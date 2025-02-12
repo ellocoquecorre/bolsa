@@ -94,6 +94,11 @@
                                 <td><!-- teléfono --></td>
                                 <td><!-- corredora --></td>
                                 <td class="text-center">
+                                    <a href="#" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center">
                                     <a href="#" class="btn btn-info btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
@@ -118,6 +123,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../js/tooltip.js"></script>
     <!-- FIN JS -->
 </body>
 

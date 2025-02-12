@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .text-right {
+            text-align: right;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+    </style>
     <!-- FIN CSS -->
 </head>
 
@@ -77,7 +86,7 @@
                 <h5 class="me-2 cartera titulo-botones">Formulario de registro</h5>
                 <form method="POST">
                     <div class="row mb-3 align-items-center">
-                        <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+                        <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
@@ -86,7 +95,7 @@
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="apellido" class="col-sm-2 col-form-label">Apellido</label>
+                        <label for="apellido" class="col-sm-2 col-form-label text-right">Apellido</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
@@ -95,7 +104,7 @@
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="mail" class="col-sm-2 col-form-label">Mail</label>
+                        <label for="mail" class="col-sm-2 col-form-label text-right">Mail</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
@@ -104,7 +113,7 @@
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
+                        <label for="telefono" class="col-sm-2 col-form-label text-right">Teléfono</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-phone"></i></span>
@@ -113,7 +122,7 @@
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="corredora" class="col-sm-2 col-form-label">Corredora</label>
+                        <label for="corredora" class="col-sm-2 col-form-label text-right">Corredora</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-briefcase"></i></span>
@@ -122,8 +131,10 @@
                         </div>
                     </div>
                     <hr class="mod mb-3">
-                    <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                    <a href="lista_clientes.php" class="btn btn-custom eliminar"><i class="fa-solid fa-xmark me-2"></i>Cancelar</a>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
+                        <a href="lista_clientes.php" class="btn btn-custom eliminar"><i class="fa-solid fa-xmark me-2"></i>Cancelar</a>
+                    </div>
                 </form>
             </div>
         </div>

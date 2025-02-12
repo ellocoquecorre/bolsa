@@ -1,3 +1,10 @@
+<?php
+// Incluir el archivo de configuración
+require_once '../config/config.php';
+
+// Resto del código de tu aplicación
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -14,8 +21,7 @@
 </head>
 
 <body>
-    <!-- CONTENIDO -->
-    <!-- Navbar -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
@@ -35,41 +41,36 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class=""
-                            href="">
-                            <i class="fas fa-home me-2"></i>Inicio
+                        <a class="nav-link active" href=""><i class="fas fa-home me-2"></i>Inicio
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
-                            href="">
-                            <i class="fa-solid fa-user-plus me-2"></i>Alta Clientes
+                        <a class="nav-link" href=""><i class="fa-solid fa-users me-2"></i>Clientes
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
-                            href="">
-                            <i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
+                        <a class="nav-link" href=""><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
-                            href="">
-                            <i class="fa-solid fa-power-off me-2"></i>Salir
+                        <a class="nav-link" href=""><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href=""><i class="fa-solid fa-power-off me-2"></i>Salir
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <!-- Fin Navbar -->
+    <!-- NAVBAR -->
 
-    <!-- Main -->
-    <div class="container-fluid mt-6">
-        <img src="img/goodfellas.png" alt="Inicio" class="img-fluid position-absolute custom-img">
-    </div>
-    <!-- Fin Main -->
     <!-- CONTENIDO -->
+    <div class="container-fluid mt-6 d-flex justify-content-center align-items-center">
+        <img src="img/goodfellas.png" alt="Inicio" class="img-fluid">
+    </div>
+    <!-- FIN CONTENIDO -->
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

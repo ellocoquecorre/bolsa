@@ -1,0 +1,4 @@
+# Deny access to the config directory
+<Directory "C:/xampp/htdocs/bolsa/config">
+    Require all denied
+</Directory>

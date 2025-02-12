@@ -1,0 +1,269 @@
+/* Archivo styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700&display=swap');
+
+body {
+  font-family: "Nunito Sans", serif;
+}
+
+.sidebar {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 1rem;
+  background-color: #f8f9fa;
+  border-right: 1px solid #ddd;
+}
+
+.nav-link {
+  color: #0B486B;
+  font-family: "Ubuntu", serif;
+}
+
+.nav-link.active {
+    color: #0B486B;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: #1373aa;
+}
+
+.fancy {
+  --b: 6px; 
+  --w: 80px;
+  --g: 15px;
+  --c: #0B486B;
+  width: fit-content;
+  font-family: "Nunito Sans", serif;
+  padding: 0 1em;
+  line-height: 1.6em;
+  color: #fff;
+  background: 
+    conic-gradient(from   45deg at left ,var(--c) 25%,#0000 0) 0,
+    conic-gradient(from -135deg at right,var(--c) 25%,#0000 0) 100%;
+  background-size: 51% 100%;
+  background-repeat: no-repeat;
+  border-image: 
+     linear-gradient(
+       #0000      calc(50% - var(--b)/2),
+       var(--c) 0 calc(50% + var(--b)/2),
+       #0000    0) 
+    1/0 var(--w)/calc(var(--w) + var(--g));
+  margin-inline: auto;
+}
+
+hr.mod {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  margin: 10px 0px 10px 0px;
+}
+
+h5 {
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.4em;
+  color: #404040;
+  font-family: "Nunito Sans", serif;
+}
+
+.btn-custom {
+  border: 1px solid #000000;
+  background-color: #fff;
+  color: #0B486B;
+  border-radius: 5px;
+}
+
+.btn-custom.ver:hover {
+    border: 1px solid #000000;
+    background-color: #008000;
+    color: #fff;
+    border-radius: 5px;
+}
+.btn-custom.editar:hover {
+  border: 1px solid #000000;
+  background-color: #ffca2c;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.btn-custom.eliminar:hover {
+  border: 1px solid #000000;
+  background-color: #FF0000;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.custom-img {
+    top: -10px;
+    z-index: 1;
+}
+
+.custom-card {
+    margin-top: 150px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.efectivo {
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item {
+  flex: 1;
+  text-align: center;
+}
+
+.titulo-botones {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.saldo, .ingresar-efectivo, .retirar-efectivo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.saldo h6 {
+  margin-right: 10px;
+}
+
+.ingresar-efectivo label, .retirar-efectivo label {
+  margin-right: 10px;
+}
+
+.linea-accion {
+  width: 100%;
+  border: none;
+  border: 1px solid #0B486B;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.titulo-botones a {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+}
+.cartera {
+  color: #0B486B;
+  font-weight: bold;
+}
+.border-column {
+  border-left: 1px solid #6c757d;
+}
+  /* TABLAS */
+  thead {
+    background-color: transparent !important;
+}
+.table-bordered {
+  border: none;
+}
+/* Bordes solo entre las celdas (internos) */
+.table-bordered th, 
+.table-bordered td {
+  border: 1px solid #dee2e6; /* Añadir bordes internos */
+}
+.table td,
+.table th {
+  vertical-align: middle;
+}
+th.text-center {
+  text-align: center;
+}
+
+td.text-center {
+  text-align: center;
+}
+.btn-custom.ver.active {
+  border: 1px solid #000000;
+  background-color: #008000;
+  color: #fff;
+  border-radius: 5px;
+}
+.cambio_fondo {
+  background-color: #f2f2f2; /* Color de fondo */
+}
+.cambio_celda {
+  padding-top: 10px;
+  max-height: 40px;
+  }
+
+.dolar {
+  color: #0B486B;
+  font-weight: bold;
+}
+
+.navbar {
+  border-bottom: 1px solid #0B486B;
+}
+.navbar-brand {
+  left: 1rem;
+}
+
+.navbar-brand img {
+  height: 30px;
+}
+.mt-6 {
+  margin-top: 5rem !important;
+}
+/* Estilos para el modal */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-top: 60px;
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+}
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+#acciones, #cedear, #bonos {
+  scroll-margin-top: 100px; /* Ajusta el valor según sea necesario */
+}
+/* Estilo para el elemento seleccionado en el dropdown */
+.selected {
+  background-color: #d3d3d3; /* Fondo gris */
+  color: #000; /* Color de texto negro */
+}

@@ -1,0 +1,34 @@
+<?php
+// Datos de conexión a la base de datos
+$servername = "localhost";
+$username = "root";
+$password = "incitato";
+$dbname = "goodfellas";
+
+// Crear conexión
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verificar conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Datos a insertar
+$id = 2;
+$mail = 'm_laguzzi@gmail.com';
+$password = '@Incitato3';
+
+// Hashear la contraseña
+$hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+// Consulta SQL para insertar datos
+$sql = "INSERT INTO admin (id, mail, password) VALUES ($id, '$mail', '$hashed_password')";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Nuevo registro creado exitosamente";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+// Cerrar conexión
+$conn->close();

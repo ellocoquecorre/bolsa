@@ -71,9 +71,63 @@
         <hr class="mod">
 
         <!-- ALTA CLIENTES -->
-        <div class="container-fluid mt-6 d-flex justify-content-center align-items-center mt-navbar">
-            <h4 class="fancy">Alta de Clientes</h4>
+        <div class="col-3"></div>
+        <div class="col-6 text-center">
+            <div class="container-fluid my-4 efectivo">
+                <h5 class="me-2 cartera titulo-botones">Formulario de registro</h5>
+                <form method="POST">
+                    <div class="row mb-3 align-items-center">
+                        <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
+                                <input type="text" class="form-control" id="nombre" name="nombre" required autofocus>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <label for="apellido" class="col-sm-2 col-form-label">Apellido</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
+                                <input type="text" class="form-control" id="apellido" name="apellido" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <label for="mail" class="col-sm-2 col-form-label">Mail</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="mail" name="mail" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-phone"></i></span>
+                                <input type="text" class="form-control" id="telefono" name="telefono" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <label for="corredora" class="col-sm-2 col-form-label">Corredora</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-briefcase"></i></span>
+                                <input type="text" class="form-control" id="corredora" name="corredora" required>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mod mb-3">
+                    <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
+                    <a href="lista_clientes.php" class="btn btn-custom eliminar"><i class="fa-solid fa-xmark me-2"></i>Cancelar</a>
+                </form>
+            </div>
         </div>
+        <div class="col-3"></div>
         <!-- FIN ALTA CLIENTES -->
 
     </div>

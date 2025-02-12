@@ -1,4 +1,14 @@
 <?php
+// Iniciar sesión
+session_start();
+
+// Verificar si el usuario está logueado
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    // Redirigir a login.php si no está logueado
+    header('Location: login.php');
+    exit;
+}
+
 // Incluir el archivo de configuración
 require_once '../config/config.php';
 
@@ -27,38 +37,26 @@ require_once '../config/config.php';
             <a class="navbar-brand" href="#">
                 <img src="img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href=""><i class="fas fa-home me-2"></i>Inicio
-                        </a>
+                        <a class="nav-link active" href="index.php"><i class="fas fa-home me-2"></i>Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href=""><i class="fa-solid fa-users me-2"></i>Clientes
-                        </a>
+                        <a class="nav-link" href="backend/lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href=""><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes
-                        </a>
+                        <a class="nav-link" href="backend/alta_clientes.php"><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href=""><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
-                        </a>
+                        <a class="nav-link" href="backend/historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href=""><i class="fa-solid fa-power-off me-2"></i>Salir
-                        </a>
+                        <a class="nav-link" href="logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>
                     </li>
                 </ul>
             </div>

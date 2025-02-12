@@ -38,7 +38,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes
+                        <a class="nav-link" href="lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes
                         </a>
                     </li>
                     <li class="nav-item">
@@ -46,7 +46,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
+                        <a class="nav-link active href=" historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
                         </a>
                     </li>
                     <li class="nav-item">
@@ -64,52 +64,17 @@
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy">Lista de Clientes</h4>
+            <h4 class="fancy">Historial</h4>
         </div>
         <!-- FIN TITULO -->
 
         <hr class="mod">
 
-        <!-- LISTA CLIENTES -->
-        <div class="col-12 text-center">
-            <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones">Listado de clientes</h5>
-                <div class="table-responsive">
-                    <table id="clientes" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Mail</th>
-                                <th>Teléfono</th>
-                                <th>Corredora</th>
-                                <th colspan="3" class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><!-- nombre --></td>
-                                <td><!-- apellido --></td>
-                                <td><!-- mail --></td>
-                                <td><!-- teléfono --></td>
-                                <td><!-- corredora --></td>
-                                <td class="text-center">
-                                    <a href="#" class="btn btn-info btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-info btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <!-- HISTORIAL -->
+        <div class="container-fluid mt-6 d-flex justify-content-center align-items-center mt-navbar">
+            <h4 class="fancy">Historial</h4>
         </div>
-        <!-- FIN LISTA CLIENTES -->
+        <!-- FIN HISTORIAL -->
 
     </div>
     <!-- FIN CONTENIDO -->

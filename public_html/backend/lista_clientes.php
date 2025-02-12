@@ -60,7 +60,7 @@
     <!-- NAVBAR -->
 
     <!-- CONTENIDO -->
-    <div class="row mx-2">
+    <div class="row mx-2 mt-navbar">
 
         <!-- TITULO -->
         <div class="col-12 text-center">

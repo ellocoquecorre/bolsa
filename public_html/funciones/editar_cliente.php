@@ -127,7 +127,7 @@
                     <hr class="mod mb-3">
                     <div class="text-right">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                        <a href="lista_clientes.php" class="btn btn-custom eliminar"><i class="fa-solid fa-xmark me-2"></i>Cancelar</a>
+                        <a href="../backend/lista_clientes.php" class="btn btn-custom eliminar"><i class="fa-solid fa-xmark me-2"></i>Cancelar</a>
                     </div>
                 </form>
             </div>

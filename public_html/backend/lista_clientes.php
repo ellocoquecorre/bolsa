@@ -3,7 +3,7 @@
 require_once '../../config/config.php';
 
 // Consulta SQL
-$sql = "SELECT nombre, apellido, email, telefono, corredora FROM clientes";
+$sql = "SELECT id, nombre, apellido, email, telefono, corredora FROM clientes"; // Asegúrate de seleccionar el ID del cliente
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -107,7 +107,7 @@ $conn->close();
                                         </a>
                                     </td>
                                     <td class="text-center">
-                                        <a href="" class="btn btn-info btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                                        <a href="../funciones/editar_cliente.php?id=<?php echo $row['id']; ?>" class="btn btn-info btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
                                     </td>

@@ -1,0 +1,75 @@
+<?php
+// Datos de conexión a la base de datos
+$servername = "localhost";
+$username = "root";
+$password = "incitato";
+$dbname = "goodfellas";
+
+// Crear conexión
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verificar conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Datos a insertar
+$clientes = [
+    [
+        'id' => 1,
+        'email' => 'el.bueno.de.harry@gmail.com',
+        'password' => 'N250ctK8',
+        'nombre' => 'Harry',
+        'apellido' => 'Flashman',
+        'telefono' => '123',
+        'corredora' => 'Balanz',
+        'url' => 'https://clientes.balanz.com/auth/login'
+    ],
+    [
+        'id' => 2,
+        'email' => 'cafe.la.humedad@gmail.com',
+        'password' => 'Rn109Nzx',
+        'nombre' => 'Cacho',
+        'apellido' => 'Castaña',
+        'telefono' => '456',
+        'corredora' => 'Allaria',
+        'url' => 'https://allaria.com.ar'
+    ],
+    [
+        'id' => 3,
+        'email' => '24.de.nerca@gmail.com',
+        'password' => 'MGBgabsZ',
+        'nombre' => 'Rocco',
+        'apellido' => 'Siffredi',
+        'telefono' => '789',
+        'corredora' => 'LEBSA',
+        'url' => 'https://operar.winvest.ar'
+    ]
+];
+
+// Insertar datos
+foreach ($clientes as $cliente) {
+    // Hashear la contraseña
+    $hashed_password = password_hash($cliente['password'], PASSWORD_BCRYPT);
+
+    // Consulta SQL para insertar datos
+    $sql = "INSERT INTO clientes (id, email, password, nombre, apellido, telefono, corredora, url) VALUES (
+        {$cliente['id']}, 
+        '{$cliente['email']}', 
+        '$hashed_password', 
+        '{$cliente['nombre']}', 
+        '{$cliente['apellido']}', 
+        '{$cliente['telefono']}', 
+        '{$cliente['corredora']}', 
+        '{$cliente['url']}'
+    )";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Nuevo registro creado exitosamente para el cliente con ID {$cliente['id']}<br>";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+    }
+}
+
+// Cerrar conexión
+$conn->close();

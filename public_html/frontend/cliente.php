@@ -20,10 +20,10 @@ if ($conn->connect_error) {
 }
 
 // Preparar y ejecutar la consulta para obtener los datos del cliente
-$stmt = $conn->prepare("SELECT nombre, apellido FROM clientes WHERE email = ?");
+$stmt = $conn->prepare("SELECT nombre, apellido, url, corredora FROM clientes WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
-$stmt->bind_result($nombre, $apellido);
+$stmt->bind_result($nombre, $apellido, $url, $corredora);
 $stmt->fetch();
 $stmt->close();
 $conn->close();
@@ -75,9 +75,10 @@ $conn->close();
         <!-- TITULO -->
         <div class="col-12 text-center">
             <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . htmlspecialchars($apellido)); ?></h4>
+            <p>Tu corredora es<br><a href="<?php echo htmlspecialchars($url); ?>" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><?php echo htmlspecialchars($corredora); ?></a></p>
         </div>
         <!-- FIN TITULO -->
-
+        <hr class="mod">
     </div>
     <!-- CONTENIDO -->
 

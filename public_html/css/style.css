@@ -232,3 +232,10 @@ td.text-center {
   background-color: #d3d3d3; /* Fondo gris */
   color: #000; /* Color de texto negro */
 }
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}

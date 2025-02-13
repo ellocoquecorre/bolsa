@@ -1,3 +1,34 @@
+<?php
+session_start();
+require_once '../../config/config.php';
+
+// Verificar si el usuario está logueado
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: ../login.php");
+    exit;
+}
+
+// Obtener el email del usuario logueado
+$email = $_SESSION['email'];
+
+// Crear conexión a la base de datos
+$conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+// Verificar la conexión
+if ($conn->connect_error) {
+    die("La conexión ha fallado: " . $conn->connect_error);
+}
+
+// Preparar y ejecutar la consulta para obtener los datos del cliente
+$stmt = $conn->prepare("SELECT nombre, apellido FROM clientes WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$stmt->bind_result($nombre, $apellido);
+$stmt->fetch();
+$stmt->close();
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -20,7 +51,7 @@
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle nav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -43,7 +74,7 @@
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy"><!-- cliente --></h4>
+            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . htmlspecialchars($apellido)); ?></h4>
         </div>
         <!-- FIN TITULO -->
 

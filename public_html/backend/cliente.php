@@ -64,17 +64,41 @@
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy">Historial</h4>
+            <h4 class="fancy"><!-- CLIENTE --></h4>
         </div>
         <!-- FIN TITULO -->
 
         <hr class="mod">
 
-        <!-- HISTORIAL -->
+        <!-- RESUMEN -->
         <div class="col-12 text-center">
-            <h4 class="fancy">Historial</h4>
+            <div class="container-fluid my-4 efectivo" id="resumen">
+                <h5 class="me-2 cartera titulo-botones">Resumen</h5>
+
+                <!-- Botones -->
+                <div class="text-start">
+                    <div class="btn-group mb-3" role="group">
+                        <button id="btnResumenPesos" class="btn btn-custom ver active">Posición en Pesos</button>
+                        <button id="btnResumenDolares" class="btn btn-custom ver">Posición en Dólares</button>
+                    </div>
+                </div>
+                <!-- Fin Botones -->
+
+                <!-- Resumen Pesos -->
+                <div id="tablaResumenPesos">
+                    <p>pesos</p>
+                </div>
+                <!-- Fin Resumen Pesos -->
+
+                <!-- Resumen Dólares -->
+                <div id="tablaResumenDolares" class="d-none">
+                    <p>dólares</p>
+                </div>
+                <!-- Fin Resumen Dólares -->
+
+            </div>
         </div>
-        <!-- FIN HISTORIAL -->
+        <!-- FIN RESUMEN -->
 
     </div>
     <!-- FIN CONTENIDO -->
@@ -83,6 +107,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../js/tooltip.js"></script>
+    <script src="../js/botones_pesos_dolares.js"></script>
     <!-- FIN JS -->
 </body>
 

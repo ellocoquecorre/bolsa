@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Si la contraseña es correcta
                 $_SESSION['loggedin'] = true;
                 $_SESSION['email'] = $email;
-                header("Location: backend/lista_clientes.php");
+                header("Location: index.php");
                 exit;
             }
         }
@@ -119,40 +119,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- NAVBAR -->
 
     <!-- CONTENIDO -->
-    <div class="row justify-content-center mt-navbar">
-        <div class="col-md-4">
-            <!-- Imagen -->
-            <div class="d-flex justify-content-center position-relative">
-                <img src="img/inicio.png" alt="Inicio" class="img-fluid position-absolute custom-img">
-            </div>
-            <!-- Imagen -->
-            <!-- Formulario Login -->
-            <div class="custom-card">
-                <h4 class="fancy">Iniciar sesión</h4>
-                <hr class="mod mb-3">
-                <?php if (isset($error)): ?>
-                    <div class="alert alert-danger"><?php echo $error; ?></div>
-                <?php endif; ?>
-                <form method="POST">
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Correo Electrónico</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
-                            <input type="email" name="email" class="form-control" id="email" required>
+    <div class="row mt-navbar mx-2">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <!-- Imagen -->
+                <div class="d-flex justify-content-center position-relative">
+                    <img src="img/inicio.png" alt="Inicio" class="img-fluid position-absolute custom-img">
+                </div>
+                <!-- Imagen -->
+                <!-- Formulario Login -->
+                <div class="custom-card">
+                    <h4 class="fancy">Iniciar sesión</h4>
+                    <hr class="mod mb-3">
+                    <?php if (isset($error)): ?>
+                        <div class="alert alert-danger"><?php echo $error; ?></div>
+                    <?php endif; ?>
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
+                                <input type="email" name="email" class="form-control" id="email" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light"><i class="fa-solid fa-lock"></i></span>
-                            <input type="password" name="password" class="form-control" id="password" required>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-lock"></i></span>
+                                <input type="password" name="password" class="form-control" id="password" required>
+                            </div>
                         </div>
-                    </div>
-                    <button type="submit" class="btn btn-custom ver w-100"><i class="fa-solid fa-check me-2"></i>Entrar</button>
-                </form>
+                        <button type="submit" class="btn btn-custom ver w-100"><i class="fa-solid fa-check me-2"></i>Entrar</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
     </div>
     <!-- CONTENIDO -->
 

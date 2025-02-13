@@ -1,3 +1,44 @@
+<?php
+// Incluir archivo de configuración
+require_once '../../config/config.php';
+
+// Obtener el id del cliente desde la URL
+$cliente_id = isset($_GET['id']) ? $_GET['id'] : 1;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtener los datos del formulario
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $email = $_POST['mail'];
+    $telefono = $_POST['telefono'];
+    $corredora = $_POST['corredora'];
+
+    // Consulta para actualizar los datos del cliente
+    $sql = "UPDATE clientes SET nombre = ?, apellido = ?, email = ?, telefono = ?, corredora = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssi", $nombre, $apellido, $email, $telefono, $corredora, $cliente_id);
+
+    if ($stmt->execute()) {
+        // Redirigir a la lista de clientes después de actualizar
+        header("Location: ../backend/lista_clientes.php");
+        exit();
+    } else {
+        echo "Error al actualizar el registro: " . $conn->error;
+    }
+
+    $stmt->close();
+} else {
+    // Consulta para obtener los datos del cliente
+    $sql = "SELECT nombre, apellido, email, telefono, corredora FROM clientes WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $cliente_id);
+    $stmt->execute();
+    $stmt->bind_result($nombre, $apellido, $email, $telefono, $corredora);
+    $stmt->fetch();
+    $stmt->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -84,7 +125,7 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required autofocus>
+                                <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" required autofocus>
                             </div>
                         </div>
                     </div>
@@ -93,7 +134,7 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
-                                <input type="text" class="form-control" id="apellido" name="apellido" required>
+                                <input type="text" class="form-control" id="apellido" name="apellido" value="<?php echo htmlspecialchars($apellido); ?>" required>
                             </div>
                         </div>
                     </div>
@@ -102,7 +143,7 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
-                                <input type="email" class="form-control" id="mail" name="mail" required>
+                                <input type="email" class="form-control" id="mail" name="mail" value="<?php echo htmlspecialchars($email); ?>" required>
                             </div>
                         </div>
                     </div>
@@ -111,7 +152,7 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-phone"></i></span>
-                                <input type="text" class="form-control" id="telefono" name="telefono" required>
+                                <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo htmlspecialchars($telefono); ?>" required>
                             </div>
                         </div>
                     </div>
@@ -120,7 +161,7 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-briefcase"></i></span>
-                                <input type="text" class="form-control" id="corredora" name="corredora" required>
+                                <input type="text" class="form-control" id="corredora" name="corredora" value="<?php echo htmlspecialchars($corredora); ?>" required>
                             </div>
                         </div>
                     </div>

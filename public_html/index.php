@@ -65,8 +65,10 @@ require_once '../config/config.php';
     <!-- NAVBAR -->
 
     <!-- CONTENIDO -->
-    <div class="container-fluid mt-6 d-flex justify-content-center align-items-center mt-navbar">
-        <img src="img/goodfellas.png" alt="Inicio" class="img-fluid">
+    <div class="row mt-navbar mx-2">
+        <div class="col-12 text-center mt-navbar">
+            <img src="img/goodfellas.png" alt="Inicio" class="img-fluid">
+        </div>
     </div>
     <!-- FIN CONTENIDO -->
 

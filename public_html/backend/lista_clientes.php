@@ -1,3 +1,17 @@
+<?php
+// Incluir archivo de configuración
+require_once '../../config/config.php';
+
+// Consulta SQL
+$sql = "SELECT nombre, apellido, email, telefono, corredora FROM clientes";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+} else {
+    echo "<tr><td colspan='8'>No se encontraron resultados</td></tr>";
+}
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -20,14 +34,7 @@
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -87,28 +94,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><!-- nombre --></td>
-                                <td><!-- apellido --></td>
-                                <td><!-- mail --></td>
-                                <td><!-- teléfono --></td>
-                                <td><!-- corredora --></td>
-                                <td class="text-center">
-                                    <a href="#" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver">
-                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                    </a>
-                                </td>
-                                <td class="text-center">
-                                    <a href="#" class="btn btn-info btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-info btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            <?php while ($row = $result->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($row['nombre']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['apellido']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['email']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['telefono']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['corredora']); ?></td>
+                                    <td class="text-center">
+                                        <a href="" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="" class="btn btn-info btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-info btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
                         </tbody>
                     </table>
                 </div>

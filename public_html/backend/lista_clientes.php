@@ -102,7 +102,7 @@ $conn->close();
                                     <td><?php echo htmlspecialchars($row['telefono']); ?></td>
                                     <td><?php echo htmlspecialchars($row['corredora']); ?></td>
                                     <td class="text-center">
-                                        <a href="" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver">
+                                        <a href="cliente.php?id=<?php echo $row['id']; ?>" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver">
                                             <i class="fa-solid fa-magnifying-glass"></i>
                                         </a>
                                     </td>

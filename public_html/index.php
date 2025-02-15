@@ -66,8 +66,9 @@ require_once '../config/config.php';
 
     <!-- CONTENIDO -->
     <div class="row mt-navbar mx-2">
-        <div class="col-12 text-center mt-navbar">
+        <div class="col-12 text-center mt-2">
             <img src="img/goodfellas.png" alt="Inicio" class="img-fluid">
+            <h1>Tus finanzas en manos expertas (y un poco turbias)</h1>
         </div>
     </div>
     <!-- FIN CONTENIDO -->

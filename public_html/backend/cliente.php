@@ -1,3 +1,20 @@
+<?php
+// Incluir archivo de configuración
+require_once '../../config/config.php';
+
+// Obtener el id del cliente desde la URL
+$cliente_id = isset($_GET['id']) ? $_GET['id'] : 1;
+
+// Consulta para obtener los datos del cliente
+$sql = "SELECT nombre, apellido FROM clientes WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $cliente_id);
+$stmt->execute();
+$stmt->bind_result($nombre, $apellido);
+$stmt->fetch();
+$stmt->close();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -34,24 +51,19 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.php"><i class="fas fa-home me-2"></i>Inicio
-                        </a>
+                        <a class="nav-link" href="../index.php"><i class="fas fa-home me-2"></i>Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes
-                        </a>
+                        <a class="nav-link active" href="lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="alta_clientes.php"><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes
-                        </a>
+                        <a class="nav-link" href="alta_clientes.php"><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active href=" historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
-                        </a>
+                        <a class="nav-link" href="historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir
-                        </a>
+                        <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>
                     </li>
                 </ul>
             </div>
@@ -64,7 +76,7 @@
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy"><!-- CLIENTE --></h4>
+            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
         </div>
         <!-- FIN TITULO -->
 
@@ -99,6 +111,167 @@
             </div>
         </div>
         <!-- FIN RESUMEN -->
+
+        <!-- TENENCIAS -->
+        <div class="col-12 text-center">
+
+            <!-- ACCIONES -->
+            <div class="container-fluid my-4 efectivo" id="acciones">
+                <h5 class="me-2 cartera titulo-botones">Acciones</h5>
+
+                <!-- Botones -->
+                <div class="text-start">
+                    <div class="btn-group mb-3" role="group">
+                        <button id="btnAccionesPesos" class="btn btn-custom ver active">Posición en Pesos</button>
+                        <button id="btnAccionesDolares" class="btn btn-custom ver">Posición en Dólares</button>
+                    </div>
+                </div>
+                <!-- Fin Botones -->
+
+                <!-- Acciones Pesos -->
+                <div id="tablaAccionesPesos">
+
+                    <!-- Consolidada Acciones Pesos -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Valor Inicial</th>
+                                    <th>Valor Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><!-- valor_inicial_acciones_pesos --></td>
+                                    <td><!-- valor_actual_acciones_pesos --></td>
+                                    <td><!-- rendimiento_acciones_pesos --></td>
+                                    <td><!-- rentabilidad_acciones_pesos --></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Fin Consolidada Acciones Pesos -->
+
+                    <hr class="linea-accion">
+
+                    <!-- Completa Acciones Pesos -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Ticker</th>
+                                    <th>Fecha</th>
+                                    <th>Cantidad</th>
+                                    <th>Valor<br>Compra</th>
+                                    <th>Valor<br>Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                    <th colspan="2">Venta</th>
+                                    <th colspan="2">Operaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-acciones-pesos">
+                                <tr>
+                                    <td>AAPL</td>
+                                    <td>10-02-2025</td>
+                                    <td>10</td>
+                                    <td>100</td>
+                                    <td>150</td>
+                                    <td>50</td>
+                                    <td>50%</td>
+                                    <td class="text-center"><a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial"><i class="fa-solid fa-percent"></i></a></td>
+                                    <td class="text-center"><a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta total"><i class="fa-solid fa-dollar-sign"></i></a></td>
+                                    <td class="text-center"><a href="" class="btn btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                    <td class="text-center"><button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar" onclick=""><i class="fa-solid fa-trash"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Fin Completa Acciones Pesos -->
+
+                </div>
+                <!-- Fin Acciones Pesos -->
+
+                <!-- Acciones Dólares -->
+                <div id="tablaAccionesDolares" class="d-none">
+
+                    <!-- Consolidada Acciones Dólares -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Valor Inicial</th>
+                                    <th>Valor Actual</th>
+                                    <th>DOLARES</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><!-- valor_inicial_acciones_dolares --></td>
+                                    <td><!-- valor_actual_acciones_dolares --></td>
+                                    <td><!-- rendimiento_acciones_dolares --></td>
+                                    <td><!-- rentabilidad_acciones_dolares --></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Fin Consolidada Acciones Dólares -->
+
+                    <hr class="linea-accion">
+
+                    <!-- Completa Acciones Dólares -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Ticker</th>
+                                    <th>Fecha</th>
+                                    <th>Cantidad</th>
+                                    <th>Valor<br>Compra</th>
+                                    <th>Valor<br>Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                    <th colspan="2">Venta</th>
+                                    <th colspan="2">Operaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-acciones-dolares">
+                                <tr data-ticker="">
+                                    <td><!-- ticker_acciones --></td>
+                                    <td><!-- fecha_acciones --></td>
+                                    <td><!-- cantidad_acciones --></td>
+                                    <td><!-- valor_compra_acciones_dolares --></td>
+                                    <td><!-- valor_actual_acciones_dolares --></td>
+                                    <td><!-- rendimiento_acciones_dolares --></td>
+                                    <td><!-- rentabilidad_acciones_dolares --></td>
+                                    <td class="text-center"><a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial"><i class="fa-solid fa-percent"></i></a></td>
+                                    <td class="text-center"><a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta total"><i class="fa-solid fa-dollar-sign"></i></a></td>
+                                    <td class="text-center"><a href="" class="btn btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                    <td class="text-center"><button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar" onclick=""><i class="fa-solid fa-trash"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Fin Completa Acciones Dólares -->
+                </div>
+                <hr class="linea-accion">
+
+                <!-- Comprar Acciones -->
+                <div class="text-start">
+                    <a href="" class="btn btn-custom ver">
+                        <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
+                    </a>
+                </div>
+                <!-- Fin Comprar Acciones -->
+
+            </div>
+            <!-- FIN ACCIONES -->
+
+            <hr class="mod">
+        </div>
+        <!-- FIN TENENCIAS -->
 
     </div>
     <!-- FIN CONTENIDO -->

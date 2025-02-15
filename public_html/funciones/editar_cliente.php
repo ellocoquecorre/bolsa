@@ -82,15 +82,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes
+                        <a class="nav-link active" href="../backend/lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="alta_clientes.php"><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes
+                        <a class="nav-link" href="../backend/alta_clientes.php"><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
+                        <a class="nav-link" href="../backend/historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
                         </a>
                     </li>
                     <li class="nav-item">
@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy">Alta de Clientes</h4>
+            <h4 class="fancy">Editar Cliente</h4>
         </div>
         <!-- FIN TITULO -->
 
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-3"></div>
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones">Formulario de registro</h5>
+                <h5 class="me-2 cartera titulo-botones">Edición de datos</h5>
                 <form method="POST">
                     <div class="row mb-3 align-items-center">
                         <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>

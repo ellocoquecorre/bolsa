@@ -8,7 +8,7 @@ $cliente_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 if ($cliente_id > 0) {
     // Realizar la consulta a la base de datos para obtener los datos del cliente
     $sql = "SELECT nombre, apellido FROM clientes WHERE id = ?";
-    $stmt = $mysqli->prepare($sql);
+    $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $cliente_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -21,7 +21,7 @@ if ($cliente_id > 0) {
 
     // Consultar el saldo en efectivo del cliente
     $sql_balance = "SELECT efectivo FROM balance WHERE usuario_id = ?";
-    $stmt_balance = $mysqli->prepare($sql_balance);
+    $stmt_balance = $conn->prepare($sql_balance);
     $stmt_balance->bind_param("i", $cliente_id);
     $stmt_balance->execute();
     $result_balance = $stmt_balance->get_result();

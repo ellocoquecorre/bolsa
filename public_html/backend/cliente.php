@@ -5,6 +5,8 @@ require_once '../../config/config.php';
 // Incluir las funciones necesarias
 include '../funciones/dolar_api.php';
 include '../funciones/balance.php';
+include '../funciones/ingresar_efectivo.php';
+include '../funciones/retirar_efectivo.php';
 
 // Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['id']) ? $_GET['id'] : 1;
@@ -394,6 +396,8 @@ $saldo_dolares = calcular_saldo_dolares($saldo_efectivo, $contadoconliqui_compra
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/formato_miles.js"></script>
+    <script src="../js/ingresar_efectivo.js"></script>
+    <script src="../js/retirar_efectivo.js"></script>
     <!-- FIN JS -->
 </body>
 

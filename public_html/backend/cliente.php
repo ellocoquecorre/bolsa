@@ -371,14 +371,14 @@ $saldo_dolares = calcular_saldo_dolares($saldo_efectivo, $contadoconliqui_compra
                         <div class="d-flex align-items-center">
                             <h6 class="me-2">Ingresar efectivo</h6>
                             <input type="text" id="ingresar_efectivo" placeholder="0,00" class="form-control me-2" onkeyup="formatInput(this)" style="width: 150px; text-align: right;">
-                            <input type="button" value="+" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresar efectivo" style="width: 40px;" onclick="ingresarEfectivo(<?php echo isset($_GET['id']) ? $_GET['id'] : 'null'; ?>)">
+                            <input type="button" value="+" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresar efectivo" style="width: 40px;" onclick="">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="d-flex align-items-center">
                             <h6 class="me-2">Retirar efectivo</h6>
                             <input type="text" id="retirar_efectivo" placeholder="0,00" class="form-control me-2" onkeyup="formatInput(this)" style="width: 150px; text-align: right;">
-                            <input type="button" value="-" class="btn btn-info btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar efectivo" style="width: 40px;" onclick="retirarEfectivo(<?php echo isset($_GET['id']) ? $_GET['id'] : 'null'; ?>)">
+                            <input type="button" value="-" class="btn btn-info btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar efectivo" style="width: 40px;" onclick="">
                         </div>
                     </div>
                 </div>

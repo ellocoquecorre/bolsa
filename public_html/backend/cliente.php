@@ -2,6 +2,10 @@
 // Incluir archivo de configuración
 require_once '../../config/config.php';
 
+// Incluir las funciones necesarias
+include '../funciones/dolar_api.php';
+include '../funciones/balance.php';
+
 // Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['id']) ? $_GET['id'] : 1;
 
@@ -13,6 +17,10 @@ $stmt->execute();
 $stmt->bind_result($nombre, $apellido);
 $stmt->fetch();
 $stmt->close();
+
+// Obtener el saldo en efectivo del balance
+$saldo_efectivo = $balance['efectivo'];
+$saldo_dolares = calcular_saldo_dolares($saldo_efectivo, $contadoconliqui_compra, $contadoconliqui_venta);
 ?>
 
 <!DOCTYPE html>
@@ -112,7 +120,9 @@ $stmt->close();
         </div>
         <!-- FIN RESUMEN -->
 
-        <!-- TENENCIAS -->
+        <hr class="mod">
+
+        <!-- ACCIONES -->
         <div class="col-12 text-center">
 
             <!-- ACCIONES -->
@@ -269,9 +279,110 @@ $stmt->close();
             </div>
             <!-- FIN ACCIONES -->
 
-            <hr class="mod">
         </div>
-        <!-- FIN TENENCIAS -->
+        <!-- FIN ACCIONES -->
+
+        <hr class="mod">
+
+        <!-- DOLAR API -->
+        <div class="col-12 text-center">
+            <div class="container-fluid my-4 efectivo" id="dolar">
+                <h5 class="me-2 cartera titulo-botones">Tipos de cambio</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Oficial</th>
+                                <th colspan="2">Blue</th>
+                                <th colspan="2">Bolsa</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Compra</td>
+                                <td>Venta</td>
+                                <td>Compra</td>
+                                <td>Venta</td>
+                                <td>Compra</td>
+                                <td>Venta</td>
+                            </tr>
+                            <tr>
+                                <td><?php echo formatear_dinero($oficial_compra); ?></td>
+                                <td><?php echo formatear_dinero($oficial_venta); ?></td>
+                                <td><?php echo formatear_dinero($blue_compra); ?></td>
+                                <td><?php echo formatear_dinero($blue_venta); ?></td>
+                                <td><?php echo formatear_dinero($bolsa_compra); ?></td>
+                                <td><?php echo formatear_dinero($bolsa_venta); ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr class="linea-accion">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th colspan="2">CCL</th>
+                                <th colspan="2">Tarjeta</th>
+                                <th colspan="2">Mayorista</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Compra</td>
+                                <td>Venta</td>
+                                <td>Compra</td>
+                                <td>Venta</td>
+                                <td>Compra</td>
+                                <td>Venta</td>
+                            </tr>
+                            <tr>
+                                <td><?php echo formatear_dinero($contadoconliqui_compra); ?></td>
+                                <td><?php echo formatear_dinero($contadoconliqui_venta); ?></td>
+                                <td><?php echo formatear_dinero($tarjeta_compra); ?></td>
+                                <td><?php echo formatear_dinero($tarjeta_venta); ?></td>
+                                <td><?php echo formatear_dinero($mayorista_compra); ?></td>
+                                <td><?php echo formatear_dinero($mayorista_venta); ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- FIN DOLAR API -->
+
+        <hr class="mod">
+
+        <!-- EFECTIVO -->
+        <div class="col-12 text-center">
+            <div class="container-fluid my-4 efectivo" id="efectivo">
+                <h5 class="me-2 cartera titulo-botones">Efectivo</h5>
+                <div class="row">
+                    <div class="col-12 col-md-4 text-start">
+                        <p>Saldo en pesos: $ <span id="saldo_efectivo"><?php echo number_format($balance['efectivo'], 2, ',', '.'); ?></span></p>
+                    </div>
+                    <div class="col-12 col-md-4 text-start">
+                        <p>Saldo en dólares: u$s <span id="saldo_dolares"><?php echo is_numeric($saldo_dolares) ? number_format($saldo_dolares, 2, ',', '.') : $saldo_dolares; ?></span></p>
+                    </div>
+                </div>
+                <hr class="linea-accion">
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="d-flex align-items-center">
+                            <h6 class="me-2">Ingresar efectivo</h6>
+                            <input type="text" id="ingresar_efectivo" placeholder="0,00" class="form-control me-2" onkeyup="formatInput(this)" style="width: 150px; text-align: right;">
+                            <input type="button" value="+" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresar efectivo" style="width: 40px;" onclick="ingresarEfectivo(<?php echo $cliente['id']; ?>)">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="d-flex align-items-center">
+                            <h6 class="me-2">Retirar efectivo</h6>
+                            <input type="text" id="retirar_efectivo" placeholder="0,00" class="form-control me-2" onkeyup="formatInput(this)" style="width: 150px; text-align: right;">
+                            <input type="button" value="-" class="btn btn-info btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar efectivo" style="width: 40px;" onclick="retirarEfectivo(<?php echo $cliente['id']; ?>)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN EFECTIVO -->
 
     </div>
     <!-- FIN CONTENIDO -->
@@ -282,6 +393,7 @@ $stmt->close();
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
+    <script src="../js/formato_miles.js"></script>
     <!-- FIN JS -->
 </body>
 

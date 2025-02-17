@@ -16,6 +16,26 @@ $stmt->close();
 
 // Obtener la fecha de hoy
 $fecha_hoy = date('Y-m-d');
+
+// Verificar si se ha enviado el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtener los datos del formulario
+    $ticker = $_POST['ticker'];
+    $cantidad = $_POST['cantidad'];
+    $precio = $_POST['precio'];
+    $fecha = $_POST['fecha'];
+
+    // Insertar los datos en la tabla "acciones"
+    $sql = "INSERT INTO acciones (ticker, cantidad, precio, fecha, cliente_id) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sidsi", $ticker, $cantidad, $precio, $fecha, $cliente_id);
+    $stmt->execute();
+    $stmt->close();
+
+    // Redirigir al archivo cliente.php con el id del cliente
+    header("Location: ../backend/cliente.php?id=$cliente_id#acciones");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -90,7 +110,7 @@ $fecha_hoy = date('Y-m-d');
 
         <hr class="mod">
 
-        <!-- ALTA CLIENTES -->
+        <!-- COMPRA ACCIONES -->
         <div class="col-3"></div>
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
@@ -142,13 +162,13 @@ $fecha_hoy = date('Y-m-d');
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                        <button type="button" class="btn btn-custom eliminar" onclick="window.location.href='../backend/cliente.php?id=<?php echo $cliente_id; ?>#acciones'"><i class="fa-solid fa-xmark me-2"></i>Cancelar</button>
+                        <button type="button" class="btn btn-custom eliminar" onclick="window.location.href='../backend/cliente.php?id=<?php echo $cliente_id; ?>#acciones'"><i class="fa-solid fa-times me-2"></i>Cancelar</button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="col-3"></div>
-        <!-- FIN ALTA CLIENTES -->
+        <!-- FIN COMPRA ACCIONES -->
 
     </div>
     <!-- FIN CONTENIDO -->

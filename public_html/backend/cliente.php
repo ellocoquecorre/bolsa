@@ -183,7 +183,7 @@ $saldo_dolares = calcular_saldo_dolares($saldo_efectivo, $contadoconliqui_compra
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
-                                <tr>
+                                <tr data-ticker="">
                                     <td><!-- ticker_acciones --></td>
                                     <td><!-- fecha_acciones --></td>
                                     <td><!-- cantidad_acciones --></td>

@@ -4,6 +4,15 @@ require_once '../../config/config.php';
 
 // Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['id']) ? $_GET['id'] : 1;
+
+// Consulta para obtener los datos del cliente
+$sql = "SELECT nombre, apellido FROM clientes WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $cliente_id);
+$stmt->execute();
+$stmt->bind_result($nombre, $apellido);
+$stmt->fetch();
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +82,7 @@ $cliente_id = isset($_GET['id']) ? $_GET['id'] : 1;
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy"><!-- nombre --></h4>
+            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
         </div>
         <!-- FIN TITULO -->
 

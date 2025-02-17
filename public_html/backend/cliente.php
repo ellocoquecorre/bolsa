@@ -271,7 +271,7 @@ $saldo_dolares = calcular_saldo_dolares($saldo_efectivo, $contadoconliqui_compra
 
                 <!-- Comprar Acciones -->
                 <div class="text-start">
-                    <a href="" class="btn btn-custom ver">
+                    <a href="../funciones/compra_acciones.php?id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
                         <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
                     </a>
                 </div>

@@ -1,5 +1,6 @@
 <?php
 require_once '../../config/config.php';
+require_once 'dolar_api.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $cliente_id = isset($_POST['cliente_id']) ? (int)$_POST['cliente_id'] : 0;
@@ -19,7 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result_balance = $stmt_balance->get_result();
             $balance = $result_balance->fetch_assoc();
 
-            echo json_encode(['success' => true, 'nuevo_saldo' => number_format($balance['efectivo'], 2, ',', '.')]);
+            // Calcular el saldo en dólares
+            $saldo_dolares = calcular_saldo_dolares($balance['efectivo'], $contadoconliqui_compra, $contadoconliqui_venta);
+
+            echo json_encode([
+                'success' => true,
+                'nuevo_saldo_pesos' => number_format($balance['efectivo'], 2, ',', '.'),
+                'nuevo_saldo_dolares' => is_numeric($saldo_dolares) ? number_format($saldo_dolares, 2, ',', '.') : $saldo_dolares
+            ]);
         } else {
             echo json_encode(['success' => false, 'error' => $stmt->error]);
         }

@@ -1,10 +1,10 @@
 $(document).ready(function() {
-    $('#ingresar_btn').click(function() {
-        var monto = $('#ingresar_efectivo').val();
+    $('.eliminar').click(function() {
+        var monto = $('#retirar_efectivo').val();
         var cliente_id = new URLSearchParams(window.location.search).get('id');
 
         $.ajax({
-            url: '../funciones/ingresa_dinero.php',
+            url: '../funciones/retira_dinero.php',
             type: 'POST',
             data: {
                 monto: monto,

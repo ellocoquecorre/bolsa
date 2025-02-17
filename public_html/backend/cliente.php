@@ -396,6 +396,7 @@ $saldo_dolares = calcular_saldo_dolares($saldo_efectivo, $contadoconliqui_compra
     <script src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/formato_miles.js"></script>
     <script src="../js/ingresa_dinero.js"></script>
+    <script src="../js/retira_dinero.js"></script>
     <!-- FIN JS -->
 </body>
 

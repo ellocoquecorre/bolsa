@@ -6,7 +6,6 @@ require_once '../../config/config.php';
 include '../funciones/dolar_api.php';
 include '../funciones/balance.php';
 
-
 // Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['id']) ? $_GET['id'] : 1;
 
@@ -22,6 +21,31 @@ $stmt->close();
 // Obtener el saldo en efectivo del balance
 $saldo_efectivo = $balance['efectivo'];
 $saldo_dolares = calcular_saldo_dolares($saldo_efectivo, $contadoconliqui_compra, $contadoconliqui_venta);
+
+// Nueva función para obtener las acciones del cliente
+function obtener_acciones_cliente($conn, $cliente_id)
+{
+    $sql = "SELECT ticker, fecha, cantidad, precio FROM acciones WHERE cliente_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $cliente_id);
+    $stmt->execute();
+    $stmt->bind_result($ticker, $fecha, $cantidad, $precio);
+
+    $acciones = [];
+    while ($stmt->fetch()) {
+        $acciones[] = [
+            'ticker' => $ticker,
+            'fecha' => $fecha,
+            'cantidad' => $cantidad,
+            'precio' => $precio
+        ];
+    }
+    $stmt->close();
+    return $acciones;
+}
+
+// Obtener las acciones del cliente
+$acciones = obtener_acciones_cliente($conn, $cliente_id);
 ?>
 
 <!DOCTYPE html>
@@ -183,19 +207,23 @@ $saldo_dolares = calcular_saldo_dolares($saldo_efectivo, $contadoconliqui_compra
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
-                                <tr data-ticker="">
-                                    <td><!-- ticker_acciones --></td>
-                                    <td><!-- fecha_acciones --></td>
-                                    <td><!-- cantidad_acciones --></td>
-                                    <td><!-- valor_compra_acciones_pesos --></td>
-                                    <td><!-- valor_actual_acciones_pesos --></td>
-                                    <td><!-- rendimiento_acciones_pesos --></td>
-                                    <td><!-- rentabilidad_acciones_pesos --></td>
-                                    <td class="text-center"><a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial"><i class="fa-solid fa-percent"></i></a></td>
-                                    <td class="text-center"><a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta total"><i class="fa-solid fa-dollar-sign"></i></a></td>
-                                    <td class="text-center"><a href="" class="btn btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                                    <td class="text-center"><button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar" onclick=""><i class="fa-solid fa-trash"></i></button></td>
-                                </tr>
+                                <?php
+                                foreach ($acciones as $accion) {
+                                    echo "<tr data-ticker='{$accion['ticker']}'>
+                                            <td>{$accion['ticker']}</td>
+                                            <td>{$accion['fecha']}</td>
+                                            <td>{$accion['cantidad']}</td>
+                                            <td>{$accion['precio']}</td>
+                                            <td><!-- valor_actual_acciones_pesos --></td>
+                                            <td><!-- rendimiento_acciones_pesos --></td>
+                                            <td><!-- rentabilidad_acciones_pesos --></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-hand-holding-usd'></i></a></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-dollar-sign'></i></a></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen-to-square'></i></a></td>
+                                            <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
+                                          </tr>";
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -249,19 +277,23 @@ $saldo_dolares = calcular_saldo_dolares($saldo_efectivo, $contadoconliqui_compra
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-dolares">
-                                <tr data-ticker="">
-                                    <td><!-- ticker_acciones --></td>
-                                    <td><!-- fecha_acciones --></td>
-                                    <td><!-- cantidad_acciones --></td>
-                                    <td><!-- valor_compra_acciones_dolares --></td>
-                                    <td><!-- valor_actual_acciones_dolares --></td>
-                                    <td><!-- rendimiento_acciones_dolares --></td>
-                                    <td><!-- rentabilidad_acciones_dolares --></td>
-                                    <td class="text-center"><a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial"><i class="fa-solid fa-percent"></i></a></td>
-                                    <td class="text-center"><a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta total"><i class="fa-solid fa-dollar-sign"></i></a></td>
-                                    <td class="text-center"><a href="" class="btn btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                                    <td class="text-center"><button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar" onclick=""><i class="fa-solid fa-trash"></i></button></td>
-                                </tr>
+                                <?php
+                                foreach ($acciones as $accion) {
+                                    echo "<tr data-ticker='{$accion['ticker']}'>
+                                            <td>{$accion['ticker']}</td>
+                                            <td>{$accion['fecha']}</td>
+                                            <td>{$accion['cantidad']}</td>
+                                            <td>{$accion['precio']}</td>
+                                            <td><!-- valor_actual_acciones_dolares --></td>
+                                            <td><!-- rendimiento_acciones_dolares --></td>
+                                            <td><!-- rentabilidad_acciones_dolares --></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-hand-holding-usd'></i></a></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-dollar-sign'></i></a></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen-to-square'></i></a></td>
+                                            <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
+                                          </tr>";
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>

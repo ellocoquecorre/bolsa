@@ -237,6 +237,21 @@ td.text-center {
   background-color: #d3d3d3; /* Fondo gris */
   color: #000; /* Color de texto negro */
 }
+#tickerDropdown {
+  position: absolute;
+  z-index: 1000;
+  display: none;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  width: 100%; /* Asegurar que el dropdown tenga el mismo ancho que el campo de entrada */
+}
+
+#tickerDropdown .dropdown-item.active {
+  background-color: #007bff;
+  color: #fff;
+}
 .text-right {
   text-align: right;
 }

@@ -1,9 +1,21 @@
 $(document).ready(function() {
+    function updateDropdownPosition() {
+        var tickerInput = $('#ticker');
+        var dropdown = $('#tickerDropdown');
+
+        var inputWidth = tickerInput.outerWidth();
+        var inputOffset = tickerInput.offset();
+
+        dropdown.css({
+            'width': inputWidth + 'px',
+            'left': inputOffset.left + 'px',
+            'top': inputOffset.top + tickerInput.outerHeight() + 'px'
+        });
+    }
+
     $('#ticker').on('input', function() {
         var query = $(this).val();
-        var inputWidth = $(this).outerWidth();
         var dropdown = $('#tickerDropdown');
-        dropdown.css('width', inputWidth + 'px'); // Asegurar que el dropdown tenga el mismo ancho que el campo de entrada
 
         if (query.length > 0) {
             $.ajax({
@@ -17,6 +29,8 @@ $(document).ready(function() {
                         items.forEach(function(item) {
                             dropdown.append('<a class="dropdown-item" href="#">' + item + '</a>');
                         });
+
+                        updateDropdownPosition();
                         dropdown.show();
                     }
                 }
@@ -24,6 +38,10 @@ $(document).ready(function() {
         } else {
             dropdown.empty().hide();
         }
+    });
+
+    $(window).on('resize', function() {
+        updateDropdownPosition();
     });
 
     $(document).on('click', '#tickerDropdown .dropdown-item', function(e) {

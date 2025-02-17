@@ -13,6 +13,9 @@ $stmt->execute();
 $stmt->bind_result($nombre, $apellido);
 $stmt->fetch();
 $stmt->close();
+
+// Obtener la fecha de hoy
+$fecha_hoy = date('Y-m-d');
 ?>
 
 <!DOCTYPE html>
@@ -131,7 +134,7 @@ $stmt->close();
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="fecha" name="fecha" required>
+                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha_hoy; ?>" required>
                             </div>
                         </div>
                     </div>

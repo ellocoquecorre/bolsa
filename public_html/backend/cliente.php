@@ -184,13 +184,13 @@ $saldo_dolares = calcular_saldo_dolares($saldo_efectivo, $contadoconliqui_compra
                             </thead>
                             <tbody id="tabla-acciones-pesos">
                                 <tr>
-                                    <td>AAPL</td>
-                                    <td>10-02-2025</td>
-                                    <td>10</td>
-                                    <td>100</td>
-                                    <td>150</td>
-                                    <td>50</td>
-                                    <td>50%</td>
+                                    <td><!-- ticker_acciones --></td>
+                                    <td><!-- fecha_acciones --></td>
+                                    <td><!-- cantidad_acciones --></td>
+                                    <td><!-- valor_compra_acciones_pesos --></td>
+                                    <td><!-- valor_actual_acciones_pesos --></td>
+                                    <td><!-- rendimiento_acciones_pesos --></td>
+                                    <td><!-- rentabilidad_acciones_pesos --></td>
                                     <td class="text-center"><a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial"><i class="fa-solid fa-percent"></i></a></td>
                                     <td class="text-center"><a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta total"><i class="fa-solid fa-dollar-sign"></i></a></td>
                                     <td class="text-center"><a href="" class="btn btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a></td>

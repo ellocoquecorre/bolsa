@@ -1,3 +1,11 @@
+<?php
+// Incluir archivo de configuración
+require_once '../../config/config.php';
+
+// Obtener el id del cliente desde la URL
+$cliente_id = isset($_GET['id']) ? $_GET['id'] : 1;
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -39,15 +47,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes
+                        <a class="nav-link active" href="../backend/lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="alta_clientes.php"><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes
+                        <a class="nav-link" href="../backend/alta_clientes.php"><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
+                        <a class="nav-link" href="../backend/historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
                         </a>
                     </li>
                     <li class="nav-item">
@@ -65,7 +73,7 @@
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy">Alta de Clientes</h4>
+            <h4 class="fancy"><!-- nombre --></h4>
         </div>
         <!-- FIN TITULO -->
 
@@ -75,57 +83,55 @@
         <div class="col-3"></div>
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones">Formulario de registro</h5>
-                <form method="POST">
+                <h5 class="me-2 cartera titulo-botones">Comprar Acciones</h5>
+                <form id="compra_acciones" method="POST" action="">
+                    <input type="hidden" name="cliente_id" value="<?php echo htmlspecialchars($cliente_id); ?>">
+                    <!-- Ticker -->
                     <div class="row mb-3 align-items-center">
-                        <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
+                        <label for="ticker" class="col-sm-2 col-form-label">Ticker</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required autofocus>
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
+                                <input type="text" class="form-control" id="ticker" name="ticker" required autofocus>
+                            </div>
+                            <div id="tickerDropdown" class="dropdown-menu" style="display: none; width: 100%;"></div>
+                        </div>
+                    </div>
+                    <!-- Cantidad -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" required>
                             </div>
                         </div>
                     </div>
+                    <!-- Precio -->
                     <div class="row mb-3 align-items-center">
-                        <label for="apellido" class="col-sm-2 col-form-label text-right">Apellido</label>
+                        <label for="precio" class="col-sm-2 col-form-label">Precio</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
-                                <input type="text" class="form-control" id="apellido" name="apellido" required>
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                <input type="number" step="0.01" class="form-control" id="precio" name="precio" required>
                             </div>
                         </div>
                     </div>
+                    <!-- Fecha -->
                     <div class="row mb-3 align-items-center">
-                        <label for="mail" class="col-sm-2 col-form-label text-right">Mail</label>
+                        <label for="fecha" class="col-sm-2 col-form-label">Fecha</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
-                                <input type="email" class="form-control" id="mail" name="mail" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3 align-items-center">
-                        <label for="telefono" class="col-sm-2 col-form-label text-right">Teléfono</label>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-phone"></i></span>
-                                <input type="text" class="form-control" id="telefono" name="telefono" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3 align-items-center">
-                        <label for="corredora" class="col-sm-2 col-form-label text-right">Corredora</label>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-briefcase"></i></span>
-                                <input type="text" class="form-control" id="corredora" name="corredora" required>
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
+                                <input type="date" class="form-control" id="fecha" name="fecha" required>
                             </div>
                         </div>
                     </div>
                     <hr class="mod mb-3">
-                    <div class="text-right">
+                    <!-- Botones -->
+                    <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                        <a href="lista_clientes.php" class="btn btn-custom eliminar"><i class="fa-solid fa-xmark me-2"></i>Cancelar</a>
+                        <button type="button" class="btn btn-custom eliminar" onclick=""><i class="fa-solid fa-xmark me-2"></i>Cancelar</button>
                     </div>
                 </form>
             </div>

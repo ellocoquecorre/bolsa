@@ -244,3 +244,7 @@ td.text-center {
 .text-left {
   text-align: left;
 }
+form label {
+  display: block;
+  text-align: right;
+}

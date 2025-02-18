@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 // Datos a insertar
 $clientes = [
     [
-        'id' => 1,
+        'cliente_id' => 1,
         'email' => 'el.bueno.de.harry@gmail.com',
         'password' => 'N250ctK8',
         'nombre' => 'Harry',
@@ -26,7 +26,7 @@ $clientes = [
         'url' => 'https://clientes.balanz.com/auth/login'
     ],
     [
-        'id' => 2,
+        'cliente_id' => 2,
         'email' => 'cafe.la.humedad@gmail.com',
         'password' => 'Rn109Nzx',
         'nombre' => 'Cacho',
@@ -36,7 +36,7 @@ $clientes = [
         'url' => 'https://allaria.com.ar'
     ],
     [
-        'id' => 3,
+        'cliente_id' => 3,
         'email' => '24.de.nerca@gmail.com',
         'password' => 'MGBgabsZ',
         'nombre' => 'Rocco',
@@ -53,8 +53,8 @@ foreach ($clientes as $cliente) {
     $hashed_password = password_hash($cliente['password'], PASSWORD_BCRYPT);
 
     // Consulta SQL para insertar datos
-    $sql = "INSERT INTO clientes (id, email, password, nombre, apellido, telefono, corredora, url) VALUES (
-        {$cliente['id']}, 
+    $sql = "INSERT INTO clientes (cliente_id, email, password, nombre, apellido, telefono, corredora, url) VALUES (
+        {$cliente['cliente_id']}, 
         '{$cliente['email']}', 
         '$hashed_password', 
         '{$cliente['nombre']}', 
@@ -65,7 +65,7 @@ foreach ($clientes as $cliente) {
     )";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Nuevo registro creado exitosamente para el cliente con ID {$cliente['id']}<br>";
+        echo "Nuevo registro creado exitosamente para el cliente con ID {$cliente['cliente_id']}<br>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
     }

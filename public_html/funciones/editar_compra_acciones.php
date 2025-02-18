@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nuevo_efectivo = $efectivo - $diferencia;
             $actualizar_efectivo = true;
         } else {
-            echo "<script>alert('Saldo insuficiente'); window.location.href='editar_compra_acciones.php?id=$cliente_id&ticker=$ticker';</script>";
+            echo "<script>alert('Saldo insuficiente'); window.location.href='editar_compra_acciones.php?cliente_id=$cliente_id&ticker=$ticker';</script>";
             exit();
         }
     }
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
 
         // Redirigir al archivo cliente.php con el id del cliente
-        header("Location: ../backend/cliente.php?id=$cliente_id#acciones");
+        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
         exit();
     }
 }
@@ -189,7 +189,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                        <button type="button" class="btn btn-custom eliminar" onclick="window.location.href='../backend/cliente.php?id=<?php echo $cliente_id; ?>#acciones'"><i class="fa-solid fa-times me-2"></i>Cancelar</button>
+                        <button type="button" class="btn btn-custom eliminar" onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones'"><i class="fa-solid fa-times me-2"></i>Cancelar</button>
                     </div>
                 </form>
             </div>

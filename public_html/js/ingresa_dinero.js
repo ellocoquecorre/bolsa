@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#ingresar_btn').click(function() {
         var monto = $('#ingresar_efectivo').val();
-        var cliente_id = new URLSearchParams(window.location.search).get('id');
+        var cliente_id = new URLSearchParams(window.location.search).get('cliente_id');
 
         $.ajax({
             url: '../funciones/ingresa_dinero.php',

@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Datos a insertar
-$id = 2;
+$cliente_id = 2;
 $mail = 'm_laguzzi@gmail.com';
 $password = '@Incitato3';
 
@@ -22,7 +22,7 @@ $password = '@Incitato3';
 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
 // Consulta SQL para insertar datos
-$sql = "INSERT INTO admin (id, mail, password) VALUES ($id, '$mail', '$hashed_password')";
+$sql = "INSERT INTO admin (cliente_id, mail, password) VALUES ($cliente_id, '$mail', '$hashed_password')";
 
 if ($conn->query($sql) === TRUE) {
     echo "Nuevo registro creado exitosamente";

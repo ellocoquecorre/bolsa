@@ -3,11 +3,11 @@
 require_once '../../config/config.php';
 
 // Obtener el ID del cliente de la URL
-$cliente_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$cliente_id = isset($_GET['cliente_id']) ? (int)$_GET['cliente_id'] : 0;
 
 if ($cliente_id > 0) {
     // Realizar la consulta a la base de datos para obtener los datos del cliente
-    $sql = "SELECT nombre, apellido FROM clientes WHERE id = ?";
+    $sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $cliente_id);
     $stmt->execute();

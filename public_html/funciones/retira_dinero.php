@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($cliente_id > 0 && $monto > 0) {
         // Obtener el saldo actual del cliente
-        $sql_balance = "SELECT efectivo FROM balance WHERE usuario_id = ?";
+        $sql_balance = "SELECT efectivo FROM balance WHERE cliente_id = ?";
         $stmt_balance = $conn->prepare($sql_balance);
         $stmt_balance->bind_param("i", $cliente_id);
         $stmt_balance->execute();
@@ -17,12 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($balance && $balance['efectivo'] >= $monto) {
             // Actualizar el saldo en efectivo del cliente
-            $sql = "UPDATE balance SET efectivo = efectivo - ? WHERE usuario_id = ?";
+            $sql = "UPDATE balance SET efectivo = efectivo - ? WHERE cliente_id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("di", $monto, $cliente_id);
             if ($stmt->execute()) {
                 // Obtener el nuevo saldo
-                $sql_balance = "SELECT efectivo FROM balance WHERE usuario_id = ?";
+                $sql_balance = "SELECT efectivo FROM balance WHERE cliente_id = ?";
                 $stmt_balance = $conn->prepare($sql_balance);
                 $stmt_balance->bind_param("i", $cliente_id);
                 $stmt_balance->execute();

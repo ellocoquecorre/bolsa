@@ -26,16 +26,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $precio = $_POST['precio'];
     $fecha = $_POST['fecha'];
 
-    // Insertar los datos en la tabla "acciones"
-    $sql = "INSERT INTO acciones (ticker, cantidad, precio, fecha, cliente_id) VALUES (?, ?, ?, ?, ?)";
+    // Realizar cálculos
+    $precio_compra = $cantidad * $precio;
+    $nuevo_cantidad = $_POST['cantidad'];
+    $nuevo_precio = $_POST['precio'];
+    $nuevo_precio_compra = $nuevo_cantidad * $nuevo_precio;
+
+    // Obtener el valor actual de efectivo del cliente
+    $sql = "SELECT efectivo FROM balance WHERE cliente_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sidsi", $ticker, $cantidad, $precio, $fecha, $cliente_id);
+    $stmt->bind_param("i", $cliente_id);
     $stmt->execute();
+    $stmt->bind_result($efectivo);
+    $stmt->fetch();
     $stmt->close();
 
-    // Redirigir al archivo cliente.php con el id del cliente
-    header("Location: ../backend/cliente.php?id=$cliente_id#acciones");
-    exit();
+    if ($precio_compra > $nuevo_precio_compra) {
+        $diferencia = $precio_compra - $nuevo_precio_compra;
+        $nuevo_efectivo = $efectivo + $diferencia;
+        $actualizar_efectivo = true;
+    } else {
+        $diferencia = $nuevo_precio_compra - $precio_compra;
+        if ($efectivo >= $diferencia) {
+            $nuevo_efectivo = $efectivo - $diferencia;
+            $actualizar_efectivo = true;
+        } else {
+            echo "<script>alert('Saldo insuficiente'); window.location.href='editar_compra_acciones.php?id=$cliente_id&ticker=$ticker';</script>";
+            exit();
+        }
+    }
+
+    if ($actualizar_efectivo) {
+        // Actualizar el valor de efectivo en la tabla "balance"
+        $sql = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("di", $nuevo_efectivo, $cliente_id);
+        $stmt->execute();
+        $stmt->close();
+
+        // Actualizar los datos en la tabla "acciones"
+        $sql = "UPDATE acciones SET cantidad = ?, precio = ?, fecha = ? WHERE ticker = ? AND cliente_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("idsis", $nuevo_cantidad, $nuevo_precio, $fecha, $ticker, $cliente_id);
+        $stmt->execute();
+        $stmt->close();
+
+        // Redirigir al archivo cliente.php con el id del cliente
+        header("Location: ../backend/cliente.php?id=$cliente_id#acciones");
+        exit();
+    }
 }
 ?>
 
@@ -61,38 +100,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.php"><i class="fas fa-home me-2"></i>Inicio
-                        </a>
+                        <a class="nav-link" href="../index.php"><i class="fas fa-home me-2"></i>Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="../backend/lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes
-                        </a>
+                        <a class="nav-link active" href="../backend/lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../backend/alta_clientes.php"><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes
-                        </a>
+                        <a class="nav-link" href="../backend/alta_clientes.php"><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../backend/historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
-                        </a>
+                        <a class="nav-link" href="../backend/historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir
-                        </a>
+                        <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>
                     </li>
                 </ul>
             </div>

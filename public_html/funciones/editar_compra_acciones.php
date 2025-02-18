@@ -2,8 +2,9 @@
 // Incluir archivo de configuración
 require_once '../../config/config.php';
 
-// Obtener el id del cliente desde la URL
+// Obtener el id del cliente y el ticker desde la URL
 $cliente_id = isset($_GET['id']) ? $_GET['id'] : 1;
+$ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
 // Consulta para obtener los datos del cliente
 $sql = "SELECT nombre, apellido FROM clientes WHERE id = ?";
@@ -123,9 +124,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
-                                <input type="text" class="form-control" id="ticker" name="ticker" required autofocus>
+                                <input type="text" class="form-control" id="ticker" name="ticker" value="<?php echo htmlspecialchars($ticker); ?>" readonly>
                             </div>
-                            <div id="tickerDropdown" class="dropdown-menu" style="display: none; width: 100%;"></div>
                         </div>
                     </div>
                     <!-- Cantidad -->
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                <input type="number" class="form-control" id="cantidad" name="cantidad" required>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" required autofocus>
                             </div>
                         </div>
                     </div>

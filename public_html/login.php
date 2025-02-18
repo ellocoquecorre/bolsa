@@ -136,14 +136,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php endif; ?>
                     <form method="POST">
                         <div class="mb-3">
-                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <label for="email" class="form-label" style="text-align: left;">Correo Electrónico</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
                                 <input type="email" name="email" class="form-control" id="email" required>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
+                            <label for="password" class="form-label" style="text-align: left;">Contraseña</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-lock"></i></span>
                                 <input type="password" name="password" class="form-control" id="password" required>

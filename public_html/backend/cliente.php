@@ -209,19 +209,21 @@ $acciones = obtener_acciones_cliente($conn, $cliente_id);
                             <tbody id="tabla-acciones-pesos">
                                 <?php
                                 foreach ($acciones as $accion) {
+                                    $cantidad_formateada = number_format($accion['cantidad'], 0, '', '.');
+                                    $precio_formateado = number_format($accion['precio'], 2, ',', '.');
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                            <td>{$accion['ticker']}</td>
-                                            <td>{$accion['fecha']}</td>
-                                            <td>{$accion['cantidad']}</td>
-                                            <td>{$accion['precio']}</td>
-                                            <td><!-- valor_actual_acciones_pesos --></td>
-                                            <td><!-- rendimiento_acciones_pesos --></td>
-                                            <td><!-- rentabilidad_acciones_pesos --></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-hand-holding-usd'></i></a></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-dollar-sign'></i></a></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen-to-square'></i></a></td>
-                                            <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
-                                          </tr>";
+                        <td>{$accion['ticker']}</td>
+                        <td>{$accion['fecha']}</td>
+                        <td>{$cantidad_formateada}</td>
+                        <td>{$precio_formateado}</td>
+                        <td><!-- valor_actual_acciones_pesos --></td>
+                        <td><!-- rendimiento_acciones_pesos --></td>
+                        <td><!-- rentabilidad_acciones_pesos --></td>
+                        <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
+                        <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-dollar-sign'></i></a></td>
+                        <td class='text-center'><a href='' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen-to-square'></i></a></td>
+                        <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
+                      </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -278,20 +280,23 @@ $acciones = obtener_acciones_cliente($conn, $cliente_id);
                             </thead>
                             <tbody id="tabla-acciones-dolares">
                                 <?php
+                                $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
                                 foreach ($acciones as $accion) {
+                                    $valor_compra_dolares = $accion['precio'] / $promedio_ccl;
+                                    $valor_compra_dolares_formateado = number_format($valor_compra_dolares, 2, ',', '.');
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                            <td>{$accion['ticker']}</td>
-                                            <td>{$accion['fecha']}</td>
-                                            <td>{$accion['cantidad']}</td>
-                                            <td>{$accion['precio']}</td>
-                                            <td><!-- valor_actual_acciones_dolares --></td>
-                                            <td><!-- rendimiento_acciones_dolares --></td>
-                                            <td><!-- rentabilidad_acciones_dolares --></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-hand-holding-usd'></i></a></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-dollar-sign'></i></a></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen-to-square'></i></a></td>
-                                            <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
-                                          </tr>";
+                        <td>{$accion['ticker']}</td>
+                        <td>{$accion['fecha']}</td>
+                        <td>{$accion['cantidad']}</td>
+                        <td>{$valor_compra_dolares_formateado}</td>
+                        <td><!-- valor_actual_acciones_dolares --></td>
+                        <td><!-- rendimiento_acciones_dolares --></td>
+                        <td><!-- rentabilidad_acciones_dolares --></td>
+                        <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
+                        <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-dollar-sign'></i></a></td>
+                        <td class='text-center'><a href='' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen-to-square'></i></a></td>
+                        <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
+                      </tr>";
                                 }
                                 ?>
                             </tbody>

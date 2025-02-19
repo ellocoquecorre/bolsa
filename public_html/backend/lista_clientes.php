@@ -80,7 +80,7 @@ $conn->close();
         <!-- LISTA CLIENTES -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones">Listado de clientes</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Listado de clientes</h5>
                 <div class="table-responsive">
                     <table id="clientes" class="table table-bordered table-striped">
                         <thead>

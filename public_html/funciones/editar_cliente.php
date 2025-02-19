@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-3"></div>
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones">Edición de datos</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Edición de datos</h5>
                 <form method="POST">
                     <div class="row mb-3 align-items-center">
                         <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>

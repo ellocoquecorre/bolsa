@@ -15,27 +15,30 @@ $stmt->bind_result($nombre, $apellido);
 $stmt->fetch();
 $stmt->close();
 
-// Consulta para obtener los valores de cantidad, precio y id de la tabla acciones
-$sql = "SELECT id, cantidad, precio, fecha FROM acciones WHERE ticker = ? AND cliente_id = ?";
+// Consulta para obtener los valores de cantidad y precio de la tabla acciones
+$sql = "SELECT cantidad, precio FROM acciones WHERE ticker = ? AND cliente_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("si", $ticker, $cliente_id);
 $stmt->execute();
-$stmt->bind_result($id_accion, $cantidad_accion, $precio_accion, $fecha_accion);
+$stmt->bind_result($cantidad_accion, $precio_accion);
 $stmt->fetch();
 $stmt->close();
 
-// Obtener la fecha de hoy (por si el usuario no selecciona una)
+// Obtener la fecha de hoy
 $fecha_hoy = date('Y-m-d');
 
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener los datos del formulario
-    $accion_id = $_POST['accion_id'];  // Se obtiene el ID de la acción
-    $nuevo_cantidad = $_POST['cantidad'];
-    $nuevo_precio = $_POST['precio'];
+    $ticker = $_POST['ticker'];
+    $cantidad = $_POST['cantidad'];
+    $precio = $_POST['precio'];
     $fecha = $_POST['fecha'];
 
-    // Calcular el costo de compra
+    // Realizar cálculos
+    $precio_compra = $cantidad * $precio;
+    $nuevo_cantidad = $_POST['cantidad'];
+    $nuevo_precio = $_POST['precio'];
     $nuevo_precio_compra = $nuevo_cantidad * $nuevo_precio;
 
     // Obtener el valor actual de efectivo del cliente
@@ -47,14 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->fetch();
     $stmt->close();
 
-    // Ajustar el saldo del cliente según la diferencia de inversión
-    $precio_compra_original = $cantidad_accion * $precio_accion;
-    if ($precio_compra_original > $nuevo_precio_compra) {
-        $diferencia = $precio_compra_original - $nuevo_precio_compra;
+    if ($precio_compra > $nuevo_precio_compra) {
+        $diferencia = $precio_compra - $nuevo_precio_compra;
         $nuevo_efectivo = $efectivo + $diferencia;
         $actualizar_efectivo = true;
     } else {
-        $diferencia = $nuevo_precio_compra - $precio_compra_original;
+        $diferencia = $nuevo_precio_compra - $precio_compra;
         if ($efectivo >= $diferencia) {
             $nuevo_efectivo = $efectivo - $diferencia;
             $actualizar_efectivo = true;
@@ -65,21 +66,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($actualizar_efectivo) {
-        // Actualizar el efectivo en la tabla "balance"
+        // Actualizar el valor de efectivo en la tabla "balance"
         $sql = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("di", $nuevo_efectivo, $cliente_id);
         $stmt->execute();
         $stmt->close();
 
-        // Actualizar solo la acción específica con el ID correspondiente
-        $sql = "UPDATE acciones SET cantidad = ?, precio = ?, fecha = ? WHERE id = ?";
+        // Actualizar los datos en la tabla "acciones"
+        $sql = "UPDATE acciones SET cantidad = ?, precio = ?, fecha = ? WHERE ticker = ? AND cliente_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("dssi", $nuevo_cantidad, $nuevo_precio, $fecha, $accion_id);
+        $stmt->bind_param("idsis", $nuevo_cantidad, $nuevo_precio, $fecha, $ticker, $cliente_id);
         $stmt->execute();
         $stmt->close();
 
-        // Redirigir al perfil del cliente
+        // Redirigir al archivo cliente.php con el id del cliente
         header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
         exit();
     }
@@ -146,14 +147,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <hr class="mod">
 
-        <!-- FORMULARIO -->
+        <!-- COMPRA ACCIONES -->
         <div class="col-3"></div>
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones mb-4">Editar los datos de <?php echo htmlspecialchars($ticker); ?></h5>
-                <form method="POST" action="">
-                    <input type="hidden" name="accion_id" value="<?php echo htmlspecialchars($id_accion); ?>">
-                    <!-- Ticker 
+                <h5 class="me-2 cartera titulo-botones mb-4">Editar Acciones</h5>
+                <form id="compra_acciones" method="POST" action="">
+                    <input type="hidden" name="cliente_id" value="<?php echo htmlspecialchars($cliente_id); ?>">
+                    <!-- Ticker -->
                     <div class="row mb-3 align-items-center">
                         <label for="ticker" class="col-sm-2 col-form-label">Ticker</label>
                         <div class="col-sm-10">
@@ -163,14 +164,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                         </div>
                     </div>
-                    -->
                     <!-- Cantidad -->
                     <div class="row mb-3 align-items-center">
                         <label for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo htmlspecialchars($cantidad_accion); ?>" autofocus required>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo htmlspecialchars($cantidad_accion); ?>" required autofocus>
                             </div>
                         </div>
                     </div>
@@ -190,7 +190,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo htmlspecialchars($fecha_accion); ?>" required>
+                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha_hoy; ?>" required>
                             </div>
                         </div>
                     </div>
@@ -198,13 +198,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                        <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones" class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
+                        <button type="button" class="btn btn-custom eliminar" onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones'"><i class="fa-solid fa-times me-2"></i>Cancelar</button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="col-3"></div>
+        <!-- FIN COMPRA ACCIONES -->
+
     </div>
+    <!-- FIN CONTENIDO -->
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

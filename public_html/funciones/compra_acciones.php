@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-3"></div>
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones">Comprar Acciones</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Comprar Acciones</h5>
                 <form id="compra_acciones" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo htmlspecialchars($cliente_id); ?>">
                     <!-- Ticker -->

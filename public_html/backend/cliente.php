@@ -121,7 +121,7 @@ $acciones = obtener_acciones_cliente($conn, $cliente_id);
         <!-- RESUMEN -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo" id="resumen">
-                <h5 class="me-2 cartera titulo-botones">Resumen</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Resumen</h5>
 
                 <!-- Botones -->
                 <div class="text-start">
@@ -155,7 +155,7 @@ $acciones = obtener_acciones_cliente($conn, $cliente_id);
 
             <!-- ACCIONES -->
             <div class="container-fluid my-4 efectivo" id="acciones">
-                <h5 class="me-2 cartera titulo-botones">Acciones</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Acciones</h5>
 
                 <!-- Botones -->
                 <div class="text-start">
@@ -330,7 +330,7 @@ $acciones = obtener_acciones_cliente($conn, $cliente_id);
         <!-- DOLAR API -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo" id="dolar">
-                <h5 class="me-2 cartera titulo-botones">Tipos de cambio</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Tipos de cambio</h5>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <thead>
@@ -397,7 +397,7 @@ $acciones = obtener_acciones_cliente($conn, $cliente_id);
         <!-- EFECTIVO -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo" id="efectivo">
-                <h5 class="me-2 cartera titulo-botones">Efectivo</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Efectivo</h5>
                 <div class="row">
                     <div class="col-12 col-md-4 text-start">
                         <p>Saldo en pesos: $ <span id="saldo_efectivo"><?php echo number_format($balance['efectivo'], 2, ',', '.'); ?></span></p>

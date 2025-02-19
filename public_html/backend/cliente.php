@@ -10,7 +10,7 @@ include '../funciones/balance.php';
 $cliente_id = isset($_GET['id']) ? $_GET['id'] : 1;
 
 // Consulta para obtener los datos del cliente
-$sql = "SELECT nombre, apellido FROM clientes WHERE id = ?";
+$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $cliente_id);
 $stmt->execute();

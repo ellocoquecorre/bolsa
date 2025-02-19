@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $corredora = $_POST['corredora'];
 
     // Consulta para actualizar los datos del cliente
-    $sql = "UPDATE clientes SET nombre = ?, apellido = ?, email = ?, telefono = ?, corredora = ? WHERE id = ?";
+    $sql = "UPDATE clientes SET nombre = ?, apellido = ?, email = ?, telefono = ?, corredora = ? WHERE cliente_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssssi", $nombre, $apellido, $email, $telefono, $corredora, $cliente_id);
 
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
 } else {
     // Consulta para obtener los datos del cliente
-    $sql = "SELECT nombre, apellido, email, telefono, corredora FROM clientes WHERE id = ?";
+    $sql = "SELECT nombre, apellido, email, telefono, corredora FROM clientes WHERE cliente_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $cliente_id);
     $stmt->execute();

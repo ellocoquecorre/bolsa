@@ -3,7 +3,7 @@
 require_once '../../config/config.php';
 
 // Obtener el id del cliente y el ticker desde la URL
-$cliente_id = isset($_GET['id']) ? $_GET['id'] : 1;
+$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
 // Consulta para obtener los datos del cliente

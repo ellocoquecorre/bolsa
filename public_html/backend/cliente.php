@@ -34,13 +34,11 @@ function obtener_acciones_cliente($conn, $cliente_id)
 
     $acciones = [];
     while ($stmt->fetch()) {
-        $precio_compra = $cantidad * $precio;
         $acciones[] = [
             'ticker' => $ticker,
             'fecha' => $fecha,
             'cantidad' => $cantidad,
             'precio' => $precio,
-            'precio_compra' => $precio_compra
         ];
     }
     $stmt->close();
@@ -443,4 +441,3 @@ $acciones = obtener_acciones_cliente($conn, $cliente_id);
 </body>
 
 </html>
-``` ▋

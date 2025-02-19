@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nuevo_efectivo = $efectivo - $diferencia;
             $actualizar_efectivo = true;
         } else {
-            echo "<script>alert('Saldo insuficiente'); window.location.href='editar_compra_acciones.php?cliente_id=$cliente_id&ticker=$ticker';</script>";
+            $error_msg = "Saldo insuficiente";
             exit();
         }
     }
@@ -146,11 +146,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <hr class="mod">
 
-        <!-- FORMULARIO -->
+        <!-- EDITAR ACCIONES -->
         <div class="col-3"></div>
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Editar los datos de <?php echo htmlspecialchars($ticker); ?></h5>
+                <?php if ($error_msg): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $error_msg; ?>
+                    </div>
+                <?php endif; ?>
                 <form method="POST" action="">
                     <input type="hidden" name="accion_id" value="<?php echo htmlspecialchars($id_accion); ?>">
                     <!-- Ticker 
@@ -198,12 +203,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                        <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones" class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
+                        <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones"
+                            class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
                     </div>
                 </form>
             </div>
         </div>
         <div class="col-3"></div>
+        <!-- FIN EDITAR ACCIONES -->
+
     </div>
 
     <!-- JS -->

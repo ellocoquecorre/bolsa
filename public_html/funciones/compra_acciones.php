@@ -14,6 +14,18 @@ $stmt->bind_result($nombre, $apellido);
 $stmt->fetch();
 $stmt->close();
 
+// Consulta para obtener el valor de "efectivo" de la tabla "balance"
+$sql = "SELECT efectivo FROM balance WHERE cliente_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $cliente_id);
+$stmt->execute();
+$stmt->bind_result($efectivo);
+$stmt->fetch();
+$stmt->close();
+
+// Formatear el valor de "efectivo" con el signo "$", punto (.) como separador de miles y coma (,) como separador de decimales
+$saldo_formateado = '$ ' . number_format($efectivo, 2, ',', '.');
+
 // Obtener la fecha de hoy
 $fecha_hoy = date('Y-m-d');
 
@@ -159,7 +171,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
-                                <input type="text" class="form-control" id="saldo" name="saldo" readonly>
+                                <input type="text" class="form-control" id="saldo" name="saldo" value="<?php echo htmlspecialchars($saldo_formateado); ?>" readonly disabled>
                             </div>
                         </div>
                     </div>
@@ -208,12 +220,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                        <button type="button" class="btn btn-custom eliminar" onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones'"><i class="fa-solid fa-times me-2"></i>Cancelar</button>
+                        <button type="button" class="btn btn-custom eliminar"
+                            onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones'">
+                            <i class="fa-solid fa-times me-2"></i>Cancelar</a>
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="col-3"></div>
+        <div class=" col-3">
+        </div>
         <!-- FIN COMPRA ACCIONES -->
 
     </div>

@@ -192,7 +192,7 @@ $valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><?php echo number_format($valor_inicial_acciones_pesos, 2, ',', '.'); ?></td>
+                                    <td>$ <?php echo number_format($valor_inicial_acciones_pesos, 2, ',', '.'); ?></td>
                                     <td><!-- valor_actual_acciones_pesos --></td>
                                     <td><!-- rendimiento_acciones_pesos --></td>
                                     <td><!-- rentabilidad_acciones_pesos --></td>
@@ -230,7 +230,7 @@ $valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
                                             <td>{$accion['ticker']}</td>
                                             <td>{$fecha_formateada}</td>
                                             <td>{$cantidad_formateada}</td>
-                                            <td>{$precio_formateado}</td>
+                                            <td>$ {$precio_formateado}</td>
                                             <td><!-- valor_actual_acciones_pesos --></td>
                                             <td><!-- rendimiento_acciones_pesos --></td>
                                             <td><!-- rentabilidad_acciones_pesos --></td>
@@ -304,7 +304,7 @@ $valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
                                             <td>{$accion['ticker']}</td>
                                             <td>{$fecha_formateada}</td>
                                             <td>{$accion['cantidad']}</td>
-                                            <td>{$valor_compra_dolares_formateado}</td>
+                                            <td>u\$s {$valor_compra_dolares_formateado}</td>
                                             <td><!-- valor_actual_acciones_dolares --></td>
                                             <td><!-- rendimiento_acciones_dolares --></td>
                                             <td><!-- rentabilidad_acciones_dolares --></td>

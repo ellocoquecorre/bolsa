@@ -47,6 +47,19 @@ function obtener_acciones_cliente($conn, $cliente_id)
 
 // Obtener las acciones del cliente
 $acciones = obtener_acciones_cliente($conn, $cliente_id);
+
+// Nueva función para calcular el valor inicial de las acciones en pesos
+function calcular_valor_inicial_acciones($acciones)
+{
+    $valor_inicial_total = 0;
+    foreach ($acciones as $accion) {
+        $valor_inicial_total += $accion['cantidad'] * $accion['precio'];
+    }
+    return $valor_inicial_total;
+}
+
+// Calcular el valor inicial de las acciones en pesos
+$valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
 ?>
 
 <!DOCTYPE html>
@@ -179,7 +192,7 @@ $acciones = obtener_acciones_cliente($conn, $cliente_id);
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><!-- valor_inicial_acciones_pesos --></td>
+                                    <td><?php echo number_format($valor_inicial_acciones_pesos, 2, ',', '.'); ?></td>
                                     <td><!-- valor_actual_acciones_pesos --></td>
                                     <td><!-- rendimiento_acciones_pesos --></td>
                                     <td><!-- rentabilidad_acciones_pesos --></td>

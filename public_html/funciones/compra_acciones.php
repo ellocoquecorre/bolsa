@@ -17,6 +17,9 @@ $stmt->close();
 // Obtener la fecha de hoy
 $fecha_hoy = date('Y-m-d');
 
+// Inicializar variable de mensaje de error
+$error_msg = "";
+
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener los datos del formulario
@@ -25,16 +28,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $precio = $_POST['precio'];
     $fecha = $_POST['fecha'];
 
-    // Insertar los datos en la tabla "acciones"
-    $sql = "INSERT INTO acciones (ticker, cantidad, precio, fecha, cliente_id) VALUES (?, ?, ?, ?, ?)";
+    // Calcular el total de la operación
+    $total_operacion = $cantidad * $precio;
+
+    // Obtener el valor de "efectivo" de la tabla "balance"
+    $sql = "SELECT efectivo FROM balance WHERE cliente_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sidsi", $ticker, $cantidad, $precio, $fecha, $cliente_id);
+    $stmt->bind_param("i", $cliente_id);
     $stmt->execute();
+    $stmt->bind_result($efectivo);
+    $stmt->fetch();
     $stmt->close();
 
-    // Redirigir al archivo cliente.php con el id del cliente
-    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
-    exit();
+    // Verificar si hay suficiente saldo
+    if ($total_operacion <= $efectivo) {
+        // Restar el total de la operación al efectivo
+        $nuevo_efectivo = $efectivo - $total_operacion;
+
+        // Actualizar el valor de "efectivo" en la tabla "balance"
+        $sql = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("di", $nuevo_efectivo, $cliente_id);
+        $stmt->execute();
+        $stmt->close();
+
+        // Insertar los datos en la tabla "acciones"
+        $sql = "INSERT INTO acciones (ticker, cantidad, precio, fecha, cliente_id) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sidsi", $ticker, $cantidad, $precio, $fecha, $cliente_id);
+        $stmt->execute();
+        $stmt->close();
+
+        // Redirigir al archivo cliente.php con el id del cliente
+        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
+        exit();
+    } else {
+        // Establecer mensaje de error de saldo insuficiente
+        $error_msg = "Saldo insuficiente";
+    }
 }
 ?>
 
@@ -115,8 +146,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Comprar Acciones</h5>
+                <?php if ($error_msg): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $error_msg; ?>
+                    </div>
+                <?php endif; ?>
                 <form id="compra_acciones" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo htmlspecialchars($cliente_id); ?>">
+                    <!-- Saldo -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="saldo" class="col-sm-2 col-form-label">Saldo</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
+                                <input type="text" class="form-control" id="saldo" name="saldo" readonly>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Ticker -->
                     <div class="row mb-3 align-items-center">
                         <label for="ticker" class="col-sm-2 col-form-label">Ticker</label>

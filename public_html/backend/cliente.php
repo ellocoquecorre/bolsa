@@ -170,7 +170,7 @@ include '../funciones/cliente_varios.php';
                                             <td>{$fecha_formateada}</td>
                                             <td>{$cantidad_formateada}</td>
                                             <td>$ {$precio_formateado}</td>
-                                            <td class='valor-actual'><!-- valor_actual_acciones_pesos --></td>
+                                            <td class='valor-actual'></td>
                                             <td><!-- rendimiento_acciones_pesos --></td>
                                             <td><!-- rentabilidad_acciones_pesos --></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-cart-arrow-down'></i></a></td>
@@ -244,7 +244,7 @@ include '../funciones/cliente_varios.php';
                                             <td>{$fecha_formateada}</td>
                                             <td>{$accion['cantidad']}</td>
                                             <td>u\$s {$valor_compra_dolares_formateado}</td>
-                                            <td class='valor-actual'><!-- valor_actual_acciones_dolares --></td>
+                                            <td><!-- valor_actual_acciones_dolares --></td>
                                             <td><!-- rendimiento_acciones_dolares --></td>
                                             <td><!-- rentabilidad_acciones_dolares --></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-cart-arrow-down'></i></a></td>

@@ -5,7 +5,85 @@ require_once '../../config/config.php';
 // Incluir las funciones necesarias
 include '../funciones/dolar_api.php';
 include '../funciones/balance.php';
-include '../funciones/cliente_varios.php';
+
+// Obtener el id del cliente desde la URL
+$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+
+// Consulta para obtener los datos del cliente
+$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $cliente_id);
+$stmt->execute();
+$stmt->bind_result($nombre, $apellido);
+$stmt->fetch();
+$stmt->close();
+
+// Obtener el saldo en efectivo del balance
+$saldo_efectivo = $balance['efectivo'];
+$saldo_dolares = calcular_saldo_dolares($saldo_efectivo, $contadoconliqui_compra, $contadoconliqui_venta);
+
+// Nueva función para obtener las acciones del cliente
+function obtener_acciones_cliente($conn, $cliente_id)
+{
+    $sql = "SELECT ticker, fecha, cantidad, precio FROM acciones WHERE cliente_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $cliente_id);
+    $stmt->execute();
+    $stmt->bind_result($ticker, $fecha, $cantidad, $precio);
+
+    $acciones = [];
+    while ($stmt->fetch()) {
+        $acciones[] = [
+            'ticker' => $ticker,
+            'fecha' => $fecha,
+            'cantidad' => $cantidad,
+            'precio' => $precio,
+        ];
+    }
+    $stmt->close();
+    return $acciones;
+}
+
+// Obtener las acciones del cliente
+$acciones = obtener_acciones_cliente($conn, $cliente_id);
+
+$promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+
+// Nueva función para calcular el valor inicial de las acciones en pesos
+function calcular_valor_inicial_acciones($acciones)
+{
+    $valor_inicial_total = 0;
+    foreach ($acciones as $accion) {
+        $valor_inicial_total += $accion['cantidad'] * $accion['precio'];
+    }
+    return $valor_inicial_total;
+}
+
+// Calcular el valor inicial de las acciones en pesos
+$valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
+
+// Función para obtener el valor actual de las acciones desde Google Finance
+function obtener_valor_accion($ticker)
+{
+    $url = "https://www.google.com/finance/quote/$ticker:BCBA?hl=es";
+    $contenido = file_get_contents($url);
+
+    if ($contenido === FALSE) {
+        return null;
+    }
+
+    // Usar una expresión regular para extraer el valor de la etiqueta deseada
+    preg_match('/<div class="YMlKec fxKbKc">([^<]*)<\/div>/', $contenido, $matches);
+
+    if (isset($matches[1])) {
+        // Convertir el valor a un número eliminando caracteres no deseados
+        $valor = str_replace(['$', ' ', '.'], '', $matches[1]);
+        $valor = str_replace(',', '.', $valor);
+        return floatval($valor);
+    } else {
+        return null;
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -21,6 +99,40 @@ include '../funciones/cliente_varios.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <!-- FIN CSS -->
+    <script>
+        // Función para formatear números con separadores de miles y decimales
+        function formatearNumero(numero) {
+            return new Intl.NumberFormat('es-AR', {
+                style: 'currency',
+                currency: 'ARS'
+            }).format(numero);
+        }
+
+        // Función para actualizar la tabla con los valores actuales de las acciones
+        async function actualizarValoresAcciones() {
+            const filas = document.querySelectorAll('#tabla-acciones-pesos tr');
+            for (const fila of filas) {
+                const ticker = fila.dataset.ticker;
+                const valorActualTd = fila.querySelector('.valor-actual');
+                try {
+                    const response = await fetch(`../funciones/obtener_valor_accion.php?ticker=${ticker}`);
+                    const data = await response.json();
+                    if (data.valor) {
+                        valorActualTd.innerText = formatearNumero(data.valor);
+                    } else {
+                        valorActualTd.innerText = 'Valor no disponible';
+                    }
+                } catch (error) {
+                    console.error('Error al obtener el valor de la acción:', error);
+                    valorActualTd.innerText = 'Error';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            actualizarValoresAcciones();
+        });
+    </script>
 </head>
 
 <body>
@@ -389,7 +501,6 @@ include '../funciones/cliente_varios.php';
     <script src="../js/formato_miles.js"></script>
     <script src="../js/ingresa_dinero.js"></script>
     <script src="../js/retira_dinero.js"></script>
-    <script src="../js/cliente_varios.js"></script>
     <!-- FIN JS -->
 </body>
 

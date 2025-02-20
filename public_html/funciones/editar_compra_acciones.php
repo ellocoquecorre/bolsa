@@ -27,6 +27,9 @@ $stmt->close();
 // Obtener la fecha de hoy (por si el usuario no selecciona una)
 $fecha_hoy = date('Y-m-d');
 
+// Inicializar el mensaje de error
+$error_msg = '';
+
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener los datos del formulario
@@ -60,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $actualizar_efectivo = true;
         } else {
             $error_msg = "Saldo insuficiente";
-            exit();
+            $actualizar_efectivo = false;
         }
     }
 
@@ -108,8 +111,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle n[...]
+                <span class=" navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">

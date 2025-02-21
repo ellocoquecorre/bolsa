@@ -239,20 +239,12 @@ include '../funciones/cliente_varios.php';
                                     $valor_compra_dolares_formateado = number_format($valor_compra_dolares, 2, ',', '.');
                                     $fecha_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
 
-                                    // Obtener el valor actual que se muestra en "valor-actual"
-                                    $valor_actual = $accion['valor_actual'] ?? 0;
-
-                                    // Calcular el valor en dólares dividiendo por $promedio_ccl
-                                    $valor_acciones_dolares = ($valor_actual > 0 && $promedio_ccl > 0)
-                                        ? number_format($valor_actual / $promedio_ccl, 2, ',', '.')
-                                        : '-';
-
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
                                             <td>{$fecha_formateada}</td>
                                             <td>{$accion['cantidad']}</td>
                                             <td>u\$s {$valor_compra_dolares_formateado}</td>
-                                            <td>u\$s {$valor_acciones_dolares}</td> <!-- Se muestra el valor calculado -->
+                                            <td><!-- valor_acciones_dolares --></td>
                                             <td><!-- rendimiento_acciones_dolares --></td>
                                             <td><!-- rentabilidad_acciones_dolares --></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>

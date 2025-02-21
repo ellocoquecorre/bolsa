@@ -162,28 +162,22 @@ include '../funciones/cliente_varios.php';
                             <tbody id="tabla-acciones-pesos">
                                 <?php
                                 foreach ($acciones as $accion) {
-                                    // Verificar si 'valor_actual' existe, si no, asignar 0
-                                    $valor_actual = $accion['valor_actual'] ?? 0;
-
-                                    // Formatear valores
-                                    $cantidad_formateada = number_format($accion['cantidad'], 0, ',', '.');
-                                    $precio_formateado = number_format($accion['precio'], 2, ',', '.');
-                                    $valor_actual_formateado = number_format($valor_actual, 2, ',', '.');
+                                    $cantidad_formateada = is_null($accion['cantidad']) ? '0' : number_format($accion['cantidad'], 0, '', '.');
+                                    $precio_formateado = is_null($accion['precio']) ? '0,00' : number_format($accion['precio'], 2, ',', '.');
                                     $fecha_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
-
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                        <td>{$accion['ticker']}</td>
-                                        <td>{$fecha_formateada}</td>
-                                        <td>{$cantidad_formateada}</td>
-                                        <td>\$ {$precio_formateado}</td>
-                                        <td>{$valor_actual_formateado}</td>
-                                        <td><!-- rendimiento_acciones_pesos --></td>
-                                        <td><!-- rentabilidad_acciones_pesos --></td>
-                                        <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
-                                        <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-minus'></i></a></td>
-                                        <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
-                                        <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
-                                    </tr>";
+                                            <td>{$accion['ticker']}</td>
+                                            <td>{$fecha_formateada}</td>
+                                            <td>{$cantidad_formateada}</td>
+                                            <td>$ {$precio_formateado}</td>
+                                            <td class='valor-actual'></td>
+                                            <td><!-- rendimiento_acciones_pesos --></td>
+                                            <td><!-- rentabilidad_acciones_pesos --></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-minus'></i></a></td>
+                                            <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
+                                            <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
+                                        </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -244,12 +238,21 @@ include '../funciones/cliente_varios.php';
                                     $valor_compra_dolares = $accion['precio'] / $promedio_ccl;
                                     $valor_compra_dolares_formateado = number_format($valor_compra_dolares, 2, ',', '.');
                                     $fecha_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
+
+                                    // Obtener el valor actual que se muestra en "valor-actual"
+                                    $valor_actual = $accion['valor_actual'] ?? 0;
+
+                                    // Calcular el valor en dólares dividiendo por $promedio_ccl
+                                    $valor_acciones_dolares = ($valor_actual > 0 && $promedio_ccl > 0)
+                                        ? number_format($valor_actual / $promedio_ccl, 2, ',', '.')
+                                        : '-';
+
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
                                             <td>{$fecha_formateada}</td>
                                             <td>{$accion['cantidad']}</td>
                                             <td>u\$s {$valor_compra_dolares_formateado}</td>
-                                            <td><!-- valor_acciones_dolares --></td>
+                                            <td>u\$s {$valor_acciones_dolares}</td> <!-- Se muestra el valor calculado -->
                                             <td><!-- rendimiento_acciones_dolares --></td>
                                             <td><!-- rentabilidad_acciones_dolares --></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
@@ -260,6 +263,7 @@ include '../funciones/cliente_varios.php';
                                 }
                                 ?>
                             </tbody>
+
                         </table>
                     </div>
                     <!-- Fin Completa Acciones Dólares -->

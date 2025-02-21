@@ -173,10 +173,10 @@ include '../funciones/cliente_varios.php';
                                             <td class='valor-actual'></td>
                                             <td><!-- rendimiento_acciones_pesos --></td>
                                             <td><!-- rentabilidad_acciones_pesos --></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-cart-arrow-down'></i></a></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-cart-arrow-down'></i></a></td>
-                                            <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-edit'></i></a></td>
-                                            <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash-alt'></i></button></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-minus'></i></a></td>
+                                            <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
+                                            <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
                                         </tr>";
                                 }
                                 ?>
@@ -203,7 +203,6 @@ include '../funciones/cliente_varios.php';
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <tr>
                                     <td>u$s <?php echo number_format($valor_inicial_acciones_pesos / $promedio_ccl, 2, ',', '.'); ?></td>
                                     <td><!-- valor_actual_acciones_dolares --></td>
@@ -244,13 +243,13 @@ include '../funciones/cliente_varios.php';
                                             <td>{$fecha_formateada}</td>
                                             <td>{$accion['cantidad']}</td>
                                             <td>u\$s {$valor_compra_dolares_formateado}</td>
-                                            <td><!-- valor_actual_acciones_dolares --></td>
+                                            <td class='valor-actual'></td>
                                             <td><!-- rendimiento_acciones_dolares --></td>
                                             <td><!-- rentabilidad_acciones_dolares --></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-cart-arrow-down'></i></a></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-cart-arrow-down'></i></a></td>
-                                            <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-edit'></i></a></td>
-                                            <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash-alt'></i></button></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-minus'></i></a></td>
+                                            <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
+                                            <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
                                         </tr>";
                                 }
                                 ?>

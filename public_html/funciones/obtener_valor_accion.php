@@ -1,39 +1,39 @@
 <?php
-if (!isset($_GET['ticker'])) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Ticker no especificado']);
-    exit;
-}
+// Configuración de error para depuración
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-$ticker = $_GET['ticker'];
+// Verificar que el ticker esté presente en la solicitud
+if (isset($_GET['ticker'])) {
+    $ticker = $_GET['ticker'];
 
-function obtener_valor_accion($ticker)
-{
-    $url = "https://www.google.com/finance/quote/$ticker:BCBA?hl=es";
-    $contenido = file_get_contents($url);
+    // Función para obtener el valor de la acción desde Google Finance
+    function obtener_valor_accion($ticker)
+    {
+        $url = "https://www.google.com/search?q={$ticker}+stock"; // URL para obtener información sobre la acción
+        $contenido = file_get_contents($url);
 
-    if ($contenido === FALSE) {
-        return null;
+        // Expresión regular para extraer el valor de la acción
+        preg_match('/<div class="YMlKec fxKbKc">(\d+\.\d+|\d+,\d+)<\/div>/', $contenido, $coincidencias);
+
+        // Si encontramos el valor, retornarlo, sino, retornar 0
+        if (isset($coincidencias[1])) {
+            return str_replace(",", ".", $coincidencias[1]);
+        } else {
+            return 0;
+        }
     }
 
-    // Usar una expresión regular para extraer el valor de la etiqueta deseada
-    preg_match('/<div class="YMlKec fxKbKc">([^<]*)<\/div>/', $contenido, $matches);
+    // Obtener el valor de la acción usando el ticker proporcionado
+    $valor_accion = obtener_valor_accion($ticker);
 
-    if (isset($matches[1])) {
-        // Convertir el valor a un número eliminando caracteres no deseados
-        $valor = str_replace(['$', ' ', '.'], '', $matches[1]);
-        $valor = str_replace(',', '.', $valor);
-        return floatval($valor);
-    } else {
-        return null;
+    // Si no encontramos un valor válido, retornamos 0
+    if ($valor_accion == 0) {
+        $valor_accion = 0;
     }
-}
 
-$valor_actual = obtener_valor_accion($ticker);
-
-if ($valor_actual !== null) {
-    echo json_encode(['valor' => $valor_actual]);
+    // Responder con el valor de la acción
+    echo json_encode(['valor_actual' => $valor_accion]);
 } else {
-    http_response_code(500);
-    echo json_encode(['error' => 'No se pudo obtener el valor de la acción']);
+    echo json_encode(['error' => 'No se proporcionó un ticker válido']);
 }

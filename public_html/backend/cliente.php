@@ -162,22 +162,28 @@ include '../funciones/cliente_varios.php';
                             <tbody id="tabla-acciones-pesos">
                                 <?php
                                 foreach ($acciones as $accion) {
-                                    $cantidad_formateada = is_null($accion['cantidad']) ? '0' : number_format($accion['cantidad'], 0, '', '.');
-                                    $precio_formateado = is_null($accion['precio']) ? '0,00' : number_format($accion['precio'], 2, ',', '.');
+                                    // Verificar si 'valor_actual' existe, si no, asignar 0
+                                    $valor_actual = $accion['valor_actual'] ?? 0;
+
+                                    // Formatear valores
+                                    $cantidad_formateada = number_format($accion['cantidad'], 0, ',', '.');
+                                    $precio_formateado = number_format($accion['precio'], 2, ',', '.');
+                                    $valor_actual_formateado = number_format($valor_actual, 2, ',', '.');
                                     $fecha_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
+
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                            <td>{$accion['ticker']}</td>
-                                            <td>{$fecha_formateada}</td>
-                                            <td>{$cantidad_formateada}</td>
-                                            <td>$ {$precio_formateado}</td>
-                                            <td class='valor-actual'></td>
-                                            <td><!-- rendimiento_acciones_pesos --></td>
-                                            <td><!-- rentabilidad_acciones_pesos --></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-minus'></i></a></td>
-                                            <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
-                                            <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
-                                        </tr>";
+                                        <td>{$accion['ticker']}</td>
+                                        <td>{$fecha_formateada}</td>
+                                        <td>{$cantidad_formateada}</td>
+                                        <td>\$ {$precio_formateado}</td>
+                                        <td class='valor-actual'>{$valor_actual_formateado}</td>
+                                        <td><!-- rendimiento_acciones_pesos --></td>
+                                        <td><!-- rentabilidad_acciones_pesos --></td>
+                                        <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
+                                        <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-minus'></i></a></td>
+                                        <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
+                                        <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>

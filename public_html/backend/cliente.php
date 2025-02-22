@@ -63,6 +63,47 @@ function calcular_valor_inicial_acciones($acciones)
 // Calcular el valor inicial de las acciones en pesos
 $valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
 
+function obtener_valor_accion($ticker)
+{
+    $url = "https://www.google.com/finance/quote/{$ticker}:BCBA?hl=es";
+
+    // Realizar la solicitud HTTP a la URL
+    $html = file_get_contents($url);
+
+    if ($html === false) {
+        // Si no pudimos obtener el contenido de la página, devolver null
+        return null;
+    }
+
+    // Buscar el valor dentro de la página HTML
+    $pattern = '/<div class="YMlKec fxKbKc">([^<]+)<\/div>/';
+    preg_match($pattern, $html, $matches);
+
+    // Verificamos si encontramos el valor
+    if (isset($matches[1])) {
+        // Limpiar el valor numérico, quitando cualquier texto no necesario
+        $valor = $matches[1];
+
+        // Eliminar cualquier símbolo de moneda, como "$"
+        $valor = preg_replace('/[^0-9,.-]/', '', $valor);
+
+        // Cambiar la coma por un punto para el separador de miles
+        // y reemplazar el punto por coma para decimales
+        $valor = str_replace('.', '', $valor); // Eliminar puntos de miles
+        $valor = str_replace(',', '.', $valor); // Convertir la coma a punto decimal
+
+        // Convertir el valor a formato numérico
+        $valor = (float)$valor;
+
+        // Devolver el valor numérico limpio
+        return $valor;
+    }
+
+    // Si no encontramos el valor, devolver null
+    return null;
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -218,15 +259,25 @@ $valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
                             <tbody id="tabla-acciones-pesos">
                                 <?php
                                 foreach ($acciones as $accion) {
-                                    $cantidad_formateada = is_null($accion['cantidad']) ? '0' : number_format($accion['cantidad'], 0, '', '.');
-                                    $precio_formateado = is_null($accion['precio']) ? '0,00' : number_format($accion['precio'], 2, ',', '.');
-                                    $fecha_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
+                                    $cantidad_compra_acciones_formateada = is_null($accion['cantidad']) ? '0' : number_format($accion['cantidad'], 0, '', '.');
+                                    $valor_compra_acciones_pesos_formateado = is_null($accion['precio']) ? '0,00' : number_format($accion['precio'], 2, ',', '.');
+                                    $fecha_compra_acciones_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
+
+                                    // Obtener el valor actual de la acción en pesos
+                                    $valor_actual = obtener_valor_accion($accion['ticker']);
+                                    if ($valor_actual !== null) {
+                                        // Formatear el valor para mostrarlo con punto como separador de miles y coma como separador decimal
+                                        $valor_actual_pesos_formateado = number_format($valor_actual, 2, ',', '.');
+                                    } else {
+                                        $valor_actual_pesos_formateado = 'N/A'; // En caso de no encontrar el valor
+                                    }
+
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
-                                            <td>{$fecha_formateada}</td>
-                                            <td>{$cantidad_formateada}</td>
-                                            <td>$ {$precio_formateado}</td>
-                                            <td><!-- valor_actual_acciones_pesos --></td>
+                                            <td>{$fecha_compra_acciones_formateada}</td>
+                                            <td>{$cantidad_compra_acciones_formateada}</td>
+                                            <td>$ {$valor_compra_acciones_pesos_formateado}</td>
+                                            <td>$ {$valor_actual_pesos_formateado}</td>
                                             <td><!-- rendimiento_acciones_pesos --></td>
                                             <td><!-- rentabilidad_acciones_pesos --></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
@@ -237,6 +288,7 @@ $valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
                                 }
                                 ?>
                             </tbody>
+
                         </table>
                     </div>
                     <!-- Fin Completa Acciones Pesos -->
@@ -291,16 +343,29 @@ $valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
                             <tbody id="tabla-acciones-dolares">
                                 <?php
                                 foreach ($acciones as $accion) {
-                                    $valor_compra_dolares = $accion['precio'] / $promedio_ccl;
+                                    // Obtenemos el valor actual de la acción desde Google Finance
+                                    $valor_actual = obtener_valor_accion($accion['ticker']); // Llamamos a la función para obtener el valor actualizado
+
+                                    if ($valor_actual === null) {
+                                        // Si no se pudo obtener el valor, mostrar un mensaje por defecto o manejar el error
+                                        $valor_actual = 0; // O alguna otra acción como mostrar 'N/A' o 'Error'
+                                    }
+
+                                    // Cálculos sin formatear los números
+                                    $valor_actual_dolares = $valor_actual / $promedio_ccl; // Aplicamos la fórmula sin redondeos
+                                    $valor_compra_dolares = $accion['precio'] / $promedio_ccl; // Cálculo de valor compra en dólares
+
+                                    // Formateamos los valores solo al momento de mostrar
                                     $valor_compra_dolares_formateado = number_format($valor_compra_dolares, 2, ',', '.');
-                                    $fecha_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
+                                    $valor_actual_dolares_formateado = number_format($valor_actual_dolares, 2, ',', '.'); // Lo formateamos como corresponde
+                                    $fecha_compra_acciones_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
-                                            <td>{$fecha_formateada}</td>
+                                            <td>{$fecha_compra_acciones_formateada}</td>
                                             <td>{$accion['cantidad']}</td>
                                             <td>u\$s {$valor_compra_dolares_formateado}</td>
-                                            <td><!-- valor_acciones_dolares --></td>
+                                            <td>u\$s {$valor_actual_dolares_formateado}</td>
                                             <td><!-- rendimiento_acciones_dolares --></td>
                                             <td><!-- rentabilidad_acciones_dolares --></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>

@@ -44,7 +44,7 @@ $mayorista_venta = isset($datos_dolar[4]['venta']) ? $datos_dolar[4]['venta'] : 
 // Función para formatear los valores numéricos como dinero
 function formatear_dinero($valor)
 {
-    return '$' . number_format($valor, 2, ',', '.');
+    return '$ ' . number_format($valor, 2, ',', '.');
 }
 
 // Función para calcular el saldo en dólares

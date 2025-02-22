@@ -268,8 +268,37 @@ function obtener_valor_accion($ticker)
                                     if ($valor_actual !== null) {
                                         // Formatear el valor para mostrarlo con punto como separador de miles y coma como separador decimal
                                         $valor_actual_pesos_formateado = number_format($valor_actual, 2, ',', '.');
+
+                                        // Realizar el cálculo para el rendimiento
+                                        $valor_actual_pesos = $valor_actual; // valor actual de la acción en pesos
+                                        $valor_compra_pesos = $accion['precio']; // precio de compra de la acción
+
+                                        // Calcular el rendimiento: (cantidad * valor_actual) - (cantidad * valor_compra)
+                                        $rendimiento = ($accion['cantidad'] * $valor_actual_pesos) - ($accion['cantidad'] * $valor_compra_pesos);
+
+                                        // Formatear el resultado con punto como separador de miles y coma como separador decimal
+                                        $rendimiento_formateado = number_format($rendimiento, 2, ',', '.');
+
+                                        // Determinar el color: verde si el rendimiento es mayor o igual a 0, rojo si es negativo
+                                        $color_rendimiento = ($rendimiento >= 0) ? 'green' : 'red';
+
+                                        // Calcular la rentabilidad: ((valor_actual - valor_compra) / valor_compra) * 100
+                                        $rentabilidad = (($valor_actual_pesos - $valor_compra_pesos) / $valor_compra_pesos) * 100;
+
+                                        // Formatear la rentabilidad con punto como separador de miles y coma como separador decimal
+                                        $rentabilidad_formateada = number_format($rentabilidad, 2, ',', '.');
+
+                                        // Determinar el color para la rentabilidad: verde si es positiva, rojo si negativa
+                                        $color_rentabilidad = ($rentabilidad >= 0) ? 'green' : 'red';
+
+                                        // Añadir el símbolo "%" al final de la rentabilidad
+                                        $rentabilidad_formateada .= ' %';
                                     } else {
                                         $valor_actual_pesos_formateado = 'N/A'; // En caso de no encontrar el valor
+                                        $rendimiento_formateado = 'N/A';
+                                        $color_rendimiento = 'black'; // Si no se puede calcular, poner en color negro
+                                        $rentabilidad_formateada = 'N/A'; // Si no se puede calcular la rentabilidad
+                                        $color_rentabilidad = 'black'; // Si no se puede calcular la rentabilidad
                                     }
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
@@ -278,8 +307,8 @@ function obtener_valor_accion($ticker)
                                             <td>{$cantidad_compra_acciones_formateada}</td>
                                             <td>$ {$valor_compra_acciones_pesos_formateado}</td>
                                             <td>$ {$valor_actual_pesos_formateado}</td>
-                                            <td><!-- rendimiento_acciones_pesos --></td>
-                                            <td><!-- rentabilidad_acciones_pesos --></td>
+                                            <td><span style='color: {$color_rendimiento};'>$  {$rendimiento_formateado}</span></td> <!-- rendimiento_acciones_pesos -->
+                                            <td><span style='color: {$color_rentabilidad};'>{$rentabilidad_formateada}</span></td> <!-- rentabilidad_acciones_pesos -->
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-minus'></i></a></td>
                                             <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
@@ -343,6 +372,8 @@ function obtener_valor_accion($ticker)
                             <tbody id="tabla-acciones-dolares">
                                 <?php
                                 foreach ($acciones as $accion) {
+                                    $cantidad_compra_acciones_formateada = is_null($accion['cantidad']) ? '0' : number_format($accion['cantidad'], 0, '', '.');
+
                                     // Obtenemos el valor actual de la acción desde Google Finance
                                     $valor_actual = obtener_valor_accion($accion['ticker']); // Llamamos a la función para obtener el valor actualizado
 
@@ -360,14 +391,32 @@ function obtener_valor_accion($ticker)
                                     $valor_actual_dolares_formateado = number_format($valor_actual_dolares, 2, ',', '.'); // Lo formateamos como corresponde
                                     $fecha_compra_acciones_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
 
+                                    // Calcular rentabilidad en porcentaje
+                                    $rentabilidad = (($valor_actual_dolares - $valor_compra_dolares) / $valor_compra_dolares) * 100;
+
+                                    // Formateamos el valor de la rentabilidad con 2 decimales y el símbolo de porcentaje
+                                    $rentabilidad_formateada = number_format($rentabilidad, 2, ',', '.') . ' %';
+
+                                    // Determinar el color: verde si la rentabilidad es mayor o igual a 0, rojo si es negativa
+                                    $color_rentabilidad = ($rentabilidad >= 0) ? 'green' : 'red';
+
+                                    // Cálculo del rendimiento
+                                    $rendimiento = ($valor_actual_dolares * $accion['cantidad']) - ($valor_compra_dolares * $accion['cantidad']);
+
+                                    // Formatear el resultado del rendimiento
+                                    $rendimiento_formateado = number_format($rendimiento, 2, ',', '.');
+
+                                    // Determinar el color del rendimiento
+                                    $color_rendimiento = ($rendimiento >= 0) ? 'green' : 'red';
+
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
                                             <td>{$fecha_compra_acciones_formateada}</td>
-                                            <td>{$accion['cantidad']}</td>
+                                            <td>{$cantidad_compra_acciones_formateada}</td>
                                             <td>u\$s {$valor_compra_dolares_formateado}</td>
                                             <td>u\$s {$valor_actual_dolares_formateado}</td>
-                                            <td><!-- rendimiento_acciones_dolares --></td>
-                                            <td><!-- rentabilidad_acciones_dolares --></td>
+                                            <td><span style='color: {$color_rendimiento};'>u\$s {$rendimiento_formateado}</span></td> <!-- rendimiento_acciones_dolares -->
+                                            <td><span style='color: {$color_rentabilidad};'>{$rentabilidad_formateada}</span></td> <!-- rentabilidad_acciones_dolares -->
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-minus'></i></a></td>
                                             <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>

@@ -55,26 +55,3 @@ function calcular_valor_inicial_acciones($acciones)
 
 // Calcular el valor inicial de las acciones en pesos
 $valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
-
-// Función para obtener el valor actual de las acciones desde Google Finance
-function obtener_valor_accion($ticker)
-{
-    $url = "https://www.google.com/finance/quote/$ticker:BCBA?hl=es";
-    $contenido = file_get_contents($url);
-
-    if ($contenido === FALSE) {
-        return null;
-    }
-
-    // Usar una expresión regular para extraer el valor de la etiqueta deseada
-    preg_match('/<div class="YMlKec fxKbKc">([^<]*)<\/div>/', $contenido, $matches);
-
-    if (isset($matches[1])) {
-        // Convertir el valor a un número eliminando caracteres no deseados
-        $valor = str_replace(['$', ' ', '.'], '', $matches[1]);
-        $valor = str_replace(',', '.', $valor);
-        return floatval($valor);
-    } else {
-        return null;
-    }
-}

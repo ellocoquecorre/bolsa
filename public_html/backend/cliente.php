@@ -63,7 +63,6 @@ function calcular_valor_inicial_acciones($acciones)
 // Calcular el valor inicial de las acciones en pesos
 $valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
 
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -227,7 +226,7 @@ $valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
                                             <td>{$fecha_formateada}</td>
                                             <td>{$cantidad_formateada}</td>
                                             <td>$ {$precio_formateado}</td>
-                                            <td><!-- valor_actual_acciones_pesos --></td>
+                                            <td class='valor-actual'></td>
                                             <td><!-- rendimiento_acciones_pesos --></td>
                                             <td><!-- rentabilidad_acciones_pesos --></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
@@ -301,7 +300,7 @@ $valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
                                             <td>{$fecha_formateada}</td>
                                             <td>{$accion['cantidad']}</td>
                                             <td>u\$s {$valor_compra_dolares_formateado}</td>
-                                            <td><!-- valor_actual_acciones_dolares --></td>
+                                            <td><!-- valor_acciones_dolares --></td>
                                             <td><!-- rendimiento_acciones_dolares --></td>
                                             <td><!-- rentabilidad_acciones_dolares --></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>

@@ -72,8 +72,19 @@
         </div>
         <!-- FIN HISTORIAL -->
 
+        <hr class="mod" style="margin-bottom: 80px;">
+
     </div>
     <!-- FIN CONTENIDO -->
+
+    <!-- FOOTER -->
+    <img id="fixed-image" src="../img/chorro.png" alt="Imagen Fija" />
+    <footer class="footer bg-light">
+        <div class="container">
+            <span class="text-muted">© GoodFellas Inc.</span>
+        </div>
+    </footer>
+    <!-- FIN FOOTER -->
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

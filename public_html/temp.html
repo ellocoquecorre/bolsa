@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navbar Fixed-Top con Lorem Ipsum</title>
+    <!-- Enlazar Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      /* Estilo para la imagen fija en la parte inferior */
+      #fixed-image {
+        position: fixed;
+        bottom: 30px; /* Ajusta este valor para desplazarla más abajo o más arriba */
+        right: 0;
+        z-index: 9999;
+        width: 200px; /* Ajusta el tamaño de la imagen si es necesario */
+      }
+      footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 56px; /* Altura igual a la navbar */
+        background-color: #f8f9fa; /* Color de fondo similar al de la navbar */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar fija en la parte superior -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Mi Sitio Web</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#inicio">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#servicios">Servicios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contacto">Contacto</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="container" style="margin-top: 100px">
+      <section id="inicio">
+        <h2>Bienvenido a Mi Sitio Web</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate urna ac justo interdum, a mollis eros volutpat. Ut aliquam, leo sit amet
+          consectetur volutpat, lorem sapien vulputate erat, vel auctor lorem arcu eu est. Phasellus vel felis sit amet eros dictum scelerisque non id felis.
+          Morbi ultricies dolor a augue iaculis, at pharetra nulla ultricies.
+        </p>
+        <p>
+          Nulla ac magna lorem. Sed dignissim, ante ac porttitor convallis, eros purus condimentum velit, vel convallis lorem eros id nisi. Nunc auctor metus
+          vitae enim condimentum fermentum. Duis vitae felis nec lorem interdum volutpat a id ligula. Etiam eu dui tortor. Nunc lobortis risus libero, ut
+          dapibus turpis cursus a. Fusce congue lorem in justo maximus, vel interdum magna sodales.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate urna ac justo interdum, a mollis eros volutpat. Ut aliquam, leo sit amet
+          consectetur volutpat, lorem sapien vulputate erat, vel auctor lorem arcu eu est. Phasellus vel felis sit amet eros dictum scelerisque non id felis.
+          Morbi ultricies dolor a augue iaculis, at pharetra nulla ultricies.
+        </p>
+        <p>
+          Nulla ac magna lorem. Sed dignissim, ante ac porttitor convallis, eros purus condimentum velit, vel convallis lorem eros id nisi. Nunc auctor metus
+          vitae enim condimentum fermentum. Duis vitae felis nec lorem interdum volutpat a id ligula. Etiam eu dui tortor. Nunc lobortis risus libero, ut
+          dapibus turpis cursus a. Fusce congue lorem in justo maximus, vel interdum magna sodales.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate urna ac justo interdum, a mollis eros volutpat. Ut aliquam, leo sit amet
+          consectetur volutpat, lorem sapien vulputate erat, vel auctor lorem arcu eu est. Phasellus vel felis sit amet eros dictum scelerisque non id felis.
+          Morbi ultricies dolor a augue iaculis, at pharetra nulla ultricies.
+        </p>
+        <p>
+          Nulla ac magna lorem. Sed dignissim, ante ac porttitor convallis, eros purus condimentum velit, vel convallis lorem eros id nisi. Nunc auctor metus
+          vitae enim condimentum fermentum. Duis vitae felis nec lorem interdum volutpat a id ligula. Etiam eu dui tortor. Nunc lobortis risus libero, ut
+          dapibus turpis cursus a. Fusce congue lorem in justo maximus, vel interdum magna sodales.
+        </p>
+      </section>
+
+      <section id="servicios">
+        <h2>Servicios</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt augue sit amet lacus faucibus, at placerat nunc fermentum. Sed accumsan nisl
+          ac mauris cursus ultricies. Maecenas tristique sapien eget mauris tincidunt facilisis. Etiam euismod euismod est id interdum. Vestibulum ac ex
+          viverra, volutpat ante ut, viverra lorem.
+        </p>
+        <p>
+          Curabitur ut sapien quis urna auctor tempus. Curabitur auctor neque sit amet enim dignissim tincidunt. Etiam non feugiat dui. Aliquam erat volutpat.
+          Sed suscipit vestibulum nisl sit amet iaculis. Aenean sed augue vitae velit rutrum euismod. Nullam tincidunt mi sit amet tortor egestas, eu vehicula
+          erat efficitur. Cras fringilla justo ut velit consectetur, nec posuere lectus vulputate.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt augue sit amet lacus faucibus, at placerat nunc fermentum. Sed accumsan nisl
+          ac mauris cursus ultricies. Maecenas tristique sapien eget mauris tincidunt facilisis. Etiam euismod euismod est id interdum. Vestibulum ac ex
+          viverra, volutpat ante ut, viverra lorem.
+        </p>
+        <p>
+          Curabitur ut sapien quis urna auctor tempus. Curabitur auctor neque sit amet enim dignissim tincidunt. Etiam non feugiat dui. Aliquam erat volutpat.
+          Sed suscipit vestibulum nisl sit amet iaculis. Aenean sed augue vitae velit rutrum euismod. Nullam tincidunt mi sit amet tortor egestas, eu vehicula
+          erat efficitur. Cras fringilla justo ut velit consectetur, nec posuere lectus vulputate.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt augue sit amet lacus faucibus, at placerat nunc fermentum. Sed accumsan nisl
+          ac mauris cursus ultricies. Maecenas tristique sapien eget mauris tincidunt facilisis. Etiam euismod euismod est id interdum. Vestibulum ac ex
+          viverra, volutpat ante ut, viverra lorem.
+        </p>
+        <p>
+          Curabitur ut sapien quis urna auctor tempus. Curabitur auctor neque sit amet enim dignissim tincidunt. Etiam non feugiat dui. Aliquam erat volutpat.
+          Sed suscipit vestibulum nisl sit amet iaculis. Aenean sed augue vitae velit rutrum euismod. Nullam tincidunt mi sit amet tortor egestas, eu vehicula
+          erat efficitur. Cras fringilla justo ut velit consectetur, nec posuere lectus vulputate.
+        </p>
+      </section>
+
+      <section id="contacto">
+        <h2>Contacto</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet erat id nisi dictum convallis. Sed in odio nisl. Mauris pharetra, purus et
+          dictum ultricies, libero odio tincidunt metus, sed auctor purus ante ut velit. Sed in scelerisque ipsum. Aenean vitae volutpat nulla. Proin sed nunc
+          et ligula volutpat pharetra.
+        </p>
+        <p>
+          Integer et urna at lectus cursus efficitur eget a mauris. Donec tempor turpis et dolor scelerisque viverra. Curabitur sed purus sed ipsum fermentum
+          porttitor vel vel mi. Fusce volutpat orci sit amet enim sollicitudin, id dapibus risus feugiat. Nulla quis egestas purus. Integer posuere mi vitae
+          nunc varius, id dapibus enim hendrerit. Nam malesuada condimentum ante, a dignissim ante pretium non.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet erat id nisi dictum convallis. Sed in odio nisl. Mauris pharetra, purus et
+          dictum ultricies, libero odio tincidunt metus, sed auctor purus ante ut velit. Sed in scelerisque ipsum. Aenean vitae volutpat nulla. Proin sed nunc
+          et ligula volutpat pharetra.
+        </p>
+        <p>
+          Integer et urna at lectus cursus efficitur eget a mauris. Donec tempor turpis et dolor scelerisque viverra. Curabitur sed purus sed ipsum fermentum
+          porttitor vel vel mi. Fusce volutpat orci sit amet enim sollicitudin, id dapibus risus feugiat. Nulla quis egestas purus. Integer posuere mi vitae
+          nunc varius, id dapibus enim hendrerit. Nam malesuada condimentum ante, a dignissim ante pretium non.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet erat id nisi dictum convallis. Sed in odio nisl. Mauris pharetra, purus et
+          dictum ultricies, libero odio tincidunt metus, sed auctor purus ante ut velit. Sed in scelerisque ipsum. Aenean vitae volutpat nulla. Proin sed nunc
+          et ligula volutpat pharetra.
+        </p>
+        <p>
+          Integer et urna at lectus cursus efficitur eget a mauris. Donec tempor turpis et dolor scelerisque viverra. Curabitur sed purus sed ipsum fermentum
+          porttitor vel vel mi. Fusce volutpat orci sit amet enim sollicitudin, id dapibus risus feugiat. Nulla quis egestas purus. Integer posuere mi vitae
+          nunc varius, id dapibus enim hendrerit. Nam malesuada condimentum ante, a dignissim ante pretium non.
+        </p>
+      </section>
+    </div>
+
+    <!-- Imagen fija al pie de la página -->
+    <img id="fixed-image" src="https://pngimg.com/uploads/thief/thief_PNG9.png" alt="Imagen Fija" />
+    <footer>
+      <p class="mb-0">© 2025 Mi Sitio Web - Todos los derechos reservados</p>
+    </footer>
+    <!-- Enlazar Bootstrap JS y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

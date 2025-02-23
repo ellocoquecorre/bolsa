@@ -5,6 +5,24 @@
 body {
   font-family: "Nunito Sans", serif;
 }
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+}
+.footer {
+  background-color: #f8f9fa;
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #0B486B;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
 h1 {
   font-family: 'Playfair Display', serif;
   color: #08486B;
@@ -106,7 +124,7 @@ h5 {
 }
 
 .custom-card {
-    margin-top: 150px;
+    margin-top: 50px;
     border: 1px solid black;
     border-radius: 10px;
     background-color: #f8f9fa;
@@ -262,4 +280,12 @@ td.text-center {
 form label {
   display: block;
   text-align: right;
+}
+/* Estilo para la imagen fija en la parte inferior */
+#fixed-image {
+  position: fixed;
+  bottom: 22.81px; /* Ajusta este valor para desplazarla más abajo o más arriba */
+  right: 0;
+  z-index: 9999;
+  width: 200px; /* Ajusta el tamaño de la imagen si es necesario */
 }

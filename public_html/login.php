@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Si la contraseña es correcta
                 $_SESSION['loggedin'] = true;
                 $_SESSION['email'] = $email;
-                header("Location: index.php");
+                header("Location: backend/lista_clientes.php");
                 exit;
             }
         }
@@ -97,9 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.php"><i class="fas fa-home me-2"></i>Inicio</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="backend/lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes</a>
                     </li>

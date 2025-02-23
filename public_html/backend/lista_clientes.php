@@ -41,10 +41,6 @@ $conn->close();
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.php"><i class="fas fa-home me-2"></i>Inicio
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link active" href="lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes
                         </a>
                     </li>
@@ -134,6 +130,7 @@ $conn->close();
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tooltip.js"></script>
     <!-- FIN JS -->
+
 </body>
 
 </html>

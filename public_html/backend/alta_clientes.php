@@ -35,10 +35,6 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.php"><i class="fas fa-home me-2"></i>Inicio
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes
                         </a>
                     </li>

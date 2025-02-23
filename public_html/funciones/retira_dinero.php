@@ -44,8 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             echo json_encode(['success' => false, 'error' => 'Saldo insuficiente']);
         }
-    } else {
-        echo json_encode(['success' => false, 'error' => 'Datos inválidos']);
     }
 } else {
     echo json_encode(['success' => false, 'error' => 'Método no permitido']);

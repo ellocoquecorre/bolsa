@@ -167,6 +167,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     // Obtener los datos formateados a través de la función
                                     $datos_accion = obtener_datos_accion($accion);
 
+                                    // Generar el HTML de cada fila con los botones
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
                                             <td>{$datos_accion['fecha_compra']}</td>
@@ -178,11 +179,16 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-check-circle'></i></a></td>
                                             <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
-                                            <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
+                                            <td class='text-center'>
+                                                <button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick='eliminarAcciones(\"{$accion['ticker']}\", {$cliente_id})'>
+                                                    <i class='fa-solid fa-trash'></i>
+                                                </button>
+                                            </td>
                                         </tr>";
                                 }
                                 ?>
                             </tbody>
+
                         </table>
                     </div>
                     <!-- Fin Completa Acciones Pesos -->
@@ -410,6 +416,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="../js/formato_miles.js"></script>
     <script src="../js/ingresa_dinero.js"></script>
     <script src="../js/retira_dinero.js"></script>
+    <script src="../js/eliminar_acciones.js"></script>
     <!-- FIN JS -->
 </body>
 

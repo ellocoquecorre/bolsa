@@ -102,6 +102,76 @@ function obtener_valor_accion($ticker)
     // Si no encontramos el valor, devolver null
     return null;
 }
+// Inicializamos una variable para acumular el total de las acciones en pesos
+$total_valor_acciones_pesos = 0;
+
+// Iteramos sobre las acciones del cliente
+foreach ($acciones as $accion) {
+    // Formateamos la cantidad de acciones (si es nula, lo ponemos como 0)
+    $cantidad_compra_acciones_formateada = is_null($accion['cantidad']) ? 0 : $accion['cantidad'];
+
+    // Obtenemos el valor actual de la acción (esto debe ser un valor numérico)
+    $valor_actual_accion = obtener_valor_accion($accion['ticker']); // Obtenemos el valor sin multiplicar por promedio_ccl aún
+
+    // Si el valor obtenido es 0 o nulo, lo manejamos adecuadamente
+    if ($valor_actual_accion === null || $valor_actual_accion == 0) {
+        $valor_actual_accion = 0; // Asignamos 0 si no se obtiene un valor válido
+    }
+
+    // Multiplicamos el valor actual de la acción por la cantidad de acciones
+    $valor_total_acciones_pesos = $cantidad_compra_acciones_formateada * $valor_actual_accion;
+
+    // Sumamos el valor total de esta acción al total acumulado
+    $total_valor_acciones_pesos += $valor_total_acciones_pesos;
+}
+
+// Ahora podemos renderizar el valor total en la celda correspondiente
+$valor_total_acciones_pesos_formateado = number_format($total_valor_acciones_pesos, 2, ',', '.');
+
+// Calculamos el rendimiento restando el valor actual menos el valor inicial
+$rendimiento_acciones_pesos = $total_valor_acciones_pesos - $valor_inicial_acciones_pesos;
+
+// Definimos el color según el rendimiento
+$color_rendimiento = ($rendimiento_acciones_pesos >= 0) ? 'green' : 'red';
+
+// Formateamos el rendimiento para mostrarlo en la tabla
+$rendimiento_acciones_pesos_formateado = number_format($rendimiento_acciones_pesos, 2, ',', '.');
+
+// Cálculo de rentabilidad con la nueva fórmula
+$rentabilidad_acciones_pesos_nueva = (($total_valor_acciones_pesos - $valor_inicial_acciones_pesos) / $total_valor_acciones_pesos) * 100;
+
+// Formateamos la rentabilidad
+$rentabilidad_acciones_pesos_nueva_formateada = number_format($rentabilidad_acciones_pesos_nueva, 2, ',', '.');
+
+// Definimos el color de la rentabilidad: verde si es positiva o 0, rojo si es negativa
+$color_rentabilidad_nueva = ($rentabilidad_acciones_pesos_nueva >= 0) ? 'green' : 'red';
+
+// Inicializamos el total de las acciones
+$total_valor_acciones_dolares = 0;
+
+// Recorremos todas las acciones para calcular el total
+foreach ($acciones as $accion) {
+    // Obtener la cantidad y el valor de compra de las acciones
+    $cantidad_compra_acciones = is_null($accion['cantidad']) ? 0 : $accion['cantidad'];
+
+    // Obtenemos el valor actual de la acción desde Google Finance (o alguna fuente similar)
+    $valor_actual = obtener_valor_accion($accion['ticker']);
+
+    if ($valor_actual === null) {
+        // Si no se pudo obtener el valor, usamos un valor predeterminado (0 o N/A)
+        $valor_actual = 0;
+    }
+
+    // Calculamos el valor actual de las acciones en dólares usando el valor actual
+    $valor_actual_dolares = $valor_actual / $promedio_ccl;
+
+    // Acumulamos el valor total de las acciones
+    $total_valor_acciones_dolares += $cantidad_compra_acciones * $valor_actual_dolares;
+}
+
+// Formateamos el total en dólares con el separador correcto
+$total_valor_acciones_dolares_formateado = number_format($total_valor_acciones_dolares, 2, ',', '.');
+
 
 
 ?>
@@ -225,13 +295,14 @@ function obtener_valor_accion($ticker)
                                     <th>Valor Actual</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>$ <?php echo number_format($valor_inicial_acciones_pesos, 2, ',', '.'); ?></td>
-                                    <td><!-- valor_actual_acciones_pesos --></td>
-                                    <td><!-- rendimiento_acciones_pesos --></td>
-                                    <td><!-- rentabilidad_acciones_pesos --></td>
+                                    <td>$ <?php echo $valor_total_acciones_pesos_formateado; ?></td> <!-- Aquí renderizamos el valor total calculado -->
+                                    <td style="color: <?php echo $color_rendimiento; ?>;">$ <?php echo $rendimiento_acciones_pesos_formateado; ?></td> <!-- Aquí mostramos el rendimiento con el color adecuado -->
+                                    <td style="color: <?php echo $color_rentabilidad_nueva; ?>;"><?php echo $rentabilidad_acciones_pesos_nueva_formateada . ' %'; ?></td> <!-- Rentabilidad con la nueva fórmula -->
                                 </tr>
                             </tbody>
                         </table>
@@ -342,7 +413,7 @@ function obtener_valor_accion($ticker)
                             <tbody>
                                 <tr>
                                     <td>u$s <?php echo number_format($valor_inicial_acciones_pesos / $promedio_ccl, 2, ',', '.'); ?></td>
-                                    <td><!-- valor_actual_acciones_dolares --></td>
+                                    <td>u$s <?php echo $total_valor_acciones_dolares_formateado; ?></td>
                                     <td><!-- rendimiento_acciones_dolares --></td>
                                     <td><!-- rentabilidad_acciones_dolares --></td>
                                 </tr>
@@ -350,6 +421,7 @@ function obtener_valor_accion($ticker)
                         </table>
                     </div>
                     <!-- Fin Consolidada Acciones Dólares -->
+
 
                     <hr class="linea-accion">
 
@@ -410,18 +482,18 @@ function obtener_valor_accion($ticker)
                                     $color_rendimiento = ($rendimiento >= 0) ? 'green' : 'red';
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                            <td>{$accion['ticker']}</td>
-                                            <td>{$fecha_compra_acciones_formateada}</td>
-                                            <td>{$cantidad_compra_acciones_formateada}</td>
-                                            <td>u\$s {$valor_compra_dolares_formateado}</td>
-                                            <td>u\$s {$valor_actual_dolares_formateado}</td>
-                                            <td><span style='color: {$color_rendimiento};'>u\$s {$rendimiento_formateado}</span></td> <!-- rendimiento_acciones_dolares -->
-                                            <td><span style='color: {$color_rentabilidad};'>{$rentabilidad_formateada}</span></td> <!-- rentabilidad_acciones_dolares -->
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-minus'></i></a></td>
-                                            <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
-                                            <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
-                                        </tr>";
+                                        <td>{$accion['ticker']}</td>
+                                        <td>{$fecha_compra_acciones_formateada}</td>
+                                        <td>{$cantidad_compra_acciones_formateada}</td>
+                                        <td>u\$s {$valor_compra_dolares_formateado}</td>
+                                        <td>u\$s {$valor_actual_dolares_formateado}</td>
+                                        <td><span style='color: {$color_rendimiento};'>u\$s {$rendimiento_formateado}</span></td> <!-- rendimiento_acciones_dolares -->
+                                        <td><span style='color: {$color_rentabilidad};'>{$rentabilidad_formateada}</span></td> <!-- rentabilidad_acciones_dolares -->
+                                        <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
+                                        <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-minus'></i></a></td>
+                                        <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
+                                        <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>

@@ -27,7 +27,7 @@ $stmt->close();
 $saldo_formateado = '$ ' . number_format($efectivo, 2, ',', '.');
 
 // Obtener la fecha de hoy
-$fecha_hoy = date('Y-m-d');
+$fecha_acciones_hoy = date('Y-m-d');
 
 // Inicializar variable de mensaje de error
 $error_msg = "";
@@ -35,13 +35,13 @@ $error_msg = "";
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener los datos del formulario
-    $ticker = $_POST['ticker'];
-    $cantidad = $_POST['cantidad'];
-    $precio = $_POST['precio'];
-    $fecha = $_POST['fecha'];
+    $ticker_acciones = $_POST['ticker'];
+    $cantidad_acciones = $_POST['cantidad'];
+    $precio_acciones = $_POST['precio'];
+    $fecha_acciones = $_POST['fecha'];
 
     // Calcular el total de la operación
-    $total_operacion = $cantidad * $precio;
+    $total_operacion = $cantidad_acciones * $precio_acciones;
 
     // Obtener el valor de "efectivo" de la tabla "balance"
     $sql = "SELECT efectivo FROM balance WHERE cliente_id = ?";
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Insertar los datos en la tabla "acciones"
         $sql = "INSERT INTO acciones (ticker, cantidad, precio, fecha, cliente_id) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sidsi", $ticker, $cantidad, $precio, $fecha, $cliente_id);
+        $stmt->bind_param("sidsi", $ticker_acciones, $cantidad_acciones, $precio_acciones, $fecha_acciones, $cliente_id);
         $stmt->execute();
         $stmt->close();
 
@@ -208,7 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha_hoy; ?>" required>
+                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha_acciones_hoy; ?>" required>
                             </div>
                         </div>
                     </div>

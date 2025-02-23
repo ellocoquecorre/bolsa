@@ -1,6 +1,6 @@
 <?php
 
-// Consulta para obtener los datos del cliente
+// DATOS DEL CLIENTE
 $sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $cliente_id);
@@ -9,27 +9,27 @@ $stmt->bind_result($nombre, $apellido);
 $stmt->fetch();
 $stmt->close();
 
-// Obtener el saldo en efectivo del balance
+// BALANCE DEL CLIENTE
 $saldo_efectivo = $balance['efectivo'];
 $saldo_dolares = calcular_saldo_dolares($saldo_efectivo, $contadoconliqui_compra, $contadoconliqui_venta);
 
-// Nueva función para obtener las acciones del cliente
+// ACCIONES DEL CLIENTE
 function obtener_acciones_cliente($conn, $cliente_id)
 {
     $sql = "SELECT ticker, fecha, cantidad, precio FROM acciones WHERE cliente_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $cliente_id);
     $stmt->execute();
-    $ticker = $fecha = $cantidad = $precio = null;
-    $stmt->bind_result($ticker, $fecha, $cantidad, $precio);
+    $ticker_acciones = $fecha_acciones = $cantidad_acciones = $precio_acciones = null;
+    $stmt->bind_result($ticker_acciones, $fecha_acciones, $cantidad_acciones, $precio_acciones);
 
     $acciones = [];
     while ($stmt->fetch()) {
         $acciones[] = [
-            'ticker' => $ticker,
-            'fecha' => $fecha,
-            'cantidad' => $cantidad,
-            'precio' => $precio,
+            'ticker' => $ticker_acciones,
+            'fecha' => $fecha_acciones,
+            'cantidad' => $cantidad_acciones,
+            'precio' => $precio_acciones,
         ];
     }
     $stmt->close();
@@ -54,9 +54,9 @@ function calcular_valor_inicial_acciones($acciones)
 // Calcular el valor inicial de las acciones en pesos
 $valor_inicial_acciones_pesos = calcular_valor_inicial_acciones($acciones);
 
-function obtener_valor_accion($ticker)
+function obtener_valor_accion($ticker_acciones)
 {
-    $url = "https://www.google.com/finance/quote/{$ticker}:BCBA?hl=es";
+    $url = "https://www.google.com/finance/quote/{$ticker_acciones}:BCBA?hl=es";
 
     // Realizar la solicitud HTTP a la URL
     $html = file_get_contents($url);
@@ -99,7 +99,7 @@ $total_valor_acciones_pesos = 0;
 // Iteramos sobre las acciones del cliente
 foreach ($acciones as $accion) {
     // Formateamos la cantidad de acciones (si es nula, lo ponemos como 0)
-    $cantidad_compra_acciones_formateada = is_null($accion['cantidad']) ? 0 : $accion['cantidad'];
+    $cantidad_acciones_compra_acciones_formateada = is_null($accion['cantidad']) ? 0 : $accion['cantidad'];
 
     // Obtenemos el valor actual de la acción (esto debe ser un valor numérico)
     $valor_actual_accion = obtener_valor_accion($accion['ticker']); // Obtenemos el valor sin multiplicar por promedio_ccl aún
@@ -110,7 +110,7 @@ foreach ($acciones as $accion) {
     }
 
     // Multiplicamos el valor actual de la acción por la cantidad de acciones
-    $valor_total_acciones_pesos = $cantidad_compra_acciones_formateada * $valor_actual_accion;
+    $valor_total_acciones_pesos = $cantidad_acciones_compra_acciones_formateada * $valor_actual_accion;
 
     // Sumamos el valor total de esta acción al total acumulado
     $total_valor_acciones_pesos += $valor_total_acciones_pesos;
@@ -143,7 +143,7 @@ $total_valor_acciones_dolares = 0;
 // Recorremos todas las acciones para calcular el total
 foreach ($acciones as $accion) {
     // Obtener la cantidad y el valor de compra de las acciones
-    $cantidad_compra_acciones = is_null($accion['cantidad']) ? 0 : $accion['cantidad'];
+    $cantidad_acciones_compra_acciones = is_null($accion['cantidad']) ? 0 : $accion['cantidad'];
 
     // Obtenemos el valor actual de la acción desde Google Finance (o alguna fuente similar)
     $valor_actual = obtener_valor_accion($accion['ticker']);
@@ -157,7 +157,7 @@ foreach ($acciones as $accion) {
     $valor_actual_dolares = $valor_actual / $promedio_ccl;
 
     // Acumulamos el valor total de las acciones
-    $total_valor_acciones_dolares += $cantidad_compra_acciones * $valor_actual_dolares;
+    $total_valor_acciones_dolares += $cantidad_acciones_compra_acciones * $valor_actual_dolares;
 }
 
 // Formateamos el total en dólares con el separador correcto
@@ -166,13 +166,13 @@ $total_valor_acciones_dolares_formateado = number_format($total_valor_acciones_d
 function obtener_datos_accion($accion)
 {
     // Formatear cantidad
-    $cantidad_compra_acciones_formateada = is_null($accion['cantidad']) ? '0' : number_format($accion['cantidad'], 0, '', '.');
+    $cantidad_acciones_compra_acciones_formateada = is_null($accion['cantidad']) ? '0' : number_format($accion['cantidad'], 0, '', '.');
 
     // Formatear valor compra
     $valor_compra_acciones_pesos_formateado = is_null($accion['precio']) ? '0,00' : number_format($accion['precio'], 2, ',', '.');
 
     // Formatear fecha de compra
-    $fecha_compra_acciones_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
+    $fecha_acciones_compra_acciones_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
 
     // Obtener el valor actual de la acción
     $valor_actual = obtener_valor_accion($accion['ticker']);
@@ -202,9 +202,9 @@ function obtener_datos_accion($accion)
 
     // Devolver todos los datos formateados
     return [
-        'cantidad_compra' => $cantidad_compra_acciones_formateada,
+        'cantidad_compra' => $cantidad_acciones_compra_acciones_formateada,
         'valor_compra' => $valor_compra_acciones_pesos_formateado,
-        'fecha_compra' => $fecha_compra_acciones_formateada,
+        'fecha_compra' => $fecha_acciones_compra_acciones_formateada,
         'valor_actual' => $valor_actual_pesos_formateado,
         'rendimiento' => $rendimiento_formateado,
         'color_rendimiento' => $color_rendimiento,
@@ -247,12 +247,13 @@ function calcularValoresAcciones($valor_inicial_acciones_pesos, $promedio_ccl, $
     ];
 }
 
+// SOiNK
 function obtener_acciones_dolares($acciones, $promedio_ccl)
 {
     $acciones_formateadas = [];
 
     foreach ($acciones as $accion) {
-        $cantidad_compra_acciones_formateada = is_null($accion['cantidad']) ? '0' : number_format($accion['cantidad'], 0, '', '.');
+        $cantidad_acciones_compra_acciones_formateada = is_null($accion['cantidad']) ? '0' : number_format($accion['cantidad'], 0, '', '.');
 
         // Obtenemos el valor actual de la acción desde Google Finance
         $valor_actual = obtener_valor_accion($accion['ticker']); // Llamamos a la función para obtener el valor actualizado
@@ -269,7 +270,7 @@ function obtener_acciones_dolares($acciones, $promedio_ccl)
         // Formateamos los valores solo al momento de mostrar
         $valor_compra_dolares_formateado = number_format($valor_compra_dolares, 2, ',', '.');
         $valor_actual_dolares_formateado = number_format($valor_actual_dolares, 2, ',', '.'); // Lo formateamos como corresponde
-        $fecha_compra_acciones_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
+        $fecha_acciones_compra_acciones_formateada = is_null($accion['fecha']) ? 'N/A' : date("d-m-Y", strtotime($accion['fecha']));
 
         // Calcular rentabilidad en porcentaje
         $rentabilidad = (($valor_actual_dolares - $valor_compra_dolares) / $valor_compra_dolares) * 100;
@@ -292,8 +293,8 @@ function obtener_acciones_dolares($acciones, $promedio_ccl)
         // Guardamos todo en el array de resultados formateados
         $acciones_formateadas[] = [
             'ticker' => $accion['ticker'],
-            'fecha' => $fecha_compra_acciones_formateada,
-            'cantidad' => $cantidad_compra_acciones_formateada,
+            'fecha' => $fecha_acciones_compra_acciones_formateada,
+            'cantidad' => $cantidad_acciones_compra_acciones_formateada,
             'valor_compra' => "u\$s {$valor_compra_dolares_formateado}",
             'valor_actual' => "u\$s {$valor_actual_dolares_formateado}",
             'rendimiento' => "<span style='color: {$color_rendimiento};'>u\$s {$rendimiento_formateado}</span>",

@@ -5,7 +5,7 @@ require_once '../../config/config.php';
 // Incluir las funciones necesarias
 include '../funciones/dolar_api.php';
 include '../funciones/balance.php';
-include '../funciones/cliente_funciones.php';
+include '../funciones/cliente_acciones.php';
 
 // Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;

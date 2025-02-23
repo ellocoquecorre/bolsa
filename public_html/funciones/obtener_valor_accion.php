@@ -5,11 +5,11 @@ if (!isset($_GET['ticker'])) {
     exit;
 }
 
-$ticker = $_GET['ticker'];
+$ticker_acciones = $_GET['ticker'];
 
-function obtener_valor_accion($ticker)
+function obtener_valor_accion($ticker_acciones)
 {
-    $url = "https://www.google.com/finance/quote/$ticker:BCBA?hl=es";
+    $url = "https://www.google.com/finance/quote/$ticker_acciones:BCBA?hl=es";
     $contenido = file_get_contents($url);
 
     if ($contenido === FALSE) {
@@ -29,7 +29,7 @@ function obtener_valor_accion($ticker)
     }
 }
 
-$valor_actual = obtener_valor_accion($ticker);
+$valor_actual = obtener_valor_accion($ticker_acciones);
 
 if ($valor_actual !== null) {
     echo json_encode(['valor' => $valor_actual]);

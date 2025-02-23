@@ -4,7 +4,7 @@ require_once '../../config/config.php';
 
 // Obtener el id del cliente y el ticker desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
-$ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
+$ticker_acciones = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
 // Consulta para obtener los datos del cliente
 $sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
@@ -18,14 +18,14 @@ $stmt->close();
 // Consulta para obtener los valores de cantidad, precio y id de la tabla acciones
 $sql = "SELECT id, cantidad, precio, fecha FROM acciones WHERE ticker = ? AND cliente_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("si", $ticker, $cliente_id);
+$stmt->bind_param("si", $ticker_acciones, $cliente_id);
 $stmt->execute();
-$stmt->bind_result($id_accion, $cantidad_accion, $precio_accion, $fecha_accion);
+$stmt->bind_result($id_accion, $cantidad_acciones_accion, $precio_acciones_accion, $fecha_acciones_accion);
 $stmt->fetch();
 $stmt->close();
 
 // Obtener la fecha de hoy (por si el usuario no selecciona una)
-$fecha_hoy = date('Y-m-d');
+$fecha_acciones_hoy = date('Y-m-d');
 
 // Inicializar el mensaje de error
 $error_msg = '';
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $accion_id = $_POST['accion_id'];  // Se obtiene el ID de la acción
     $nuevo_cantidad = $_POST['cantidad'];
     $nuevo_precio = $_POST['precio'];
-    $fecha = $_POST['fecha'];
+    $fecha_acciones = $_POST['fecha'];
 
     // Calcular el costo de compra
     $nuevo_precio_compra = $nuevo_cantidad * $nuevo_precio;
@@ -51,13 +51,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
 
     // Ajustar el saldo del cliente según la diferencia de inversión
-    $precio_compra_original = $cantidad_accion * $precio_accion;
-    if ($precio_compra_original > $nuevo_precio_compra) {
-        $diferencia = $precio_compra_original - $nuevo_precio_compra;
+    $precio_acciones_compra_original = $cantidad_acciones_accion * $precio_acciones_accion;
+    if ($precio_acciones_compra_original > $nuevo_precio_compra) {
+        $diferencia = $precio_acciones_compra_original - $nuevo_precio_compra;
         $nuevo_efectivo = $efectivo + $diferencia;
         $actualizar_efectivo = true;
     } else {
-        $diferencia = $nuevo_precio_compra - $precio_compra_original;
+        $diferencia = $nuevo_precio_compra - $precio_acciones_compra_original;
         if ($efectivo >= $diferencia) {
             $nuevo_efectivo = $efectivo - $diferencia;
             $actualizar_efectivo = true;
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Actualizar solo la acción específica con el ID correspondiente
         $sql = "UPDATE acciones SET cantidad = ?, precio = ?, fecha = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("dssi", $nuevo_cantidad, $nuevo_precio, $fecha, $accion_id);
+        $stmt->bind_param("dssi", $nuevo_cantidad, $nuevo_precio, $fecha_acciones, $accion_id);
         $stmt->execute();
         $stmt->close();
 
@@ -150,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-3"></div>
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones mb-4">Editar los datos de <?php echo htmlspecialchars($ticker); ?></h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Editar los datos de <?php echo htmlspecialchars($ticker_acciones); ?></h5>
                 <?php if ($error_msg): ?>
                     <div class="alert alert-danger" role="alert">
                         <?php echo $error_msg; ?>
@@ -164,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
-                                <input type="text" class="form-control" id="ticker" name="ticker" value="<?php echo htmlspecialchars($ticker); ?>" readonly>
+                                <input type="text" class="form-control" id="ticker" name="ticker" value="<?php echo htmlspecialchars($ticker_acciones); ?>" readonly>
                             </div>
                         </div>
                     </div>
@@ -175,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo htmlspecialchars($cantidad_accion); ?>" autofocus required>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo htmlspecialchars($cantidad_acciones_accion); ?>" autofocus required>
                             </div>
                         </div>
                     </div>
@@ -185,7 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                <input type="number" step="0.01" class="form-control" id="precio" name="precio" value="<?php echo htmlspecialchars($precio_accion); ?>" required>
+                                <input type="number" step="0.01" class="form-control" id="precio" name="precio" value="<?php echo htmlspecialchars($precio_acciones_accion); ?>" required>
                             </div>
                         </div>
                     </div>
@@ -195,7 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo htmlspecialchars($fecha_accion); ?>" required>
+                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo htmlspecialchars($fecha_acciones_accion); ?>" required>
                             </div>
                         </div>
                     </div>

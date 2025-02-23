@@ -380,8 +380,8 @@ $total_valor_acciones_dolares_formateado = number_format($total_valor_acciones_d
                                             <td>$ {$valor_actual_pesos_formateado}</td>
                                             <td><span style='color: {$color_rendimiento};'>$  {$rendimiento_formateado}</span></td> <!-- rendimiento_acciones_pesos -->
                                             <td><span style='color: {$color_rentabilidad};'>{$rentabilidad_formateada}</span></td> <!-- rentabilidad_acciones_pesos -->
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-minus'></i></a></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-minus'></i></a></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-check-circle'></i></a></td>
                                             <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
                                             <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
                                         </tr>";
@@ -398,9 +398,10 @@ $total_valor_acciones_dolares_formateado = number_format($total_valor_acciones_d
 
                 <!-- Acciones Dólares -->
                 <div id="tablaAccionesDolares" class="d-none">
-
+                    <p class="text-left">Valor promedio dólar CCL: $ <?php echo number_format($promedio_ccl, 2, ',', '.'); ?></p>
                     <!-- Consolidada Acciones Dólares -->
                     <div class="table-responsive">
+
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -412,10 +413,33 @@ $total_valor_acciones_dolares_formateado = number_format($total_valor_acciones_d
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>u$s <?php echo number_format($valor_inicial_acciones_pesos / $promedio_ccl, 2, ',', '.'); ?></td>
+                                    <?php
+                                    // Convertimos los valores a números sin formato
+                                    $valor_inicial_dolares = $valor_inicial_acciones_pesos / $promedio_ccl;
+                                    $valor_actual_dolares = floatval(str_replace(',', '.', str_replace('.', '', $total_valor_acciones_dolares_formateado)));
+
+                                    // Calculamos el rendimiento
+                                    $rendimiento = $valor_actual_dolares - $valor_inicial_dolares;
+
+                                    // Definir color según el resultado
+                                    $color_rendimiento = ($rendimiento >= 0) ? 'green' : 'red';
+
+                                    // Calculamos la rentabilidad en porcentaje
+                                    $rentabilidad = ($valor_inicial_dolares != 0) ? (($rendimiento / $valor_inicial_dolares) * 100) : 0;
+
+                                    // Definir color de rentabilidad
+                                    $color_rentabilidad = ($rentabilidad >= 0) ? 'green' : 'red';
+
+                                    // Formateamos los valores antes de mostrarlos
+                                    $valor_inicial_formateado = number_format($valor_inicial_dolares, 2, ',', '.');
+                                    $rendimiento_formateado = number_format($rendimiento, 2, ',', '.');
+                                    $rentabilidad_formateada = number_format($rentabilidad, 2, ',', '.') . ' %';
+                                    ?>
+
+                                    <td>u$s <?php echo $valor_inicial_formateado; ?></td>
                                     <td>u$s <?php echo $total_valor_acciones_dolares_formateado; ?></td>
-                                    <td><!-- rendimiento_acciones_dolares --></td>
-                                    <td><!-- rentabilidad_acciones_dolares --></td>
+                                    <td><span style="color: <?php echo $color_rendimiento; ?>;">u$s <?php echo $rendimiento_formateado; ?></span></td>
+                                    <td><span style="color: <?php echo $color_rentabilidad; ?>;"><?php echo $rentabilidad_formateada; ?></span></td>
                                 </tr>
                             </tbody>
                         </table>

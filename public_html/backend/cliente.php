@@ -3,7 +3,7 @@
 require_once '../../config/config.php';
 
 // Incluir las funciones necesarias
-include '../funciones/dolar_api.php';
+include '../funciones/dolar_cronista.php';
 include '../funciones/balance.php';
 include '../funciones/cliente_acciones.php';
 

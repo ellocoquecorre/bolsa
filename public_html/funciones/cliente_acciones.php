@@ -67,7 +67,7 @@ function obtener_valor_accion($ticker_acciones)
     }
 
     // Buscar el valor dentro de la página HTML
-    $pattern = '/<div class="YMlKec fxKbKc">([^<]+)<\/div>/';
+    $pattern = '/<div class="YMlKec fxKbKc">([^<]+)<\\/div>/';
     preg_match($pattern, $html, $matches);
 
     // Verificamos si encontramos el valor
@@ -93,6 +93,7 @@ function obtener_valor_accion($ticker_acciones)
     // Si no encontramos el valor, devolver null
     return null;
 }
+
 // Inicializamos una variable para acumular el total de las acciones en pesos
 $total_valor_acciones_pesos = 0;
 
@@ -129,7 +130,7 @@ $color_rendimiento = ($rendimiento_acciones_pesos >= 0) ? 'green' : 'red';
 $rendimiento_acciones_pesos_formateado = number_format($rendimiento_acciones_pesos, 2, ',', '.');
 
 // Cálculo de rentabilidad con la nueva fórmula
-$rentabilidad_acciones_pesos_nueva = (($total_valor_acciones_pesos - $valor_inicial_acciones_pesos) / $total_valor_acciones_pesos) * 100;
+$rentabilidad_acciones_pesos_nueva = ($total_valor_acciones_pesos != 0) ? (($total_valor_acciones_pesos - $valor_inicial_acciones_pesos) / $total_valor_acciones_pesos) * 100 : 0;
 
 // Formateamos la rentabilidad
 $rentabilidad_acciones_pesos_nueva_formateada = number_format($rentabilidad_acciones_pesos_nueva, 2, ',', '.');

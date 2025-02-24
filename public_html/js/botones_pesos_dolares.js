@@ -42,4 +42,67 @@ document.addEventListener("DOMContentLoaded", () => {
         tablaAccionesPesos.classList.add("d-none");
     });
     
+    // Cedear
+    const btnCedearPesos = document.getElementById("btnCedearPesos");
+    const btnCedearDolares = document.getElementById("btnCedearDolares");
+    const tablaCedearPesos = document.getElementById("tablaCedearPesos");
+    const tablaCedearDolares = document.getElementById("tablaCedearDolares");
+
+    // Función para alternar entre las tablas
+    btnCedearPesos.addEventListener("click", () => {
+        btnCedearPesos.classList.add("active");
+        btnCedearDolares.classList.remove("active");
+        tablaCedearPesos.classList.remove("d-none");
+        tablaCedearDolares.classList.add("d-none");
+    });
+
+    btnCedearDolares.addEventListener("click", () => {
+        btnCedearDolares.classList.add("active");
+        btnCedearPesos.classList.remove("active");
+        tablaCedearDolares.classList.remove("d-none");
+        tablaCedearPesos.classList.add("d-none");
+    });
+ 
+    // Bonos
+    const btnBonosPesos = document.getElementById("btnBonosPesos");
+    const btnBonosDolares = document.getElementById("btnBonosDolares");
+    const tablaBonosPesos = document.getElementById("tablaBonosPesos");
+    const tablaBonosDolares = document.getElementById("tablaBonosDolares");
+
+    // Función para alternar entre las tablas
+    btnBonosPesos.addEventListener("click", () => {
+        btnBonosPesos.classList.add("active");
+        btnBonosDolares.classList.remove("active");
+        tablaBonosPesos.classList.remove("d-none");
+        tablaBonosDolares.classList.add("d-none");
+    });
+
+    btnBonosDolares.addEventListener("click", () => {
+        btnBonosDolares.classList.add("active");
+        btnBonosPesos.classList.remove("active");
+        tablaBonosDolares.classList.remove("d-none");
+        tablaBonosPesos.classList.add("d-none");
+    });
+ 
+    // Fondos
+    const btnFondosPesos = document.getElementById("btnFondosPesos");
+    const btnFondosDolares = document.getElementById("btnFondosDolares");
+    const tablaFondosPesos = document.getElementById("tablaFondosPesos");
+    const tablaFondosDolares = document.getElementById("tablaFondosDolares");
+
+    // Función para alternar entre las tablas
+    btnFondosPesos.addEventListener("click", () => {
+        btnFondosPesos.classList.add("active");
+        btnFondosDolares.classList.remove("active");
+        tablaFondosPesos.classList.remove("d-none");
+        tablaFondosDolares.classList.add("d-none");
+    });
+
+    btnFondosDolares.addEventListener("click", () => {
+        btnFondosDolares.classList.add("active");
+        btnFondosPesos.classList.remove("active");
+        tablaFondosDolares.classList.remove("d-none");
+        tablaFondosPesos.classList.add("d-none");
+    });
+ 
 });

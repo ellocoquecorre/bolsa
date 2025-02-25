@@ -32,53 +32,6 @@ $fecha_acciones_hoy = date('Y-m-d');
 // Inicializar variable de mensaje de error
 $error_msg = "";
 
-// Verificar si se ha enviado el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener los datos del formulario
-    $ticker_acciones = $_POST['ticker'];
-    $cantidad_acciones = $_POST['cantidad'];
-    $precio_acciones = $_POST['precio'];
-    $fecha_acciones = $_POST['fecha'];
-
-    // Calcular el total de la operación
-    $total_operacion = $cantidad_acciones * $precio_acciones;
-
-    // Obtener el valor de "efectivo" de la tabla "balance"
-    $sql = "SELECT efectivo FROM balance WHERE cliente_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $cliente_id);
-    $stmt->execute();
-    $stmt->bind_result($efectivo);
-    $stmt->fetch();
-    $stmt->close();
-
-    // Verificar si hay suficiente saldo
-    if ($total_operacion <= $efectivo) {
-        // Restar el total de la operación al efectivo
-        $nuevo_efectivo = $efectivo - $total_operacion;
-
-        // Actualizar el valor de "efectivo" en la tabla "balance"
-        $sql = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("di", $nuevo_efectivo, $cliente_id);
-        $stmt->execute();
-        $stmt->close();
-
-        // Insertar los datos en la tabla "acciones"
-        $sql = "INSERT INTO acciones (ticker, cantidad, precio, fecha, cliente_id) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sidsi", $ticker_acciones, $cantidad_acciones, $precio_acciones, $fecha_acciones, $cliente_id);
-        $stmt->execute();
-        $stmt->close();
-
-        // Redirigir al archivo cliente.php con el id del cliente
-        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
-        exit();
-    } else {
-        // Establecer mensaje de error de saldo insuficiente
-        $error_msg = "Saldo insuficiente";
-    }
-}
 ?>
 
 <!DOCTYPE html>

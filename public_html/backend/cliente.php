@@ -4,8 +4,6 @@ require_once '../../config/config.php';
 
 // Incluir las funciones necesarias
 include '../funciones/dolar_cronista.php';
-include '../funciones/balance.php';
-include '../funciones/cliente_acciones.php';
 
 // Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
@@ -382,16 +380,16 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
         <hr class="mod">
 
-        <!-- EFECTIVO -->
+        <!-- BALANCE -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo" id="efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Efectivo</h5>
                 <div class="row">
                     <div class="col-12 col-md-4 text-start">
-                        <p>Saldo en pesos: $ <span id="saldo_efectivo"><?php echo number_format($balance['efectivo'], 2, ',', '.'); ?></span></p>
+                        <p>Saldo en pesos: $ <!-- saldo_en_pesos --></p>
                     </div>
                     <div class="col-12 col-md-4 text-start">
-                        <p>Saldo en dólares: u$s <span id="saldo_dolares"><?php echo is_numeric($saldo_dolares) ? number_format($saldo_dolares, 2, ',', '.') : $saldo_dolares; ?></span></p>
+                        <p>Saldo en dólares: u$s <!-- saldo_en_dolares --></p>
                     </div>
                 </div>
                 <hr class="linea-accion">
@@ -399,21 +397,21 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <div class="col-12 col-md-4">
                         <div class="d-flex align-items-center">
                             <h6 class="me-2">Ingresar efectivo</h6>
-                            <input type="text" id="ingresar_efectivo" placeholder="0,00" class="form-control me-2" onkeyup="formatInput(this)" style="width: 150px; text-align: right;">
+                            <input type="text" id="ingresar_efectivo" placeholder="0,00" class="form-control me-2" onkeyup="" style="width: 150px; text-align: right;">
                             <input type="button" value="+" class="btn btn-info btn-custom ver" id="ingresar_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresar efectivo" style="width: 40px;">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="d-flex align-items-center">
                             <h6 class="me-2">Retirar efectivo</h6>
-                            <input type="text" id="retirar_efectivo" placeholder="0,00" class="form-control me-2" onkeyup="formatInput(this)" style="width: 150px; text-align: right;">
+                            <input type="text" id="retirar_efectivo" placeholder="0,00" class="form-control me-2" onkeyup="" style="width: 150px; text-align: right;">
                             <input type="button" value="-" class="btn btn-info btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar efectivo" style="width: 40px;">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- FIN EFECTIVO -->
+        <!-- FIN BALANCE -->
 
         <hr class="mod" style="margin-bottom: 80px;">
 

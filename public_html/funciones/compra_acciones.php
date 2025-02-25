@@ -119,7 +119,7 @@ $error_msg = "";
                         <label for="saldo" class="col-sm-2 col-form-label">Saldo</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
                                 <input type="text" class="form-control" id="saldo" name="saldo" value="<?php echo htmlspecialchars($saldo_formateado); ?>" readonly disabled>
                             </div>
                         </div>

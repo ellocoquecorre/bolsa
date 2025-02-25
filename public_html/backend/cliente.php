@@ -152,14 +152,25 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Precio<br>Compra</th>
-                                    <th>Precio<br>Actual</th>
-                                    <th>Valor<br>Inicial</th>
-                                    <th>Valor<br>Actual</th>
+                                    <th colspan="2">Precio</th>
+                                    <th colspan="2">Valor</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                     <th colspan="2">Venta</th>
                                     <th colspan="2">Operaciones</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Compra</th>
+                                    <th>Actual</th>
+                                    <th>Inicial</th>
+                                    <th>Actual</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th colspan="2"></th>
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
@@ -239,14 +250,25 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Precio<br>Compra</th>
-                                    <th>Precio<br>Actual</th>
-                                    <th>Valor<br>Inicial</th>
-                                    <th>Valor<br>Actual</th>
+                                    <th colspan="2">Precio</th>
+                                    <th colspan="2">Valor</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                     <th colspan="2">Venta</th>
                                     <th colspan="2">Operaciones</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Compra</th>
+                                    <th>Actual</th>
+                                    <th>Inicial</th>
+                                    <th>Actual</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th colspan="2"></th>
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-dolares">
@@ -343,14 +365,25 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Precio<br>Compra</th>
-                                    <th>Precio<br>Actual</th>
-                                    <th>Valor<br>Inicial</th>
-                                    <th>Valor<br>Actual</th>
+                                    <th colspan="2">Precio</th>
+                                    <th colspan="2">Valor</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                     <th colspan="2">Venta</th>
                                     <th colspan="2">Operaciones</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Compra</th>
+                                    <th>Actual</th>
+                                    <th>Inicial</th>
+                                    <th>Actual</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th colspan="2"></th>
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-cedear-pesos">
@@ -430,14 +463,25 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Precio<br>Compra</th>
-                                    <th>Precio<br>Actual</th>
-                                    <th>Valor<br>Inicial</th>
-                                    <th>Valor<br>Actual</th>
+                                    <th colspan="2">Precio</th>
+                                    <th colspan="2">Valor</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                     <th colspan="2">Venta</th>
                                     <th colspan="2">Operaciones</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Compra</th>
+                                    <th>Actual</th>
+                                    <th>Inicial</th>
+                                    <th>Actual</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th colspan="2"></th>
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-cedear-dolares">
@@ -534,14 +578,25 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Precio<br>Compra</th>
-                                    <th>Precio<br>Actual</th>
-                                    <th>Valor<br>Inicial</th>
-                                    <th>Valor<br>Actual</th>
+                                    <th colspan="2">Precio</th>
+                                    <th colspan="2">Valor</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                     <th colspan="2">Venta</th>
                                     <th colspan="2">Operaciones</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Compra</th>
+                                    <th>Actual</th>
+                                    <th>Inicial</th>
+                                    <th>Actual</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th colspan="2"></th>
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-bonos-pesos">
@@ -606,14 +661,25 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Precio<br>Compra</th>
-                                    <th>Precio<br>Actual</th>
-                                    <th>Valor<br>Inicial</th>
-                                    <th>Valor<br>Actual</th>
+                                    <th colspan="2">Precio</th>
+                                    <th colspan="2">Valor</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                     <th colspan="2">Venta</th>
                                     <th colspan="2">Operaciones</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Compra</th>
+                                    <th>Actual</th>
+                                    <th>Inicial</th>
+                                    <th>Actual</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th colspan="2"></th>
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-bonos-dolares">
@@ -704,14 +770,25 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Precio<br>Compra</th>
-                                    <th>Precio<br>Actual</th>
-                                    <th>Valor<br>Inicial</th>
-                                    <th>Valor<br>Actual</th>
+                                    <th colspan="2">Precio</th>
+                                    <th colspan="2">Valor</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                     <th colspan="2">Venta</th>
                                     <th colspan="2">Operaciones</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Compra</th>
+                                    <th>Actual</th>
+                                    <th>Inicial</th>
+                                    <th>Actual</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th colspan="2"></th>
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-fondos-pesos">
@@ -776,14 +853,25 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Precio<br>Compra</th>
-                                    <th>Precio<br>Actual</th>
-                                    <th>Valor<br>Inicial</th>
-                                    <th>Valor<br>Actual</th>
+                                    <th colspan="2">Precio</th>
+                                    <th colspan="2">Valor</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                     <th colspan="2">Venta</th>
                                     <th colspan="2">Operaciones</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Compra</th>
+                                    <th>Actual</th>
+                                    <th>Inicial</th>
+                                    <th>Actual</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th colspan="2"></th>
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-fondos-dolares">

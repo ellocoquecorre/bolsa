@@ -248,10 +248,10 @@ function calcularValoresAcciones($valor_inicial_acciones_pesos, $promedio_ccl, $
     ];
 }
 
-// SOiNK
+// ACCIONES DOLARES
 function obtener_acciones_dolares($acciones, $promedio_ccl)
 {
-    $acciones_formateadas = [];
+    $acciones_dolares = [];
 
     foreach ($acciones as $accion) {
         $cantidad_acciones_compra_acciones_formateada = is_null($accion['cantidad']) ? '0' : number_format($accion['cantidad'], 0, '', '.');
@@ -292,7 +292,7 @@ function obtener_acciones_dolares($acciones, $promedio_ccl)
         $color_rendimiento = ($rendimiento >= 0) ? 'green' : 'red';
 
         // Guardamos todo en el array de resultados formateados
-        $acciones_formateadas[] = [
+        $acciones_dolares[] = [
             'ticker' => $accion['ticker'],
             'fecha' => $fecha_acciones_compra_acciones_formateada,
             'cantidad' => $cantidad_acciones_compra_acciones_formateada,
@@ -303,5 +303,5 @@ function obtener_acciones_dolares($acciones, $promedio_ccl)
         ];
     }
 
-    return $acciones_formateadas;
+    return $acciones_dolares;
 }

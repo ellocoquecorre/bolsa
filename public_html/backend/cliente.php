@@ -177,6 +177,12 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <?php
                                 foreach ($acciones as $accion) {
                                     $datos_accion = obtener_datos_accion($accion);
+                                    $cantidad_compra = floatval($datos_accion['cantidad_compra']);
+                                    $valor_compra = floatval($datos_accion['valor_compra']);
+                                    $valor_actual = floatval($datos_accion['valor_actual']);
+
+                                    $valor_inicial_accion_pesos = number_format($cantidad_compra * $valor_compra, 2, ',', '.');
+                                    $valor_actual_accion_pesos = number_format($cantidad_compra * $valor_actual, 2, ',', '.');
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
@@ -184,15 +190,15 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td>{$datos_accion['cantidad_compra']}</td>
                                             <td>$ {$datos_accion['valor_compra']}</td>
                                             <td>$ {$datos_accion['valor_actual']}</td>
-                                            <td>$ <!-- valor_inicial_acciones_pesos --></td>
-                                            <td>$ <!-- valor_actual_acciones_pesos --></td>
+                                            <td>$ {$valor_inicial_accion_pesos}</td>
+                                            <td>$ {$valor_actual_accion_pesos}</td>
                                             <td><span style='color: {$datos_accion['color_rendimiento']};'>$  {$datos_accion['rendimiento']}</span></td>
                                             <td><span style='color: {$datos_accion['color_rentabilidad']};'>{$datos_accion['rentabilidad']}</span></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-check-circle'></i></a></td>
                                             <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
                                             <td class='text-center'>
-                                                <button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick='eliminarAcciones(\"{$accion['ticker']}\", {$cliente_id})'>
+                                                <button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick='eliminarAcciones(\"{$accion['ticker']}\")'>
                                                     <i class='fa-solid fa-trash'></i>
                                                 </button>
                                             </td>
@@ -200,7 +206,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 }
                                 ?>
                             </tbody>
-
                         </table>
                     </div>
                     <!-- Fin Completa Acciones Pesos -->
@@ -273,17 +278,24 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </thead>
                             <tbody id="tabla-acciones-dolares">
                                 <?php
-                                $acciones_formateadas = obtener_acciones_dolares($acciones, $promedio_ccl);
+                                $acciones_dolares = obtener_acciones_dolares($acciones, $promedio_ccl);
 
-                                foreach ($acciones_formateadas as $accion) {
+                                foreach ($acciones_dolares as $accion) {
+                                    $cantidad = floatval($accion['cantidad']);
+                                    $valor_compra = floatval($accion['valor_compra']);
+                                    $valor_actual = floatval($accion['valor_actual']);
+
+                                    $valor_inicial_accion_dolares = number_format($cantidad * $valor_compra, 2, ',', '.');
+                                    $valor_actual_accion_dolares = number_format($cantidad * $valor_actual, 2, ',', '.');
+
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
                                             <td>{$accion['fecha']}</td>
                                             <td>{$accion['cantidad']}</td>
                                             <td>{$accion['valor_compra']}</td>
                                             <td>{$accion['valor_actual']}</td>
-                                            <td>$ <!-- valor_inicial_acciones_dolares --></td>
-                                            <td>$ <!-- valor_actual_acciones_dolares --></td>
+                                            <td>$ {$valor_inicial_accion_dolares}</td>
+                                            <td>$ {$valor_actual_accion_dolares}</td>
                                             <td>{$accion['rendimiento']}</td>
                                             <td>{$accion['rentabilidad']}</td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>

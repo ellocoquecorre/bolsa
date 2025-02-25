@@ -112,14 +112,14 @@ $error_msg = "";
                         <?php echo $error_msg; ?>
                     </div>
                 <?php endif; ?>
-                <form id="compra_acciones" method="POST" action="">
+                <form id="compra_acciones" method="POST" action="../funciones/cliente_acciones.php">
                     <input type="hidden" name="cliente_id" value="<?php echo htmlspecialchars($cliente_id); ?>">
                     <!-- Saldo -->
                     <div class="row mb-3 align-items-center">
                         <label for="saldo" class="col-sm-2 col-form-label">Saldo</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                 <input type="text" class="form-control" id="saldo" name="saldo" value="<?php echo htmlspecialchars($saldo_formateado); ?>" readonly disabled>
                             </div>
                         </div>

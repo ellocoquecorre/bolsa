@@ -1,7 +1,7 @@
 $(document).ready(function() {
     function updateDropdownPosition() {
         var tickerInput = $('#ticker');
-        var dropdown = $('#tickerDropdown');
+        var dropdown = $('#tickerDropdown_acciones');
 
         var inputWidth = tickerInput.outerWidth();
         var inputOffset = tickerInput.offset();
@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     $('#ticker').on('input', function() {
         var query = $(this).val();
-        var dropdown = $('#tickerDropdown');
+        var dropdown = $('#tickerDropdown_acciones');
 
         if (query.length > 0) {
             $.ajax({
@@ -27,7 +27,8 @@ $(document).ready(function() {
                     if (data.length > 0) {
                         var items = JSON.parse(data);
                         items.forEach(function(item) {
-                            dropdown.append('<a class="dropdown-item" href="#">' + item + '</a>');
+                            dropdown.append('<a class="dropdown-item" href="#">' +
+                                item.ticker + ' - ' + item.company_name + '</a>');
                         });
 
                         updateDropdownPosition();
@@ -44,15 +45,15 @@ $(document).ready(function() {
         updateDropdownPosition();
     });
 
-    $(document).on('click', '#tickerDropdown .dropdown-item', function(e) {
+    $(document).on('click', '#tickerDropdown_acciones .dropdown-item', function(e) {
         e.preventDefault();
         var text = $(this).text().split(' - ')[0];
         $('#ticker').val(text);
-        $('#tickerDropdown').empty().hide();
+        $('#tickerDropdown_acciones').empty().hide();
     });
 
     $('#ticker').on('keydown', function(e) {
-        var dropdownItems = $('#tickerDropdown .dropdown-item');
+        var dropdownItems = $('#tickerDropdown_acciones .dropdown-item');
         var activeItem = dropdownItems.filter('.active');
         if (e.key === 'ArrowDown') {
             if (activeItem.length && activeItem.next().length) {

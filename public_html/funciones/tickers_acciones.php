@@ -7,11 +7,14 @@ if (isset($_GET['term'])) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $term);
     $stmt->execute();
-    $stmt->bind_result($ticker_acciones, $company_name);
+    $stmt->bind_result($ticker, $company_name);
 
     $results = [];
     while ($stmt->fetch()) {
-        $results[] = $ticker_acciones . ' - ' . $company_name;
+        $results[] = [
+            'ticker' => $ticker,
+            'company_name' => $company_name
+        ];
     }
     $stmt->close();
 

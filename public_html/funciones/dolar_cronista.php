@@ -1,4 +1,8 @@
 <?php
+
+// Incluir utilidades comunes
+require_once 'formato_dinero.php';
+
 // FUNCIONES COMUNES
 function obtener_valor($url, &$compra, &$venta)
 {
@@ -24,23 +28,6 @@ function obtener_valor($url, &$compra, &$venta)
     } else {
         $venta = "-";
     }
-}
-
-function formatear_dinero($valor)
-{
-    if ($valor == '-') {
-        return $valor;
-    }
-    return '$ ' . number_format((float)$valor, 2, ',', '.');
-}
-
-function calcular_saldo_dolares($saldo_efectivo, $ccl_compra, $ccl_venta)
-{
-    if ($ccl_compra == 'N/A' || $ccl_venta == 'N/A') {
-        return 'N/A';
-    }
-    $ccl_promedio = ((float)$ccl_compra + (float)$ccl_venta) / 2;
-    return $saldo_efectivo / $ccl_promedio;
 }
 
 // DOLAR BNA

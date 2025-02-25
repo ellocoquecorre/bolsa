@@ -314,7 +314,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
         <hr class="mod">
 
-        <!-- DOLAR API -->
+        <!-- COTIZACION DOLAR -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo" id="dolar">
                 <h5 class="me-2 cartera titulo-botones mb-4">Tipos de cambio</h5>
@@ -336,12 +336,12 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <td>Venta</td>
                             </tr>
                             <tr>
-                                <td><?php echo formatear_dinero($oficial_compra); ?></td>
-                                <td><?php echo formatear_dinero($oficial_venta); ?></td>
-                                <td><?php echo formatear_dinero($blue_compra); ?></td>
-                                <td><?php echo formatear_dinero($blue_venta); ?></td>
-                                <td><?php echo formatear_dinero($bolsa_compra); ?></td>
-                                <td><?php echo formatear_dinero($bolsa_venta); ?></td>
+                                <td>$ <?php echo formatear_dinero($oficial_compra); ?></td>
+                                <td>$ <?php echo formatear_dinero($oficial_venta); ?></td>
+                                <td>$ <?php echo formatear_dinero($blue_compra); ?></td>
+                                <td>$ <?php echo formatear_dinero($blue_venta); ?></td>
+                                <td>$ <?php echo formatear_dinero($bolsa_compra); ?></td>
+                                <td>$ <?php echo formatear_dinero($bolsa_venta); ?></td>
                             </tr>
                         </tbody>
                     </table>
@@ -365,19 +365,19 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <td>Venta</td>
                             </tr>
                             <tr>
-                                <td><?php echo formatear_dinero($contadoconliqui_compra); ?></td>
-                                <td><?php echo formatear_dinero($contadoconliqui_venta); ?></td>
-                                <td><?php echo formatear_dinero($tarjeta_compra); ?></td>
-                                <td><?php echo formatear_dinero($tarjeta_venta); ?></td>
-                                <td><?php echo formatear_dinero($mayorista_compra); ?></td>
-                                <td><?php echo formatear_dinero($mayorista_venta); ?></td>
+                                <td>$ <?php echo formatear_dinero($contadoconliqui_compra); ?></td>
+                                <td>$ <?php echo formatear_dinero($contadoconliqui_venta); ?></td>
+                                <td>$ <?php echo formatear_dinero($tarjeta_compra); ?></td>
+                                <td>$ <?php echo formatear_dinero($tarjeta_venta); ?></td>
+                                <td>$ <?php echo formatear_dinero($mayorista_compra); ?></td>
+                                <td>$ <?php echo formatear_dinero($mayorista_venta); ?></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <!-- FIN DOLAR API -->
+        <!-- COTIZACION DOLAR -->
 
         <hr class="mod">
 
@@ -387,7 +387,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 <h5 class="me-2 cartera titulo-botones mb-4">Efectivo</h5>
                 <div class="row">
                     <div class="col-12 col-md-4 text-start">
-                        <p>Saldo en pesos: $ <!-- saldo_en_pesos --></p>
+                        <p>Saldo en pesos: $ <?php echo $saldo_en_pesos_formateado; ?></p>
                     </div>
                     <div class="col-12 col-md-4 text-start">
                         <p>Saldo en dólares: u$s <!-- saldo_en_dolares --></p>

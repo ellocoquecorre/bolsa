@@ -126,13 +126,13 @@ $error_msg = "";
                     </div>
                     <!-- Ticker -->
                     <div class="row mb-3 align-items-center">
-                        <label for="ticker" class="col-sm-2 col-form-label">Ticker</label>
+                        <label for="ticker_acciones" class="col-sm-2 col-form-label">Ticker</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
                                 <input type="text" class="form-control" id="ticker" name="ticker" required autofocus>
                             </div>
-                            <div id="tickerDropdown" class="dropdown-menu" style="display: none; width: 100%;"></div>
+                            <div id="tickerDropdown_acciones" class="dropdown-menu" style="display: none; width: 100%;"></div>
                         </div>
                     </div>
                     <!-- Cantidad -->

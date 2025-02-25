@@ -14,13 +14,3 @@ $stmt->bind_result($nombre, $apellido);
 $stmt->fetch();
 $stmt->close();
 // FIN DATOS DEL CLIENTE
-
-// BALANCE DEL CLIENTE
-$sql = "SELECT efectivo FROM balance WHERE cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $cliente_id);
-$stmt->execute();
-$stmt->bind_result($saldo_efectivo);
-$stmt->fetch();
-$stmt->close();
-// FIN BALANCE DEL CLIENTE

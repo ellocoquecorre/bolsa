@@ -6,6 +6,7 @@ require_once '../../config/config.php';
 include '../funciones/dolar_cronista.php';
 include '../funciones/balance.php';
 include '../funciones/cliente_acciones.php';
+include '../funciones/cliente_cedear.php';
 
 // Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
@@ -151,7 +152,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Valor<br>Compra</th>
+                                    <th>Precio<br>Compra</th>
+                                    <th>Precio<br>Actual</th>
+                                    <th>Valor<br>Inicial</th>
                                     <th>Valor<br>Actual</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
@@ -170,6 +173,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td>{$datos_accion['cantidad_compra']}</td>
                                             <td>$ {$datos_accion['valor_compra']}</td>
                                             <td>$ {$datos_accion['valor_actual']}</td>
+                                            <td>$ <!-- valor_inicial_acciones_pesos --></td>
+                                            <td>$ <!-- valor_actual_acciones_pesos --></td>
                                             <td><span style='color: {$datos_accion['color_rendimiento']};'>$  {$datos_accion['rendimiento']}</span></td>
                                             <td><span style='color: {$datos_accion['color_rentabilidad']};'>{$datos_accion['rentabilidad']}</span></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
@@ -234,7 +239,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Valor<br>Compra</th>
+                                    <th>Precio<br>Compra</th>
+                                    <th>Precio<br>Actual</th>
+                                    <th>Valor<br>Inicial</th>
                                     <th>Valor<br>Actual</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
@@ -253,6 +260,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td>{$accion['cantidad']}</td>
                                             <td>{$accion['valor_compra']}</td>
                                             <td>{$accion['valor_actual']}</td>
+                                            <td>$ <!-- valor_inicial_acciones_dolares --></td>
+                                            <td>$ <!-- valor_actual_acciones_dolares --></td>
                                             <td>{$accion['rendimiento']}</td>
                                             <td>{$accion['rentabilidad']}</td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
@@ -314,10 +323,10 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><!-- valor_total_inicial_cedear_pesos --></td>
-                                    <td><!-- valor_total_actual_cedear_pesos --></td>
-                                    <td><!-- rendimiento_total_cedear_pesos --></td>
-                                    <td><!-- rentabilidad_total_cedear_pesos --></td>
+                                    <td>$ <?php echo number_format($valor_inicial_cedear_pesos, 2, ',', '.'); ?></td>
+                                    <td>$ <?php echo $valor_total_cedear_pesos_formateado; ?></td>
+                                    <td style="color: <?php echo $color_rendimiento_cedear; ?>;">$ <?php echo $rendimiento_cedear_pesos_formateado; ?></td>
+                                    <td style="color: <?php echo $color_rentabilidad_cedear_nueva; ?>;"><?php echo $rentabilidad_cedear_pesos_nueva_formateada . ' %'; ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -334,7 +343,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Valor<br>Compra</th>
+                                    <th>Precio<br>Compra</th>
+                                    <th>Precio<br>Actual</th>
+                                    <th>Valor<br>Inicial</th>
                                     <th>Valor<br>Actual</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
@@ -343,20 +354,33 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody id="tabla-cedear-pesos">
-                                <tr>
-                                    <td><!-- ticker_cedear_pesos --></td>
-                                    <td><!-- fecha_cedear_pesos --></td>
-                                    <td><!-- cantidad_cedear_pesos --></td>
-                                    <td><!-- valor_compra_cedear_pesos --></td>
-                                    <td><!-- valor_actual_cedear_pesos --></td>
-                                    <td><!-- rendimiento_cedear_pesos --></td>
-                                    <td><!-- rentabilidad_cedear_pesos --></td>
+                                <?php
+                                foreach ($cedear as $accion) {
+                                    $datos_cedear = obtener_datos_cedear($accion);
+
+                                    echo "<tr data-ticker='{$accion['ticker']}'>
+                                    <td>{$accion['ticker']}</td>
+                                    <td>{$datos_cedear['fecha_compra']}</td>
+                                    <td>{$datos_cedear['cantidad_compra']}</td>
+                                    <td>$ {$datos_cedear['valor_compra']}</td>
+                                    <td>$ {$datos_cedear['valor_actual']}</td>
+                                    <td>$ <!-- valor_inicial_cedear_pesos --></td>
+                                    <td>$ <!-- valor_actual_cedear_pesos --></td>
+                                    <td><span style='color: {$datos_cedear['color_rendimiento']};'>$  {$datos_cedear['rendimiento']}</span></td>
+                                    <td><span style='color: {$datos_cedear['color_rentabilidad']};'>{$datos_cedear['rentabilidad']}</span></td>
                                     <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
-                                    <td class="text-center"><a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta total"><i class="fa-solid fa-check-circle"></i></a></td>
-                                    <td class="text-center"><a href="" class="btn btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen"></i></a></td>
-                                    <td class="text-center"><button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar" onclick=""><i class="fa-solid fa-trash"></i></button></td>
-                                </tr>
+                                    <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-check-circle'></i></a></td>
+                                    <td class='text-center'><a href='../funciones/editar_compra_cedear.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
+                                    <td class='text-center'>
+                                        <button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick='eliminarCedear(\"{$accion['ticker']}\")'>
+                                            <i class='fa-solid fa-trash'></i>
+                                        </button>
+                                    </td>
+                                </tr>";
+                                }
+                                ?>
                             </tbody>
+
                         </table>
                     </div>
                     <!-- Fin Completa Cedear Pesos -->
@@ -382,10 +406,14 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><!-- valor_total_inicial_cedear_dolares --></td>
-                                    <td><!-- valor_total_actual_cedear_dolares --></td>
-                                    <td><!-- rendimiento_total_cedear_dolares --></td>
-                                    <td><!-- rentabilidad_total_cedear_dolares --></td>
+                                    <?php
+                                    $valores = calcularValoresCedear($valor_inicial_cedear_pesos, $promedio_ccl, $total_valor_cedear_dolares_formateado);
+                                    ?>
+
+                                    <td>u$s <?php echo $valores['valor_inicial_formateado']; ?></td>
+                                    <td>u$s <?php echo $valores['valor_actual_formateado']; ?></td>
+                                    <td><span style="color: <?php echo $valores['color_rendimiento']; ?>;">u$s <?php echo $valores['rendimiento_formateado']; ?></span></td>
+                                    <td><span style="color: <?php echo $valores['color_rentabilidad']; ?>;"><?php echo $valores['rentabilidad_formateada']; ?></span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -402,7 +430,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Valor<br>Compra</th>
+                                    <th>Precio<br>Compra</th>
+                                    <th>Precio<br>Actual</th>
+                                    <th>Valor<br>Inicial</th>
                                     <th>Valor<br>Actual</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
@@ -411,19 +441,27 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody id="tabla-cedear-dolares">
-                                <tr>
-                                    <td><!-- ticker_cedear_dolares --></td>
-                                    <td><!-- fecha_cedear_dolares --></td>
-                                    <td><!-- cantidad_cedear_dolares --></td>
-                                    <td><!-- valor_compra_cedear_dolares --></td>
-                                    <td><!-- valor_actual_cedear_dolares --></td>
-                                    <td><!-- rendimiento_cedear_dolares --></td>
-                                    <td><!-- rentabilidad_cedear_dolares --></td>
+                                <?php
+                                $cedear_formateadas = obtener_cedear_dolares($cedear, $promedio_ccl);
+
+                                foreach ($cedear_formateadas as $accion) {
+                                    echo "<tr data-ticker='{$accion['ticker']}'>
+                                    <td>{$accion['ticker']}</td>
+                                    <td>{$accion['fecha']}</td>
+                                    <td>{$accion['cantidad']}</td>
+                                    <td>{$accion['valor_compra']}</td>
+                                    <td>{$accion['valor_actual']}</td>
+                                    <td>$ <!-- valor_inicial_cedear_dolares --></td>
+                                    <td>$ <!-- valor_actual_cedear_dolares --></td>
+                                    <td>{$accion['rendimiento']}</td>
+                                    <td>{$accion['rentabilidad']}</td>
                                     <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
-                                    <td class="text-center"><a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta total"><i class="fa-solid fa-check-circle"></i></a></td>
-                                    <td class="text-center"><a href="" class="btn btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen"></i></a></td>
-                                    <td class="text-center"><button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar" onclick=""><i class="fa-solid fa-trash"></i></button></td>
-                                </tr>
+                                    <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-check-circle'></i></a></td>
+                                    <td class='text-center'><a href='../funciones/editar_compra_cedear.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
+                                    <td class='text-center'><button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''><i class='fa-solid fa-trash'></i></button></td>
+                                </tr>";
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -496,7 +534,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Valor<br>Compra</th>
+                                    <th>Precio<br>Compra</th>
+                                    <th>Precio<br>Actual</th>
+                                    <th>Valor<br>Inicial</th>
                                     <th>Valor<br>Actual</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
@@ -509,7 +549,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <td><!-- ticker_bonos_pesos --></td>
                                     <td><!-- fecha_bonos_pesos --></td>
                                     <td><!-- cantidad_bonos_pesos --></td>
-                                    <td><!-- valor_compra_bonos_pesos --></td>
+                                    <td><!-- precio_compra_bonos_pesos --></td>
+                                    <td><!-- precio_actual_bonos_pesos --></td>
+                                    <td><!-- valor_inicial_bonos_pesos --></td>
                                     <td><!-- valor_actual_bonos_pesos --></td>
                                     <td><!-- rendimiento_bonos_pesos --></td>
                                     <td><!-- rentabilidad_bonos_pesos --></td>
@@ -564,7 +606,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Valor<br>Compra</th>
+                                    <th>Precio<br>Compra</th>
+                                    <th>Precio<br>Actual</th>
+                                    <th>Valor<br>Inicial</th>
                                     <th>Valor<br>Actual</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
@@ -577,7 +621,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <td><!-- ticker_bonos_dolares --></td>
                                     <td><!-- fecha_bonos_dolares --></td>
                                     <td><!-- cantidad_bonos_dolares --></td>
-                                    <td><!-- valor_compra_bonos_dolares --></td>
+                                    <td><!-- precio_compra_bonos_dolares --></td>
+                                    <td><!-- precio_actual_bonos_dolares --></td>
+                                    <td><!-- valor_inicial_bonos_dolares --></td>
                                     <td><!-- valor_actual_bonos_dolares --></td>
                                     <td><!-- rendimiento_bonos_dolares --></td>
                                     <td><!-- rentabilidad_bonos_dolares --></td>
@@ -658,7 +704,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Valor<br>Compra</th>
+                                    <th>Precio<br>Compra</th>
+                                    <th>Precio<br>Actual</th>
+                                    <th>Valor<br>Inicial</th>
                                     <th>Valor<br>Actual</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
@@ -671,7 +719,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <td><!-- ticker_fondos_pesos --></td>
                                     <td><!-- fecha_fondos_pesos --></td>
                                     <td><!-- cantidad_fondos_pesos --></td>
-                                    <td><!-- valor_compra_fondos_pesos --></td>
+                                    <td><!-- precio_compra_fondos_pesos --></td>
+                                    <td><!-- precio_actual_fondos_pesos --></td>
+                                    <td><!-- valor_inicial_fondos_pesos --></td>
                                     <td><!-- valor_actual_fondos_pesos --></td>
                                     <td><!-- rendimiento_fondos_pesos --></td>
                                     <td><!-- rentabilidad_fondos_pesos --></td>
@@ -726,7 +776,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Ticker</th>
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
-                                    <th>Valor<br>Compra</th>
+                                    <th>Precio<br>Compra</th>
+                                    <th>Precio<br>Actual</th>
+                                    <th>Valor<br>Inicial</th>
                                     <th>Valor<br>Actual</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
@@ -739,7 +791,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <td><!-- ticker_fondos_dolares --></td>
                                     <td><!-- fecha_fondos_dolares --></td>
                                     <td><!-- cantidad_fondos_dolares --></td>
-                                    <td><!-- valor_compra_fondos_dolares --></td>
+                                    <td><!-- precio_compra_fondos_dolares --></td>
+                                    <td><!-- precio_actual_fondos_dolares --></td>
+                                    <td><!-- valor_inicial_fondos_dolares --></td>
                                     <td><!-- valor_actual_fondos_dolares --></td>
                                     <td><!-- rendimiento_fondos_dolares --></td>
                                     <td><!-- rentabilidad_fondos_dolares --></td>

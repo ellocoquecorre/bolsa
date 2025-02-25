@@ -13,7 +13,7 @@ async function actualizarValoresAcciones() {
         const ticker = fila.dataset.ticker;
         const valorActualTd = fila.querySelector('.valor-actual');
         try {
-            const response = await fetch(`../funciones/obtener_valor_accion.php?ticker=${ticker}`);
+            const response = await fetch(`../funciones/valor_accion.php?ticker=${ticker}`);
             const data = await response.json();
             if (data.valor) {
                 valorActualTd.innerText = formatearNumero(data.valor);

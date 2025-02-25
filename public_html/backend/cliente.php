@@ -3,6 +3,7 @@
 require_once '../../config/config.php';
 
 // Incluir las funciones necesarias
+include '../funciones/cliente_funciones.php';
 include '../funciones/dolar_cronista.php';
 
 // Obtener el id del cliente desde la URL
@@ -194,7 +195,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Eliminar" onclick="eliminarAcciones(\" {$accion['ticker']}\")"> <i class="fa-solid fa-trash"></i>
+                                        title="Eliminar" onclick="" <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
                             </tbody>
@@ -207,7 +208,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                 <!-- Acciones Dólares -->
                 <div id="tablaAccionesDolares" class="d-none">
-                    <p class="text-left" style="color: #0B486B">Valor promedio dólar CCL: $ <?php echo number_format($promedio_ccl, 2, ',', '.'); ?></p>
+                    <p class="text-left promedio_ccl">Valor promedio dólar CCL: $ <!-- promedio_ccl --></p>
 
                     <!-- Consolidada Acciones Dólares -->
                     <div class="table-responsive">
@@ -287,7 +288,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Eliminar" onclick="eliminarAcciones(\" {$accion['ticker']}\")"> <i class="fa-solid fa-trash"></i>
+                                        title="Eliminar" onclick="" <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
                             </tbody>
@@ -433,9 +434,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
-    <script src="../js/formato_miles.js"></script>
-    <script src="../js/ingresa_dinero.js"></script>
-    <script src="../js/retira_dinero.js"></script>
     <script src="../js/eliminar_acciones.js"></script>
     <!-- FIN JS -->
 </body>

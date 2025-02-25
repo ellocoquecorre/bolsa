@@ -289,3 +289,7 @@ form label {
   z-index: 9999;
   width: 200px; /* Ajusta el tamaño de la imagen si es necesario */
 }
+
+.promedio_ccl {
+  color: #0B486B;
+}

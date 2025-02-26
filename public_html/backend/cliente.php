@@ -179,6 +179,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
                                     $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
                                     $rendimiento_acciones_pesos = $valor_actual_acciones_pesos - $valor_inicial_acciones_pesos;
+                                    $rentabilidad_acciones_pesos = ($valor_actual_acciones_pesos / $valor_inicial_acciones_pesos - 1) * 100;
 
                                     echo '<tr data-ticker="' . htmlspecialchars($accion['ticker']) . '">';
                                     echo '<td>' . htmlspecialchars($accion['ticker']) . '</td>';
@@ -188,8 +189,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($precio_actual)) . '</td>';
                                     echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . '</td>';
                                     echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . '</td>';
-                                    echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($rendimiento_acciones_pesos)) . '</td>';
-                                    echo '<td><!-- rentabilidad__acciones_pesos --> %</td>';
+                                    echo '<td class="text-right" style="color: <?php echo $color_rendimiento; ?>;">$ ' . htmlspecialchars(formatear_dinero($rendimiento_acciones_pesos)) . '</td>';
+                                    echo '<td style="color: <?php echo $color_rendimiento; ?>;">' . htmlspecialchars(formatear_dinero($rentabilidad_acciones_pesos)) . ' %</td>';
                                     echo '<td class="text-center">
                                     <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial">
                                     <i class="fa-solid fa-percent"></i>

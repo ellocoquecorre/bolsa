@@ -188,8 +188,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($precio_actual)) . '</td>';
                                     echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . '</td>';
                                     echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . '</td>';
-                                    echo '<td class="text-right" style="color: <?php echo $color_rendimiento; ?>;">$ ' . htmlspecialchars(formatear_dinero($rendimiento_acciones_pesos)) . '</td>';
-                                    echo '<td style="color: <?php echo $color_rendimiento; ?>;">' . htmlspecialchars(formatear_dinero($rentabilidad_acciones_pesos)) . ' %</td>';
+                                    echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($rendimiento_acciones_pesos)) . '</td>';
+                                    echo '<td>' . htmlspecialchars(formatear_dinero($rentabilidad_acciones_pesos)) . ' %</td>';
                                     echo '<td class="text-center">
                                     <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial">
                                     <i class="fa-solid fa-percent"></i>

@@ -157,23 +157,24 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th colspan="2">Operaciones</th>
                                 </tr>
                                 <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th>Compra</th>
-                                    <th>Actual</th>
-                                    <th>Inicial</th>
-                                    <th>Actual</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th colspan="2"></th>
-                                    <th colspan="2"></th>
+                                    <th><!-- Ticker --></th>
+                                    <th><!-- Fecha --></th>
+                                    <th><!-- Cantidad --></th>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Actual</th>
+                                    <th><!-- X -->Inicial</th>
+                                    <th><!-- X -->Actual</th>
+                                    <th><!-- Rendimiento --></th>
+                                    <th><!-- Rentabilidad --></th>
+                                    <th colspan="2"><!-- Venta --></th>
+                                    <th colspan="2"><!-- Operaciones --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
                                 <td><!-- ticker_acciones --></td>
+                                <td><!-- fecha_acciones --></td>
                                 <td><!-- cantidad_acciones --></td>
-                                <td><!-- precio_inicial_acciones_pesos --></td>
+                                <td><!-- precio_compra_acciones_pesos --></td>
                                 <td><!-- precio_actual_acciones_pesos --></td>
                                 <td><!-- valor_inicial_acciones_pesos --></td>
                                 <td><!-- valor_actual_acciones_pesos --></td>
@@ -194,7 +195,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Eliminar" onclick="" <i class="fa-solid fa-trash"></i>
+                                        title="Eliminar" onclick=""><i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
                             </tbody>
@@ -250,23 +251,24 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th colspan="2">Operaciones</th>
                                 </tr>
                                 <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th>Compra</th>
-                                    <th>Actual</th>
-                                    <th>Inicial</th>
-                                    <th>Actual</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th colspan="2"></th>
-                                    <th colspan="2"></th>
+                                    <th><!-- Ticker --></th>
+                                    <th><!-- Fecha --></th>
+                                    <th><!-- Cantidad --></th>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Actual</th>
+                                    <th><!-- X -->Inicial</th>
+                                    <th><!-- X -->Actual</th>
+                                    <th><!-- Rendimiento --></th>
+                                    <th><!-- Rentabilidad --></th>
+                                    <th colspan="2"><!-- Venta --></th>
+                                    <th colspan="2"><!-- Operaciones --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-dolares">
                                 <td><!-- ticker_acciones --></td>
+                                <td><!-- fecha_acciones --></td>
                                 <td><!-- cantidad_acciones --></td>
-                                <td><!-- precio_inicial_acciones_dolares --></td>
+                                <td><!-- precio_compra_acciones_dolares --></td>
                                 <td><!-- precio_actual_acciones_dolares --></td>
                                 <td><!-- valor_inicial_acciones_dolares --></td>
                                 <td><!-- valor_actual_acciones_dolares --></td>
@@ -287,7 +289,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Eliminar" onclick="" <i class="fa-solid fa-trash"></i>
+                                        title="Eliminar" onclick=""><i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
                             </tbody>

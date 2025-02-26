@@ -23,9 +23,6 @@ $stmt->bind_result($efectivo);
 $stmt->fetch();
 $stmt->close();
 
-// Formatear el valor de "efectivo" con el signo "$", punto (.) como separador de miles y coma (,) como separador de decimales
-$saldo_formateado = '$ ' . number_format($efectivo, 2, ',', '.');
-
 // Obtener la fecha de hoy
 $fecha_acciones_hoy = date('Y-m-d');
 
@@ -120,7 +117,7 @@ $error_msg = "";
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
-                                <input type="text" class="form-control" id="saldo" name="saldo" value="<?php echo htmlspecialchars($saldo_formateado); ?>" readonly disabled>
+                                <input type="text" class="form-control" id="saldo" name="saldo" value="" readonly disabled>
                             </div>
                         </div>
                     </div>

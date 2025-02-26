@@ -188,8 +188,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($precio_actual)) . '</td>';
                                     echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . '</td>';
                                     echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . '</td>';
-                                    echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($rendimiento_acciones_pesos)) . '</td>';
-                                    echo '<td>' . htmlspecialchars(formatear_dinero($rentabilidad_acciones_pesos)) . ' %</td>';
+                                    echo '<td class="text-right">' . formatear_y_colorear_valor($rendimiento_acciones_pesos, '$') . '</td>';
+                                    echo '<td>' . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . '</td>';
                                     echo '<td class="text-center">
                                     <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial">
                                     <i class="fa-solid fa-percent"></i>
@@ -305,8 +305,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . '</td>';
                                     echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . '</td>';
                                     echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . '</td>';
-                                    echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($rendimiento_acciones_dolares)) . '</td>';
-                                    echo '<td>' . htmlspecialchars(formatear_dinero($rentabilidad__acciones_dolares)) . ' %</td>';
+                                    echo '<td class="text-right">' . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . '</td>';
+                                    echo '<td>' . formatear_y_colorear_porcentaje($rentabilidad__acciones_dolares) . '</td>';
                                     echo '<td class="text-center">
                                     <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial">
                                     <i class="fa-solid fa-percent"></i>

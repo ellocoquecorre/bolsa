@@ -1,6 +1,7 @@
 <?php
 // Incluir archivo de configuración
 require_once '../../config/config.php';
+include '../funciones/cliente_funciones.php'; // Incluir funciones del cliente
 
 // Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
@@ -29,6 +30,36 @@ $fecha_acciones_hoy = date('Y-m-d');
 // Inicializar variable de mensaje de error
 $error_msg = "";
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $ticker = $_POST['ticker'];
+    $cantidad = $_POST['cantidad'];
+    $precio = $_POST['precio'];
+    $fecha = $_POST['fecha'];
+    $total_compra = $cantidad * $precio;
+
+    if ($total_compra > $efectivo) {
+        $error_msg = "Saldo insuficiente";
+    } else {
+        // Actualizar el saldo en la tabla balance
+        $nuevo_efectivo = $efectivo - $total_compra;
+        $sql_update_balance = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
+        $stmt = $conn->prepare($sql_update_balance);
+        $stmt->bind_param("di", $nuevo_efectivo, $cliente_id);
+        $stmt->execute();
+        $stmt->close();
+
+        // Insertar los datos en la tabla acciones
+        $sql_insert_acciones = "INSERT INTO acciones (cliente_id, ticker, cantidad, precio, fecha) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql_insert_acciones);
+        $stmt->bind_param("isids", $cliente_id, $ticker, $cantidad, $precio, $fecha);
+        $stmt->execute();
+        $stmt->close();
+
+        // Redirigir a la página del cliente
+        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
+        exit;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -53,14 +84,7 @@ $error_msg = "";
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -109,7 +133,7 @@ $error_msg = "";
                         <?php echo $error_msg; ?>
                     </div>
                 <?php endif; ?>
-                <form id="compra_acciones" method="POST" action="../funciones/cliente_acciones.php">
+                <form id="compra_acciones" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo htmlspecialchars($cliente_id); ?>">
                     <!-- Saldo -->
                     <div class="row mb-3 align-items-center">
@@ -117,7 +141,7 @@ $error_msg = "";
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
-                                <input type="text" class="form-control" id="saldo" name="saldo" value="" readonly disabled>
+                                <input type="text" class="form-control" id="saldo" name="saldo" value="<?php echo htmlspecialchars($efectivo); ?>" readonly disabled>
                             </div>
                         </div>
                     </div>
@@ -166,8 +190,7 @@ $error_msg = "";
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                        <button type="button" class="btn btn-custom eliminar"
-                            onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones'">
+                        <button type="button" class="btn btn-custom eliminar" onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones'">
                             <i class="fa-solid fa-times me-2"></i>Cancelar</a>
                         </button>
                     </div>

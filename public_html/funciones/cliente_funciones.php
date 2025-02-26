@@ -85,6 +85,6 @@ function obtenerAcciones($cliente_id)
 function formatearFecha($fecha)
 {
     $date = new DateTime($fecha);
-    return $date->format('d-m-Y');
+    return $date->format('d-m-y');
 }
 // FIN RENDERIZAR ACCIONES

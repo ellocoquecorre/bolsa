@@ -4,7 +4,6 @@ require_once '../../config/config.php';
 
 // Incluir las funciones necesarias
 include '../funciones/cliente_funciones.php';
-include '../funciones/dolar_cronista.php';
 
 // Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
@@ -390,7 +389,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <p>Saldo en pesos: $ <?php echo $saldo_en_pesos_formateado; ?></p>
                     </div>
                     <div class="col-12 col-md-4 text-start">
-                        <p>Saldo en dólares: u$s <!-- saldo_en_dolares --></p>
+                        <p>Saldo en dólares: u$s <?php echo $saldo_en_dolares_formateado; ?></p>
                     </div>
                 </div>
                 <hr class="linea-accion">

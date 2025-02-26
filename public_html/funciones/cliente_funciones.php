@@ -3,6 +3,7 @@
 require_once '../../config/config.php';
 // Incluir utilidades comunes
 require_once 'formato_dinero.php';
+include '../funciones/dolar_cronista.php';
 
 // CLIENTE_ID
 $cliente_id = isset($_POST['cliente_id']) ? $_POST['cliente_id'] : (isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1);
@@ -28,3 +29,12 @@ $stmt_saldo->close();
 
 $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
 // FIN SALDO EN PESOS
+
+// PROMEDIO CCL
+$promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+// FIN PROMEDIO CCL
+
+// SALDO EN DÓLARES
+$saldo_en_dolares = $saldo_en_pesos / $promedio_ccl;
+$saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
+// FIN SALDO EN DÓLARES

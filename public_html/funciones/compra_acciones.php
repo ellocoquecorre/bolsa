@@ -1,6 +1,7 @@
 <?php
 // Incluir archivo de configuración
 require_once '../../config/config.php';
+require_once 'formato_dinero.php';
 include '../funciones/cliente_funciones.php'; // Incluir funciones del cliente
 
 // Obtener el id del cliente desde la URL
@@ -23,6 +24,9 @@ $stmt->execute();
 $stmt->bind_result($efectivo);
 $stmt->fetch();
 $stmt->close();
+
+// Formatear el valor de $efectivo
+$efectivo_formateado = formatear_dinero($efectivo);
 
 // Obtener la fecha de hoy
 $fecha_acciones_hoy = date('Y-m-d');
@@ -141,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
-                                <input type="text" class="form-control" id="saldo" name="saldo" value="<?php echo htmlspecialchars($efectivo); ?>" readonly disabled>
+                                <input type="text" class="form-control" id="saldo" name="saldo" value="<?php echo htmlspecialchars($efectivo_formateado); ?>" readonly disabled>
                             </div>
                         </div>
                     </div>

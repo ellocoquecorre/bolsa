@@ -171,33 +171,43 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
-                                <td><!-- ticker_acciones --></td>
-                                <td><!-- fecha_acciones --></td>
-                                <td><!-- cantidad_acciones --></td>
-                                <td><!-- precio_compra_acciones_pesos --></td>
-                                <td><!-- precio_actual_acciones_pesos --></td>
-                                <td><!-- valor_inicial_acciones_pesos --></td>
-                                <td><!-- valor_actual_acciones_pesos --></td>
-                                <td><!-- rendimiento_acciones_pesos --></td>
-                                <td><!-- rentabilidad__acciones_pesos --></td>
-                                <td class="text-center">
-                                    <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Venta parcial"> <i class="fa-solid fa-percent"></i></a>
-                                </td>
-                                <td class="text-center">
-                                    <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Venta total"><i class="fa-solid fa-check-circle"></i></a>
-                                </td>
-                                <td class="text-center">
-                                    <a href="../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion[" ticker"]}"
+                                <?php
+                                $acciones = obtenerAcciones($cliente_id);
+                                foreach ($acciones as $accion) {
+                                    echo '<tr data-ticker="' . htmlspecialchars($accion['ticker']) . '">';
+                                    echo '<td>' . htmlspecialchars($accion['ticker']) . '</td>';
+                                    echo '<td>' . htmlspecialchars(formatearFecha($accion['fecha'])) . '</td>';
+                                    echo '<td>' . htmlspecialchars($accion['cantidad']) . '</td>';
+                                    echo '<td>$ ' . htmlspecialchars(formatear_dinero($accion['precio'])) . '</td>';
+                                    echo '<td>$ <!-- precio_actual_acciones_pesos --></td>';
+                                    echo '<td>$ <!-- valor_inicial_acciones_pesos --></td>';
+                                    echo '<td>$ <!-- valor_actual_acciones_pesos --></td>';
+                                    echo '<td>$ <!-- rendimiento_acciones_pesos --></td>';
+                                    echo '<td><!-- rentabilidad__acciones_pesos --> %</td>';
+                                    echo '<td class="text-center">
+                                        <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial">
+                                        <i class="fa-solid fa-percent"></i>
+                                        </a>
+                                        </td>';
+                                    echo '<td class="text-center">
+                                        <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta total">
+                                        <i class="fa-solid fa-check-circle"></i>
+                                        </a>
+                                        </td>';
+                                    echo '<td class="text-center">
+                                        <a href="../funciones/editar_compra_acciones.php?cliente_id=' . $cliente_id . '&ticker=' . $accion['ticker'] . '" 
                                         class="btn btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                                        <i class="fa-solid fa-pen"></i></a>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Eliminar" onclick=""><i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
+                                        <i class="fa-solid fa-pen"></i>
+                                        </a>
+                                        </td>';
+                                    echo '<td class="text-center">
+                                        <button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar" onclick="">
+                                        <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                        </td>';
+                                    echo '</tr>';
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -265,33 +275,43 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-dolares">
-                                <td><!-- ticker_acciones --></td>
-                                <td><!-- fecha_acciones --></td>
-                                <td><!-- cantidad_acciones --></td>
-                                <td><!-- precio_compra_acciones_dolares --></td>
-                                <td><!-- precio_actual_acciones_dolares --></td>
-                                <td><!-- valor_inicial_acciones_dolares --></td>
-                                <td><!-- valor_actual_acciones_dolares --></td>
-                                <td><!-- rendimiento_acciones_dolares --></td>
-                                <td><!-- rentabilidad__acciones_dolares --></td>
-                                <td class="text-center">
-                                    <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Venta parcial"> <i class="fa-solid fa-percent"></i></a>
-                                </td>
-                                <td class="text-center">
-                                    <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Venta total"><i class="fa-solid fa-check-circle"></i></a>
-                                </td>
-                                <td class="text-center">
-                                    <a href="../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion[" ticker"]}"
-                                        class="btn btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                                        <i class="fa-solid fa-pen"></i></a>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Eliminar" onclick=""><i class="fa-solid fa-trash"></i>
+                                <?php
+                                $acciones = obtenerAcciones($cliente_id);
+                                foreach ($acciones as $accion) {
+                                    echo '<tr data-ticker="' . htmlspecialchars($accion['ticker']) . '">';
+                                    echo '<td>' . htmlspecialchars($accion['ticker']) . '</td>';
+                                    echo '<td>' . htmlspecialchars(formatearFecha($accion['fecha'])) . '</td>';
+                                    echo '<td>' . htmlspecialchars($accion['cantidad']) . '</td>';
+                                    echo '<td>u$s ' . htmlspecialchars(formatear_dinero($accion['precio'] / $promedio_ccl)) . '</td>';
+                                    echo '<td>u$s <!-- precio_actual_acciones_dolares --></td>';
+                                    echo '<td>u$s <!-- valor_inicial_acciones_dolares --></td>';
+                                    echo '<td>u$s <!-- valor_actual_acciones_dolares --></td>';
+                                    echo '<td>u$s <!-- rendimiento_acciones_dolares --></td>';
+                                    echo '<td><!-- rentabilidad__acciones_dolares --> %</td>';
+                                    echo '<td class="text-center">
+                                    <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial">
+                                    <i class="fa-solid fa-percent"></i>
+                                    </a>
+                                    </td>';
+                                    echo '<td class="text-center">
+                                    <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta total">
+                                    <i class="fa-solid fa-check-circle"></i>
+                                    </a>
+                                    </td>';
+                                    echo '<td class="text-center">
+                                    <a href="../funciones/editar_compra_acciones.php?cliente_id=' . $cliente_id . '&ticker=' . $accion['ticker'] . '" 
+                                    class="btn btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                                    <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    </td>';
+                                    echo '<td class="text-center">
+                                    <button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar" onclick="">
+                                    <i class="fa-solid fa-trash"></i>
                                     </button>
-                                </td>
+                                    </td>';
+                                    echo '</tr>';
+                                }
+                                ?>
                             </tbody>
 
                         </table>

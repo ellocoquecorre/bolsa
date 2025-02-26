@@ -62,3 +62,29 @@ function guardarAccion($cliente_id, $ticker, $cantidad, $precio, $fecha)
     $stmt->close();
 }
 // FIN COMPRA DE ACCIONES
+
+// RENDERIZAR ACCIONES
+function obtenerAcciones($cliente_id)
+{
+    global $conn;
+    $sql_acciones = "SELECT ticker, fecha, cantidad, precio FROM acciones WHERE cliente_id = ?";
+    $stmt_acciones = $conn->prepare($sql_acciones);
+    $stmt_acciones->bind_param("i", $cliente_id);
+    $stmt_acciones->execute();
+    $result = $stmt_acciones->get_result();
+
+    $acciones = [];
+    while ($fila = $result->fetch_assoc()) {
+        $acciones[] = $fila;
+    }
+
+    $stmt_acciones->close();
+    return $acciones;
+}
+
+function formatearFecha($fecha)
+{
+    $date = new DateTime($fecha);
+    return $date->format('d-m-Y');
+}
+// FIN RENDERIZAR ACCIONES

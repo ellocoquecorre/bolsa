@@ -1,46 +1,42 @@
 <?php
 require_once '../../config/config.php';
-require_once 'dolar_cronista.php';
+require_once 'formato_dinero.php';
 
-// Define the calcular_saldo_dolares function
-function calcular_saldo_dolares($efectivo, $compra, $venta)
-{
-    // Implement the logic to calculate the dollar balance
-    return $efectivo / (($compra + $venta) / 2);
+// Verificar que se recibió el cliente_id y el monto
+if (!isset($_POST['cliente_id']) || !isset($_POST['monto'])) {
+    echo json_encode(["error" => "Faltan datos"]);
+    exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $cliente_id = isset($_POST['cliente_id']) ? (int)$_POST['cliente_id'] : 0;
-    $monto = isset($_POST['monto']) ? (float)str_replace(',', '.', str_replace('.', '', $_POST['monto'])) : 0;
+$cliente_id = (int) $_POST['cliente_id'];
+$monto = (float) str_replace(',', '.', $_POST['monto']); // Convertir coma a punto decimal
 
-    if ($cliente_id > 0 && $monto > 0) {
-        // Actualizar el saldo en efectivo del cliente
-        $sql = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("di", $monto, $cliente_id);
-        if ($stmt->execute()) {
-            // Obtener el nuevo saldo
-            $sql_balance = "SELECT efectivo FROM balance WHERE cliente_id = ?";
-            $stmt_balance = $conn->prepare($sql_balance);
-            $stmt_balance->bind_param("i", $cliente_id);
-            $stmt_balance->execute();
-            $result_balance = $stmt_balance->get_result();
-            $balance = $result_balance->fetch_assoc();
+// Obtener saldo actual
+$sql = "SELECT efectivo FROM balance WHERE cliente_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $cliente_id);
+$stmt->execute();
+$stmt->bind_result($saldo_actual);
+$stmt->fetch();
+$stmt->close();
 
-            // Calcular el saldo en dólares
-            $saldo_dolares = calcular_saldo_dolares($balance['efectivo'], $contadoconliqui_compra, $contadoconliqui_venta);
+// Calcular nuevo saldo
+$nuevo_saldo = $saldo_actual + $monto;
 
-            echo json_encode([
-                'success' => true,
-                'nuevo_saldo_pesos' => number_format($balance['efectivo'], 2, ',', '.'),
-                'nuevo_saldo_dolares' => is_numeric($saldo_dolares) ? number_format($saldo_dolares, 2, ',', '.') : $saldo_dolares
-            ]);
-        } else {
-            echo json_encode(['success' => false, 'error' => $stmt->error]);
-        }
-        $stmt->close();
-    }
-} else {
-    echo json_encode(['success' => false, 'error' => 'Método no permitido']);
-}
-$conn->close();
+// Actualizar saldo en la base de datos
+$sql_update = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
+$stmt_update = $conn->prepare($sql_update);
+$stmt_update->bind_param("di", $nuevo_saldo, $cliente_id);
+$stmt_update->execute();
+$stmt_update->close();
+
+// Calcular saldo en dólares
+include 'dolar_cronista.php';
+$promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+$saldo_en_dolares = $nuevo_saldo / $promedio_ccl;
+
+// Devolver los nuevos saldos formateados
+echo json_encode([
+    "saldo_pesos" => formatear_dinero($nuevo_saldo),
+    "saldo_dolares" => formatear_dinero($saldo_en_dolares)
+]);

@@ -386,10 +386,10 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 <h5 class="me-2 cartera titulo-botones mb-4">Efectivo</h5>
                 <div class="row">
                     <div class="col-12 col-md-4 text-start">
-                        <p>Saldo en pesos: $ <?php echo $saldo_en_pesos_formateado; ?></p>
+                        <p class="saldo-pesos">Saldo en pesos: $ <?php echo $saldo_en_pesos_formateado; ?></p>
                     </div>
                     <div class="col-12 col-md-4 text-start">
-                        <p>Saldo en dólares: u$s <?php echo $saldo_en_dolares_formateado; ?></p>
+                        <p class="saldo-dolares">Saldo en dólares: u$s <?php echo $saldo_en_dolares_formateado; ?></p>
                     </div>
                 </div>
                 <hr class="linea-accion">
@@ -434,8 +434,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/eliminar_acciones.js"></script>
-    <script src="../js/formato_miles_balance.js"></script>
     <script src="../js/ingresar_efectivo.js"></script>
+    <script src="../js/formato_miles_balance.js"></script>
     <!-- FIN JS -->
 </body>
 

@@ -97,6 +97,12 @@ h5 {
   color: #0B486B;
   border-radius: 5px;
 }
+.btn-custom-ccl {
+  border: 1px solid #000000;
+  background-color: #fff;
+  color: #0B486B;
+  border-radius: 5px;
+}
 
 .btn-custom.ver:hover {
     border: 1px solid #000000;
@@ -292,4 +298,8 @@ form label {
 
 .promedio_ccl {
   color: #0B486B;
+}
+#valorPromedioCCL {
+  margin-left: 10px;
+  vertical-align: middle;
 }

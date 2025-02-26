@@ -110,6 +110,10 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <button id="btnAccionesPesos" class="btn btn-custom ver active">Posición en Pesos</button>
                         <button id="btnAccionesDolares" class="btn btn-custom ver">Posición en Dólares</button>
                     </div>
+                    <div class="btn-group mb-3 d-none" id="valorPromedioCCL">
+                        <button class="btn btn-custom-ccl">Promedio dólar CCL: $ <?php echo ($promedio_ccl); ?></button>
+                    </div>
+
                 </div>
                 <!-- Fin Botones -->
 
@@ -224,7 +228,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                 <!-- Acciones Dólares -->
                 <div id="tablaAccionesDolares" class="d-none">
-                    <p class="text-left promedio_ccl">Valor promedio dólar CCL: $ <?php echo ($promedio_ccl); ?></p>
 
                     <!-- Consolidada Acciones Dólares -->
                     <div class="table-responsive">
@@ -480,6 +483,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="../js/ingresar_efectivo.js"></script>
     <script src="../js/formato_miles_balance.js"></script>
     <script src="../js/retirar_efectivo.js"></script>
+    <script src="../js/valor_promedio_ccl.js"></script>
     <!-- FIN JS -->
 </body>
 

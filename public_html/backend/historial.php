@@ -1,3 +1,15 @@
+<?php
+// Incluir archivo de configuración
+require_once '../../config/config.php';
+
+// Incluir las funciones necesarias
+include '../funciones/cliente_funciones.php';
+
+// Obtener el id del cliente desde la URL
+$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -42,10 +54,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active href=" historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir
                         </a>
                     </li>
@@ -60,7 +68,7 @@
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy">Historial</h4>
+            <h4 class="fancy">Historial de <?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
         </div>
         <!-- FIN TITULO -->
 

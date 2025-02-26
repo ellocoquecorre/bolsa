@@ -47,9 +47,6 @@ $conn->close();
                         <a class="nav-link" href="alta_clientes.php"><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>
                     </li>
                 </ul>
@@ -82,7 +79,7 @@ $conn->close();
                                 <th>Mail</th>
                                 <th>Teléfono</th>
                                 <th>Corredora</th>
-                                <th colspan="3" class="text-center">Acciones</th>
+                                <th colspan="4" class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,6 +93,11 @@ $conn->close();
                                     <td class="text-center">
                                         <a href="cliente.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver">
                                             <i class="fa-solid fa-magnifying-glass"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="historial.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Historial">
+                                            <i class="fa-solid fa-clock-rotate-left"></i>
                                         </a>
                                     </td>
                                     <td class="text-center">

@@ -288,7 +288,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     echo '<td>' . htmlspecialchars(formatearFecha($accion['fecha'])) . '</td>';
                                     echo '<td>' . htmlspecialchars($accion['cantidad']) . '</td>';
                                     echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($accion['precio'] / $promedio_ccl)) . '</td>';
-                                    echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($precio_actual / $promedio_ccl)) . '</td>';
+                                    echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($precio_actual / $promedio_ccl)) . '</td>';
                                     echo '<td class="text-right">u$s <!-- valor_inicial_acciones_dolares --></td>';
                                     echo '<td class="text-right">u$s <!-- valor_actual_acciones_dolares --></td>';
                                     echo '<td class="text-right">u$s <!-- rendimiento_acciones_dolares --></td>';

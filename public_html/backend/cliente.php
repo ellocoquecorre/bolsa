@@ -174,7 +174,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <?php
                                 $acciones = obtenerAcciones($cliente_id);
                                 foreach ($acciones as $accion) {
-                                    // Obtener el precio actual de Google Finance
                                     $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
                                     $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
                                     $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
@@ -285,18 +284,29 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <?php
                                 $acciones = obtenerAcciones($cliente_id);
                                 foreach ($acciones as $accion) {
+                                    // pesos
                                     $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
+                                    $rendimiento_acciones_pesos = $valor_actual_acciones_pesos - $valor_inicial_acciones_pesos;
+                                    $rentabilidad_acciones_pesos = ($valor_actual_acciones_pesos / $valor_inicial_acciones_pesos - 1) * 100;
+                                    // dolares
+                                    $precio_actual_dolares = $precio_actual / $promedio_ccl;
+                                    $valor_inicial_acciones_dolares = $valor_inicial_acciones_pesos / $promedio_ccl;
+                                    $valor_actual_acciones_dolares = $valor_actual_acciones_pesos / $promedio_ccl;
+                                    $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
+                                    $rentabilidad__acciones_dolares = ($valor_actual_acciones_dolares / $valor_inicial_acciones_dolares - 1) * 100;
 
                                     echo '<tr data-ticker="' . htmlspecialchars($accion['ticker']) . '">';
                                     echo '<td>' . htmlspecialchars($accion['ticker']) . '</td>';
                                     echo '<td>' . htmlspecialchars(formatearFecha($accion['fecha'])) . '</td>';
                                     echo '<td>' . htmlspecialchars($accion['cantidad']) . '</td>';
                                     echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($accion['precio'] / $promedio_ccl)) . '</td>';
-                                    echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($precio_actual / $promedio_ccl)) . '</td>';
-                                    echo '<td class="text-right">u$s <!-- valor_inicial_acciones_dolares --></td>';
-                                    echo '<td class="text-right">u$s <!-- valor_actual_acciones_dolares --></td>';
-                                    echo '<td class="text-right">u$s <!-- rendimiento_acciones_dolares --></td>';
-                                    echo '<td><!-- rentabilidad__acciones_dolares --> %</td>';
+                                    echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . '</td>';
+                                    echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . '</td>';
+                                    echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . '</td>';
+                                    echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($rendimiento_acciones_dolares)) . '</td>';
+                                    echo '<td>' . htmlspecialchars(formatear_dinero($rentabilidad__acciones_dolares)) . ' %</td>';
                                     echo '<td class="text-center">
                                     <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial">
                                     <i class="fa-solid fa-percent"></i>

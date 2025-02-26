@@ -436,6 +436,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="../js/eliminar_acciones.js"></script>
     <script src="../js/ingresar_efectivo.js"></script>
     <script src="../js/formato_miles_balance.js"></script>
+    <script src="../js/retirar_efectivo.js"></script>
     <!-- FIN JS -->
 </body>
 

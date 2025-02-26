@@ -208,7 +208,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                 <!-- Acciones Dólares -->
                 <div id="tablaAccionesDolares" class="d-none">
-                    <p class="text-left promedio_ccl">Valor promedio dólar CCL: $ <!-- promedio_ccl --></p>
+                    <p class="text-left promedio_ccl">Valor promedio dólar CCL: $ <?php echo ($promedio_ccl); ?></p>
 
                     <!-- Consolidada Acciones Dólares -->
                     <div class="table-responsive">

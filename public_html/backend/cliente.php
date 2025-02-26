@@ -176,6 +176,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 foreach ($acciones as $accion) {
                                     // Obtener el precio actual de Google Finance
                                     $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
+                                    $rendimiento_acciones_pesos = $valor_actual_acciones_pesos - $valor_inicial_acciones_pesos;
 
                                     echo '<tr data-ticker="' . htmlspecialchars($accion['ticker']) . '">';
                                     echo '<td>' . htmlspecialchars($accion['ticker']) . '</td>';
@@ -183,9 +186,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     echo '<td>' . htmlspecialchars($accion['cantidad']) . '</td>';
                                     echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($accion['precio'])) . '</td>';
                                     echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($precio_actual)) . '</td>';
-                                    echo '<td class="text-right">$ <!-- valor_inicial_acciones_pesos --></td>';
-                                    echo '<td class="text-right">$ <!-- valor_actual_acciones_pesos --></td>';
-                                    echo '<td class="text-right">$ <!-- rendimiento_acciones_pesos --></td>';
+                                    echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . '</td>';
+                                    echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . '</td>';
+                                    echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($rendimiento_acciones_pesos)) . '</td>';
                                     echo '<td><!-- rentabilidad__acciones_pesos --> %</td>';
                                     echo '<td class="text-center">
                                     <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial">

@@ -294,13 +294,14 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $valor_actual_acciones_dolares = $valor_actual_acciones_pesos / $promedio_ccl;
                                     $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
                                     $rentabilidad_acciones_dolares = (($valor_actual_acciones_dolares - $valor_inicial_acciones_dolares) / $valor_inicial_acciones_dolares) * 100;
+                                    $valor_inicial_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
                                             <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                            <td class='text-right'>$ <!-- ccl_compra --></td>
+                                            <td class='text-right'>$ " . htmlspecialchars(obtenerCCLCompra($cliente_id, $accion['ticker'])) . "</td>
                                             <td>{$accion['cantidad']}</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $promedio_ccl)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_inicial_ccl)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>

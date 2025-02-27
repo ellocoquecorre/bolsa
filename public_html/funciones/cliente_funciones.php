@@ -116,3 +116,18 @@ function obtenerPrecioActualGoogleFinance($ticker)
     }
 }
 // FIN GOOGLE FINANCE
+
+// CCL COMPRA
+function obtenerCCLCompra($cliente_id, $ticker)
+{
+    global $conn;
+    $sql = "SELECT ccl_compra FROM acciones WHERE cliente_id = ? AND ticker = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $cliente_id, $ticker);
+    $stmt->execute();
+    $stmt->bind_result($valor_inicial_ccl);
+    $stmt->fetch();
+    $stmt->close();
+    return $valor_inicial_ccl;
+}
+// FIN CCL COMPRA

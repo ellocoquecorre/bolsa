@@ -107,10 +107,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <button id="btnAccionesPesos" class="btn btn-custom ver active">Posición en Pesos</button>
                         <button id="btnAccionesDolares" class="btn btn-custom ver">Posición en Dólares</button>
                     </div>
-                    <div class="btn-group mb-3 d-none" id="valorPromedioCCL">
-                        <button class="btn btn-custom-ccl">Promedio dólar CCL: $ <?php echo ($promedio_ccl); ?></button>
-                    </div>
-
                 </div>
                 <!-- Fin Botones -->
 
@@ -154,21 +150,19 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th colspan="2">Valor</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
-                                    <th colspan="2">Venta</th>
-                                    <th colspan="2">Operaciones</th>
+                                    <th>Ops.</th>
                                 </tr>
                                 <tr>
                                     <th><!-- Ticker --></th>
                                     <th><!-- Fecha --></th>
                                     <th><!-- Cantidad --></th>
                                     <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Actual</th>
+                                    <th><!-- Precio -->Hoy</th>
                                     <th><!-- X -->Inicial</th>
-                                    <th><!-- X -->Actual</th>
+                                    <th><!-- X -->Hoy</th>
                                     <th><!-- Rendimiento --></th>
                                     <th><!-- Rentabilidad --></th>
-                                    <th colspan="2"><!-- Venta --></th>
-                                    <th colspan="2"><!-- Operaciones --></th>
+                                    <th><!-- Ops --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
@@ -192,23 +186,26 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
                                             <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
                                             <td class='text-center'>
-                                                <a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' 
-                                                title='Venta parcial'><i class='fa-solid fa-percent'></i></a>
-                                            </td>
-                                            <td class='text-center'>
-                                                <a href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' 
-                                                class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'>
-                                                <i class='fa-solid fa-check-circle'></i></a>
-                                            </td>
-                                            <td class='text-center'>
-                                                <a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' 
-                                                class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'>
-                                                <i class='fa-solid fa-pen'></i></a>
-                                            </td>
-                                            <td class='text-center'>
-                                                <button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick='eliminarAccion(this)'>
-                                                    <i class='fa-solid fa-trash'></i>
-                                                </button>
+                                                <div class='dropdown d-flex justify-content-end'>
+                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                    <i class='fa-solid fa-bars'></i>
+                                                    </button>
+                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                        <li>
+                                                        <a class='dropdown-item' href='#'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
+                                                        </li>
+                                                        <li>
+                                                        <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-check-circle me-2'></i> Venta total</a>
+                                                        </li>
+                                                        <li>
+                                                        <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-pen me-2'></i> Editar</a>
+                                                        </li>
+                                                        <li>
+                                                        <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </td>
                                         </tr>";
                                 }
@@ -256,28 +253,27 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <tr>
                                     <th>Ticker</th>
                                     <th>Fecha</th>
-                                    <th>Valor CCL</th>
+                                    <th colspan="2">Valor CCL</th>
                                     <th>Cantidad</th>
                                     <th colspan="2">Precio</th>
                                     <th colspan="2">Valor</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
-                                    <th colspan="2">Venta</th>
-                                    <th colspan="2">Operaciones</th>
+                                    <th>Ops</th>
                                 </tr>
                                 <tr>
                                     <th><!-- Ticker --></th>
                                     <th><!-- Fecha --></th>
-                                    <th><!-- Valor CCL --></th>
+                                    <th><!-- Valor CCL -->Compra</th>
+                                    <th><!-- Valor CCL -->Hoy</th>
                                     <th><!-- Cantidad --></th>
                                     <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Actual</th>
+                                    <th><!-- Precio -->Hoy</th>
                                     <th><!-- X -->Inicial</th>
-                                    <th><!-- X -->Actual</th>
+                                    <th><!-- X -->Hoy</th>
                                     <th><!-- Rendimiento --></th>
                                     <th><!-- Rentabilidad --></th>
-                                    <th colspan="2"><!-- Venta --></th>
-                                    <th colspan="2"><!-- Operaciones --></th>
+                                    <th><!-- Ops --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-dolares">
@@ -300,6 +296,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td>{$accion['ticker']}</td>
                                             <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(obtenerCCLCompra($cliente_id, $accion['ticker'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
                                             <td>{$accion['cantidad']}</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_inicial_ccl)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
@@ -307,13 +304,27 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
                                             <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
                                             <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-check-circle'></i></a></td>
-                                            <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
                                             <td class='text-center'>
-                                                <button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''>
-                                                    <i class='fa-solid fa-trash'></i>
-                                                </button>
+                                                <div class='dropdown d-flex justify-content-end'>
+                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                    <i class='fa-solid fa-bars'></i>
+                                                    </button>
+                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                        <li>
+                                                        <a class='dropdown-item' href='#'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
+                                                        </li>
+                                                        <li>
+                                                        <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-check-circle me-2'></i> Venta total</a>
+                                                        </li>
+                                                        <li>
+                                                        <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-pen me-2'></i> Editar</a>
+                                                        </li>
+                                                        <li>
+                                                        <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </td>
                                         </tr>";
                                 }

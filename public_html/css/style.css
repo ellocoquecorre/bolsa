@@ -123,7 +123,31 @@ h5 {
   color: #fff;
   border-radius: 5px;
 }
+/* Estilo personalizado para el botón */
+.custom-btn {
+  background-color: #0b486b !important;
+  border-color: #0b486b !important;
+  color: #fff !important;
+}
 
+/* Estilo para los elementos del menú al pasar el mouse */
+.dropdown-item:hover {
+  background-color: #0b486b !important;
+  color: #fff !important;
+}
+
+/* Estilo para los íconos dentro de los elementos del menú al pasar el mouse */
+.dropdown-item:hover i {
+  color: #fff !important;
+}
+.table-responsive {
+  overflow-x: visible;
+}
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 1051; /* Z-index alto para asegurarse de que el menú esté por encima de otros elementos */
+}
 .custom-img {
     top: -10px;
     z-index: 1;

@@ -181,38 +181,25 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $rendimiento_acciones_pesos = $valor_actual_acciones_pesos - $valor_inicial_acciones_pesos;
                                     $rentabilidad_acciones_pesos = ($valor_actual_acciones_pesos / $valor_inicial_acciones_pesos - 1) * 100;
 
-                                    echo '<tr data-ticker="' . htmlspecialchars($accion['ticker']) . '">';
-                                    echo '<td>' . htmlspecialchars($accion['ticker']) . '</td>';
-                                    echo '<td>' . htmlspecialchars(formatearFecha($accion['fecha'])) . '</td>';
-                                    echo '<td>' . htmlspecialchars($accion['cantidad']) . '</td>';
-                                    echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($accion['precio'])) . '</td>';
-                                    echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($precio_actual)) . '</td>';
-                                    echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . '</td>';
-                                    echo '<td class="text-right">$ ' . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . '</td>';
-                                    echo '<td class="text-right">' . formatear_y_colorear_valor($rendimiento_acciones_pesos, '$') . '</td>';
-                                    echo '<td>' . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . '</td>';
-                                    echo '<td class="text-center">
-                                    <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial">
-                                    <i class="fa-solid fa-percent"></i>
-                                    </a>
-                                    </td>';
-                                    echo '<td class="text-center">
-                                    <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta total">
-                                    <i class="fa-solid fa-check-circle"></i>
-                                    </a>
-                                    </td>';
-                                    echo '<td class="text-center">
-                                    <a href="../funciones/editar_compra_acciones.php?cliente_id=' . $cliente_id . '&ticker=' . $accion['ticker'] . '" 
-                                    class="btn btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                                    <i class="fa-solid fa-pen"></i>
-                                    </a>
-                                    </td>';
-                                    echo '<td class="text-center">
-                                    <button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar" onclick="">
-                                    <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                    </td>';
-                                    echo '</tr>';
+                                    echo "<tr data-ticker='{$accion['ticker']}'>
+                                            <td>{$accion['ticker']}</td>
+                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                            <td>{$accion['cantidad']}</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-check-circle'></i></a></td>
+                                            <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
+                                            <td class='text-center'>
+                                                <button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''>
+                                                    <i class='fa-solid fa-trash'></i>
+                                                </button>
+                                            </td>
+                                        </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -297,38 +284,25 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
                                     $rentabilidad__acciones_dolares = ($valor_actual_acciones_dolares / $valor_inicial_acciones_dolares - 1) * 100;
 
-                                    echo '<tr data-ticker="' . htmlspecialchars($accion['ticker']) . '">';
-                                    echo '<td>' . htmlspecialchars($accion['ticker']) . '</td>';
-                                    echo '<td>' . htmlspecialchars(formatearFecha($accion['fecha'])) . '</td>';
-                                    echo '<td>' . htmlspecialchars($accion['cantidad']) . '</td>';
-                                    echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($accion['precio'] / $promedio_ccl)) . '</td>';
-                                    echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . '</td>';
-                                    echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . '</td>';
-                                    echo '<td class="text-right">u$s ' . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . '</td>';
-                                    echo '<td class="text-right">' . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . '</td>';
-                                    echo '<td>' . formatear_y_colorear_porcentaje($rentabilidad__acciones_dolares) . '</td>';
-                                    echo '<td class="text-center">
-                                    <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta parcial">
-                                    <i class="fa-solid fa-percent"></i>
-                                    </a>
-                                    </td>';
-                                    echo '<td class="text-center">
-                                    <a href="" class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta total">
-                                    <i class="fa-solid fa-check-circle"></i>
-                                    </a>
-                                    </td>';
-                                    echo '<td class="text-center">
-                                    <a href="../funciones/editar_compra_acciones.php?cliente_id=' . $cliente_id . '&ticker=' . $accion['ticker'] . '" 
-                                    class="btn btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                                    <i class="fa-solid fa-pen"></i>
-                                    </a>
-                                    </td>';
-                                    echo '<td class="text-center">
-                                    <button class="btn btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar" onclick="">
-                                    <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                    </td>';
-                                    echo '</tr>';
+                                    echo "<tr data-ticker='{$accion['ticker']}'>
+                                            <td>{$accion['ticker']}</td>
+                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                            <td>{$accion['cantidad']}</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $promedio_ccl)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad__acciones_dolares) . "</td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
+                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-check-circle'></i></a></td>
+                                            <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
+                                            <td class='text-center'>
+                                                <button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick=''>
+                                                    <i class='fa-solid fa-trash'></i>
+                                                </button>
+                                            </td>
+                                        </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -481,6 +455,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="../js/formato_miles_balance.js"></script>
     <script src="../js/retirar_efectivo.js"></script>
     <script src="../js/valor_promedio_ccl.js"></script>
+    <script src="../js/eliminar_acciones.js"></script>
     <!-- FIN JS -->
 </body>
 

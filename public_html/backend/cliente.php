@@ -179,7 +179,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
                                     $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
                                     $rendimiento_acciones_pesos = $valor_actual_acciones_pesos - $valor_inicial_acciones_pesos;
-                                    $rentabilidad_acciones_pesos = ($valor_actual_acciones_pesos / $valor_inicial_acciones_pesos - 1) * 100;
+                                    $rentabilidad_acciones_pesos = (($valor_actual_acciones_pesos - $valor_inicial_acciones_pesos) / $valor_inicial_acciones_pesos) * 100;
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
@@ -191,9 +191,20 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
                                             <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
                                             <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
-                                            <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-check-circle'></i></a></td>
-                                            <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>
+                                            <td class='text-center'>
+                                                <a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' 
+                                                title='Venta parcial'><i class='fa-solid fa-percent'></i></a>
+                                            </td>
+                                            <td class='text-center'>
+                                                <a href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' 
+                                                class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'>
+                                                <i class='fa-solid fa-check-circle'></i></a>
+                                            </td>
+                                            <td class='text-center'>
+                                                <a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' 
+                                                class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'>
+                                                <i class='fa-solid fa-pen'></i></a>
+                                            </td>
                                             <td class='text-center'>
                                                 <button class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Eliminar' onclick='eliminarAccion(this)'>
                                                     <i class='fa-solid fa-trash'></i>
@@ -275,14 +286,12 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
                                     $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
                                     $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
-                                    $rendimiento_acciones_pesos = $valor_actual_acciones_pesos - $valor_inicial_acciones_pesos;
-                                    $rentabilidad_acciones_pesos = ($valor_actual_acciones_pesos / $valor_inicial_acciones_pesos - 1) * 100;
                                     // dolares
                                     $precio_actual_dolares = $precio_actual / $promedio_ccl;
                                     $valor_inicial_acciones_dolares = $valor_inicial_acciones_pesos / $promedio_ccl;
                                     $valor_actual_acciones_dolares = $valor_actual_acciones_pesos / $promedio_ccl;
                                     $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
-                                    $rentabilidad__acciones_dolares = ($valor_actual_acciones_dolares / $valor_inicial_acciones_dolares - 1) * 100;
+                                    $rentabilidad_acciones_dolares = (($valor_actual_acciones_dolares - $valor_inicial_acciones_dolares) / $valor_inicial_acciones_dolares) * 100;
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
@@ -293,7 +302,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
                                             <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad__acciones_dolares) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta parcial'><i class='fa-solid fa-percent'></i></a></td>
                                             <td class='text-center'><a href='' class='btn btn-custom eliminar' data-bs-toggle='tooltip' data-bs-placement='top' title='Venta total'><i class='fa-solid fa-check-circle'></i></a></td>
                                             <td class='text-center'><a href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}' class='btn btn-custom editar' data-bs-toggle='tooltip' data-bs-placement='top' title='Editar'><i class='fa-solid fa-pen'></i></a></td>

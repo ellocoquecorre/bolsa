@@ -256,6 +256,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <tr>
                                     <th>Ticker</th>
                                     <th>Fecha</th>
+                                    <th>Valor CCL</th>
                                     <th>Cantidad</th>
                                     <th colspan="2">Precio</th>
                                     <th colspan="2">Valor</th>
@@ -267,6 +268,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <tr>
                                     <th><!-- Ticker --></th>
                                     <th><!-- Fecha --></th>
+                                    <th><!-- Valor CCL --></th>
                                     <th><!-- Cantidad --></th>
                                     <th><!-- Precio -->Compra</th>
                                     <th><!-- Precio -->Actual</th>
@@ -296,6 +298,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
                                             <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                            <td class='text-right'>$ </td>
                                             <td>{$accion['cantidad']}</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $promedio_ccl)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>

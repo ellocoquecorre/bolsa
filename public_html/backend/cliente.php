@@ -285,12 +285,13 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
                                     $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
                                     // dolares
+                                    $valor_inicial_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
                                     $precio_actual_dolares = $precio_actual / $promedio_ccl;
-                                    $valor_inicial_acciones_dolares = $valor_inicial_acciones_pesos / $promedio_ccl;
+                                    $valor_inicial_acciones_dolares = $valor_inicial_acciones_pesos / $valor_inicial_ccl;
                                     $valor_actual_acciones_dolares = $valor_actual_acciones_pesos / $promedio_ccl;
                                     $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
                                     $rentabilidad_acciones_dolares = (($valor_actual_acciones_dolares - $valor_inicial_acciones_dolares) / $valor_inicial_acciones_dolares) * 100;
-                                    $valor_inicial_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
+
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>

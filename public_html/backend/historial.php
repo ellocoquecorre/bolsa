@@ -156,18 +156,27 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
-                                <tr data-ticker="">
-                                    <td><!-- ticker_accion --></td>
-                                    <td><!-- cantidad_accion --></td>
-                                    <td><!-- fecha_compra_accion --></td>
-                                    <td class="text-right">$ <!-- precio_compra_pesos_accion --></td>
-                                    <td class="text-right">$ <!-- total_compra_pesos_accion --></td>
-                                    <td><!-- fecha_venta_accion --></td>
-                                    <td class="text-right">$ <!-- precio_venta_pesos_accion --></td>
-                                    <td class="text-right">$ <!-- total_venta_pesos_accion --></td>
-                                    <td class="text-right">$ <!-- rendimiento_pesos_accion --></td>
-                                    <td class="text-right"><!-- rentabilidad_pesos_accion --> %</td>
-                                </tr>
+                                <?php
+                                foreach ($historial_acciones as $accion) {
+                                    $total_compra_pesos_accion = $accion['cantidad'] * $accion['precio_compra'];
+                                    $total_venta_pesos_accion = $accion['cantidad'] * $accion['precio_venta'];
+                                    $rendimiento_pesos_accion = $total_venta_pesos_accion - $total_compra_pesos_accion;
+                                    $rentabilidad_pesos_accion = ($rendimiento_pesos_accion / $total_compra_pesos_accion) * 100;
+
+                                    echo "<tr data-ticker='{$accion['ticker']}'>
+                                            <td>{$accion['ticker']}</td>
+                                            <td>{$accion['cantidad']}</td>
+                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha_compra'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio_compra'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_compra_pesos_accion)) . "</td>
+                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha_venta'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio_venta'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_venta_pesos_accion)) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_y_colorear_valor($rendimiento_pesos_accion)) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_y_colorear_porcentaje($rentabilidad_pesos_accion)) . "</td>
+                                        </tr>";
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -269,8 +278,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
-    <script src="../js/formato_miles_balance.js"></script>
-    <script src="../js/valor_promedio_ccl.js"></script>
     <!-- FIN JS -->
 </body>
 

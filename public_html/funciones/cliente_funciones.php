@@ -131,3 +131,39 @@ function obtenerCCLCompra($cliente_id, $ticker)
     return $valor_inicial_ccl;
 }
 // FIN CCL COMPRA
+
+// HISTORIAL ACCIONES
+// Función para obtener el historial de acciones del cliente
+function obtenerHistorialAcciones($cliente_id)
+{
+    // Conexión a la base de datos
+    $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    // Consulta SQL
+    $sql = "SELECT * FROM acciones_historial WHERE cliente_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $cliente_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Array para almacenar los resultados
+    $historial_acciones = array();
+    while ($row = $result->fetch_assoc()) {
+        $historial_acciones[] = $row;
+    }
+
+    // Cerrar la conexión
+    $stmt->close();
+    $conn->close();
+
+    return $historial_acciones;
+}
+
+// Obtener el historial de acciones del cliente
+$historial_acciones = obtenerHistorialAcciones($cliente_id);
+// FIN HISTORIAL DE ACCIONES

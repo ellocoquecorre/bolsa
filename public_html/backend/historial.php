@@ -30,7 +30,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
+                <img src="../img/logo.png" alt="Logo" title="GoodFellas Inc." />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -172,8 +172,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td>" . htmlspecialchars(formatearFecha($accion['fecha_venta'])) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio_venta'])) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_venta_pesos_accion)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_y_colorear_valor($rendimiento_pesos_accion)) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_y_colorear_porcentaje($rentabilidad_pesos_accion)) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_pesos_accion) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_pesos_accion) . "</td>
                                         </tr>";
                                 }
                                 ?>

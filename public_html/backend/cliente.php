@@ -150,7 +150,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th colspan="2">Valor</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
-                                    <th>Ops.</th>
+                                    <th></th>
                                 </tr>
                                 <tr>
                                     <th><!-- Ticker --></th>
@@ -258,7 +258,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th colspan="2">Valor</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
-                                    <th>Ops</th>
+                                    <th></th>
                                 </tr>
                                 <tr>
                                     <th><!-- Ticker --></th>

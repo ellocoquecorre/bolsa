@@ -143,26 +143,20 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Ticker</th>
-                                    <th>Fecha</th>
-                                    <th>Cantidad</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
                                     <th colspan="2">Precio</th>
                                     <th colspan="2">Valor</th>
-                                    <th>Rendimiento</th>
-                                    <th>Rentabilidad</th>
-                                    <th></th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Ticker --></th>
-                                    <th><!-- Fecha --></th>
-                                    <th><!-- Cantidad --></th>
                                     <th><!-- Precio -->Compra</th>
                                     <th><!-- Precio -->Hoy</th>
-                                    <th><!-- X -->Inicial</th>
-                                    <th><!-- X -->Hoy</th>
-                                    <th><!-- Rendimiento --></th>
-                                    <th><!-- Rentabilidad --></th>
-                                    <th><!-- Ops --></th>
+                                    <th><!-- Valor -->Inicial</th>
+                                    <th><!-- Valor -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
@@ -250,29 +244,23 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Ticker</th>
-                                    <th>Fecha</th>
-                                    <th>Cantidad</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
                                     <th colspan="2">Dólar CCL</th>
                                     <th colspan="2">Precio</th>
                                     <th colspan="2">Valor</th>
-                                    <th>Rendimiento</th>
-                                    <th>Rentabilidad</th>
-                                    <th></th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Ticker --></th>
-                                    <th><!-- Fecha --></th>
-                                    <th><!-- Cantidad --></th>
                                     <th><!-- Valor CCL -->Compra</th>
                                     <th><!-- Valor CCL -->Hoy</th>
                                     <th><!-- Precio -->Compra</th>
                                     <th><!-- Precio -->Hoy</th>
                                     <th><!-- X -->Inicial</th>
                                     <th><!-- X -->Hoy</th>
-                                    <th><!-- Rendimiento --></th>
-                                    <th><!-- Rentabilidad --></th>
-                                    <th><!-- Ops --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-dolares">

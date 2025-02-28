@@ -52,10 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
         $stmt->close();
 
-        // Insertar los datos en la tabla acciones
-        $sql_insert_acciones = "INSERT INTO acciones (cliente_id, ticker, cantidad, precio, fecha) VALUES (?, ?, ?, ?, ?)";
+        // Insertar los datos en la tabla acciones, incluyendo el valor de CCL
+        $sql_insert_acciones = "INSERT INTO acciones (cliente_id, ticker, cantidad, precio, fecha, ccl_compra) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql_insert_acciones);
-        $stmt->bind_param("isids", $cliente_id, $ticker, $cantidad, $precio, $fecha);
+        $stmt->bind_param("isidsd", $cliente_id, $ticker, $cantidad, $precio, $fecha, $promedio_ccl);
         $stmt->execute();
         $stmt->close();
 

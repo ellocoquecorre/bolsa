@@ -429,7 +429,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     </div>
                     <div class="col-12 col-md-6 text-start">
                         <p class="saldo-dolares">Saldo en dólares: u$s <?php echo $saldo_en_dolares_formateado; ?>
-                            <small class="promedio_ccl">(Promedio dólar CCL: $ <?php echo ($promedio_ccl); ?>)</small>
+                            <small class="promedio_ccl">(Promedio dólar CCL: $ <?php echo (formatear_dinero($promedio_ccl)); ?>)</small>
                         </p>
                     </div>
                 </div>

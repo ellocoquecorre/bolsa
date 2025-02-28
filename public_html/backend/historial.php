@@ -74,11 +74,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
         <hr class="mod">
 
-        <!-- HISTORIAL -->
-        <div class="col-12 text-center">
-            <h4 class="fancy">Historial</h4>
-        </div>
-        <!-- FIN HISTORIAL -->
+        <!-- HISTORIAL ACCIONES -->
+
+        <!-- FIN HISTORIAL ACCIONES -->
 
         <hr class="mod" style="margin-bottom: 80px;">
 

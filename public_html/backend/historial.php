@@ -212,23 +212,27 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th style="vertical-align: text-top;">Ticker</th>
                                     <th style="vertical-align: text-top;">Cantidad</th>
                                     <th>Fecha<br>Compra</th>
+                                    <th>Valor CCL<br>Compra</th>
                                     <th>Precio<br>Compra</th>
                                     <th>Total<br>Compra</th>
                                     <th>Fecha<br>Venta</th>
+                                    <th>Valor CCL<br>Venta</th>
                                     <th>Precio<br>Venta</th>
                                     <th>Total<br>Venta</th>
                                     <th style="vertical-align: text-top;">Rendimiento</th>
                                     <th style="vertical-align: text-top;">Rentabilidad</th>
                                 </tr>
                             </thead>
-                            <tbody id="tabla-acciones-pesos">
+                            <tbody id="tabla-acciones-dolares">
                                 <tr>
                                     <td><!-- ticker_accion --></td>
                                     <td><!-- cantidad_accion --></td>
                                     <td><!-- fecha_compra_accion --></td>
+                                    <td class="text-right">$ <!-- valor_ccl_compra_dolares_accion --></td>
                                     <td class="text-right">u$s <!-- precio_compra_dolares_accion --></td>
                                     <td class="text-right">u$s <!-- total_compra_dolares_accion --></td>
                                     <td><!-- fecha_venta_accion --></td>
+                                    <td class="text-right">$ <!-- valor_ccl_venta_dolares_accion --></td>
                                     <td class="text-right">u$s <!-- precio_venta_dolares_accion --></td>
                                     <td class="text-right">u$s <!-- total_venta_dolares_accion --></td>
                                     <td class="text-right">u$s <!-- rendimiento_dolares_accion --></td>

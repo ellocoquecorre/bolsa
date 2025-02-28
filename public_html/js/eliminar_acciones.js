@@ -3,6 +3,13 @@ function eliminarAccion(button) {
     const row = button.closest('tr');
     const ticker = row.querySelector('td:first-child').textContent.trim();
 
+    // Preguntar al usuario si realmente quiere eliminar la acción
+    const confirmacion = confirm(`¿Estás seguro de que querés eliminar ${ticker}?`);
+    
+    if (!confirmacion) {
+        return; // Si el usuario cancela, no hacer nada
+    }
+
     if (clienteId && ticker) {
         fetch('../funciones/eliminar_acciones.php', {
             method: 'POST',

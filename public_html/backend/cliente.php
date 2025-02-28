@@ -202,7 +202,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                         </li>
                                                         <li>
                                                         <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
-
                                                         </li>
                                                     </ul>
                                                 </div>

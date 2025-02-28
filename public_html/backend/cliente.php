@@ -187,7 +187,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
                                             <td class='text-center'>
                                                 <div class='dropdown d-flex justify-content-end'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
                                                     <i class='fa-solid fa-bars'></i>
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>

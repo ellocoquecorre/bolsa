@@ -324,6 +324,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <!-- Fin Completa Acciones Dólares -->
 
                 </div>
+                <!-- Fin Acciones Dólares -->
+
                 <hr class="linea-accion">
 
                 <!-- Comprar Acciones -->

@@ -143,44 +143,31 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Precio</th>
-                                    <th colspan="2">Valor</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
-                                </tr>
-                                <tr>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Inicial</th>
-                                    <th><!-- Valor -->Hoy</th>
+                                    <th style="vertical-align: text-top;">Ticker</th>
+                                    <th style="vertical-align: text-top;">Cantidad</th>
+                                    <th>Fecha<br>Compra</th>
+                                    <th>Precio<br>Compra</th>
+                                    <th>Total<br>Compra</th>
+                                    <th>Fecha<br>Venta</th>
+                                    <th>Precio<br>Venta</th>
+                                    <th>Total<br>Venta</th>
+                                    <th style="vertical-align: text-top;">Rendimiento</th>
+                                    <th style="vertical-align: text-top;">Rentabilidad</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
-                                <?php
-                                $acciones = obtenerAcciones($cliente_id);
-                                foreach ($acciones as $accion) {
-                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
-                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
-                                    $rendimiento_acciones_pesos = $valor_actual_acciones_pesos - $valor_inicial_acciones_pesos;
-                                    $rentabilidad_acciones_pesos = (($valor_actual_acciones_pesos - $valor_inicial_acciones_pesos) / $valor_inicial_acciones_pesos) * 100;
-
-                                    echo "<tr data-ticker='{$accion['ticker']}'>
-                                            <td>{$accion['ticker']}</td>
-                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                            <td>{$accion['cantidad']}</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
-                                        </tr>";
-                                }
-                                ?>
+                                <tr>
+                                    <td><!-- ticker_accion --></td>
+                                    <td><!-- cantidad_accion --></td>
+                                    <td><!-- fecha_compra_accion --></td>
+                                    <td class="text-right">$ <!-- precio_compra_pesos_accion --></td>
+                                    <td class="text-right">$ <!-- total_compra_pesos_accion --></td>
+                                    <td><!-- fecha_venta_accion --></td>
+                                    <td class="text-right">$ <!-- precio_venta_pesos_accion --></td>
+                                    <td class="text-right">$ <!-- total_venta_pesos_accion --></td>
+                                    <td class="text-right">$ <!-- rendimiento_pesos_accion --></td>
+                                    <td class="text-right"><!-- rentabilidad_pesos_accion --> %</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -222,58 +209,32 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Precio</th>
-                                    <th colspan="2">Valor</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
-                                </tr>
-                                <tr>
-                                    <th><!-- Valor CCL -->Compra</th>
-                                    <th><!-- Valor CCL -->Hoy</th>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- X -->Inicial</th>
-                                    <th><!-- X -->Hoy</th>
+                                    <th style="vertical-align: text-top;">Ticker</th>
+                                    <th style="vertical-align: text-top;">Cantidad</th>
+                                    <th>Fecha<br>Compra</th>
+                                    <th>Precio<br>Compra</th>
+                                    <th>Total<br>Compra</th>
+                                    <th>Fecha<br>Venta</th>
+                                    <th>Precio<br>Venta</th>
+                                    <th>Total<br>Venta</th>
+                                    <th style="vertical-align: text-top;">Rendimiento</th>
+                                    <th style="vertical-align: text-top;">Rentabilidad</th>
                                 </tr>
                             </thead>
-                            <tbody id="tabla-acciones-dolares">
-                                <?php
-                                $acciones = obtenerAcciones($cliente_id);
-                                foreach ($acciones as $accion) {
-                                    // pesos
-                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
-                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
-                                    // dolares
-                                    $valor_inicial_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
-                                    $precio_actual_dolares = $precio_actual / $promedio_ccl;
-                                    $valor_inicial_acciones_dolares = $valor_inicial_acciones_pesos / $valor_inicial_ccl;
-                                    $valor_actual_acciones_dolares = $valor_actual_acciones_pesos / $promedio_ccl;
-                                    $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
-                                    $rentabilidad_acciones_dolares = (($valor_actual_acciones_dolares - $valor_inicial_acciones_dolares) / $valor_inicial_acciones_dolares) * 100;
-
-
-                                    echo "<tr data-ticker='{$accion['ticker']}'>
-                                            <td></td>
-                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                            <td>{$accion['cantidad']}</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(obtenerCCLCompra($cliente_id, $accion['ticker'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_inicial_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
-                                        </tr>";
-                                }
-                                ?>
+                            <tbody id="tabla-acciones-pesos">
+                                <tr>
+                                    <td><!-- ticker_accion --></td>
+                                    <td><!-- cantidad_accion --></td>
+                                    <td><!-- fecha_compra_accion --></td>
+                                    <td class="text-right">u$s <!-- precio_compra_dolares_accion --></td>
+                                    <td class="text-right">u$s <!-- total_compra_dolares_accion --></td>
+                                    <td><!-- fecha_venta_accion --></td>
+                                    <td class="text-right">u$s <!-- precio_venta_dolares_accion --></td>
+                                    <td class="text-right">u$s <!-- total_venta_dolares_accion --></td>
+                                    <td class="text-right">u$s <!-- rendimiento_dolares_accion --></td>
+                                    <td class="text-right"><!-- rentabilidad_dolares_accion --> %</td>
+                                </tr>
                             </tbody>
-
                         </table>
                     </div>
                     <!-- Fin Completa Acciones Dólares -->

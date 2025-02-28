@@ -75,7 +75,228 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
         <hr class="mod">
 
         <!-- HISTORIAL ACCIONES -->
+        <div class="col-12 text-center">
+            <div class="container-fluid my-4 efectivo" id="acciones">
+                <h5 class="me-2 cartera titulo-botones mb-4">Acciones</h5>
 
+                <!-- Botones -->
+                <div class="text-start">
+                    <div class="btn-group mb-3" role="group">
+                        <button id="btnAccionesPesos" class="btn btn-custom ver active">Posición en Pesos</button>
+                        <button id="btnAccionesDolares" class="btn btn-custom ver">Posición en Dólares</button>
+                    </div>
+                </div>
+                <!-- Fin Botones -->
+
+                <!-- Acciones Pesos -->
+                <div id="tablaAccionesPesos">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Valor Inicial</th>
+                                    <th>Valor Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>$ <!-- valor_inicial_consolidado_acciones_pesos --></td>
+                                    <td>$ <!-- valor_actual_consolidado_acciones_pesos --></td>
+                                    <td>$ <!-- rendimiento_consolidado_acciones_pesos --></td>
+                                    <td><!-- rentabilidad_consolidado_acciones_pesos --> %</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr class="linea-accion">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="2">Precio</th>
+                                    <th colspan="2">Valor</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Hoy</th>
+                                    <th><!-- Valor -->Inicial</th>
+                                    <th><!-- Valor -->Hoy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-acciones-pesos">
+                                <?php
+                                $acciones = obtenerAcciones($cliente_id);
+                                foreach ($acciones as $accion) {
+                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
+                                    $rendimiento_acciones_pesos = $valor_actual_acciones_pesos - $valor_inicial_acciones_pesos;
+                                    $rentabilidad_acciones_pesos = (($valor_actual_acciones_pesos - $valor_inicial_acciones_pesos) / $valor_inicial_acciones_pesos) * 100;
+
+                                    echo "<tr data-ticker='{$accion['ticker']}'>
+                                            <td>{$accion['ticker']}</td>
+                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                            <td>{$accion['cantidad']}</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
+                                            <td class='text-center'>
+                                                <div class='dropdown d-flex justify-content-end'>
+                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                    <i class='fa-solid fa-bars'></i>
+                                                    </button>
+                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                        <li>
+                                                        <a class='dropdown-item' href='#'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
+                                                        </li>
+                                                        <li>
+                                                        <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-check-circle me-2'></i> Venta total</a>
+                                                        </li>
+                                                        <li>
+                                                        <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-pen me-2'></i> Editar</a>
+                                                        </li>
+                                                        <li>
+                                                        <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Fin Acciones Pesos -->
+
+                <!-- Acciones Dólares -->
+                <div id="tablaAccionesDolares" class="d-none">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Valor Inicial</th>
+                                    <th>Valor Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>$ <!-- valor_inicial_consolidado_acciones_dolares --></td>
+                                    <td>$ <!-- valor_actual_consolidado_acciones_dolares --></td>
+                                    <td>$ <!-- rendimiento_consolidado_acciones_dolares --></td>
+                                    <td><!-- rentabilidad_consolidado_acciones_dolares --> %</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr class="linea-accion">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="2">Dólar CCL</th>
+                                    <th colspan="2">Precio</th>
+                                    <th colspan="2">Valor</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th><!-- Valor CCL -->Compra</th>
+                                    <th><!-- Valor CCL -->Hoy</th>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Hoy</th>
+                                    <th><!-- X -->Inicial</th>
+                                    <th><!-- X -->Hoy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-acciones-dolares">
+                                <?php
+                                $acciones = obtenerAcciones($cliente_id);
+                                foreach ($acciones as $accion) {
+                                    // pesos
+                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
+                                    // dolares
+                                    $valor_inicial_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
+                                    $precio_actual_dolares = $precio_actual / $promedio_ccl;
+                                    $valor_inicial_acciones_dolares = $valor_inicial_acciones_pesos / $valor_inicial_ccl;
+                                    $valor_actual_acciones_dolares = $valor_actual_acciones_pesos / $promedio_ccl;
+                                    $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
+                                    $rentabilidad_acciones_dolares = (($valor_actual_acciones_dolares - $valor_inicial_acciones_dolares) / $valor_inicial_acciones_dolares) * 100;
+
+                                    echo "<tr data-ticker='{$accion['ticker']}'>
+                                            <td>{$accion['ticker']}</td>
+                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                            <td>{$accion['cantidad']}</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(obtenerCCLCompra($cliente_id, $accion['ticker'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_inicial_ccl)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
+                                            <td class='text-center'>
+                                                <div class='dropdown d-flex justify-content-end'>
+                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                    <i class='fa-solid fa-bars'></i>
+                                                    </button>
+                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                        <li>
+                                                        <a class='dropdown-item' href='#'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
+                                                        </li>
+                                                        <li>
+                                                        <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-check-circle me-2'></i> Venta total</a>
+                                                        </li>
+                                                        <li>
+                                                        <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-pen me-2'></i> Editar</a>
+                                                        </li>
+                                                        <li>
+                                                        <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Fin Acciones Dólares -->
+
+                <hr class="linea-accion">
+
+                <!-- Comprar Acciones -->
+                <div class="text-start">
+                    <a href="../funciones/compra_acciones.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
+                        <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
+                    </a>
+                </div>
+                <!-- Fin Comprar Acciones -->
+
+            </div>
+        </div>
         <!-- FIN HISTORIAL ACCIONES -->
 
         <hr class="mod" style="margin-bottom: 80px;">
@@ -96,6 +317,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../js/tooltip.js"></script>
+    <script src="../js/botones_pesos_dolares.js"></script>
+    <script src="../js/ingresar_efectivo.js"></script>
+    <script src="../js/formato_miles_balance.js"></script>
+    <script src="../js/valor_promedio_ccl.js"></script>
     <!-- FIN JS -->
 </body>
 

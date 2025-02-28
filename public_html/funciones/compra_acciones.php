@@ -34,6 +34,10 @@ $fecha_acciones_hoy = date('Y-m-d');
 // Inicializar variable de mensaje de error
 $error_msg = "";
 
+// Obtener valor_inicial_ccl de cliente.php
+include '../backend/cliente.php';
+$valor_inicial_ccl = obtenerCCLCompra($cliente_id, $ticker); // Asegúrate de que esta función esté disponible en cliente.php
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $ticker = $_POST['ticker'];
     $cantidad = $_POST['cantidad'];
@@ -53,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->close();
 
         // Insertar los datos en la tabla acciones
-        $sql_insert_acciones = "INSERT INTO acciones (cliente_id, ticker, cantidad, precio, fecha) VALUES (?, ?, ?, ?, ?)";
+        $sql_insert_acciones = "INSERT INTO acciones (cliente_id, ticker, cantidad, precio, fecha, ccl_compra) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql_insert_acciones);
-        $stmt->bind_param("isids", $cliente_id, $ticker, $cantidad, $precio, $fecha);
+        $stmt->bind_param("isidsd", $cliente_id, $ticker, $cantidad, $precio, $fecha, $valor_inicial_ccl);
         $stmt->execute();
         $stmt->close();
 

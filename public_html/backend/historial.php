@@ -156,7 +156,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
-                                <tr>
+                                <tr data-ticker="">
                                     <td><!-- ticker_accion --></td>
                                     <td><!-- cantidad_accion --></td>
                                     <td><!-- fecha_compra_accion --></td>
@@ -216,7 +216,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th>Precio<br>Compra</th>
                                     <th>Total<br>Compra</th>
                                     <th>Fecha<br>Venta</th>
-                                    <th>Valor CCL<br>Venta</th>
+                                    <th>Valor CCL<br>Compra</th>
                                     <th>Precio<br>Venta</th>
                                     <th>Total<br>Venta</th>
                                     <th style="vertical-align: text-top;">Rendimiento</th>
@@ -224,7 +224,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-dolares">
-                                <tr>
+                                <tr data-ticker="">
                                     <td><!-- ticker_accion --></td>
                                     <td><!-- cantidad_accion --></td>
                                     <td><!-- fecha_compra_accion --></td>

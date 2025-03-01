@@ -146,8 +146,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Precio</th>
-                                    <th colspan="2">Valor</th>
+                                    <th colspan="2">Precio x acción</th>
+                                    <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
                                     <th rowspan="2"></th>
@@ -155,7 +155,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <tr>
                                     <th><!-- Precio -->Compra</th>
                                     <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Inicial</th>
+                                    <th><!-- Valor -->Compra</th>
                                     <th><!-- Valor -->Hoy</th>
                                 </tr>
                             </thead>

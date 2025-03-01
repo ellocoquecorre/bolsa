@@ -118,25 +118,39 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Valor Inicial</th>
-                                    <th>Valor Actual</th>
+                                    <th>Valor Total Inicial</th>
+                                    <th>Valor Total Actual</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php
+                                $acciones = obtenerAcciones($cliente_id);
+                                $valor_inicial_consolidado_acciones_pesos = 0;
+                                $valor_actual_consolidado_acciones_pesos = 0;
+
+                                foreach ($acciones as $accion) {
+                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+                                    $valor_inicial_consolidado_acciones_pesos += $valor_inicial_acciones_pesos;
+                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
+                                    $valor_actual_consolidado_acciones_pesos += $valor_actual_acciones_pesos;
+                                }
+                                $rendimiento_consolidado_acciones_pesos = $valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos;
+                                $rentabilidad_consolidado_acciones_pesos = (($valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos) / $valor_inicial_consolidado_acciones_pesos) * 100;
+                                ?>
+
                                 <tr>
-                                    <td>$ <!-- valor_inicial_consolidado_acciones_pesos --></td>
-                                    <td>$ <!-- valor_actual_consolidado_acciones_pesos --></td>
-                                    <td>$ <!-- rendimiento_consolidado_acciones_pesos --></td>
-                                    <td><!-- rentabilidad_consolidado_acciones_pesos --> %</td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_pesos)); ?></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
+                                    <td><?php echo htmlspecialchars(formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos)); ?></td>
+                                    <td><?php echo htmlspecialchars(formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos)); ?></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <!-- Fin Consolidada Acciones Pesos -->
-
-                    <hr class="linea-accion">
 
                     <!-- Completa Acciones Pesos -->
                     <div class="table-responsive">
@@ -189,10 +203,10 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                         <a class='dropdown-item' href='#'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
                                                         </li>
                                                         <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-check-circle me-2'></i> Venta total</a>
+                                                        <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-coins me-2'></i> Venta total</a>
                                                         </li>
                                                         <li>
-                                                        <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-pen me-2'></i> Editar</a>
+                                                        <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
                                                         </li>
                                                         <li>
                                                         <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>

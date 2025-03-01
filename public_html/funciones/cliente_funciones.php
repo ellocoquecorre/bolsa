@@ -167,3 +167,17 @@ function obtenerHistorialAcciones($cliente_id)
 // Obtener el historial de acciones del cliente
 $historial_acciones = obtenerHistorialAcciones($cliente_id);
 // FIN HISTORIAL DE ACCIONES
+
+// ACCIONES CONSOLIDADA
+
+function calcularValorInicialConsolidadoAccionesPesos($acciones)
+{
+    $valor_inicial_consolidado_acciones_pesos = 0;
+    foreach ($acciones as $accion) {
+        $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+        $valor_inicial_consolidado_acciones_pesos += $valor_inicial_acciones_pesos;
+    }
+    return $valor_inicial_consolidado_acciones_pesos;
+}
+
+// FIN ACCIONES CONSOLIDADA

@@ -52,7 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Si la contraseña es correcta
                 $_SESSION['loggedin'] = true;
                 $_SESSION['email'] = $email;
-                header("Location: frontend/cliente.php");
+                $cliente_id = $row['cliente_id']; // Obtener el cliente_id
+                header("Location: frontend/cliente.php?cliente_id=" . $cliente_id);
                 exit;
             }
         }

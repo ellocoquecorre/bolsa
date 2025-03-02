@@ -39,7 +39,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../backend/historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial</a>
+                        <a class="nav-link" href="cliente.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-rotate-left me-2"></i>Volver</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>
@@ -140,16 +140,20 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th style="vertical-align: text-top;">Ticker</th>
-                                    <th style="vertical-align: text-top;">Cantidad</th>
-                                    <th>Fecha<br>Compra</th>
-                                    <th>Precio<br>Compra</th>
-                                    <th>Total<br>Compra</th>
-                                    <th>Fecha<br>Venta</th>
-                                    <th>Precio<br>Venta</th>
-                                    <th>Total<br>Venta</th>
-                                    <th style="vertical-align: text-top;">Rendimiento</th>
-                                    <th style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="3">Compra</th>
+                                    <th colspan="3">Venta</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                </tr>
+                                <tr>
+                                    <th>Fecha<!-- Compra --></th>
+                                    <th>Precio<!-- Compra --></th>
+                                    <th>Total<!-- Compra --></th>
+                                    <th>Fecha<!-- Venta --></th>
+                                    <th>Precio<!-- Venta --></th>
+                                    <th>Total<!-- Venta --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
@@ -215,18 +219,22 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th style="vertical-align: text-top;">Ticker</th>
-                                    <th style="vertical-align: text-top;">Cantidad</th>
-                                    <th>Fecha<br>Compra</th>
-                                    <th>Valor CCL<br>Compra</th>
-                                    <th>Precio<br>Compra</th>
-                                    <th>Total<br>Compra</th>
-                                    <th>Fecha<br>Venta</th>
-                                    <th>Valor CCL<br>Venta</th>
-                                    <th>Precio<br>Venta</th>
-                                    <th>Total<br>Venta</th>
-                                    <th style="vertical-align: text-top;">Rendimiento</th>
-                                    <th style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="4">Compra</th>
+                                    <th colspan="4">Venta</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                </tr>
+                                <tr>
+                                    <th>Fecha<!-- Compra --></th>
+                                    <th>Dolar CCL<!-- Compra --></th>
+                                    <th>Precio<!-- Compra --></th>
+                                    <th>Total<!-- Compra --></th>
+                                    <th>Fecha<!-- Venta --></th>
+                                    <th>Dolar CCL<!-- Venta --></th>
+                                    <th>Precio<!-- Venta --></th>
+                                    <th>Total<!-- Venta --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-dolares">

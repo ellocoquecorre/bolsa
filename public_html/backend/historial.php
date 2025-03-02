@@ -125,28 +125,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $acciones = obtenerAcciones($cliente_id);
-                                $valor_inicial_consolidado_acciones_pesos = 0;
-                                $valor_actual_consolidado_acciones_pesos = 0;
-
-                                foreach ($acciones as $accion) {
-                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
-                                    $valor_inicial_consolidado_acciones_pesos += $valor_inicial_acciones_pesos;
-                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
-                                    $valor_actual_consolidado_acciones_pesos += $valor_actual_acciones_pesos;
-                                }
-                                $rendimiento_consolidado_acciones_pesos = $valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos;
-                                $rentabilidad_consolidado_acciones_pesos = ($rendimiento_consolidado_acciones_pesos / $valor_inicial_consolidado_acciones_pesos) * 100;
-                                ?>
-
                                 <tr>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_pesos)); ?></td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos); ?></td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos); ?></td>
-
+                                    <td>$ <!-- valor_inicial_consolidado_acciones_pesos --></td>
+                                    <td>$ <!-- valor_actual_consolidado_acciones_pesos --></td>
+                                    <td>$ <!-- rendimiento_consolidado_acciones_pesos --></td>
+                                    <td><!-- rentabilidad_consolidado_acciones_pesos --> %</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -221,28 +204,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $acciones = obtenerAcciones($cliente_id);
-                                $valor_inicial_consolidado_acciones_dolares = 0;
-                                $valor_actual_consolidado_acciones_dolares = 0;
-
-                                foreach ($historial_acciones as $accion) {
-                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                    $valor_inicial_acciones_dolares = $accion['precio'] * $accion['cantidad'] / $accion['ccl_compra'];
-                                    $valor_inicial_consolidado_acciones_dolares += $valor_inicial_acciones_dolares;
-                                    $valor_actual_acciones_dolares = $precio_actual * $accion['cantidad'] / $accion['ccl_compra'];
-                                    $valor_actual_consolidado_acciones_dolares += $valor_actual_acciones_dolares;
-                                }
-                                $rendimiento_consolidado_acciones_dolares = $valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares;
-                                $rentabilidad_consolidado_acciones_dolares = ($rendimiento_consolidado_acciones_dolares / $valor_inicial_consolidado_acciones_dolares) * 100;
-                                ?>
-
                                 <tr>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_dolares)); ?></td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_dolares)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares); ?></td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_dolares); ?></td>
-
+                                    <td>$ <!-- valor_inicial_consolidado_acciones_dolares --></td>
+                                    <td>$ <!-- valor_actual_consolidado_acciones_dolares --></td>
+                                    <td>$ <!-- rendimiento_consolidado_acciones_dolares --></td>
+                                    <td><!-- rentabilidad_consolidado_acciones_dolares --> %</td>
                                 </tr>
                             </tbody>
                         </table>

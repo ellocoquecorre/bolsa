@@ -1,32 +1,17 @@
 <?php
-session_start();
+// Incluir archivo de configuración
 require_once '../../config/config.php';
 
 // Incluir las funciones necesarias
 include '../funciones/cliente_funciones.php';
 
-// Verificar si el usuario está logueado
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: ../login.php");
-    exit;
-}
-
-// Obtener el email del usuario logueado
-$email = $_SESSION['email'];
-
-// Crear conexión a la base de datos
-$conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-
-// Verificar la conexión
-if ($conn->connect_error) {
-    die("La conexión ha fallado: " . $conn->connect_error);
-}
+// Obtener el id del cliente desde la URL
+$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
 // Obtener datos de la corredora
 $datos_corredora = obtenerDatosCorredora($cliente_id);
 $url_corredora = $datos_corredora['url'];
 $nombre_corredora = $datos_corredora['corredora'];
-?>
 
 ?>
 
@@ -204,16 +189,16 @@ $nombre_corredora = $datos_corredora['corredora'];
                                     $rentabilidad_acciones_pesos = (($rendimiento_acciones_pesos) / $valor_inicial_acciones_pesos) * 100;
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                    <td>{$accion['ticker']}</td>
-                                    <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                    <td>{$accion['cantidad']}</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
-                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
-                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
-                                </tr>";
+                                            <td>{$accion['ticker']}</td>
+                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                            <td>{$accion['cantidad']}</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
+                                        </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -309,18 +294,18 @@ $nombre_corredora = $datos_corredora['corredora'];
 
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                    <td>{$accion['ticker']}</td>
-                                    <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                    <td>{$accion['cantidad']}</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(obtenerCCLCompra($cliente_id, $accion['ticker'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_inicial_ccl)) . "</td>
-                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
-                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
-                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
-                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
-                                </tr>";
+                                            <td>{$accion['ticker']}</td>
+                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                            <td>{$accion['cantidad']}</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(obtenerCCLCompra($cliente_id, $accion['ticker'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_inicial_ccl)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
+                                        </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -425,16 +410,16 @@ $nombre_corredora = $datos_corredora['corredora'];
 
         <hr class="mod" style="margin-bottom: 80px;">
 
-        <!-- FOOTER -->
-        <footer class="footer bg-light">
-            <div class="container">
-                <span class="text-muted">© GoodFellas Inc.</span>
-            </div>
-        </footer>
-        <!-- FIN FOOTER -->
-
     </div>
     <!-- FIN CONTENIDO -->
+
+    <!-- FOOTER -->
+    <footer class="footer bg-light">
+        <div class="container">
+            <span class="text-muted">© GoodFellas Inc.</span>
+        </div>
+    </footer>
+    <!-- FIN FOOTER -->
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

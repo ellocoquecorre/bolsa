@@ -125,11 +125,28 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php
+                                $acciones = obtenerAcciones($cliente_id);
+                                $valor_inicial_consolidado_acciones_pesos = 0;
+                                $valor_actual_consolidado_acciones_pesos = 0;
+
+                                foreach ($acciones as $accion) {
+                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+                                    $valor_inicial_consolidado_acciones_pesos += $valor_inicial_acciones_pesos;
+                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
+                                    $valor_actual_consolidado_acciones_pesos += $valor_actual_acciones_pesos;
+                                }
+                                $rendimiento_consolidado_acciones_pesos = $valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos;
+                                $rentabilidad_consolidado_acciones_pesos = ($rendimiento_consolidado_acciones_pesos / $valor_inicial_consolidado_acciones_pesos) * 100;
+                                ?>
+
                                 <tr>
-                                    <td>$ <!-- valor_inicial_consolidado_acciones_pesos --></td>
-                                    <td>$ <!-- valor_actual_consolidado_acciones_pesos --></td>
-                                    <td>$ <!-- rendimiento_consolidado_acciones_pesos --></td>
-                                    <td><!-- rentabilidad_consolidado_acciones_pesos --> %</td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_pesos)); ?></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos); ?></td>
+
                                 </tr>
                             </tbody>
                         </table>

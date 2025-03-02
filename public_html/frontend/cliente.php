@@ -22,6 +22,12 @@ if ($conn->connect_error) {
     die("La conexión ha fallado: " . $conn->connect_error);
 }
 
+// Obtener datos de la corredora
+$datos_corredora = obtenerDatosCorredora($cliente_id);
+$url_corredora = $datos_corredora['url'];
+$nombre_corredora = $datos_corredora['corredora'];
+?>
+
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +59,7 @@ if ($conn->connect_error) {
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../backend/historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial</a>
+                        <a class="nav-link" href="historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>
@@ -70,7 +76,7 @@ if ($conn->connect_error) {
         <!-- TITULO -->
         <div class="col-12 text-center">
             <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . htmlspecialchars($apellido)); ?></h4>
-            <p>Tu corredora es<br><a href="<!-- link_corredora -->" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><!-- nombre_corredora --></a></p>
+            <p>Tu corredora es<br><a href="<?php echo $url_corredora; ?>" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><?php echo $nombre_corredora; ?></a></p>
         </div>
         <!-- FIN TITULO -->
 
@@ -418,6 +424,14 @@ if ($conn->connect_error) {
         <!-- FIN BALANCE -->
 
         <hr class="mod" style="margin-bottom: 80px;">
+
+        <!-- FOOTER -->
+        <footer class="footer bg-light">
+            <div class="container">
+                <span class="text-muted">© GoodFellas Inc.</span>
+            </div>
+        </footer>
+        <!-- FIN FOOTER -->
 
     </div>
     <!-- FIN CONTENIDO -->

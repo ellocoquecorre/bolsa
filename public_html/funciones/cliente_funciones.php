@@ -20,6 +20,21 @@ $stmt->fetch();
 $stmt->close();
 // FIN DATOS DEL CLIENTE
 
+// CORREDORA CLIENTE
+function obtenerDatosCorredora($cliente_id)
+{
+    global $conn;
+    $sql = "SELECT url, corredora FROM clientes WHERE cliente_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $cliente_id);
+    $stmt->execute();
+    $stmt->bind_result($url, $corredora);
+    $stmt->fetch();
+    $stmt->close();
+    return ['url' => $url, 'corredora' => $corredora];
+}
+// FIN CORREDORA CLIENTE
+
 // SALDO EN PESOS
 $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
 $stmt_saldo = $conn->prepare($sql_saldo);

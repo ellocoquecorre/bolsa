@@ -70,7 +70,7 @@ if ($conn->connect_error) {
         <!-- TITULO -->
         <div class="col-12 text-center">
             <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . htmlspecialchars($apellido)); ?></h4>
-            <p>Tu corredora es<br><a href="<?php echo htmlspecialchars($url); ?>" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><?php echo htmlspecialchars($corredora); ?></a></p>
+            <p>Tu corredora es<br><a href="<!-- link_corredora -->" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><!-- nombre_corredora --></a></p>
         </div>
         <!-- FIN TITULO -->
 

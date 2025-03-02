@@ -281,7 +281,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_venta_dolares_accion)) . "</td>
                                     <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($total_venta_dolares_accion)) . "</td>
 
-                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_dolares_accion) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_dolares_accion, 'u$s') . "</td>
                                     <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_dolares_accion) . "</td>
                                 </tr>";
                                 }

@@ -153,6 +153,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     </div>
                     <!-- Fin Consolidada Acciones Pesos -->
 
+                    <hr class="linea-accion">
+
                     <!-- Completa Acciones Pesos -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
@@ -234,8 +236,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Valor Inicial</th>
-                                    <th>Valor Actual</th>
+                                    <th>Valor Total Inicial</th>
+                                    <th>Valor Total Actual</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                 </tr>
@@ -279,8 +281,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
                                     <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Precio</th>
-                                    <th colspan="2">Valor</th>
+                                    <th colspan="2">Precio x acción</th>
+                                    <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
                                     <th rowspan="2"></th>
@@ -290,7 +292,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th><!-- Valor CCL -->Hoy</th>
                                     <th><!-- Precio -->Compra</th>
                                     <th><!-- Precio -->Hoy</th>
-                                    <th><!-- X -->Inicial</th>
+                                    <th><!-- X -->Compra</th>
                                     <th><!-- X -->Hoy</th>
                                 </tr>
                             </thead>

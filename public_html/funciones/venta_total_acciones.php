@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $precio_venta = isset($_POST['precio']) ? floatval($_POST['precio']) : 0;
 
     // Llamar a la función para realizar las operaciones
-    realizarVentas($cliente_id, $ticker, $cantidad, $fecha_acciones_hoy, $precio_venta);
+    realizarVentas($cliente_id, $ticker, $cantidad, $precio_venta);
 
     // Redireccionar al cliente
     header("Location: ../backend/cliente.php?cliente_id=$cliente_id");
@@ -119,6 +119,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                 <input type="number" step="0.01" class="form-control" id="precio" name="precio" value="" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fecha (solo para visualización) -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="fecha" class="col-sm-2 col-form-label">Fecha</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
+                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha_acciones_hoy; ?>" disabled required>
                             </div>
                         </div>
                     </div>

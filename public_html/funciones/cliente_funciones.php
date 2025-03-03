@@ -194,10 +194,11 @@ function calcularValorInicialConsolidadoAccionesPesos($acciones)
     }
     return $valor_inicial_consolidado_acciones_pesos;
 }
+
 // FIN ACCIONES CONSOLIDADA
 
-// VENTA TOTAL ACCIONES
-function realizarVentas($cliente_id, $ticker, $cantidad, $fecha_venta, $precio_venta)
+// X
+function realizarVentas($cliente_id, $ticker, $cantidad, $precio_venta)
 {
     global $conn;
 
@@ -215,6 +216,9 @@ function realizarVentas($cliente_id, $ticker, $cantidad, $fecha_venta, $precio_v
 
     // Obtener el promedio CCL de la venta
     global $promedio_ccl;
+
+    // Obtener la fecha de hoy (fecha de venta)
+    $fecha_venta = date('Y-m-d');
 
     // Insertar los datos en la tabla acciones_historial
     $sql_historial = "INSERT INTO acciones_historial (cliente_id, ticker, cantidad, fecha_compra, precio_compra, ccl_compra, fecha_venta, precio_venta, ccl_venta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -240,4 +244,4 @@ function realizarVentas($cliente_id, $ticker, $cantidad, $fecha_venta, $precio_v
     $stmt_eliminar_acciones->execute();
     $stmt_eliminar_acciones->close();
 }
-// FIN VENTA TOTAL ACCIONES
+// FIN X

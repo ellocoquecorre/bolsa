@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo $cantidad; ?>" disabled required>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo $cantidad; ?>" readonly required>
                             </div>
                         </div>
                     </div>
@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha_acciones_hoy; ?>" disabled required>
+                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha_acciones_hoy; ?>" readonly required>
                             </div>
                         </div>
                     </div>

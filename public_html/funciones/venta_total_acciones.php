@@ -30,6 +30,11 @@ $fecha_acciones_hoy = date('Y-m-d');
 // Procesar el formulario al hacer clic en "Aceptar"
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $precio_venta = isset($_POST['precio']) ? floatval($_POST['precio']) : 0;
+    $fecha_venta = isset($_POST['fecha']) ? $_POST['fecha'] : '';
+
+    // Registrar la fecha en el archivo de log
+    $log_message = "Fecha enviada: " . $fecha_venta . "\n";
+    file_put_contents('log.txt', $log_message, FILE_APPEND);
 
     // Llamar a la función para realizar las operaciones
     realizarVentas($cliente_id, $ticker, $cantidad, $precio_venta);
@@ -108,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo $cantidad; ?>" readonly required>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo $cantidad; ?>" disabled required>
                             </div>
                         </div>
                     </div>
@@ -122,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                     </div>
-                    <!-- Fecha (solo para visualización) -->
+                    <!-- Fecha -->
                     <div class="row mb-3 align-items-center">
                         <label for="fecha" class="col-sm-2 col-form-label">Fecha</label>
                         <div class="col-sm-10">

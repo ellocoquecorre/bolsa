@@ -140,10 +140,10 @@ function obtenerCCLCompra($cliente_id, $ticker)
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("is", $cliente_id, $ticker);
     $stmt->execute();
-    $stmt->bind_result($valor_inicial_ccl);
+    $stmt->bind_result($valor_compra_ccl);
     $stmt->fetch();
     $stmt->close();
-    return $valor_inicial_ccl;
+    return $valor_compra_ccl;
 }
 // FIN CCL COMPRA
 

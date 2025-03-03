@@ -247,10 +247,10 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 $acciones = obtenerAcciones($cliente_id);
                                 $valor_inicial_consolidado_acciones_dolares = 0;
                                 $valor_actual_consolidado_acciones_dolares = 0;
-                                $valor_inicial_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
+                                $valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
                                 foreach ($acciones as $accion) {
                                     $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                    $valor_inicial_acciones_dolares = ($accion['precio'] * $accion['cantidad']) / $valor_inicial_ccl;
+                                    $valor_inicial_acciones_dolares = ($accion['precio'] * $accion['cantidad']) / $valor_compra_ccl;
                                     $valor_inicial_consolidado_acciones_dolares += $valor_inicial_acciones_dolares;
                                     $valor_actual_acciones_dolares = ($precio_actual * $accion['cantidad']) / $promedio_ccl;
                                     $valor_actual_consolidado_acciones_dolares += $valor_actual_acciones_dolares;
@@ -305,9 +305,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
                                     $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
                                     // dolares
-                                    $valor_inicial_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
+                                    $valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
                                     $precio_actual_dolares = $precio_actual / $promedio_ccl;
-                                    $valor_inicial_acciones_dolares = $valor_inicial_acciones_pesos / $valor_inicial_ccl;
+                                    $valor_inicial_acciones_dolares = $valor_inicial_acciones_pesos / $valor_compra_ccl;
                                     $valor_actual_acciones_dolares = $valor_actual_acciones_pesos / $promedio_ccl;
                                     $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
                                     $rentabilidad_acciones_dolares = (($valor_actual_acciones_dolares - $valor_inicial_acciones_dolares) / $valor_inicial_acciones_dolares) * 100;
@@ -319,7 +319,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td>{$accion['cantidad']}</td>
                                             <td class='text-right'>$ " . htmlspecialchars(obtenerCCLCompra($cliente_id, $accion['ticker'])) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_inicial_ccl)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_compra_ccl)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>

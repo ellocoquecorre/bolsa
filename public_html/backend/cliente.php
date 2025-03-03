@@ -197,7 +197,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
                                             <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
                                             <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-end'>
+                                                <div class='dropdown d-flex justify-content-center'>
                                                     <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
                                                     <i class='fa-solid fa-bars'></i>
                                                     </button>
@@ -326,7 +326,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                             <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
                                             <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
                                             <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-end'>
+                                                <div class='dropdown d-flex justify-content-center'>
                                                     <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
                                                     <i class='fa-solid fa-bars'></i>
                                                     </button>

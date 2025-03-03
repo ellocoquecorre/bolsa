@@ -32,7 +32,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas Inc." />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle na[...]
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class=" navbar-toggler-icon"></span>
             </button>
 
@@ -136,7 +136,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 }
 
                                 $rendimiento_consolidado_acciones_pesos = $valor_venta_consolidado_acciones_pesos - $valor_compra_consolidado_acciones_pesos;
-                                $rentabilidad_consolidado_acciones_pesos = ($rendimiento_consolidado_acciones_pesos / $valor_compra_consolidado_acciones_pesos) * 100;
+                                if ($valor_compra_consolidado_acciones_pesos != 0) {
+                                    $rentabilidad_consolidado_acciones_pesos = ($rendimiento_consolidado_acciones_pesos / $valor_compra_consolidado_acciones_pesos) * 100;
+                                } else {
+                                    $rentabilidad_consolidado_acciones_pesos = 0;
+                                }
                                 ?>
                                 <tr>
                                     <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_acciones_pesos)); ?></td>
@@ -178,7 +182,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $total_compra_pesos_accion = $accion['cantidad'] * $accion['precio_compra'];
                                     $total_venta_pesos_accion = $accion['cantidad'] * $accion['precio_venta'];
                                     $rendimiento_pesos_accion = $total_venta_pesos_accion - $total_compra_pesos_accion;
-                                    $rentabilidad_pesos_accion = ($rendimiento_pesos_accion / $total_compra_pesos_accion) * 100;
+                                    if ($total_compra_pesos_accion != 0) {
+                                        $rentabilidad_pesos_accion = ($rendimiento_pesos_accion / $total_compra_pesos_accion) * 100;
+                                    } else {
+                                        $rentabilidad_pesos_accion = 0;
+                                    }
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
@@ -229,7 +237,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $valor_venta_consolidado_acciones_dolares += $total_venta_dolares_accion;
                                 }
                                 $rendimiento_consolidado_acciones_dolares = $valor_venta_consolidado_acciones_dolares - $valor_compra_consolidado_acciones_dolares;
-                                $rentabilidad_consolidado_acciones_dolares = ($rendimiento_consolidado_acciones_dolares / $valor_compra_consolidado_acciones_dolares) * 100;
+                                if ($valor_compra_consolidado_acciones_dolares != 0) {
+                                    $rentabilidad_consolidado_acciones_dolares = ($rendimiento_consolidado_acciones_dolares / $valor_compra_consolidado_acciones_dolares) * 100;
+                                } else {
+                                    $rentabilidad_consolidado_acciones_dolares = 0;
+                                }
                                 ?>
                                 <tr>
                                     <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_acciones_dolares)); ?></td>
@@ -275,7 +287,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $precio_venta_dolares_accion = $accion['precio_venta'] / $accion['ccl_venta'];
                                     $total_venta_dolares_accion = $accion['cantidad'] * $precio_venta_dolares_accion;
                                     $rendimiento_dolares_accion = $total_venta_dolares_accion - $total_compra_dolares_accion;
-                                    $rentabilidad_dolares_accion = ($rendimiento_dolares_accion / $total_compra_dolares_accion) * 100;
+                                    if ($total_compra_dolares_accion != 0) {
+                                        $rentabilidad_dolares_accion = ($rendimiento_dolares_accion / $total_compra_dolares_accion) * 100;
+                                    } else {
+                                        $rentabilidad_dolares_accion = 0;
+                                    }
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                     <td>{$accion['ticker']}</td>

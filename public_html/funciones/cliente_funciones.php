@@ -214,29 +214,18 @@ function realizarVentas($cliente_id, $ticker, $cantidad, $precio_venta)
     // Obtener el promedio CCL de la venta
     global $promedio_ccl;
 
-    // Verificar si $fecha_venta es válida
-    if (empty($fecha_venta)) {
-        $fecha_venta = date('Y-m-d'); // Establecer la fecha de hoy si está vacía
-    }
+    // Obtener la fecha de hoy (fecha de venta)
+    $fecha_venta = date('Y-m-d');
 
-    // Imprimir la fecha justo antes de la ejecución de la consulta para verificar
-    file_put_contents('fecha_venta_pre_sql.txt', "Fecha Venta (antes de la inserción): " . $fecha_venta . "\n", FILE_APPEND);
+    // Registrar en el log
+    $log_message = "Fecha compra: " . $fecha_compra . ", Fecha venta: " . $fecha_venta . "\n";
+    file_put_contents('log.txt', $log_message, FILE_APPEND);
 
     // Insertar los datos en la tabla acciones_historial
     $sql_historial = "INSERT INTO acciones_historial (cliente_id, ticker, cantidad, fecha_compra, precio_compra, ccl_compra, fecha_venta, precio_venta, ccl_venta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-    // Preparar la consulta
     $stmt_historial = $conn->prepare($sql_historial);
     $stmt_historial->bind_param("isisssdsd", $cliente_id, $ticker, $cantidad, $fecha_compra, $precio_compra, $valor_compra_ccl, $fecha_venta, $precio_venta, $promedio_ccl);
-
-    // Ejecutar la consulta y verificar errores
-    if ($stmt_historial->execute()) {
-        echo "Registro guardado correctamente.<br>";
-    } else {
-        echo "Error en la consulta: " . $stmt_historial->error . "<br>";
-    }
-
-    // Cerrar statement después de ejecutarlo
+    $stmt_historial->execute();
     $stmt_historial->close();
 
     // Calcular el valor actual de las acciones en pesos

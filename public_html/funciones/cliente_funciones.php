@@ -197,7 +197,7 @@ function calcularValorInicialConsolidadoAccionesPesos($acciones)
 
 // FIN ACCIONES CONSOLIDADA
 
-// X
+// VENTA TOTAL ACCIONES
 function realizarVentas($cliente_id, $ticker, $cantidad, $precio_venta)
 {
     global $conn;
@@ -244,4 +244,4 @@ function realizarVentas($cliente_id, $ticker, $cantidad, $precio_venta)
     $stmt_eliminar_acciones->execute();
     $stmt_eliminar_acciones->close();
 }
-// FIN X
+// FIN VENTA TOTAL ACCIONES

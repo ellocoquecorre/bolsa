@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     file_put_contents('log.txt', $log_message, FILE_APPEND);
 
     // Llamar a la función para realizar las operaciones
-    realizarVentas($cliente_id, $ticker, $cantidad, $precio_venta);
+    realizarVentas($cliente_id, $ticker, $cantidad, $precio_venta, $fecha_venta);
 
     // Redireccionar al cliente
     header("Location: ../backend/cliente.php?cliente_id=$cliente_id");

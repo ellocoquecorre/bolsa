@@ -118,16 +118,16 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Valor Inicial</th>
-                                    <th>Valor Actual</th>
+                                    <th>Valor total Compra</th>
+                                    <th>Valor total Venta</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>$ <!-- valor_inicial_consolidado_acciones_pesos --></td>
-                                    <td>$ <!-- valor_actual_consolidado_acciones_pesos --></td>
+                                    <td>$ <!-- valor_compra_consolidado_acciones_pesos --></td>
+                                    <td>$ <!-- valor_venta_consolidado_acciones_pesos --></td>
                                     <td>$ <!-- rendimiento_consolidado_acciones_pesos --></td>
                                     <td><!-- rentabilidad_consolidado_acciones_pesos --> %</td>
                                 </tr>
@@ -197,16 +197,16 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Valor Inicial</th>
-                                    <th>Valor Actual</th>
+                                    <th>Valor total Compra</th>
+                                    <th>Valor total Venta</th>
                                     <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>$ <!-- valor_inicial_consolidado_acciones_dolares --></td>
-                                    <td>$ <!-- valor_actual_consolidado_acciones_dolares --></td>
+                                    <td>$ <!-- valor_compra_consolidado_acciones_dolares --></td>
+                                    <td>$ <!-- valor_venta_consolidado_acciones_dolares --></td>
                                     <td>$ <!-- rendimiento_consolidado_acciones_dolares --></td>
                                     <td><!-- rentabilidad_consolidado_acciones_dolares --> %</td>
                                 </tr>

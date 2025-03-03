@@ -1,6 +1,7 @@
 <?php
 // Incluir archivo de configuración
 require_once '../../config/config.php';
+include '../funciones/cliente_funciones.php';
 
 // Obtener el id del cliente y el ticker desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
@@ -23,9 +24,20 @@ $stmt->bind_result($cantidad);
 $stmt->fetch();
 $stmt->close();
 
-// Obtener la fecha de hoy
+// Obtener la fecha de hoy desde el servidor
 $fecha_acciones_hoy = date('Y-m-d');
 
+// Procesar el formulario al hacer clic en "Aceptar"
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $precio_venta = isset($_POST['precio']) ? floatval($_POST['precio']) : 0;
+
+    // Llamar a la función para realizar las operaciones
+    realizarVentas($cliente_id, $ticker, $cantidad, $fecha_acciones_hoy, $precio_venta);
+
+    // Redireccionar al cliente
+    header("Location: ../backend/cliente.php?cliente_id=$cliente_id");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -50,8 +62,8 @@ $fecha_acciones_hoy = date('Y-m-d');
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle n[...]
-                <span class=" navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -110,22 +122,11 @@ $fecha_acciones_hoy = date('Y-m-d');
                             </div>
                         </div>
                     </div>
-                    <!-- Fecha -->
-                    <div class="row mb-3 align-items-center">
-                        <label for="fecha" class="col-sm-2 col-form-label">Fecha</label>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha_acciones_hoy; ?>" required>
-                            </div>
-                        </div>
-                    </div>
                     <hr class="mod mb-3">
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                        <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones"
-                            class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
+                        <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones" class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
                     </div>
                 </form>
             </div>

@@ -194,5 +194,50 @@ function calcularValorInicialConsolidadoAccionesPesos($acciones)
     }
     return $valor_inicial_consolidado_acciones_pesos;
 }
-
 // FIN ACCIONES CONSOLIDADA
+
+// VENTA TOTAL ACCIONES
+function realizarVentas($cliente_id, $ticker, $cantidad, $fecha_venta, $precio_venta)
+{
+    global $conn;
+
+    // Obtener los datos de la acción a vender
+    $sql_accion = "SELECT fecha, precio FROM acciones WHERE cliente_id = ? AND ticker = ?";
+    $stmt_accion = $conn->prepare($sql_accion);
+    $stmt_accion->bind_param("is", $cliente_id, $ticker);
+    $stmt_accion->execute();
+    $stmt_accion->bind_result($fecha_compra, $precio_compra);
+    $stmt_accion->fetch();
+    $stmt_accion->close();
+
+    // Obtener el valor de compra CCL
+    $valor_compra_ccl = obtenerCCLCompra($cliente_id, $ticker);
+
+    // Obtener el promedio CCL de la venta
+    global $promedio_ccl;
+
+    // Insertar los datos en la tabla acciones_historial
+    $sql_historial = "INSERT INTO acciones_historial (cliente_id, ticker, cantidad, fecha_compra, precio_compra, ccl_compra, fecha_venta, precio_venta, ccl_venta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt_historial = $conn->prepare($sql_historial);
+    $stmt_historial->bind_param("isisssdsd", $cliente_id, $ticker, $cantidad, $fecha_compra, $precio_compra, $valor_compra_ccl, $fecha_venta, $precio_venta, $promedio_ccl);
+    $stmt_historial->execute();
+    $stmt_historial->close();
+
+    // Calcular el valor actual de las acciones en pesos
+    $valor_actual_acciones_pesos = $precio_venta * $cantidad;
+
+    // Sumar el valor actual de las acciones al saldo del cliente en la tabla balance
+    $sql_saldo = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
+    $stmt_saldo = $conn->prepare($sql_saldo);
+    $stmt_saldo->bind_param("di", $valor_actual_acciones_pesos, $cliente_id);
+    $stmt_saldo->execute();
+    $stmt_saldo->close();
+
+    // Eliminar las acciones vendidas de la tabla acciones
+    $sql_eliminar_acciones = "DELETE FROM acciones WHERE cliente_id = ? AND ticker = ?";
+    $stmt_eliminar_acciones = $conn->prepare($sql_eliminar_acciones);
+    $stmt_eliminar_acciones->bind_param("is", $cliente_id, $ticker);
+    $stmt_eliminar_acciones->execute();
+    $stmt_eliminar_acciones->close();
+}
+// FIN VENTA TOTAL ACCIONES

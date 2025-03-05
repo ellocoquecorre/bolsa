@@ -52,7 +52,7 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle na">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -184,7 +184,7 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                        <input type="number" class="form-control" id="precio_venta" name="precio_venta" value="" required autofocus>
+                                        <input type="text" class="form-control" id="precio_venta" name="precio_venta" placeholder="0,00" onkeyup="formatoBalance(this)" required autofocus>
                                     </div>
                                 </div>
                             </div>
@@ -234,6 +234,7 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../js/formato_miles_balance.js"></script>
     <!-- FIN JS -->
 </body>
 

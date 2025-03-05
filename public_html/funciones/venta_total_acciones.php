@@ -5,17 +5,6 @@ include '../funciones/cliente_funciones.php';
 
 // Obtener el id del cliente y el ticker desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
-$ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
-
-// Consulta para obtener los datos del cliente
-$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $cliente_id);
-$stmt->execute();
-$stmt->bind_result($nombre, $apellido);
-$stmt->fetch();
-$stmt->close();
-
 ?>
 
 <!DOCTYPE html>
@@ -72,45 +61,131 @@ $stmt->close();
 
         <hr class="mod">
 
-        <!-- EDITAR ACCIONES -->
-        <div class="col-3"></div>
-        <div class="col-6 text-center">
+        <!-- VENTA TOTAL ACCIONES -->
+        <div class="col-2"></div>
+        <div class="col-8 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones mb-4">Venta total de <?php echo htmlspecialchars($ticker); ?></h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Venta total</h5>
 
                 <form method="POST" action="">
-                    <input type="hidden" name="accion_id" value="">
-                    <!-- Cantidad -->
-                    <div class="row mb-3 align-items-center">
-                        <label for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo $cantidad; ?>" readonly required>
+                    <!-- Primera Fila -->
+                    <div class="row">
+                        <!-- Izquierda -->
+                        <div class="col-6 text-center">
+                            <!-- Ticker -->
+                            <div class="row mb-3 align-items-center">
+                                <label class="col-sm-4" for="ticker" class="col-sm-2 col-form-label">Ticker</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
+                                        <input type="number" class="form-control" id="ticker" name="ticker" value="<!-- $ticker -->" readonly>
+                                    </div>
+                                </div>
                             </div>
+                            <!-- Fin Ticker -->
                         </div>
-                    </div>
-                    <!-- Precio -->
-                    <div class="row mb-3 align-items-center">
-                        <label for="precio" class="col-sm-2 col-form-label">Precio</label>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                <input type="number" step="0.01" class="form-control" id="precio" name="precio" value="" required>
+                        <!-- Fin Izquierda -->
+                        <!-- Derecha -->
+                        <div class="col-6 text-center">
+                            <!-- Cantidad -->
+                            <div class="row mb-3 align-items-center">
+                                <label class="col-sm-4" for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
+                                        <input type="number" class="form-control" id="cantidad" name="cantidad" value="<!-- $cantidad -->" readonly>
+                                    </div>
+                                </div>
                             </div>
+                            <!-- Fin Cantidad -->
                         </div>
+                        <!-- Fin Derecha -->
                     </div>
-                    <!-- Fecha -->
-                    <div class="row mb-3 align-items-center">
-                        <label for="fecha" class="col-sm-2 col-form-label">Fecha</label>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha_acciones_hoy; ?>" readonly required>
+                    <!-- Fin Primera Fila -->
+
+                    <hr class="linea-accion">
+
+                    <!-- Segunda Fila -->
+                    <div class="row">
+                        <!-- Fin Izquierda -->
+                        <div class="col-6 text-center">
+                            <!-- Fecha Compra -->
+                            <div class="row mb-3 align-items-center">
+                                <label class="col-sm-4" for="fecha_compra" class="col-sm-2 col-form-label">Fecha Compra</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
+                                        <input type="number" class="form-control" id="fecha_compra" name="fecha_compra" value="<!-- $fecha_compra -->" readonly>
+                                    </div>
+                                </div>
                             </div>
+                            <!-- Fin Fecha Compra -->
+                            <!-- Precio Compra -->
+                            <div class="row mb-3 align-items-center">
+                                <label class="col-sm-4" for="precio_compra" class="col-sm-2 col-form-label">Precio Compra</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                        <input type="number" class="form-control" id="precio_compra" name="precio_compra" value="<!-- $precio_compra -->" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Fin Precio Compra -->
+                            <!-- CCL Compra -->
+                            <div class="row mb-3 align-items-center">
+                                <label class="col-sm-4" for="ccl_compra" class="col-sm-2 col-form-label">CCL Compra</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                        <input type="number" class="form-control" id="ccl_compra" name="ccl_compra" value="<!-- $ccl_compra -->" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Fin CCL Compra -->
                         </div>
+                        <!-- Fin Izquierda -->
+                        <!-- Derecha -->
+                        <div class="col-6 text-center">
+                            <!-- Fecha Venta -->
+                            <div class="row mb-3 align-items-center">
+                                <label class="col-sm-4" for="fecha_venta" class="col-sm-2 col-form-label">Fecha Venta</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
+                                        <input type="number" class="form-control" id="fecha_venta" name="fecha_venta" value="<!-- $fecha_venta -->" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Fin Fecha Venta -->
+                            <!-- Precio Venta -->
+                            <div class="row mb-3 align-items-center">
+                                <label class="col-sm-4" for="precio_venta" class="col-sm-2 col-form-label">Precio Venta</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                        <input type="number" class="form-control" id="precio_venta" name="precio_venta" value="" required autofocus>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Fin Precio Venta -->
+                            <!-- CCL Venta -->
+                            <div class="row mb-3 align-items-center">
+                                <label class="col-sm-4" for="ccl_venta" class="col-sm-2 col-form-label">CCL Venta</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                        <input type="number" class="form-control" id="ccl_venta" name="ccl_venta" value="<!-- $ccl_venta -->" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Fin CCL Venta -->
+                        </div>
+                        <!-- Fin Derecha -->
                     </div>
+                    <!-- Fin Segunda Fila -->
+
                     <hr class="mod mb-3">
+
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
@@ -119,8 +194,8 @@ $stmt->close();
                 </form>
             </div>
         </div>
-        <div class="col-3"></div>
-        <!-- FIN EDITAR ACCIONES -->
+        <div class="col-2"></div>
+        <!-- FIN VENTA TOTAL ACCIONES -->
 
     </div>
     <!-- FIN CONTENIDO -->

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-03-2025 a las 15:00:27
+-- Tiempo de generación: 05-03-2025 a las 15:13:12
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -47,8 +47,7 @@ INSERT INTO `acciones` (`id`, `cliente_id`, `ticker`, `cantidad`, `precio`, `fec
 (29, 2, 'BYMA', 10, 467.00, '2025-02-26', 1219.99),
 (30, 3, 'CEPU', 10, 1545.00, '2025-02-12', 1185.19),
 (31, 3, 'COME', 10, 181.75, '2025-02-26', 1219.99),
-(51, 1, 'ALUA', 10, 794.00, '2025-02-12', 1185.19),
-(56, 1, 'TRAN', 432, 2315.00, '2025-02-28', 1223.35);
+(51, 1, 'ALUA', 10, 794.00, '2025-02-12', 1185.19);
 
 -- --------------------------------------------------------
 
@@ -79,7 +78,8 @@ INSERT INTO `acciones_historial` (`id`, `cliente_id`, `ticker`, `cantidad`, `fec
 (3, 2, 'EDN2', 10, '2024-11-01', 1820.00, 1177.29, '2025-01-31', 2305.00, 1180.70),
 (4, 2, 'IRSA2', 10, '2024-11-01', 1545.00, 1177.29, '2025-01-31', 1775.00, 1180.70),
 (5, 3, 'EDN3', 10, '2024-11-01', 1820.00, 1177.29, '2025-01-31', 2305.00, 1180.70),
-(6, 3, 'IRSA3', 10, '2024-11-01', 1545.00, 1177.29, '2025-01-31', 1775.00, 1180.70);
+(6, 3, 'IRSA3', 10, '2024-11-01', 1545.00, 1177.29, '2025-01-31', 1775.00, 1180.70),
+(7, 1, 'TRAN', 432, '2025-02-28', 2315.00, 1223.35, '0000-00-00', 2020.00, 1228.52);
 
 -- --------------------------------------------------------
 
@@ -118,7 +118,7 @@ CREATE TABLE `balance` (
 --
 
 INSERT INTO `balance` (`id`, `cliente_id`, `efectivo`) VALUES
-(1, 1, 3916580.00),
+(1, 1, 4789220.00),
 (2, 2, 3891580.00),
 (3, 3, 2982732.50);
 
@@ -675,7 +675,7 @@ ALTER TABLE `acciones`
 -- AUTO_INCREMENT de la tabla `acciones_historial`
 --
 ALTER TABLE `acciones_historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `admin`

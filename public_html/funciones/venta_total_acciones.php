@@ -5,8 +5,31 @@ include '../funciones/cliente_funciones.php';
 
 // Obtener el id del cliente y el ticker desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
-?>
+$ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
+// Obtener datos de la base de datos
+$sql = "SELECT ticker, cantidad, fecha, precio, ccl_compra FROM acciones WHERE cliente_id = ? AND ticker = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("is", $cliente_id, $ticker);
+$stmt->execute();
+$stmt->bind_result($db_ticker, $cantidad, $fecha_compra, $precio_compra, $ccl_compra);
+$stmt->fetch();
+$stmt->close();
+
+// Obtener el valor de promedio_ccl
+$promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+
+// Renderizar la fecha actual
+$fecha_venta = date('d-m-Y');
+
+// Formatear los números
+$cantidad_formateada = number_format($cantidad, 0, ',', '.');
+$precio_compra_formateado = number_format($precio_compra, 2, ',', '.');
+$ccl_compra_formateado = number_format($ccl_compra, 2, ',', '.');
+$promedio_ccl_formateado = number_format($promedio_ccl, 2, ',', '.');
+$fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -29,10 +52,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle na">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -52,7 +74,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
     <!-- CONTENIDO -->
     <div class="row mx-2 mt-navbar">
-
         <!-- TITULO -->
         <div class="col-12 text-center">
             <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
@@ -78,7 +99,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
-                                        <input type="number" class="form-control" id="ticker" name="ticker" value="<!-- $ticker -->" readonly>
+                                        <input type="text" class="form-control" id="ticker" name="ticker" value="<?php echo $db_ticker; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +114,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                        <input type="number" class="form-control" id="cantidad" name="cantidad" value="<!-- $cantidad -->" readonly>
+                                        <input type="text" class="form-control" id="cantidad" name="cantidad" value="<?php echo $cantidad_formateada; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +136,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                        <input type="number" class="form-control" id="fecha_compra" name="fecha_compra" value="<!-- $fecha_compra -->" readonly>
+                                        <input type="text" class="form-control" id="fecha_compra" name="fecha_compra" value="<?php echo $fecha_compra_formateada; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +147,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                        <input type="number" class="form-control" id="precio_compra" name="precio_compra" value="<!-- $precio_compra -->" readonly>
+                                        <input type="text" class="form-control" id="precio_compra" name="precio_compra" value="<?php echo $precio_compra_formateado; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +158,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                        <input type="number" class="form-control" id="ccl_compra" name="ccl_compra" value="<!-- $ccl_compra -->" readonly>
+                                        <input type="text" class="form-control" id="ccl_compra" name="ccl_compra" value="<?php echo $ccl_compra_formateado; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +173,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                        <input type="number" class="form-control" id="fecha_venta" name="fecha_venta" value="<!-- $fecha_venta -->" readonly>
+                                        <input type="text" class="form-control" id="fecha_venta" name="fecha_venta" value="<?php echo $fecha_venta; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +195,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                        <input type="number" class="form-control" id="ccl_venta" name="ccl_venta" value="<!-- $ccl_venta -->" readonly>
+                                        <input type="text" class="form-control" id="ccl_venta" name="ccl_venta" value="<?php echo $promedio_ccl_formateado; ?>" readonly>
                                     </div>
                                 </div>
                             </div>

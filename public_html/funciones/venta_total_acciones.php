@@ -16,33 +16,6 @@ $stmt->bind_result($nombre, $apellido);
 $stmt->fetch();
 $stmt->close();
 
-// Consulta para obtener la cantidad de acciones
-$stmt = $conn->prepare("SELECT cantidad FROM acciones WHERE cliente_id = ? AND ticker = ?");
-$stmt->bind_param("is", $cliente_id, $ticker);
-$stmt->execute();
-$stmt->bind_result($cantidad);
-$stmt->fetch();
-$stmt->close();
-
-// Obtener la fecha de hoy desde el servidor
-$fecha_acciones_hoy = date('Y-m-d');
-
-// Procesar el formulario al hacer clic en "Aceptar"
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $precio_venta = isset($_POST['precio']) ? floatval($_POST['precio']) : 0;
-    $fecha_venta = isset($_POST['fecha']) ? $_POST['fecha'] : '';
-
-    // Registrar la fecha en el archivo de log
-    $log_message = "Fecha enviada: " . $fecha_venta . "\n";
-    file_put_contents('log.txt', $log_message, FILE_APPEND);
-
-    // Llamar a la función para realizar las operaciones
-    realizarVentas($cliente_id, $ticker, $cantidad, $precio_venta, $fecha_venta);
-
-    // Redireccionar al cliente
-    header("Location: ../backend/cliente.php?cliente_id=$cliente_id");
-    exit();
-}
 ?>
 
 <!DOCTYPE html>

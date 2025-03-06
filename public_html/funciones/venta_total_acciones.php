@@ -21,8 +21,6 @@ $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 
 // Renderizar la fecha actual
 $fecha_venta = date('d-m-Y');
-$fecha_compra = date('d-m-Y');
-
 
 ?>
 <!DOCTYPE html>

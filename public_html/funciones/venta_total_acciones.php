@@ -133,7 +133,7 @@ $fecha_venta = date('d-m-Y');
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_compra" name="fecha_compra"
-                                            value="<?php echo $fecha_compra; ?>" readonly>
+                                            value="<?php echo date('d-m-Y', strtotime($fecha_compra)); ?>" readonly>
                                     </div>
                                 </div>
                             </div>

@@ -16,6 +16,10 @@ $stmt->bind_result($db_ticker, $cantidad, $fecha_compra, $precio_compra, $ccl_co
 $stmt->fetch();
 $stmt->close();
 
+// Calcular la cantidad a mostrar en el campo de entrada
+$cantidad_mostrar = $cantidad - 1;
+$valor_campo = "Máximo $cantidad_mostrar acciones";
+
 // Obtener el valor de promedio_ccl
 $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 
@@ -79,7 +83,7 @@ $fecha_venta = date('d-m-Y');
         <div class="col-2"></div>
         <div class="col-8 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones mb-4">Venta total</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Venta parcial</h5>
 
                 <form method="POST" action="../funciones/cliente_funciones.php">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
@@ -116,7 +120,7 @@ $fecha_venta = date('d-m-Y');
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                        <input type="text" class="form-control" id="cantidad" name="cantidad"
+                                        <input type="text" placeholder="<?php echo $valor_campo; ?>" class="form-control" id="cantidad" name="cantidad"
                                             value="" autofocus required>
                                     </div>
                                 </div>

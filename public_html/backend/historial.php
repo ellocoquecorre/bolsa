@@ -59,7 +59,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
         <!-- TITULO -->
         <div class="col-12 text-center">
             <h4 class="fancy">Historial de <?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
-            <a href="cliente.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-custom ver" data-bs-toggle="tooltip"
+            <a href="cliente.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver" data-bs-toggle="tooltip"
                 data-bs-placement="top" title="Tenencia">
                 <i class="fa-solid fa-magnifying-glass me-2"></i>Tenencia</a>
         </div>

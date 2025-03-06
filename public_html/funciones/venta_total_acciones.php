@@ -215,6 +215,8 @@ $fecha_venta = date('d-m-Y');
                         <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones"
                             class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
                     </div>
+                    <!-- Fin Botones -->
+
                 </form>
             </div>
         </div>

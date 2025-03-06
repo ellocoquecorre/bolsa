@@ -7,6 +7,13 @@ if (!function_exists('formatear_dinero')) {
     }
 }
 
+if (!function_exists('formatear_numero')) {
+    function formatear_numero($numero)
+    {
+        return number_format($numero, 0, ',', '.');
+    }
+}
+
 // Definir una nueva función para formatear y colorear valores específicos
 if (!function_exists('formatear_y_colorear_valor')) {
     function formatear_y_colorear_valor($numero, $moneda = '$')

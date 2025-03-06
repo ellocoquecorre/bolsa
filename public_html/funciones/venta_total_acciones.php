@@ -21,13 +21,8 @@ $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 
 // Renderizar la fecha actual
 $fecha_venta = date('d-m-Y');
+$fecha_compra = date('d-m-Y');
 
-// Formatear los números
-$cantidad_formateada = number_format($cantidad, 0, ',', '.');
-$precio_compra_formateado = number_format($precio_compra, 2, ',', '.');
-$ccl_compra_formateado = number_format($ccl_compra, 2, ',', '.');
-$promedio_ccl_formateado = number_format($promedio_ccl, 2, ',', '.');
-$fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
 
 ?>
 <!DOCTYPE html>
@@ -52,7 +47,8 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -99,7 +95,8 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
-                                        <input type="text" class="form-control" id="ticker" name="ticker" value="<?php echo $db_ticker; ?>" readonly>
+                                        <input type="text" class="form-control" id="ticker" name="ticker"
+                                            value="<?php echo $db_ticker; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +111,8 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                        <input type="text" class="form-control" id="cantidad" name="cantidad" value="<?php echo $cantidad_formateada; ?>" readonly>
+                                        <input type="text" class="form-control" id="cantidad" name="cantidad"
+                                            value="<?php echo formatear_numero($cantidad); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +134,8 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                        <input type="text" class="form-control" id="fecha_compra" name="fecha_compra" value="<?php echo $fecha_compra_formateada; ?>" readonly>
+                                        <input type="text" class="form-control" id="fecha_compra" name="fecha_compra"
+                                            value="<?php echo $fecha_compra; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +146,8 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                        <input type="text" class="form-control" id="precio_compra" name="precio_compra" value="<?php echo $precio_compra_formateado; ?>" readonly>
+                                        <input type="text" class="form-control" id="precio_compra" name="precio_compra"
+                                            value="<?php echo formatear_dinero($precio_compra); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +158,8 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                        <input type="text" class="form-control" id="ccl_compra" name="ccl_compra" value="<?php echo $ccl_compra_formateado; ?>" readonly>
+                                        <input type="text" class="form-control" id="ccl_compra" name="ccl_compra"
+                                            value="<?php echo formatear_dinero($ccl_compra); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -173,7 +174,8 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                        <input type="text" class="form-control" id="fecha_venta" name="fecha_venta" value="<?php echo $fecha_venta; ?>" readonly>
+                                        <input type="text" class="form-control" id="fecha_venta" name="fecha_venta"
+                                            value="<?php echo $fecha_venta; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +186,8 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                        <input type="text" class="form-control" id="precio_venta" name="precio_venta" placeholder="0,00" onkeyup="formatoBalance(this)" required autofocus>
+                                        <input type="text" class="form-control" id="precio_venta" name="precio_venta"
+                                            placeholder="0,00" onkeyup="formatoBalance(this)" required autofocus>
                                     </div>
                                 </div>
                             </div>
@@ -195,7 +198,8 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                        <input type="text" class="form-control" id="ccl_venta" name="ccl_venta" value="<?php echo $promedio_ccl_formateado; ?>" readonly>
+                                        <input type="text" class="form-control" id="ccl_venta" name="ccl_venta"
+                                            value="<?php echo formatear_dinero($promedio_ccl); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -210,7 +214,8 @@ $fecha_compra_formateada = date('d-m-Y', strtotime($fecha_compra));
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                        <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones" class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
+                        <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones"
+                            class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
                     </div>
                 </form>
             </div>

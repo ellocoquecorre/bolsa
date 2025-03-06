@@ -203,7 +203,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                                         <li>
-                                                        <a class='dropdown-item' href='#'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
+                                                        <a class='dropdown-item' href='../funciones/venta_parcial_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
                                                         </li>
                                                         <li>
                                                         <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-coins me-2'></i> Venta total</a>
@@ -332,7 +332,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                                         <li>
-                                                        <a class='dropdown-item' href='#'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
+                                                        <a class='dropdown-item' href='../funciones/venta_parcial_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
                                                         </li>
                                                         <li>
                                                         <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-check-circle me-2'></i> Venta total</a>

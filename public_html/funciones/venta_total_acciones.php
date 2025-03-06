@@ -83,10 +83,13 @@ $fecha_venta = date('d-m-Y');
                 <h5 class="me-2 cartera titulo-botones mb-4">Venta total</h5>
 
                 <form method="POST" action="">
+
                     <!-- Primera Fila -->
                     <div class="row">
+
                         <!-- Izquierda -->
                         <div class="col-6 text-center">
+
                             <!-- Ticker -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="ticker" class="col-sm-2 col-form-label">Ticker</label>
@@ -99,10 +102,13 @@ $fecha_venta = date('d-m-Y');
                                 </div>
                             </div>
                             <!-- Fin Ticker -->
+
                         </div>
                         <!-- Fin Izquierda -->
+
                         <!-- Derecha -->
                         <div class="col-6 text-center">
+
                             <!-- Cantidad -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
@@ -115,8 +121,10 @@ $fecha_venta = date('d-m-Y');
                                 </div>
                             </div>
                             <!-- Fin Cantidad -->
+
                         </div>
                         <!-- Fin Derecha -->
+
                     </div>
                     <!-- Fin Primera Fila -->
 
@@ -124,8 +132,10 @@ $fecha_venta = date('d-m-Y');
 
                     <!-- Segunda Fila -->
                     <div class="row">
-                        <!-- Fin Izquierda -->
+
+                        <!-- Izquierda -->
                         <div class="col-6 text-center">
+
                             <!-- Fecha Compra -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="fecha_compra" class="col-sm-2 col-form-label">Fecha Compra</label>
@@ -138,6 +148,7 @@ $fecha_venta = date('d-m-Y');
                                 </div>
                             </div>
                             <!-- Fin Fecha Compra -->
+
                             <!-- Precio Compra -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="precio_compra" class="col-sm-2 col-form-label">Precio Compra</label>
@@ -150,6 +161,7 @@ $fecha_venta = date('d-m-Y');
                                 </div>
                             </div>
                             <!-- Fin Precio Compra -->
+
                             <!-- CCL Compra -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="ccl_compra" class="col-sm-2 col-form-label">CCL Compra</label>
@@ -162,10 +174,13 @@ $fecha_venta = date('d-m-Y');
                                 </div>
                             </div>
                             <!-- Fin CCL Compra -->
+
                         </div>
                         <!-- Fin Izquierda -->
+
                         <!-- Derecha -->
                         <div class="col-6 text-center">
+
                             <!-- Fecha Venta -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="fecha_venta" class="col-sm-2 col-form-label">Fecha Venta</label>
@@ -178,6 +193,7 @@ $fecha_venta = date('d-m-Y');
                                 </div>
                             </div>
                             <!-- Fin Fecha Venta -->
+
                             <!-- Precio Venta -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="precio_venta" class="col-sm-2 col-form-label">Precio Venta</label>
@@ -190,6 +206,7 @@ $fecha_venta = date('d-m-Y');
                                 </div>
                             </div>
                             <!-- Fin Precio Venta -->
+
                             <!-- CCL Venta -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="ccl_venta" class="col-sm-2 col-form-label">CCL Venta</label>
@@ -202,8 +219,10 @@ $fecha_venta = date('d-m-Y');
                                 </div>
                             </div>
                             <!-- Fin CCL Venta -->
+
                         </div>
                         <!-- Fin Derecha -->
+
                     </div>
                     <!-- Fin Segunda Fila -->
 

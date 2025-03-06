@@ -19,10 +19,9 @@ $stmt->close();
 // Obtener el valor de promedio_ccl
 $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 
-// Renderizar la fecha actual
 $fecha_venta = date('d-m-Y');
-
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -82,7 +81,9 @@ $fecha_venta = date('d-m-Y');
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Venta total</h5>
 
-                <form method="POST" action="">
+                <form method="POST" action="../funciones/cliente_funciones.php">
+                    <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
+                    <input type="hidden" name="ticker" value="<?php echo $db_ticker; ?>">
 
                     <!-- Primera Fila -->
                     <div class="row">

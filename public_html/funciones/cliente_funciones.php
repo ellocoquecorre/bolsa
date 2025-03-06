@@ -195,5 +195,39 @@ function calcularValorInicialConsolidadoAccionesPesos($acciones)
 // FIN ACCIONES CONSOLIDADA
 
 // VENTA TOTAL ACCIONES
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $cliente_id = $_POST['cliente_id'];
+    $ticker = $_POST['ticker'];
+    $cantidad = str_replace('.', '', $_POST['cantidad']);
+    $fecha_compra = DateTime::createFromFormat('d-m-Y', $_POST['fecha_compra'])->format('Y-m-d');
+    $precio_compra = str_replace(',', '.', str_replace('.', '', $_POST['precio_compra']));
+    $ccl_compra = str_replace(',', '.', str_replace('.', '', $_POST['ccl_compra']));
+    $fecha_venta = DateTime::createFromFormat('d-m-Y', $_POST['fecha_venta'])->format('Y-m-d');
+    $precio_venta = str_replace(',', '.', str_replace('.', '', $_POST['precio_venta']));
+    $ccl_venta = str_replace(',', '.', str_replace('.', '', $_POST['ccl_venta']));
 
+    // Actualizar saldo
+    $total_venta = $cantidad * $precio_venta;
+    $nuevo_saldo = $saldo_en_pesos + $total_venta;
+    actualizarSaldo($cliente_id, $nuevo_saldo);
+
+    // Insertar en acciones_historial
+    $sql_insert_historial = "INSERT INTO acciones_historial (cliente_id, ticker, cantidad, fecha_compra, precio_compra, ccl_compra, fecha_venta, precio_venta, ccl_venta) 
+                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql_insert_historial);
+    $stmt->bind_param("isissdssd", $cliente_id, $ticker, $cantidad, $fecha_compra, $precio_compra, $ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
+    $stmt->execute();
+    $stmt->close();
+
+    // Eliminar de acciones
+    $sql_delete_accion = "DELETE FROM acciones WHERE cliente_id = ? AND ticker = ?";
+    $stmt = $conn->prepare($sql_delete_accion);
+    $stmt->bind_param("is", $cliente_id, $ticker);
+    $stmt->execute();
+    $stmt->close();
+
+    // Redirigir
+    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
+    exit();
+}
 // FIN VENTA TOTAL ACCIONES

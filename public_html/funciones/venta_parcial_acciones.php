@@ -17,12 +17,20 @@ $stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra
 $stmt->fetch();
 $stmt->close();
 
+$cantidad_max = $db_cantidad - 1;
+
+// Formatear las fechas y valores
+$db_fecha_compra_formateada = date('d-m-Y', strtotime($db_fecha_compra));
+$db_precio_compra_formateado = formatear_dinero($db_precio_compra);
+$db_ccl_compra_formateado = formatear_dinero($db_ccl_compra);
+
 // Obtener el promedio CCL
 function obtenerPromedioCCL()
 {
     global $contadoconliqui_compra, $contadoconliqui_venta;
     return ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 }
+$promedio_ccl_formateado = formatear_dinero($promedio_ccl);
 
 ?>
 
@@ -116,7 +124,7 @@ function obtenerPromedioCCL()
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                        <input type="text" placeholder="<?php echo htmlspecialchars($db_cantidad); ?>" class="form-control"
+                                        <input type="text" placeholder="Máximo <?php echo htmlspecialchars($cantidad_max); ?> acciones" class="form-control"
                                             id="cantidad" name="cantidad" value="" autofocus required>
                                     </div>
                                 </div>
@@ -140,7 +148,7 @@ function obtenerPromedioCCL()
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_compra" name="fecha_compra"
-                                            value="<?php echo htmlspecialchars($db_fecha_compra); ?>" readonly>
+                                            value="<?php echo htmlspecialchars($db_fecha_compra_formateada); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -153,7 +161,7 @@ function obtenerPromedioCCL()
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="precio_compra" name="precio_compra"
-                                            value="<?php echo htmlspecialchars($db_precio_compra); ?>" readonly>
+                                            value="<?php echo htmlspecialchars($db_precio_compra_formateado); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +174,7 @@ function obtenerPromedioCCL()
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="ccl_compra" name="ccl_compra"
-                                            value="<?php echo htmlspecialchars($db_ccl_compra); ?>" readonly>
+                                            value="<?php echo htmlspecialchars($db_ccl_compra_formateado); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -183,7 +191,7 @@ function obtenerPromedioCCL()
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_venta" name="fecha_venta"
-                                            value="<?php echo date('Y-m-d'); ?>" readonly>
+                                            value="<?php echo date('d-m-Y'); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +216,7 @@ function obtenerPromedioCCL()
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="ccl_venta" name="ccl_venta"
-                                            value="<?php echo htmlspecialchars($promedio_ccl); ?>" readonly>
+                                            value="<?php echo htmlspecialchars($promedio_ccl_formateado); ?>" readonly>
                                     </div>
                                 </div>
                             </div>

@@ -8,20 +8,6 @@ require_once '../funciones/cliente_funciones.php';
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
-// Obtener los datos de la acción específica del cliente
-$sql = "SELECT ticker, cantidad, fecha, precio, ccl_compra FROM acciones WHERE cliente_id = ? AND ticker = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("is", $cliente_id, $ticker);
-$stmt->execute();
-$stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra);
-$stmt->fetch();
-$stmt->close();
-
-// Formatear las fechas y valores
-$db_fecha_compra_formateada = date('d-m-Y', strtotime($db_fecha_compra));
-$db_precio_compra_formateado = formatear_dinero($db_precio_compra);
-$db_ccl_compra_formateado = formatear_dinero($db_ccl_compra);
-
 // Obtener el promedio CCL
 function obtenerPromedioCCL()
 {
@@ -29,42 +15,6 @@ function obtenerPromedioCCL()
     return ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 }
 $promedio_ccl = obtenerPromedioCCL();
-$promedio_ccl_formateado = formatear_dinero($promedio_ccl);
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obtener los valores del formulario
-    $cantidad = floatval($_POST['cantidad']);
-    $fecha_venta = date('Y-m-d', strtotime($_POST['fecha_venta']));
-    $precio_venta = floatval(str_replace(',', '.', $_POST['precio_venta']));
-    $ccl_venta = floatval(str_replace(',', '.', $_POST['ccl_venta']));
-
-    // Actualizar la tabla acciones
-    $nuevo_cantidad = $db_cantidad - $cantidad;
-    $sql_update_acciones = "UPDATE acciones SET cantidad = ? WHERE cliente_id = ? AND ticker = ?";
-    $stmt_update = $conn->prepare($sql_update_acciones);
-    $stmt_update->bind_param("iis", $nuevo_cantidad, $cliente_id, $ticker);
-    $stmt_update->execute();
-    $stmt_update->close();
-
-    // Insertar en la tabla acciones_historial
-    $sql_insert_historial = "INSERT INTO acciones_historial (cliente_id, ticker, cantidad, fecha_compra, precio_compra, ccl_compra, fecha_venta, precio_venta, ccl_venta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt_insert = $conn->prepare($sql_insert_historial);
-    $stmt_insert->bind_param("isissssdd", $cliente_id, $ticker, $cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
-    $stmt_insert->execute();
-    $stmt_insert->close();
-
-    // Actualizar la tabla balance
-    $valor_venta = $cantidad * $precio_venta;
-    $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
-    $stmt_update_balance = $conn->prepare($sql_update_balance);
-    $stmt_update_balance->bind_param("di", $valor_venta, $cliente_id);
-    $stmt_update_balance->execute();
-    $stmt_update_balance->close();
-
-    // Redirigir a la página del cliente
-    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
-    exit;
-}
 
 ?>
 
@@ -121,15 +71,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <hr class="mod">
 
-        <!-- VENTA PARCIAL ACCIONES -->
+        <!-- VENTA TOTAL ACCIONES -->
         <div class="col-2"></div>
         <div class="col-8 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Venta total</h5>
 
-                <form id="venta_parcial" method="POST" action="">
+                <form id="venta_total" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
-                    <input type="hidden" name="ticker" value="<?php echo $db_ticker; ?>">
+                    <input type="hidden" name="ticker" value="<!-- ticker -->">
 
                     <!-- Primera Fila -->
                     <div class="row">
@@ -142,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
                                         <input type="text" class="form-control" id="ticker" name="ticker"
-                                            value="<?php echo htmlspecialchars($db_ticker); ?>" readonly>
+                                            value="<!-- ticker -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -159,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
                                         <input type="text" class="form-control"
-                                            id="cantidad" name="cantidad" value="<?php echo htmlspecialchars($db_cantidad); ?>" readonly>
+                                            id="cantidad" name="cantidad" value="<!-- cantidad -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_compra" name="fecha_compra"
-                                            value="<?php echo htmlspecialchars($db_fecha_compra_formateada); ?>" readonly>
+                                            value="<!-- fecha_compra -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -195,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="precio_compra" name="precio_compra"
-                                            value="<?php echo htmlspecialchars($db_precio_compra_formateado); ?>" readonly>
+                                            value="<!-- precio_compra -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="ccl_compra" name="ccl_compra"
-                                            value="<?php echo htmlspecialchars($db_ccl_compra_formateado); ?>" readonly>
+                                            value="<!-- ccl_compra -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -225,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_venta" name="fecha_venta"
-                                            value="<?php echo date('d-m-Y'); ?>" readonly>
+                                            value="<!-- fecha_venta -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -251,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="ccl_venta" name="ccl_venta"
-                                            value="<?php echo htmlspecialchars($promedio_ccl_formateado); ?>" readonly>
+                                            value="<!-- ccl_venta -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -274,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
         <div class="col-2"></div>
-        <!-- FIN VENTA PARCIAL ACCIONES -->
+        <!-- FIN VENTA TOTAL ACCIONES -->
     </div>
     <!-- FIN CONTENIDO -->
 
@@ -291,18 +241,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        document.getElementById('btnAceptar').addEventListener('click', function() {
-            var cantidad = parseFloat(document.getElementById('cantidad').value);
-            var cantidadMax = <?php echo $cantidad_max; ?>;
-
-            if (cantidad >= cantidadMax) {
-                alert('Cantidad máxima de acciones para una\nventa parcial = ' + cantidadMax);
-            } else {
-                document.getElementById('venta_parcial').submit();
-            }
-        });
-    </script>
     <!-- FIN JS -->
 </body>
 

@@ -3,6 +3,8 @@
 require_once '../../config/config.php';
 // Incluir función de formato de dinero
 require_once '../funciones/formato_dinero.php';
+// Incluir funciones del cliente
+require_once '../funciones/cliente_funciones.php';
 
 // Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
@@ -31,6 +33,48 @@ $fecha_hoy = date('Y-m-d');
 
 // Renderizar los datos obtenidos
 $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
+
+// Si se envió el formulario, realizar las operaciones
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $cantidad = floatval($_POST['cantidad']);
+    $precio = floatval(str_replace(',', '.', $_POST['precio']));
+    $ticker = $_POST['ticker'];
+    $fecha = $_POST['fecha'];
+
+    $total_compra = $cantidad * $precio;
+
+    if ($total_compra > $saldo_en_pesos) {
+        echo '<script>alert("Saldo insuficiente");</script>';
+    } else {
+        // Restar el valor de la compra al saldo en pesos
+        $nuevo_saldo = $saldo_en_pesos - $total_compra;
+        $sql_update_saldo = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
+        $stmt_update_saldo = $conn->prepare($sql_update_saldo);
+        $stmt_update_saldo->bind_param("di", $nuevo_saldo, $cliente_id);
+        $stmt_update_saldo->execute();
+        $stmt_update_saldo->close();
+
+        // Obtener el promedio CCL
+        $promedio_ccl = obtenerPromedioCCL();
+
+        // Insertar los datos de la compra en la tabla "acciones"
+        $sql_insert_accion = "INSERT INTO acciones (cliente_id, ticker, cantidad, precio, fecha, ccl_compra) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt_insert_accion = $conn->prepare($sql_insert_accion);
+        $stmt_insert_accion->bind_param("isidsd", $cliente_id, $ticker, $cantidad, $precio, $fecha, $promedio_ccl);
+        $stmt_insert_accion->execute();
+        $stmt_insert_accion->close();
+
+        // Redirigir a la página del cliente
+        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
+        exit();
+    }
+}
+
+function obtenerPromedioCCL()
+{
+    global $contadoconliqui_compra, $contadoconliqui_venta;
+    return ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+}
 ?>
 
 <!DOCTYPE html>
@@ -100,7 +144,7 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Comprar Acciones</h5>
-                <form id="compra_acciones" method="POST" action="" onsubmit="return validarSaldo()">
+                <form id="compra_acciones" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
                     <!-- Saldo -->
                     <div class="row mb-3 align-items-center">
@@ -162,14 +206,12 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
                         <button type="button" class="btn btn-custom eliminar"
                             onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones'">
-                            <i class="fa-solid fa-times me-2"></i>Cancelar
-                        </button>
+                            <i class="fa-solid fa-times me-2"></i>Cancelar</button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class=" col-3">
-        </div>
+        <div class="col-3"></div>
         <!-- FIN COMPRA ACCIONES -->
 
     </div>

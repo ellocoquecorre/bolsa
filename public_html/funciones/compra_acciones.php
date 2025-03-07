@@ -1,71 +1,3 @@
-<?php
-// Incluir archivo de configuración
-require_once '../../config/config.php';
-require_once 'formato_dinero.php';
-include '../funciones/cliente_funciones.php'; // Incluir funciones del cliente
-
-// Obtener el id del cliente desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
-
-// Consulta para obtener los datos del cliente
-$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $cliente_id);
-$stmt->execute();
-$stmt->bind_result($nombre, $apellido);
-$stmt->fetch();
-$stmt->close();
-
-// Consulta para obtener el valor de "efectivo" de la tabla "balance"
-$sql = "SELECT efectivo FROM balance WHERE cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $cliente_id);
-$stmt->execute();
-$stmt->bind_result($efectivo);
-$stmt->fetch();
-$stmt->close();
-
-// Formatear el valor de $efectivo
-$efectivo_formateado = formatear_dinero($efectivo);
-
-// Obtener la fecha de hoy
-$fecha_acciones_hoy = date('Y-m-d');
-
-// Inicializar variable de mensaje de error
-$error_msg = "";
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $ticker = $_POST['ticker'];
-    $cantidad = $_POST['cantidad'];
-    $precio = $_POST['precio'];
-    $fecha = $_POST['fecha'];
-    $total_compra = $cantidad * $precio;
-
-    if ($total_compra > $efectivo) {
-        $error_msg = "Saldo insuficiente";
-    } else {
-        // Actualizar el saldo en la tabla balance
-        $nuevo_efectivo = $efectivo - $total_compra;
-        $sql_update_balance = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
-        $stmt = $conn->prepare($sql_update_balance);
-        $stmt->bind_param("di", $nuevo_efectivo, $cliente_id);
-        $stmt->execute();
-        $stmt->close();
-
-        // Insertar los datos en la tabla acciones, incluyendo el valor de CCL
-        $sql_insert_acciones = "INSERT INTO acciones (cliente_id, ticker, cantidad, precio, fecha, ccl_compra) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql_insert_acciones);
-        $stmt->bind_param("isidsd", $cliente_id, $ticker, $cantidad, $precio, $fecha, $promedio_ccl);
-        $stmt->execute();
-        $stmt->close();
-
-        // Redirigir a la página del cliente
-        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
-        exit;
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -122,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
+            <h4 class="fancy"><!-- nombre_y_apellido --></h4>
         </div>
         <!-- FIN TITULO -->
 
@@ -133,13 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Comprar Acciones</h5>
-                <?php if ($error_msg): ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?php echo $error_msg; ?>
-                    </div>
-                <?php endif; ?>
                 <form id="compra_acciones" method="POST" action="">
-                    <input type="hidden" name="cliente_id" value="<?php echo htmlspecialchars($cliente_id); ?>">
+                    <input type="hidden" name="cliente_id" value="<!-- cliente_id -->">
                     <!-- Saldo -->
                     <div class="row mb-3 align-items-center">
                         <label for="saldo" class="col-sm-2 col-form-label">Saldo</label>
@@ -147,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
                                 <input type="text" class="form-control" id="saldo" name="saldo"
-                                    value="$ <?php echo htmlspecialchars($efectivo_formateado); ?>" readonly disabled>
+                                    value="$ <!-- saldo_en_pesos -->" readonly disabled>
                             </div>
                         </div>
                     </div>
@@ -190,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                 <input type="date" class="form-control" id="fecha" name="fecha"
-                                    value="<?php echo $fecha_acciones_hoy; ?>" required>
+                                    value="<!-- fecha_hoy -->" required>
                             </div>
                         </div>
                     </div>

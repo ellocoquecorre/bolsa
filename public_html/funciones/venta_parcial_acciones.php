@@ -30,7 +30,43 @@ function obtenerPromedioCCL()
     global $contadoconliqui_compra, $contadoconliqui_venta;
     return ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 }
+$promedio_ccl = obtenerPromedioCCL();
 $promedio_ccl_formateado = formatear_dinero($promedio_ccl);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Obtener los valores del formulario
+    $cantidad = floatval($_POST['cantidad']);
+    $fecha_venta = date('Y-m-d', strtotime($_POST['fecha_venta']));
+    $precio_venta = floatval(str_replace(',', '.', $_POST['precio_venta']));
+    $ccl_venta = floatval(str_replace(',', '.', $_POST['ccl_venta']));
+
+    // Actualizar la tabla acciones
+    $nuevo_cantidad = $db_cantidad - $cantidad;
+    $sql_update_acciones = "UPDATE acciones SET cantidad = ? WHERE cliente_id = ? AND ticker = ?";
+    $stmt_update = $conn->prepare($sql_update_acciones);
+    $stmt_update->bind_param("iis", $nuevo_cantidad, $cliente_id, $ticker);
+    $stmt_update->execute();
+    $stmt_update->close();
+
+    // Insertar en la tabla acciones_historial
+    $sql_insert_historial = "INSERT INTO acciones_historial (cliente_id, ticker, cantidad, fecha_compra, precio_compra, ccl_compra, fecha_venta, precio_venta, ccl_venta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt_insert = $conn->prepare($sql_insert_historial);
+    $stmt_insert->bind_param("isissssdd", $cliente_id, $ticker, $cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
+    $stmt_insert->execute();
+    $stmt_insert->close();
+
+    // Actualizar la tabla balance
+    $valor_venta = $cantidad * $precio_venta;
+    $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
+    $stmt_update_balance = $conn->prepare($sql_update_balance);
+    $stmt_update_balance->bind_param("di", $valor_venta, $cliente_id);
+    $stmt_update_balance->execute();
+    $stmt_update_balance->close();
+
+    // Redirigir a la página del cliente
+    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
+    exit;
+}
 
 ?>
 
@@ -93,7 +129,7 @@ $promedio_ccl_formateado = formatear_dinero($promedio_ccl);
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Venta parcial</h5>
 
-                <form id="venta_parcial" method="POST" action="../funciones/cliente_funciones.php">
+                <form id="venta_parcial" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
                     <input type="hidden" name="ticker" value="<?php echo $db_ticker; ?>">
 
@@ -231,7 +267,7 @@ $promedio_ccl_formateado = formatear_dinero($promedio_ccl);
 
                     <!-- Botones -->
                     <div class="text-end">
-                        <button type="button" id="btnAceptar" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
+                        <button type="submit" id="btnAceptar" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
                         <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones"
                             class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
                     </div>

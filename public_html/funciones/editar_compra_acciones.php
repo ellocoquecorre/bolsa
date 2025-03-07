@@ -182,7 +182,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                <input type="text" step="0.01" class="form-control" id="precio" name="precio" value="<?php echo htmlspecialchars($precio_acciones_accion); ?>" placeholder="0,00" onkeyup="formatoBalance(this)" required>
+                                <input type="text" step="0.01" class="form-control" id="precio" name="precio" value="<?php echo htmlspecialchars($precio_acciones_accion); ?>" placeholder="0,00" required>
                             </div>
                         </div>
                     </div>
@@ -225,7 +225,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="../js/formato_miles_balance.js"></script>
     <script src="../js/tickers_acciones.js"></script>
     <!-- FIN JS -->
 </body>

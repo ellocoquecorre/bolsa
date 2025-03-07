@@ -202,7 +202,7 @@ $fecha_venta = date('d-m-Y');
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="precio_venta" name="precio_venta"
-                                            placeholder="0,00" onkeyup="formatoBalance(this)" required autofocus>
+                                            placeholder="0,00" required autofocus>
                                     </div>
                                 </div>
                             </div>
@@ -259,7 +259,6 @@ $fecha_venta = date('d-m-Y');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="../js/formato_miles_balance.js"></script>
     <!-- FIN JS -->
 </body>
 

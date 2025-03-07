@@ -56,28 +56,6 @@ $saldo_en_dolares = $saldo_en_pesos / $promedio_ccl;
 $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
 // FIN SALDO EN DÓLARES
 
-// COMPRA DE ACCIONES
-function actualizarSaldo($cliente_id, $nuevo_efectivo)
-{
-    global $conn;
-    $sql_update_balance = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
-    $stmt = $conn->prepare($sql_update_balance);
-    $stmt->bind_param("di", $nuevo_efectivo, $cliente_id);
-    $stmt->execute();
-    $stmt->close();
-}
-
-function guardarAccion($cliente_id, $ticker, $cantidad, $precio, $fecha)
-{
-    global $conn;
-    $sql_insert_acciones = "INSERT INTO acciones (cliente_id, ticker, cantidad, precio, fecha) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql_insert_acciones);
-    $stmt->bind_param("isids", $cliente_id, $ticker, $cantidad, $precio, $fecha);
-    $stmt->execute();
-    $stmt->close();
-}
-// FIN COMPRA DE ACCIONES
-
 // RENDERIZAR ACCIONES
 function obtenerAcciones($cliente_id)
 {
@@ -193,41 +171,3 @@ function calcularValorInicialConsolidadoAccionesPesos($acciones)
     return $valor_inicial_consolidado_acciones_pesos;
 }
 // FIN ACCIONES CONSOLIDADA
-
-// VENTA TOTAL ACCIONES
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $cliente_id = $_POST['cliente_id'];
-    $ticker = $_POST['ticker'];
-    $cantidad = str_replace('.', '', $_POST['cantidad']);
-    $fecha_compra = DateTime::createFromFormat('d-m-Y', $_POST['fecha_compra'])->format('Y-m-d');
-    $precio_compra = str_replace(',', '.', str_replace('.', '', $_POST['precio_compra']));
-    $ccl_compra = str_replace(',', '.', str_replace('.', '', $_POST['ccl_compra']));
-    $fecha_venta = DateTime::createFromFormat('d-m-Y', $_POST['fecha_venta'])->format('Y-m-d');
-    $precio_venta = str_replace(',', '.', str_replace('.', '', $_POST['precio_venta']));
-    $ccl_venta = str_replace(',', '.', str_replace('.', '', $_POST['ccl_venta']));
-
-    // Actualizar saldo
-    $total_venta = $cantidad * $precio_venta;
-    $nuevo_saldo = $saldo_en_pesos + $total_venta;
-    actualizarSaldo($cliente_id, $nuevo_saldo);
-
-    // Insertar en acciones_historial
-    $sql_insert_historial = "INSERT INTO acciones_historial (cliente_id, ticker, cantidad, fecha_compra, precio_compra, ccl_compra, fecha_venta, precio_venta, ccl_venta) 
-                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql_insert_historial);
-    $stmt->bind_param("isissdssd", $cliente_id, $ticker, $cantidad, $fecha_compra, $precio_compra, $ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
-    $stmt->execute();
-    $stmt->close();
-
-    // Eliminar de acciones
-    $sql_delete_accion = "DELETE FROM acciones WHERE cliente_id = ? AND ticker = ?";
-    $stmt = $conn->prepare($sql_delete_accion);
-    $stmt->bind_param("is", $cliente_id, $ticker);
-    $stmt->execute();
-    $stmt->close();
-
-    // Redirigir
-    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
-    exit();
-}
-// FIN VENTA TOTAL ACCIONES

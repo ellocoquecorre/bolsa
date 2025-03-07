@@ -427,7 +427,6 @@ $nombre_corredora = $datos_corredora['corredora'];
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
-    <script src="../js/formato_miles_balance.js"></script>
     <script src="../js/valor_promedio_ccl.js"></script>
     <!-- FIN JS -->
 </body>

@@ -464,14 +464,14 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <div class="col-12 col-md-4">
                         <div class="d-flex align-items-center">
                             <h6 class="me-2">Ingresar efectivo</h6>
-                            <input type="text" id="ingresar_efectivo" placeholder="0,00" class="form-control me-2" onkeyup="formatoBalance(this)" style="width: 150px; text-align: right;">
+                            <input type="text" id="ingresar_efectivo" placeholder="0,00" class="form-control me-2" style="width: 150px; text-align: right;">
                             <input type="button" value="+" class="btn btn-info btn-custom ver" id="ingresar_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresar efectivo" style="width: 40px;">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="d-flex align-items-center">
                             <h6 class="me-2">Retirar efectivo</h6>
-                            <input type="text" id="retirar_efectivo" placeholder="0,00" class="form-control me-2" onkeyup="formatoBalance(this)" style="width: 150px; text-align: right;">
+                            <input type="text" id="retirar_efectivo" placeholder="0,00" class="form-control me-2" style="width: 150px; text-align: right;">
                             <input type="button" value="-" class="btn btn-info btn-custom eliminar" id="retirar_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar efectivo" style="width: 40px;">
                         </div>
                     </div>
@@ -502,7 +502,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/eliminar_acciones.js"></script>
     <script src="../js/ingresar_efectivo.js"></script>
-    <script src="../js/formato_miles_balance.js"></script>
     <script src="../js/retirar_efectivo.js"></script>
     <script src="../js/valor_promedio_ccl.js"></script>
     <!-- FIN JS -->

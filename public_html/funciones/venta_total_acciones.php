@@ -8,6 +8,64 @@ require_once '../funciones/cliente_funciones.php';
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
+// Obtener los datos de la acción específica del cliente
+$sql = "SELECT ticker, cantidad, fecha, precio, ccl_compra FROM acciones WHERE cliente_id = ? AND ticker = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("is", $cliente_id, $ticker);
+$stmt->execute();
+$stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra);
+$stmt->fetch();
+$stmt->close();
+
+// Formatear las fechas y valores
+$db_fecha_compra_formateada = date('d-m-Y', strtotime($db_fecha_compra));
+$db_precio_compra_formateado = formatear_dinero($db_precio_compra);
+$db_ccl_compra_formateado = formatear_dinero($db_ccl_compra);
+
+// Obtener el promedio CCL
+function obtenerPromedioCCL()
+{
+    global $contadoconliqui_compra, $contadoconliqui_venta;
+    return ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+}
+$promedio_ccl = obtenerPromedioCCL();
+$promedio_ccl_formateado = formatear_dinero($promedio_ccl);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Obtener los valores del formulario
+    $cantidad = floatval($_POST['cantidad']);
+    $fecha_venta = date('Y-m-d', strtotime($_POST['fecha_venta']));
+    $precio_venta = floatval(str_replace(',', '.', $_POST['precio_venta']));
+    $ccl_venta = floatval(str_replace(',', '.', $_POST['ccl_venta']));
+
+    // Actualizar la tabla acciones
+    $nuevo_cantidad = $db_cantidad - $cantidad;
+    $sql_update_acciones = "UPDATE acciones SET cantidad = ? WHERE cliente_id = ? AND ticker = ?";
+    $stmt_update = $conn->prepare($sql_update_acciones);
+    $stmt_update->bind_param("iis", $nuevo_cantidad, $cliente_id, $ticker);
+    $stmt_update->execute();
+    $stmt_update->close();
+
+    // Insertar en la tabla acciones_historial
+    $sql_insert_historial = "INSERT INTO acciones_historial (cliente_id, ticker, cantidad, fecha_compra, precio_compra, ccl_compra, fecha_venta, precio_venta, ccl_venta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt_insert = $conn->prepare($sql_insert_historial);
+    $stmt_insert->bind_param("isissssdd", $cliente_id, $ticker, $cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
+    $stmt_insert->execute();
+    $stmt_insert->close();
+
+    // Actualizar la tabla balance
+    $valor_venta = $cantidad * $precio_venta;
+    $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
+    $stmt_update_balance = $conn->prepare($sql_update_balance);
+    $stmt_update_balance->bind_param("di", $valor_venta, $cliente_id);
+    $stmt_update_balance->execute();
+    $stmt_update_balance->close();
+
+    // Redirigir a la página del cliente
+    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -63,22 +121,20 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
         <hr class="mod">
 
-        <!-- VENTA TOTAL ACCIONES -->
+        <!-- VENTA PARCIAL ACCIONES -->
         <div class="col-2"></div>
         <div class="col-8 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Venta total</h5>
 
-                <form method="POST" action="../funciones/cliente_funciones.php">
-                    <input type="hidden" name="cliente_id" value="<!-- cliente_id -->">
-                    <input type="hidden" name="ticker" value="<!-- ticker -->">
+                <form id="venta_parcial" method="POST" action="">
+                    <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
+                    <input type="hidden" name="ticker" value="<?php echo $db_ticker; ?>">
 
                     <!-- Primera Fila -->
                     <div class="row">
-
                         <!-- Izquierda -->
                         <div class="col-6 text-center">
-
                             <!-- Ticker -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="ticker" class="col-sm-2 col-form-label">Ticker</label>
@@ -86,34 +142,30 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
                                         <input type="text" class="form-control" id="ticker" name="ticker"
-                                            value="<!-- ticker -->" readonly>
+                                            value="<?php echo htmlspecialchars($db_ticker); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
                             <!-- Fin Ticker -->
-
                         </div>
                         <!-- Fin Izquierda -->
 
                         <!-- Derecha -->
                         <div class="col-6 text-center">
-
                             <!-- Cantidad -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                        <input type="text" class="form-control" id="cantidad" name="cantidad"
-                                            value="<!-- ticker -->" readonly>
+                                        <input type="text" class="form-control"
+                                            id="cantidad" name="cantidad" value="<?php echo htmlspecialchars($db_cantidad); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
                             <!-- Fin Cantidad -->
-
                         </div>
                         <!-- Fin Derecha -->
-
                     </div>
                     <!-- Fin Primera Fila -->
 
@@ -121,10 +173,8 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
                     <!-- Segunda Fila -->
                     <div class="row">
-
                         <!-- Izquierda -->
                         <div class="col-6 text-center">
-
                             <!-- Fecha Compra -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="fecha_compra" class="col-sm-2 col-form-label">Fecha Compra</label>
@@ -132,7 +182,7 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_compra" name="fecha_compra"
-                                            value="<!-- fecha_compra -->" readonly>
+                                            value="<?php echo htmlspecialchars($db_fecha_compra_formateada); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +195,7 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="precio_compra" name="precio_compra"
-                                            value="<!-- precio_compra -->" readonly>
+                                            value="<?php echo htmlspecialchars($db_precio_compra_formateado); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -158,18 +208,16 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="ccl_compra" name="ccl_compra"
-                                            value="<!-- ccl_compra -->" readonly>
+                                            value="<?php echo htmlspecialchars($db_ccl_compra_formateado); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
                             <!-- Fin CCL Compra -->
-
                         </div>
                         <!-- Fin Izquierda -->
 
                         <!-- Derecha -->
                         <div class="col-6 text-center">
-
                             <!-- Fecha Venta -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="fecha_venta" class="col-sm-2 col-form-label">Fecha Venta</label>
@@ -177,7 +225,7 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_venta" name="fecha_venta"
-                                            value="<!-- fecha_venta -->" readonly>
+                                            value="<?php echo date('d-m-Y'); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -203,15 +251,13 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="ccl_venta" name="ccl_venta"
-                                            value="<!-- ccl_venta -->" readonly>
+                                            value="<?php echo htmlspecialchars($promedio_ccl_formateado); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
                             <!-- Fin CCL Venta -->
-
                         </div>
                         <!-- Fin Derecha -->
-
                     </div>
                     <!-- Fin Segunda Fila -->
 
@@ -219,18 +265,16 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
                     <!-- Botones -->
                     <div class="text-end">
-                        <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
+                        <button type="submit" id="btnAceptar" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
                         <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones"
                             class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
                     </div>
                     <!-- Fin Botones -->
-
                 </form>
             </div>
         </div>
         <div class="col-2"></div>
-        <!-- FIN VENTA TOTAL ACCIONES -->
-
+        <!-- FIN VENTA PARCIAL ACCIONES -->
     </div>
     <!-- FIN CONTENIDO -->
 
@@ -247,6 +291,18 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        document.getElementById('btnAceptar').addEventListener('click', function() {
+            var cantidad = parseFloat(document.getElementById('cantidad').value);
+            var cantidadMax = <?php echo $cantidad_max; ?>;
+
+            if (cantidad >= cantidadMax) {
+                alert('Cantidad máxima de acciones para una\nventa parcial = ' + cantidadMax);
+            } else {
+                document.getElementById('venta_parcial').submit();
+            }
+        });
+    </script>
     <!-- FIN JS -->
 </body>
 

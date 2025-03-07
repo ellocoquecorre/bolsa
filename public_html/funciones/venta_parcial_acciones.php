@@ -8,6 +8,22 @@ require_once '../funciones/cliente_funciones.php';
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
+// Obtener los datos de la acción específica del cliente
+$sql = "SELECT ticker, cantidad, fecha, precio, ccl_compra FROM acciones WHERE cliente_id = ? AND ticker = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("is", $cliente_id, $ticker);
+$stmt->execute();
+$stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra);
+$stmt->fetch();
+$stmt->close();
+
+// Obtener el promedio CCL
+function obtenerPromedioCCL()
+{
+    global $contadoconliqui_compra, $contadoconliqui_venta;
+    return ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +79,7 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
         <hr class="mod">
 
-        <!-- VENTA TOTAL ACCIONES -->
+        <!-- VENTA PARCIAL ACCIONES -->
         <div class="col-2"></div>
         <div class="col-8 text-center">
             <div class="container-fluid my-4 efectivo">
@@ -75,10 +91,8 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
                     <!-- Primera Fila -->
                     <div class="row">
-
                         <!-- Izquierda -->
                         <div class="col-6 text-center">
-
                             <!-- Ticker -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="ticker" class="col-sm-2 col-form-label">Ticker</label>
@@ -86,34 +100,30 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
                                         <input type="text" class="form-control" id="ticker" name="ticker"
-                                            value="<!-- ticker -->" readonly>
+                                            value="<?php echo htmlspecialchars($db_ticker); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
                             <!-- Fin Ticker -->
-
                         </div>
                         <!-- Fin Izquierda -->
 
                         <!-- Derecha -->
                         <div class="col-6 text-center">
-
                             <!-- Cantidad -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                        <input type="text" placeholder="<!-- cantidad -->" class="form-control"
+                                        <input type="text" placeholder="<?php echo htmlspecialchars($db_cantidad); ?>" class="form-control"
                                             id="cantidad" name="cantidad" value="" autofocus required>
                                     </div>
                                 </div>
                             </div>
                             <!-- Fin Cantidad -->
-
                         </div>
                         <!-- Fin Derecha -->
-
                     </div>
                     <!-- Fin Primera Fila -->
 
@@ -121,10 +131,8 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
                     <!-- Segunda Fila -->
                     <div class="row">
-
                         <!-- Izquierda -->
                         <div class="col-6 text-center">
-
                             <!-- Fecha Compra -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="fecha_compra" class="col-sm-2 col-form-label">Fecha Compra</label>
@@ -132,7 +140,7 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_compra" name="fecha_compra"
-                                            value="<!-- fecha_compra -->" readonly>
+                                            value="<?php echo htmlspecialchars($db_fecha_compra); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +153,7 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="precio_compra" name="precio_compra"
-                                            value="<!-- precio_compra -->" readonly>
+                                            value="<?php echo htmlspecialchars($db_precio_compra); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -158,18 +166,16 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="ccl_compra" name="ccl_compra"
-                                            value="<!-- ccl_compra -->" readonly>
+                                            value="<?php echo htmlspecialchars($db_ccl_compra); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
                             <!-- Fin CCL Compra -->
-
                         </div>
                         <!-- Fin Izquierda -->
 
                         <!-- Derecha -->
                         <div class="col-6 text-center">
-
                             <!-- Fecha Venta -->
                             <div class="row mb-3 align-items-center">
                                 <label class="col-sm-4" for="fecha_venta" class="col-sm-2 col-form-label">Fecha Venta</label>
@@ -177,7 +183,7 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_venta" name="fecha_venta"
-                                            value="<!-- fecha_venta -->" readonly>
+                                            value="<?php echo date('Y-m-d'); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -189,8 +195,7 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                        <input type="text" class="form-control" id="precio_venta" name="precio_venta"
-                                            placeholder="0,00" required>
+                                        <input type="text" class="form-control" id="precio_venta" name="precio_venta" placeholder="0,00" required>
                                     </div>
                                 </div>
                             </div>
@@ -203,15 +208,13 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="ccl_venta" name="ccl_venta"
-                                            value="<!-- ccl_venta -->" readonly>
+                                            value="<?php echo htmlspecialchars($promedio_ccl); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
                             <!-- Fin CCL Venta -->
-
                         </div>
                         <!-- Fin Derecha -->
-
                     </div>
                     <!-- Fin Segunda Fila -->
 
@@ -224,13 +227,11 @@ $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
                             class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
                     </div>
                     <!-- Fin Botones -->
-
                 </form>
             </div>
         </div>
         <div class="col-2"></div>
-        <!-- FIN VENTA TOTAL ACCIONES -->
-
+        <!-- FIN VENTA PARCIAL ACCIONES -->
     </div>
     <!-- FIN CONTENIDO -->
 

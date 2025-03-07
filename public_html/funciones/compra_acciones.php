@@ -1,3 +1,38 @@
+<?php
+// Incluir archivo de configuración
+require_once '../../config/config.php';
+// Incluir función de formato de dinero
+require_once '../funciones/formato_dinero.php';
+
+// Obtener el id del cliente desde la URL
+$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+
+// Obtener los datos del cliente
+$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $cliente_id);
+$stmt->execute();
+$stmt->bind_result($nombre, $apellido);
+$stmt->fetch();
+$stmt->close();
+
+// Obtener el saldo en pesos del cliente
+$sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
+$stmt_saldo = $conn->prepare($sql_saldo);
+$stmt_saldo->bind_param("i", $cliente_id);
+$stmt_saldo->execute();
+$stmt_saldo->bind_result($saldo_en_pesos);
+$stmt_saldo->fetch();
+$stmt_saldo->close();
+$saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
+
+// Obtener la fecha actual
+$fecha_hoy = date('Y-m-d');
+
+// Renderizar los datos obtenidos
+$nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -54,7 +89,7 @@
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy"><!-- nombre_y_apellido --></h4>
+            <h4 class="fancy"><?php echo $nombre_y_apellido; ?></h4>
         </div>
         <!-- FIN TITULO -->
 
@@ -66,7 +101,7 @@
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Comprar Acciones</h5>
                 <form id="compra_acciones" method="POST" action="">
-                    <input type="hidden" name="cliente_id" value="<!-- cliente_id -->">
+                    <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
                     <!-- Saldo -->
                     <div class="row mb-3 align-items-center">
                         <label for="saldo" class="col-sm-2 col-form-label">Saldo</label>
@@ -74,7 +109,7 @@
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
                                 <input type="text" class="form-control" id="saldo" name="saldo"
-                                    value="$ <!-- saldo_en_pesos -->" readonly disabled>
+                                    value="$ <?php echo $saldo_en_pesos_formateado; ?>" readonly disabled>
                             </div>
                         </div>
                     </div>
@@ -117,7 +152,7 @@
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                 <input type="date" class="form-control" id="fecha" name="fecha"
-                                    value="<!-- fecha_hoy -->" required>
+                                    value="<?php echo $fecha_hoy; ?>" required>
                             </div>
                         </div>
                     </div>

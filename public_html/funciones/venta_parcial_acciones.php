@@ -203,7 +203,8 @@ $promedio_ccl_formateado = formatear_dinero($promedio_ccl);
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                        <input type="text" class="form-control" id="precio_venta" name="precio_venta" placeholder="0,00" required>
+                                        <input type="text" class="form-control" id="precio_venta" name="precio_venta"
+                                            placeholder="0,00" required>
                                     </div>
                                 </div>
                             </div>

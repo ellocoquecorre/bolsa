@@ -100,7 +100,7 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Comprar Acciones</h5>
-                <form id="compra_acciones" method="POST" action="">
+                <form id="compra_acciones" method="POST" action="" onsubmit="return validarSaldo()">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
                     <!-- Saldo -->
                     <div class="row mb-3 align-items-center">
@@ -189,6 +189,19 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tickers_acciones.js"></script>
+    <script>
+        function validarSaldo() {
+            var cantidad = parseFloat(document.getElementById('cantidad').value);
+            var precio = parseFloat(document.getElementById('precio').value.replace(',', '.'));
+            var saldo = parseFloat("<?php echo $saldo_en_pesos; ?>");
+
+            if (cantidad * precio > saldo) {
+                alert('Saldo insuficiente');
+                return false;
+            }
+            return true;
+        }
+    </script>
     <!-- FIN JS -->
 </body>
 

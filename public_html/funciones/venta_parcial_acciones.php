@@ -93,7 +93,7 @@ $promedio_ccl_formateado = formatear_dinero($promedio_ccl);
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Venta parcial</h5>
 
-                <form method="POST" action="../funciones/cliente_funciones.php">
+                <form id="venta_parcial" method="POST" action="../funciones/cliente_funciones.php">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
                     <input type="hidden" name="ticker" value="<?php echo $db_ticker; ?>">
 
@@ -230,7 +230,7 @@ $promedio_ccl_formateado = formatear_dinero($promedio_ccl);
 
                     <!-- Botones -->
                     <div class="text-end">
-                        <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
+                        <button type="button" id="btnAceptar" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
                         <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones"
                             class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
                     </div>
@@ -256,6 +256,18 @@ $promedio_ccl_formateado = formatear_dinero($promedio_ccl);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        document.getElementById('btnAceptar').addEventListener('click', function() {
+            var cantidad = parseFloat(document.getElementById('cantidad').value);
+            var cantidadMax = <?php echo $cantidad_max; ?>;
+
+            if (cantidad >= cantidadMax) {
+                alert('Cantidad máxima de acciones para una\nventa parcial = ' + cantidadMax);
+            } else {
+                document.getElementById('venta_parcial').submit();
+            }
+        });
+    </script>
     <!-- FIN JS -->
 </body>
 

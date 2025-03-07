@@ -162,7 +162,7 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
                         <button type="button" class="btn btn-custom eliminar"
                             onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones'">
-                            <i class="fa-solid fa-times me-2"></i>Cancelar</a>
+                            <i class="fa-solid fa-times me-2"></i>Cancelar
                         </button>
                     </div>
                 </form>

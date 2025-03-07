@@ -8,6 +8,16 @@ require_once '../funciones/cliente_funciones.php';
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
+// Obtener datos de la tabla acciones para el cliente y ticker en cuestión
+$query = "SELECT * FROM acciones WHERE cliente_id = ? AND ticker = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("is", $cliente_id, $ticker);
+$stmt->execute();
+$result = $stmt->get_result();
+$accion = $result->fetch_assoc();
+
+$fecha_actual = date("d-m-Y");
+
 // Obtener el promedio CCL
 function obtenerPromedioCCL()
 {
@@ -16,6 +26,44 @@ function obtenerPromedioCCL()
 }
 $promedio_ccl = obtenerPromedioCCL();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Desformatear los valores antes de guardar en la base de datos
+    $cantidad = str_replace('.', '', $_POST['cantidad']);
+    $fecha_compra = date("Y-m-d", strtotime($_POST['fecha_compra']));
+    $precio_compra = str_replace(['.', ','], ['', '.'], $_POST['precio_compra']);
+    $ccl_compra = str_replace(['.', ','], ['', '.'], $_POST['ccl_compra']);
+    $fecha_venta = date("Y-m-d", strtotime($_POST['fecha_venta']));
+    $precio_venta = str_replace(['.', ','], ['', '.'], $_POST['precio_venta']);
+    $ccl_venta = str_replace(['.', ','], ['', '.'], $_POST['ccl_venta']);
+    $ticker = $_POST['ticker'];
+
+    // Insertar en la tabla acciones_historial
+    $query_historial = "
+        INSERT INTO acciones_historial
+        (cliente_id, ticker, cantidad, fecha_compra, precio_compra, ccl_compra, fecha_venta, precio_venta, ccl_venta)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ";
+    $stmt_historial = $conn->prepare($query_historial);
+    $stmt_historial->bind_param("isissdssd", $cliente_id, $ticker, $cantidad, $fecha_compra, $precio_compra, $ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
+    $stmt_historial->execute();
+
+    // Calcular el nuevo balance
+    $total_venta = $cantidad * $precio_venta;
+    $query_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
+    $stmt_balance = $conn->prepare($query_balance);
+    $stmt_balance->bind_param("di", $total_venta, $cliente_id);
+    $stmt_balance->execute();
+
+    // Eliminar la línea de la tabla acciones
+    $query_delete = "DELETE FROM acciones WHERE cliente_id = ? AND ticker = ?";
+    $stmt_delete = $conn->prepare($query_delete);
+    $stmt_delete->bind_param("is", $cliente_id, $ticker);
+    $stmt_delete->execute();
+
+    // Redirigir a la misma URL que el botón Cancelar
+    header("Location: ../backend/cliente.php?cliente_id={$cliente_id}#acciones");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +127,7 @@ $promedio_ccl = obtenerPromedioCCL();
 
                 <form id="venta_total" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
-                    <input type="hidden" name="ticker" value="<!-- ticker -->">
+                    <input type="hidden" name="ticker" value="<?php echo $accion['ticker']; ?>">
 
                     <!-- Primera Fila -->
                     <div class="row">
@@ -92,7 +140,7 @@ $promedio_ccl = obtenerPromedioCCL();
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
                                         <input type="text" class="form-control" id="ticker" name="ticker"
-                                            value="<!-- ticker -->" readonly>
+                                            value="<?php echo $accion['ticker']; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -109,7 +157,7 @@ $promedio_ccl = obtenerPromedioCCL();
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
                                         <input type="text" class="form-control"
-                                            id="cantidad" name="cantidad" value="<!-- cantidad -->" readonly>
+                                            id="cantidad" name="cantidad" value="<?php echo formatear_numero($accion['cantidad']); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +180,7 @@ $promedio_ccl = obtenerPromedioCCL();
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_compra" name="fecha_compra"
-                                            value="<!-- fecha_compra -->" readonly>
+                                            value="<?php echo date("d-m-Y", strtotime($accion['fecha'])); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +193,7 @@ $promedio_ccl = obtenerPromedioCCL();
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="precio_compra" name="precio_compra"
-                                            value="<!-- precio_compra -->" readonly>
+                                            value="<?php echo formatear_dinero($accion['precio']); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +206,7 @@ $promedio_ccl = obtenerPromedioCCL();
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="ccl_compra" name="ccl_compra"
-                                            value="<!-- ccl_compra -->" readonly>
+                                            value="<?php echo formatear_dinero($accion['ccl_compra']); ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -175,7 +223,7 @@ $promedio_ccl = obtenerPromedioCCL();
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_venta" name="fecha_venta"
-                                            value="<!-- fecha_venta -->" readonly>
+                                            value="<?php echo $fecha_actual; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -201,7 +249,7 @@ $promedio_ccl = obtenerPromedioCCL();
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="ccl_venta" name="ccl_venta"
-                                            value="<!-- ccl_venta -->" readonly>
+                                            value="<?php echo formatear_dinero($promedio_ccl); ?>" readonly>
                                     </div>
                                 </div>
                             </div>

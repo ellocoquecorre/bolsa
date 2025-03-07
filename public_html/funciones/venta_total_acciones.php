@@ -1,27 +1,13 @@
 <?php
 // Incluir archivo de configuración
 require_once '../../config/config.php';
-include '../funciones/cliente_funciones.php';
+require_once '../funciones/formato_dinero.php';
+require_once '../funciones/cliente_funciones.php';
 
-// Obtener el id del cliente y el ticker desde la URL
+// Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
-$ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
-// Obtener datos de la base de datos
-$sql = "SELECT ticker, cantidad, fecha, precio, ccl_compra FROM acciones WHERE cliente_id = ? AND ticker = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("is", $cliente_id, $ticker);
-$stmt->execute();
-$stmt->bind_result($db_ticker, $cantidad, $fecha_compra, $precio_compra, $ccl_compra);
-$stmt->fetch();
-$stmt->close();
-
-// Obtener el valor de promedio_ccl
-$promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-
-$fecha_venta = date('d-m-Y');
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -82,8 +68,8 @@ $fecha_venta = date('d-m-Y');
                 <h5 class="me-2 cartera titulo-botones mb-4">Venta total</h5>
 
                 <form method="POST" action="../funciones/cliente_funciones.php">
-                    <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
-                    <input type="hidden" name="ticker" value="<?php echo $db_ticker; ?>">
+                    <input type="hidden" name="cliente_id" value="<!-- cliente_id -->">
+                    <input type="hidden" name="ticker" value="<!-- ticker -->">
 
                     <!-- Primera Fila -->
                     <div class="row">
@@ -98,7 +84,7 @@ $fecha_venta = date('d-m-Y');
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
                                         <input type="text" class="form-control" id="ticker" name="ticker"
-                                            value="<?php echo $db_ticker; ?>" readonly>
+                                            value="<!-- ticker -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +103,7 @@ $fecha_venta = date('d-m-Y');
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
                                         <input type="text" class="form-control" id="cantidad" name="cantidad"
-                                            value="<?php echo formatear_numero($cantidad); ?>" readonly>
+                                            value="<!-- ticker -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +130,7 @@ $fecha_venta = date('d-m-Y');
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_compra" name="fecha_compra"
-                                            value="<?php echo date('d-m-Y', strtotime($fecha_compra)); ?>" readonly>
+                                            value="<!-- fecha_compra -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -157,7 +143,7 @@ $fecha_venta = date('d-m-Y');
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="precio_compra" name="precio_compra"
-                                            value="<?php echo formatear_dinero($precio_compra); ?>" readonly>
+                                            value="<!-- precio_compra -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -170,7 +156,7 @@ $fecha_venta = date('d-m-Y');
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="ccl_compra" name="ccl_compra"
-                                            value="<?php echo formatear_dinero($ccl_compra); ?>" readonly>
+                                            value="<!-- ccl_compra -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +175,7 @@ $fecha_venta = date('d-m-Y');
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="text" class="form-control" id="fecha_venta" name="fecha_venta"
-                                            value="<?php echo $fecha_venta; ?>" readonly>
+                                            value="<!-- fecha_venta -->" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -215,7 +201,7 @@ $fecha_venta = date('d-m-Y');
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="ccl_venta" name="ccl_venta"
-                                            value="<?php echo formatear_dinero($promedio_ccl); ?>" readonly>
+                                            value="<!-- ccl_venta -->" readonly>
                                     </div>
                                 </div>
                             </div>

@@ -1,9 +1,7 @@
 <?php
 // Incluir archivo de configuración
 require_once '../../config/config.php';
-// Incluir función de formato de dinero
 require_once '../funciones/formato_dinero.php';
-// Incluir funciones del cliente
 require_once '../funciones/cliente_funciones.php';
 
 // Obtener el id del cliente desde la URL

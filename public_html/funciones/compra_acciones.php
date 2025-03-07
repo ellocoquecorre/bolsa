@@ -88,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -145,7 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
-                                <input type="text" class="form-control" id="saldo" name="saldo" value="$ <?php echo htmlspecialchars($efectivo_formateado); ?>" readonly disabled>
+                                <input type="text" class="form-control" id="saldo" name="saldo"
+                                    value="$ <?php echo htmlspecialchars($efectivo_formateado); ?>" readonly disabled>
                             </div>
                         </div>
                     </div>
@@ -176,7 +178,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                <input type="text" step="0.01" class="form-control" id="precio" name="precio" placeholder="0,00" onkeyup="formatoBalance(this)" required>
+                                <input type="text" step="0.01" class="form-control" id="precio" name="precio"
+                                    placeholder="0,00" required>
                             </div>
                         </div>
                     </div>
@@ -186,7 +189,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha_acciones_hoy; ?>" required>
+                                <input type="date" class="form-control" id="fecha" name="fecha"
+                                    value="<?php echo $fecha_acciones_hoy; ?>" required>
                             </div>
                         </div>
                     </div>
@@ -194,7 +198,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                        <button type="button" class="btn btn-custom eliminar" onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones'">
+                        <button type="button" class="btn btn-custom eliminar"
+                            onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones'">
                             <i class="fa-solid fa-times me-2"></i>Cancelar</a>
                         </button>
                     </div>

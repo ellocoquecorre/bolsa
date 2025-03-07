@@ -4,10 +4,12 @@ require_once '../../config/config.php';
 require_once '../funciones/formato_dinero.php';
 require_once '../funciones/cliente_funciones.php';
 
-// Obtener el id del cliente desde la URL
+// Obtener el id del cliente y el ticker desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+$ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 

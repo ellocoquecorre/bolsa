@@ -45,6 +45,9 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <a class="nav-link" href="alta_clientes.php"><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="dolares.php"><i class="fa-solid fa-dollar-sign me-2"></i>Dólares</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>
                     </li>
                 </ul>
@@ -375,73 +378,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
             </div>
         </div>
         <!-- FIN ACCIONES -->
-
-        <hr class="mod">
-
-        <!-- COTIZACION DOLAR -->
-        <div class="col-12 text-center">
-            <div class="container-fluid my-4 efectivo" id="dolar">
-                <h5 class="me-2 cartera titulo-botones mb-4">Tipos de cambio</h5>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th colspan="2">Oficial</th>
-                                <th colspan="2">Blue</th>
-                                <th colspan="2">Bolsa</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                            </tr>
-                            <tr>
-                                <td>$ <?php echo formatear_dinero($oficial_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($oficial_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero($blue_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($blue_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero($bolsa_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($bolsa_venta); ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr class="linea-accion">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th colspan="2">CCL</th>
-                                <th colspan="2">Tarjeta</th>
-                                <th colspan="2">Mayorista</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                            </tr>
-                            <tr>
-                                <td>$ <?php echo formatear_dinero($contadoconliqui_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($contadoconliqui_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero($tarjeta_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($tarjeta_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero($mayorista_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($mayorista_venta); ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!-- COTIZACION DOLAR -->
 
         <hr class="mod">
 

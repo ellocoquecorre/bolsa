@@ -1,12 +1,12 @@
 <?php
-// Incluir archivo de configuración
 require_once '../../config/config.php';
-
-// Incluir las funciones necesarias
 include '../funciones/cliente_funciones.php';
 
-// Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+
+$datos_corredora = obtenerDatosCorredora($cliente_id);
+$url_corredora = $datos_corredora['url'];
+$nombre_corredora = $datos_corredora['corredora'];
 
 ?>
 
@@ -26,6 +26,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 </head>
 
 <body>
+
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
@@ -39,7 +40,13 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="cliente.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-rotate-left me-2"></i>Volver</a>
+                        <a class="nav-link" href="cliente.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-house me-2"></i>Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="cliente.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-rotate-left me-2"></i>Volver</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dolares.php"><i class="fa-solid fa-power-off me-2"></i>Dólares</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>
@@ -56,6 +63,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
         <!-- TITULO -->
         <div class="col-12 text-center">
             <h4 class="fancy">Historial de <?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
+            <p>Tu corredora es<br><a href="<?php echo $url_corredora; ?>" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><?php echo $nombre_corredora; ?></a></p>
         </div>
         <!-- FIN TITULO -->
 

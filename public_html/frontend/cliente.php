@@ -1,14 +1,9 @@
 <?php
-// Incluir archivo de configuración
 require_once '../../config/config.php';
-
-// Incluir las funciones necesarias
 include '../funciones/cliente_funciones.php';
 
-// Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
-// Obtener datos de la corredora
 $datos_corredora = obtenerDatosCorredora($cliente_id);
 $url_corredora = $datos_corredora['url'];
 $nombre_corredora = $datos_corredora['corredora'];
@@ -31,6 +26,7 @@ $nombre_corredora = $datos_corredora['corredora'];
 </head>
 
 <body>
+
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
@@ -44,7 +40,13 @@ $nombre_corredora = $datos_corredora['corredora'];
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
+                        <a class="nav-link active" href="cliente.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-house me-2"></i>Inicio</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="historial.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-hourglass me-2"></i>Historial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dolares.php"><i class="fa-solid fa-power-off me-2"></i>Dólares</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>
@@ -320,73 +322,6 @@ $nombre_corredora = $datos_corredora['corredora'];
             </div>
         </div>
         <!-- FIN ACCIONES -->
-
-        <hr class="mod">
-
-        <!-- COTIZACION DOLAR -->
-        <div class="col-12 text-center">
-            <div class="container-fluid my-4 efectivo" id="dolar">
-                <h5 class="me-2 cartera titulo-botones mb-4">Tipos de cambio</h5>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th colspan="2">Oficial</th>
-                                <th colspan="2">Blue</th>
-                                <th colspan="2">Bolsa</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                            </tr>
-                            <tr>
-                                <td>$ <?php echo formatear_dinero($oficial_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($oficial_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero($blue_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($blue_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero($bolsa_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($bolsa_venta); ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr class="linea-accion">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th colspan="2">CCL</th>
-                                <th colspan="2">Tarjeta</th>
-                                <th colspan="2">Mayorista</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                            </tr>
-                            <tr>
-                                <td>$ <?php echo formatear_dinero($contadoconliqui_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($contadoconliqui_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero($tarjeta_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($tarjeta_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero($mayorista_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($mayorista_venta); ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!-- COTIZACION DOLAR -->
 
         <hr class="mod">
 

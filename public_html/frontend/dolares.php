@@ -77,26 +77,32 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th colspan="2">Oficial</th>
-                                <th colspan="2">Blue</th>
-                                <th colspan="2">Bolsa</th>
+                                <th colspan="3">Oficial</th>
+                                <th colspan="3">Blue</th>
+                                <th colspan="3">Bolsa</th>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Compra</td>
                                 <td>Venta</td>
+                                <td>Promedio</td>
                                 <td>Compra</td>
                                 <td>Venta</td>
+                                <td>Promedio</td>
                                 <td>Compra</td>
                                 <td>Venta</td>
+                                <td>Promedio</td>
                             </tr>
                             <tr>
                                 <td>$ <?php echo formatear_dinero($oficial_compra); ?></td>
                                 <td>$ <?php echo formatear_dinero($oficial_venta); ?></td>
+                                <td>$ <?php echo formatear_dinero(($oficial_compra + $oficial_venta) / 2); ?></td>
                                 <td>$ <?php echo formatear_dinero($blue_compra); ?></td>
                                 <td>$ <?php echo formatear_dinero($blue_venta); ?></td>
+                                <td>$ <?php echo formatear_dinero(($blue_compra + $blue_venta) / 2); ?></td>
                                 <td>$ <?php echo formatear_dinero($bolsa_compra); ?></td>
                                 <td>$ <?php echo formatear_dinero($bolsa_venta); ?></td>
+                                <td>$ <?php echo formatear_dinero(($bolsa_compra + $bolsa_venta) / 2); ?></td>
                             </tr>
                         </tbody>
                     </table>
@@ -106,33 +112,39 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th colspan="2">CCL</th>
-                                <th colspan="2">Tarjeta</th>
-                                <th colspan="2">Mayorista</th>
+                                <th colspan="3">CCL</th>
+                                <th colspan="3">Tarjeta</th>
+                                <th colspan="3">Mayorista</th>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Compra</td>
                                 <td>Venta</td>
+                                <td>Promedio</td>
                                 <td>Compra</td>
                                 <td>Venta</td>
+                                <td>Promedio</td>
                                 <td>Compra</td>
                                 <td>Venta</td>
+                                <td>Promedio</td>
                             </tr>
                             <tr>
                                 <td>$ <?php echo formatear_dinero($contadoconliqui_compra); ?></td>
                                 <td>$ <?php echo formatear_dinero($contadoconliqui_venta); ?></td>
+                                <td>$ <?php echo formatear_dinero(($contadoconliqui_compra + $contadoconliqui_venta) / 2); ?></td>
                                 <td>$ <?php echo formatear_dinero($tarjeta_compra); ?></td>
                                 <td>$ <?php echo formatear_dinero($tarjeta_venta); ?></td>
+                                <td>$ <?php echo formatear_dinero(($tarjeta_compra + $tarjeta_venta) / 2); ?></td>
                                 <td>$ <?php echo formatear_dinero($mayorista_compra); ?></td>
                                 <td>$ <?php echo formatear_dinero($mayorista_venta); ?></td>
+                                <td>$ <?php echo formatear_dinero(($mayorista_compra + $mayorista_venta) / 2); ?></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <!-- COTIZACION DOLAR -->
+        <!-- FIN COTIZACION DOLAR -->
 
         <hr class="mod">
 

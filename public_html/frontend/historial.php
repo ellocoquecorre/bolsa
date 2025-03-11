@@ -43,7 +43,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                         <a class="nav-link" href="cliente.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-house me-2"></i>Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="cliente.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-rotate-left me-2"></i>Volver</a>
+                        <a class="nav-link active" href="cliente.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-hourglass me-2"></i>Historial</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="dolares.php"><i class="fa-solid fa-dollar-sign me-2"></i>Dólares</a>

@@ -97,8 +97,7 @@ function obtenerPromedioCCL()
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -150,8 +149,7 @@ function obtenerPromedioCCL()
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
-                                <input type="text" class="form-control" id="saldo" name="saldo"
-                                    value="$ <?php echo $saldo_en_pesos_formateado; ?>" readonly disabled>
+                                <input type="text" class="form-control" id="saldo" name="saldo" value="$ <?php echo $saldo_en_pesos_formateado; ?>" readonly disabled>
                             </div>
                         </div>
                     </div>
@@ -182,8 +180,7 @@ function obtenerPromedioCCL()
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                <input type="text" step="0.01" class="form-control" id="precio" name="precio"
-                                    placeholder="0,00" required>
+                                <input type="text" step="0.01" class="form-control" id="precio" name="precio" placeholder="0,00" required>
                             </div>
                         </div>
                     </div>
@@ -193,8 +190,7 @@ function obtenerPromedioCCL()
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="fecha" name="fecha"
-                                    value="<?php echo $fecha_hoy; ?>" required>
+                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha_hoy; ?>" required>
                             </div>
                         </div>
                     </div>
@@ -202,8 +198,7 @@ function obtenerPromedioCCL()
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
-                        <button type="button" class="btn btn-custom eliminar"
-                            onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#cedears'">
+                        <button type="button" class="btn btn-custom eliminar" onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#cedears'">
                             <i class="fa-solid fa-times me-2"></i>Cancelar</button>
                     </div>
                 </form>
@@ -228,7 +223,7 @@ function obtenerPromedioCCL()
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="../js/tickers_acciones.js"></script>
+    <script src="../js/tickers_cedear.js"></script>
     <script>
         function validarSaldo() {
             var cantidad = parseFloat(document.getElementById('cantidad').value);

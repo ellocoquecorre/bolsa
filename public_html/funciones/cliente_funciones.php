@@ -82,6 +82,32 @@ function formatearFecha($fecha)
 }
 // FIN RENDERIZAR ACCIONES
 
+// RENDERIZAR CEDEAR
+function obtenerCedeares($cliente_id)
+{
+    global $conn;
+    $sql_cedeares = "SELECT ticker_cedear, fecha_cedear, cantidad_cedear, precio_cedear FROM cedear WHERE cliente_id = ?";
+    $stmt_cedeares = $conn->prepare($sql_cedeares);
+    $stmt_cedeares->bind_param("i", $cliente_id);
+    $stmt_cedeares->execute();
+    $result = $stmt_cedeares->get_result();
+
+    $cedeares = [];
+    while ($fila = $result->fetch_assoc()) {
+        $cedeares[] = $fila;
+    }
+
+    $stmt_cedeares->close();
+    return $cedeares;
+}
+
+function formatearFechaCedear($fecha)
+{
+    $date = new DateTime($fecha);
+    return $date->format('d-m-y');
+}
+// FIN RENDERIZAR CEDEAR
+
 // GOOGLE FINANCE
 function obtenerPrecioActualGoogleFinance($ticker)
 {

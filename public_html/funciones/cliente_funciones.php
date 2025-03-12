@@ -108,7 +108,7 @@ function formatearFechaCedear($fecha)
 }
 // FIN RENDERIZAR CEDEAR
 
-// GOOGLE FINANCE
+// GOOGLE FINANCE ACCIONES
 function obtenerPrecioActualGoogleFinance($ticker)
 {
     $url = "https://www.google.com/finance/quote/$ticker:BCBA?hl=es";
@@ -134,7 +134,35 @@ function obtenerPrecioActualGoogleFinance($ticker)
         return null;
     }
 }
-// FIN GOOGLE FINANCE
+// FIN GOOGLE FINANCE ACCIONES
+
+// GOOGLE FINANCE CEDEAR
+function obtenerPrecioActualGoogleFinanceCedear($ticker_cedear)
+{
+    $url = "https://www.google.com/finance/quote/$ticker_cedear:BCBA?hl=es";
+    $html = file_get_contents($url);
+
+    // Crear un nuevo DOMDocument
+    $dom = new DOMDocument();
+    @$dom->loadHTML($html);
+
+    // Buscar el valor numérico en la etiqueta <div class="YMlKec fxKbKc">
+    $finder = new DomXPath($dom);
+    $classname = "YMlKec fxKbKc";
+    $nodes = $finder->query("//*[contains(@class, '$classname')]");
+
+    if ($nodes->length > 0) {
+        $valor = $nodes->item(0)->nodeValue;
+        // Formatear valor a número sin formato
+        $valor = str_replace(",", "", $valor); // Eliminar comas de miles
+        $valor = str_replace(".", "", substr($valor, 0, -3)) . "." . substr($valor, -2); // Reemplazar punto decimal y reconstruir
+        $valor = (float)$valor / 100; // Corregir el formato multiplicando por 0.01
+        return $valor;
+    } else {
+        return null;
+    }
+}
+// FIN GOOGLE FINANCE CEDEAR
 
 // CCL COMPRA
 function obtenerCCLCompra($cliente_id, $ticker)

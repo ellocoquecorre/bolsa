@@ -175,3 +175,123 @@ function calcularValorInicialConsolidadoAccionesPesos($acciones)
 // Fin Acciones Consolidada
 
 //-- FIN ACCIONES --//
+
+//-- CEDEAR --//
+
+// Renderizar Cedear
+function obtenerCedear($cliente_id)
+{
+    global $conn;
+    $sql_cedear = "SELECT ticker_cedear, fecha_cedear, cantidad_cedear, precio_cedear FROM cedear WHERE cliente_id = ?";
+    $stmt_cedear = $conn->prepare($sql_cedear);
+    $stmt_cedear->bind_param("i", $cliente_id);
+    $stmt_cedear->execute();
+    $result = $stmt_cedear->get_result();
+
+    $cedear = [];
+    while ($fila = $result->fetch_assoc()) {
+        $cedear[] = $fila;
+    }
+
+    $stmt_cedear->close();
+    return $cedear;
+}
+
+function formatearFechaCedear($fecha)
+{
+    $date = new DateTime($fecha);
+    return $date->format('d-m-y');
+}
+// Fin Renderizar Cedear
+
+// Precio Actual Cedear
+function obtenerPrecioActualCedear($ticker_cedear)
+{
+    $url = "https://www.google.com/finance/quote/$ticker_cedear:BCBA?hl=es";
+    $html = file_get_contents($url);
+
+    // Crear un nuevo DOMDocument
+    $dom = new DOMDocument();
+    @$dom->loadHTML($html);
+
+    // Buscar el valor numérico en la etiqueta <div class="YMlKec fxKbKc">
+    $finder = new DomXPath($dom);
+    $classname = "YMlKec fxKbKc";
+    $nodes = $finder->query("//*[contains(@class, '$classname')]");
+
+    if ($nodes->length > 0) {
+        $valor = $nodes->item(0)->nodeValue;
+        // Formatear valor a número sin formato
+        $valor = str_replace(",", "", $valor); // Eliminar comas de miles
+        $valor = str_replace(".", "", substr($valor, 0, -3)) . "." . substr($valor, -2); // Reemplazar punto decimal y reconstruir
+        $valor = (float)$valor / 100; // Corregir el formato multiplicando por 0.01
+        return $valor;
+    } else {
+        return null;
+    }
+}
+// Fin Precio Actual Cedear
+
+// CCL Compra Cedear
+function obtenerCCLCompraCedear($cliente_id, $ticker_cedear)
+{
+    global $conn;
+    $sql = "SELECT ccl_compra FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $cliente_id, $ticker_cedear);
+    $stmt->execute();
+    $stmt->bind_result($valor_compra_ccl);
+    $stmt->fetch();
+    $stmt->close();
+    return $valor_compra_ccl;
+}
+// Fin CCL Compra Cedear
+
+// Historial Cedear
+function obtenerHistorialCedear($cliente_id)
+{
+    // Conexión a la base de datos
+    $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    // Consulta SQL
+    $sql = "SELECT * FROM cedear_historial WHERE cliente_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $cliente_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Array para almacenar los resultados
+    $historial_cedear = array();
+    while ($row = $result->fetch_assoc()) {
+        $historial_cedear[] = $row;
+    }
+
+    // Cerrar la conexión
+    $stmt->close();
+    $conn->close();
+
+    return $historial_cedear;
+}
+
+// Obtener el historial de cedear del cliente
+$historial_cedear = obtenerHistorialCedear($cliente_id);
+// Fin Historial Cedear
+
+// Cedear Consolidada
+function calcularValorInicialConsolidadoCedear($cedear)
+{
+    $valor_inicial_consolidado_cedear = 0;
+    foreach ($cedear as $c) {
+        $valor_inicial_cedear = $c['precio_cedear'] * $c['cantidad_cedear'];
+        $valor_inicial_consolidado_cedear += $valor_inicial_cedear;
+    }
+    return $valor_inicial_consolidado_cedear;
+}
+// Fin Cedear Consolidada
+
+//-- FIN CEDEAR --//

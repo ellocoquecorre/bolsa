@@ -236,14 +236,14 @@ function obtenerPrecioActualCedear($ticker_cedear)
 function obtenerCCLCompraCedear($cliente_id, $ticker_cedear)
 {
     global $conn;
-    $sql = "SELECT ccl_compra_cedear FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?";
+    $sql = "SELECT ccl_compra FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("is", $cliente_id, $ticker_cedear);
     $stmt->execute();
-    $stmt->bind_result($valor_compra_ccl_cedear);
+    $stmt->bind_result($valor_compra_ccl);
     $stmt->fetch();
     $stmt->close();
-    return $valor_compra_ccl_cedear;
+    return $valor_compra_ccl;
 }
 // Fin CCL Compra Cedear
 

@@ -383,7 +383,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
         <!-- CEDEAR -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo" id="cedear">
-                <h5 class="me-2 cartera titulo-botones mb-4">CEDEAR</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Cedear</h5>
 
                 <!-- Botones -->
                 <div class="text-start">
@@ -396,6 +396,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                 <!-- Cedear Pesos -->
                 <div id="tablaCedearPesos">
+
                     <!-- Consolidada Cedear Pesos -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
@@ -408,25 +409,12 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $cedear = obtenerCedear($cliente_id);
-                                $valor_inicial_consolidado_cedear_pesos = 0;
-                                $valor_actual_consolidado_cedear_pesos = 0;
-
-                                foreach ($cedear as $c) {
-                                    $valor_inicial_cedear_pesos = $c['precio_cedear'] * $c['cantidad_cedear'];
-                                    $valor_inicial_consolidado_cedear_pesos += $valor_inicial_cedear_pesos;
-                                    $valor_actual_cedear_pesos = obtenerPrecioActualCedear($c['ticker_cedear']) * $c['cantidad_cedear'];
-                                    $valor_actual_consolidado_cedear_pesos += $valor_actual_cedear_pesos;
-                                }
-                                $rendimiento_consolidado_cedear_pesos = $valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos;
-                                $rentabilidad_consolidado_cedear_pesos = ($rendimiento_consolidado_cedear_pesos / $valor_inicial_consolidado_cedear_pesos) * 100;
-                                ?>
                                 <tr>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_pesos)); ?></td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_pesos)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_pesos); ?></td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_pesos); ?></td>
+                                    <td><!-- $valor_inicial_consolidado_cedear_pesos --></td>
+                                    <td><!-- $valor_actual_consolidado_cedear_pesos --></td>
+                                    <td><!-- $rendimiento_consolidado_cedear_pesos --></td>
+                                    <td><!-- $rentabilidad_consolidado_cedear_pesos --></td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -440,68 +428,67 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Ticker</th>
-                                    <th>Fecha</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio unitario</th>
-                                    <th>Valor total</th>
-                                    <th>Rendimiento</th>
-                                    <th>Rentabilidad</th>
-                                    <th>Opciones</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="2">Precio unitario</th>
+                                    <th colspan="2">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Hoy</th>
+                                    <th><!-- Valor -->Compra</th>
+                                    <th><!-- Valor -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-cedear-pesos">
-                                <?php
-                                foreach ($cedear as $c) {
-                                    $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
-                                    $valor_inicial_cedear_pesos = $c['precio_cedear'] * $c['cantidad_cedear'];
-                                    $valor_actual_cedear_pesos = $precio_actual * $c['cantidad_cedear'];
-                                    $rendimiento_cedear_pesos = $valor_actual_cedear_pesos - $valor_inicial_cedear_pesos;
-                                    $rentabilidad_cedear_pesos = ($rendimiento_cedear_pesos / $valor_inicial_cedear_pesos) * 100;
-                                ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($c['ticker_cedear']); ?></td>
-                                        <td><?php echo htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])); ?></td>
-                                        <td><?php echo htmlspecialchars($c['cantidad_cedear']); ?></td>
-                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($c['precio_cedear'])); ?></td>
-                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_cedear_pesos)); ?></td>
-                                        <td><?php echo formatear_y_colorear_valor($rendimiento_cedear_pesos); ?></td>
-                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_cedear_pesos); ?></td>
-                                        <td>
-                                            <div class="dropdown d-flex justify-content-center">
-                                                <button class="btn custom-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" title="Opciones">
-                                                    <i class="fa-solid fa-bars"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                                    <li>
-                                                        <a class="dropdown-item" href="../funciones/venta_parcial_cedear.php?cliente_id=<?php echo $cliente_id; ?>&ticker_cedear=<?php echo $c['ticker_cedear']; ?>"><i class="fa-solid fa-minus me-2"></i>Venta Parcial</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="../funciones/venta_total_cedear.php?cliente_id=<?php echo $cliente_id; ?>&ticker_cedear=<?php echo $c['ticker_cedear']; ?>"><i class="fa-solid fa-xmark me-2"></i>Venta Total</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="../funciones/editar_compra_cedear.php?cliente_id=<?php echo $cliente_id; ?>&ticker_cedear=<?php echo $c['ticker_cedear']; ?>"><i class="fa-solid fa-pen me-2"></i>Editar Compra</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#" onclick="eliminarCedear(this, '<?php echo $c['ticker_cedear']; ?>')"><i class="fa-solid fa-trash me-2"></i>Eliminar</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php
-                                }
-                                ?>
+                                <tr data-ticker=''>
+                                    <td><!-- $ticker_cedear --></td>
+                                    <td><!-- $fecha_cedear --></td>
+                                    <td><!-- $cantidad_cedear --></td>
+                                    <td class='text-right'><!-- $precio_compra_cedear_pesos --></td>
+                                    <td class='text-right'><!-- $precio_actual_cedear_pesos --></td>
+                                    <td class='text-right'><!-- $valor_inicial_cedear_pesos --></td>
+                                    <td class='text-right'><!-- $valor_actual_cedear_pesos --></td>
+                                    <td class='text-right'><!-- $rendimiento_cedear_pesos --></td>
+                                    <td class='text-right'><!-- $rentabilidad_cedear_pesos --></td>
+                                    <td class='text-center'>
+                                        <div class='dropdown d-flex justify-content-center'>
+                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                <i class='fa-solid fa-bars'></i>
+                                            </button>
+                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_cedear.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_cedear.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-coins me-2'></i> Venta total</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_cedear.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                     <!-- Fin Completa Cedear Pesos -->
+
                 </div>
                 <!-- Fin Cedear Pesos -->
 
                 <!-- Cedear Dólares -->
                 <div id="tablaCedearDolares" class="d-none">
-                    <!-- Consolidada Cedear Dolares -->
+
+                    <!-- Consolidada Cedear Dólares -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -513,96 +500,85 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $valor_inicial_consolidado_cedear_dolares = 0;
-                                $valor_actual_consolidado_cedear_dolares = 0;
-
-                                foreach ($cedear as $c) {
-                                    $valor_inicial_cedear_dolares = ($c['precio_cedear'] * $c['cantidad_cedear']) / $c['ccl_compra_cedear'];
-                                    $valor_inicial_consolidado_cedear_dolares += $valor_inicial_cedear_dolares;
-                                    $valor_actual_cedear_dolares = (obtenerPrecioActualCedear($c['ticker_cedear']) * $c['cantidad_cedear']) / $promedio_ccl;
-                                    $valor_actual_consolidado_cedear_dolares += $valor_actual_cedear_dolares;
-                                }
-                                $rendimiento_consolidado_cedear_dolares = $valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares;
-                                $rentabilidad_consolidado_cedear_dolares = ($rendimiento_consolidado_cedear_dolares / $valor_inicial_consolidado_cedear_dolares) * 100;
-                                ?>
                                 <tr>
-                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_dolares)); ?></td>
-                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_dolares)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_dolares, 'u$s'); ?></td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_dolares); ?></td>
+                                    <td><!-- $valor_inicial_consolidado_cedear_dolares --></td>
+                                    <td><!-- $valor_actual_consolidado_cedear_dolares --></td>
+                                    <td><!-- $rendimiento_consolidado_cedear_dolares --></td>
+                                    <td><!-- $rentabilidad_consolidado_cedear_dolares --></td>
+
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- Fin Consolidada Cedear Dolares -->
+                    <!-- Fin Consolidada Cedear Dólares -->
 
                     <hr class="linea-accion">
 
-                    <!-- Completa Cedear Dolares -->
+                    <!-- Completa Cedear Dólares -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Ticker</th>
-                                    <th>Fecha</th>
-                                    <th>Cantidad</th>
-                                    <th>Dólar CCL</th>
-                                    <th>Precio unitario</th>
-                                    <th>Valor total</th>
-                                    <th>Rendimiento</th>
-                                    <th>Rentabilidad</th>
-                                    <th>Opciones</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="2">Dólar CCL</th>
+                                    <th colspan="2">Precio unitario</th>
+                                    <th colspan="2">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th><!-- Valor CCL -->Compra</th>
+                                    <th><!-- Valor CCL -->Hoy</th>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Hoy</th>
+                                    <th><!-- X -->Compra</th>
+                                    <th><!-- X -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-cedear-dolares">
-                                <?php
-                                foreach ($cedear as $c) {
-                                    $valor_compra_ccl = $c['ccl_compra_cedear'];
-                                    $precio_actual_cedear_dolares = obtenerPrecioActualCedear($c['ticker_cedear']) / $promedio_ccl;
-                                    $valor_inicial_cedear_dolares = ($c['precio_cedear'] * $c['cantidad_cedear']) / $valor_compra_ccl;
-                                    $valor_actual_cedear_dolares = (obtenerPrecioActualCedear($c['ticker_cedear']) * $c['cantidad_cedear']) / $promedio_ccl;
-                                    $rendimiento_cedear_dolares = $valor_actual_cedear_dolares - $valor_inicial_cedear_dolares;
-                                    $rentabilidad_cedear_dolares = ($rendimiento_cedear_dolares / $valor_inicial_cedear_dolares) * 100;
-                                ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($c['ticker_cedear']); ?></td>
-                                        <td><?php echo htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])); ?></td>
-                                        <td><?php echo htmlspecialchars($c['cantidad_cedear']); ?></td>
-                                        <td>$ <?php echo htmlspecialchars($valor_compra_ccl); ?></td>
-                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($precio_actual_cedear_dolares)); ?></td>
-                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_cedear_dolares)); ?></td>
-                                        <td><?php echo formatear_y_colorear_valor($rendimiento_cedear_dolares, 'u$s'); ?></td>
-                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_cedear_dolares); ?></td>
-                                        <td>
-                                            <div class="dropdown d-flex justify-content-center">
-                                                <button class="btn custom-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" title="Opciones">
-                                                    <i class="fa-solid fa-bars"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                                    <li>
-                                                        <a class="dropdown-item" href="../funciones/venta_parcial_cedear.php?cliente_id=<?php echo $cliente_id; ?>&ticker_cedear=<?php echo $c['ticker_cedear']; ?>"><i class="fa-solid fa-minus me-2"></i>Venta Parcial</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="../funciones/venta_total_cedear.php?cliente_id=<?php echo $cliente_id; ?>&ticker_cedear=<?php echo $c['ticker_cedear']; ?>"><i class="fa-solid fa-xmark me-2"></i>Venta Total</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="../funciones/editar_compra_cedear.php?cliente_id=<?php echo $cliente_id; ?>&ticker_cedear=<?php echo $c['ticker_cedear']; ?>"><i class="fa-solid fa-pen me-2"></i>Editar Compra</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#" onclick="eliminarCedear(this, '<?php echo $c['ticker_cedear']; ?>')"><i class="fa-solid fa-trash me-2"></i>Eliminar</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php
-                                }
-                                ?>
+                                <tr data-ticker=''>
+                                    <td><!-- $ticker_cedear --></td>
+                                    <td><!-- $fecha_cedear --></td>
+                                    <td><!-- $cantidad_cedear --></td>
+                                    <td class='text-right'><!-- $precio_compra_ccl_cedear_dolares --></td>
+                                    <td class='text-right'><!-- $precio_actual_ccl_cedear_dolares --></td>
+                                    <td class='text-right'><!-- $precio_compra_cedear_dolares --></td>
+                                    <td class='text-right'><!-- $precio_actual_cedear_dolares --></td>
+                                    <td class='text-right'><!-- $valor_inicial_cedear_dolares --></td>
+                                    <td class='text-right'><!-- $valor_actual_cedear_dolares --></td>
+                                    <td class='text-right'><!-- $rendimiento_cedear_dolares --></td>
+                                    <td class='text-right'><!-- $rentabilidad_cedear_dolares --></td>
+                                    <td class='text-center'>
+                                        <div class='dropdown d-flex justify-content-center'>
+                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                <i class='fa-solid fa-bars'></i>
+                                            </button>
+                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_cedear.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_cedear.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-coins me-2'></i> Venta total</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_cedear.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
+
                         </table>
                     </div>
-                    <!-- Fin Completa Cedear Dolares -->
+                    <!-- Fin Completa Cedear Dólares -->
+
                 </div>
                 <!-- Fin Cedear Dólares -->
 
@@ -610,11 +586,12 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                 <!-- Comprar Cedear -->
                 <div class="text-start">
-                    <a href="../funciones/compra_cedear.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
+                    <a href="../funciones/compra_cedears.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
                         <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
                     </a>
                 </div>
                 <!-- Fin Comprar Cedear -->
+
             </div>
         </div>
         <!-- FIN CEDEAR -->
@@ -655,6 +632,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <td><!-- $valor_actual_consolidado_bonos_pesos --></td>
                                     <td><!-- $rendimiento_consolidado_bonos_pesos --></td>
                                     <td><!-- $rentabilidad_consolidado_bonos_pesos --></td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -671,7 +649,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Precio x acción</th>
+                                    <th colspan="2">Precio unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -685,16 +663,16 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody id="tabla-bonos-pesos">
-                                <tr>
+                                <tr data-ticker=''>
                                     <td><!-- $ticker_bonos --></td>
                                     <td><!-- $fecha_bonos --></td>
                                     <td><!-- $cantidad_bonos --></td>
-                                    <td><!-- $precio_compra_bonos --></td>
-                                    <td><!-- $precio_actual_bonos --></td>
-                                    <td><!-- $valor_inicial_bonos_pesos --></td>
-                                    <td><!-- $valor_actual_bonos_pesos --></td>
-                                    <td><!-- $rendimiento_bonos_pesos --></td>
-                                    <td><!-- $rentabilidad_bonos_pesos --></td>
+                                    <td class='text-right'><!-- $precio_compra_bonos_pesos --></td>
+                                    <td class='text-right'><!-- $precio_actual_bonos_pesos --></td>
+                                    <td class='text-right'><!-- $valor_inicial_bonos_pesos --></td>
+                                    <td class='text-right'><!-- $valor_actual_bonos_pesos --></td>
+                                    <td class='text-right'><!-- $rendimiento_bonos_pesos --></td>
+                                    <td class='text-right'><!-- $rentabilidad_bonos_pesos --></td>
                                     <td class='text-center'>
                                         <div class='dropdown d-flex justify-content-center'>
                                             <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
@@ -728,14 +706,14 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 <!-- Bonos Dólares -->
                 <div id="tablaBonosDolares" class="d-none">
 
-                    <!-- Consolidada Bonos Dolares -->
+                    <!-- Consolidada Bonos Dólares -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
-                                    <th>DOLARES</th>
+                                    <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                 </tr>
                             </thead>
@@ -745,15 +723,16 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <td><!-- $valor_actual_consolidado_bonos_dolares --></td>
                                     <td><!-- $rendimiento_consolidado_bonos_dolares --></td>
                                     <td><!-- $rentabilidad_consolidado_bonos_dolares --></td>
+
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- Fin Consolidada Bonos Dolares -->
+                    <!-- Fin Consolidada Bonos Dólares -->
 
                     <hr class="linea-accion">
 
-                    <!-- Completa Bonos Dolares -->
+                    <!-- Completa Bonos Dólares -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -761,30 +740,35 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Precio x acción</th>
+                                    <th colspan="2">Dólar CCL</th>
+                                    <th colspan="2">Precio unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
                                     <th rowspan="2"></th>
                                 </tr>
                                 <tr>
+                                    <th><!-- Valor CCL -->Compra</th>
+                                    <th><!-- Valor CCL -->Hoy</th>
                                     <th><!-- Precio -->Compra</th>
                                     <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Compra</th>
-                                    <th><!-- Valor -->Hoy</th>
+                                    <th><!-- X -->Compra</th>
+                                    <th><!-- X -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-bonos-dolares">
-                                <tr>
+                                <tr data-ticker=''>
                                     <td><!-- $ticker_bonos --></td>
                                     <td><!-- $fecha_bonos --></td>
                                     <td><!-- $cantidad_bonos --></td>
-                                    <td><!-- $precio_compra_bonos --></td>
-                                    <td><!-- $precio_actual_bonos --></td>
-                                    <td><!-- $valor_inicial_bonos_dolares --></td>
-                                    <td><!-- $valor_actual_bonos_dolares --></td>
-                                    <td><!-- $rendimiento_bonos_dolares --></td>
-                                    <td><!-- $rentabilidad_bonos_dolares --></td>
+                                    <td class='text-right'><!-- $precio_compra_ccl_bonos_dolares --></td>
+                                    <td class='text-right'><!-- $precio_actual_ccl_bonos_dolares --></td>
+                                    <td class='text-right'><!-- $precio_compra_bonos_dolares --></td>
+                                    <td class='text-right'><!-- $precio_actual_bonos_dolares --></td>
+                                    <td class='text-right'><!-- $valor_inicial_bonos_dolares --></td>
+                                    <td class='text-right'><!-- $valor_actual_bonos_dolares --></td>
+                                    <td class='text-right'><!-- $rendimiento_bonos_dolares --></td>
+                                    <td class='text-right'><!-- $rentabilidad_bonos_dolares --></td>
                                     <td class='text-center'>
                                         <div class='dropdown d-flex justify-content-center'>
                                             <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
@@ -808,9 +792,10 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     </td>
                                 </tr>
                             </tbody>
+
                         </table>
                     </div>
-                    <!-- Fin Completa Bonos Dolares -->
+                    <!-- Fin Completa Bonos Dólares -->
 
                 </div>
                 <!-- Fin Bonos Dólares -->
@@ -865,6 +850,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <td><!-- $valor_actual_consolidado_fondos_pesos --></td>
                                     <td><!-- $rendimiento_consolidado_fondos_pesos --></td>
                                     <td><!-- $rentabilidad_consolidado_fondos_pesos --></td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -881,7 +867,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Precio x acción</th>
+                                    <th colspan="2">Precio unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -895,16 +881,16 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody id="tabla-fondos-pesos">
-                                <tr>
+                                <tr data-ticker=''>
                                     <td><!-- $ticker_fondos --></td>
                                     <td><!-- $fecha_fondos --></td>
                                     <td><!-- $cantidad_fondos --></td>
-                                    <td><!-- $precio_compra_fondos --></td>
-                                    <td><!-- $precio_actual_fondos --></td>
-                                    <td><!-- $valor_inicial_fondos_pesos --></td>
-                                    <td><!-- $valor_actual_fondos_pesos --></td>
-                                    <td><!-- $rendimiento_fondos_pesos --></td>
-                                    <td><!-- $rentabilidad_fondos_pesos --></td>
+                                    <td class='text-right'><!-- $precio_compra_fondos_pesos --></td>
+                                    <td class='text-right'><!-- $precio_actual_fondos_pesos --></td>
+                                    <td class='text-right'><!-- $valor_inicial_fondos_pesos --></td>
+                                    <td class='text-right'><!-- $valor_actual_fondos_pesos --></td>
+                                    <td class='text-right'><!-- $rendimiento_fondos_pesos --></td>
+                                    <td class='text-right'><!-- $rentabilidad_fondos_pesos --></td>
                                     <td class='text-center'>
                                         <div class='dropdown d-flex justify-content-center'>
                                             <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
@@ -938,14 +924,14 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 <!-- Fondos Dólares -->
                 <div id="tablaFondosDolares" class="d-none">
 
-                    <!-- Consolidada Fondos Dolares -->
+                    <!-- Consolidada Fondos Dólares -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
-                                    <th>DOLARES</th>
+                                    <th>Rendimiento</th>
                                     <th>Rentabilidad</th>
                                 </tr>
                             </thead>
@@ -955,15 +941,16 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <td><!-- $valor_actual_consolidado_fondos_dolares --></td>
                                     <td><!-- $rendimiento_consolidado_fondos_dolares --></td>
                                     <td><!-- $rentabilidad_consolidado_fondos_dolares --></td>
+
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- Fin Consolidada Fondos Dolares -->
+                    <!-- Fin Consolidada Fondos Dólares -->
 
                     <hr class="linea-accion">
 
-                    <!-- Completa Fondos Dolares -->
+                    <!-- Completa Fondos Dólares -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -971,30 +958,35 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Precio x acción</th>
+                                    <th colspan="2">Dólar CCL</th>
+                                    <th colspan="2">Precio unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
                                     <th rowspan="2"></th>
                                 </tr>
                                 <tr>
+                                    <th><!-- Valor CCL -->Compra</th>
+                                    <th><!-- Valor CCL -->Hoy</th>
                                     <th><!-- Precio -->Compra</th>
                                     <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Compra</th>
-                                    <th><!-- Valor -->Hoy</th>
+                                    <th><!-- X -->Compra</th>
+                                    <th><!-- X -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-fondos-dolares">
-                                <tr>
+                                <tr data-ticker=''>
                                     <td><!-- $ticker_fondos --></td>
                                     <td><!-- $fecha_fondos --></td>
                                     <td><!-- $cantidad_fondos --></td>
-                                    <td><!-- $precio_compra_fondos --></td>
-                                    <td><!-- $precio_actual_fondos --></td>
-                                    <td><!-- $valor_inicial_fondos_dolares --></td>
-                                    <td><!-- $valor_actual_fondos_dolares --></td>
-                                    <td><!-- $rendimiento_fondos_dolares --></td>
-                                    <td><!-- $rentabilidad_fondos_dolares --></td>
+                                    <td class='text-right'><!-- $precio_compra_ccl_fondos_dolares --></td>
+                                    <td class='text-right'><!-- $precio_actual_ccl_fondos_dolares --></td>
+                                    <td class='text-right'><!-- $precio_compra_fondos_dolares --></td>
+                                    <td class='text-right'><!-- $precio_actual_fondos_dolares --></td>
+                                    <td class='text-right'><!-- $valor_inicial_fondos_dolares --></td>
+                                    <td class='text-right'><!-- $valor_actual_fondos_dolares --></td>
+                                    <td class='text-right'><!-- $rendimiento_fondos_dolares --></td>
+                                    <td class='text-right'><!-- $rentabilidad_fondos_dolares --></td>
                                     <td class='text-center'>
                                         <div class='dropdown d-flex justify-content-center'>
                                             <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
@@ -1018,9 +1010,10 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     </td>
                                 </tr>
                             </tbody>
+
                         </table>
                     </div>
-                    <!-- Fin Completa Fondos Dolares -->
+                    <!-- Fin Completa Fondos Dólares -->
 
                 </div>
                 <!-- Fin Fondos Dólares -->

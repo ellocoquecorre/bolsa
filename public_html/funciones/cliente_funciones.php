@@ -57,7 +57,6 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
 // FIN SALDO EN DÓLARES
 
 //-- ACCIONES --//
-
 // Renderizar Acciones
 function obtenerAcciones($cliente_id)
 {
@@ -173,11 +172,9 @@ function calcularValorInicialConsolidadoAccionesPesos($acciones)
     return $valor_inicial_consolidado_acciones_pesos;
 }
 // Fin Acciones Consolidada
-
 //-- FIN ACCIONES --//
 
 //-- CEDEAR --//
-
 // Renderizar Cedear
 function obtenerCedear($cliente_id)
 {
@@ -293,5 +290,4 @@ function calcularValorInicialConsolidadoCedear($cedear)
     return $valor_inicial_consolidado_cedear;
 }
 // Fin Cedear Consolidada
-
 //-- FIN CEDEAR --//

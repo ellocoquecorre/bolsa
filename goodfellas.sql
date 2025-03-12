@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-03-2025 a las 21:11:07
+-- Tiempo de generación: 12-03-2025 a las 12:17:34
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -47,8 +47,7 @@ INSERT INTO `acciones` (`id`, `cliente_id`, `ticker`, `cantidad`, `precio`, `fec
 (29, 2, 'BYMA', 10, 467.00, '2025-02-26', 1219.99),
 (30, 3, 'CEPU', 10, 1545.00, '2025-02-12', 1185.19),
 (31, 3, 'COME', 10, 181.75, '2025-02-26', 1219.99),
-(70, 1, 'ALUA', 10, 794.00, '2025-02-12', 1185.19),
-(76, 1, 'TRAN', 232, 2315.00, '2025-02-12', 1185.19);
+(70, 1, 'ALUA', 10, 794.00, '2025-02-12', 1185.19);
 
 -- --------------------------------------------------------
 
@@ -80,7 +79,8 @@ INSERT INTO `acciones_historial` (`id`, `cliente_id`, `ticker`, `cantidad`, `fec
 (4, 2, 'IRSA2', 10, '2024-11-01', 1545.00, 1177.29, '2025-01-31', 1775.00, 1180.70),
 (5, 3, 'EDN3', 10, '2024-11-01', 1820.00, 1177.29, '2025-01-31', 2305.00, 1180.70),
 (6, 3, 'IRSA3', 10, '2024-11-01', 1545.00, 1177.29, '2025-01-31', 1775.00, 1180.70),
-(23, 1, 'TRAN', 200, '2025-02-12', 2315.00, 1185.19, '2025-03-07', 2330.00, 1.22);
+(23, 1, 'TRAN', 200, '2025-02-12', 2315.00, 1185.19, '2025-03-07', 2330.00, 1.22),
+(24, 1, 'TRAN', 232, '2025-02-12', 2315.00, 1185.19, '2025-03-07', 2330.00, 1221.94);
 
 -- --------------------------------------------------------
 
@@ -119,9 +119,44 @@ CREATE TABLE `balance` (
 --
 
 INSERT INTO `balance` (`id`, `cliente_id`, `efectivo`) VALUES
-(1, 1, 4382580.00),
+(1, 1, 4923140.00),
 (2, 2, 3891580.00),
 (3, 3, 2982732.50);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `bonos`
+--
+
+CREATE TABLE `bonos` (
+  `id` int(11) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `ticker_bonos` varchar(10) NOT NULL,
+  `fecha_bonos` date NOT NULL,
+  `cantidad_bonos` int(11) NOT NULL,
+  `precio_bonos` decimal(10,2) NOT NULL,
+  `ccl_compra` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `bonos_historial`
+--
+
+CREATE TABLE `bonos_historial` (
+  `id` int(11) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `ticker_bonos` varchar(10) NOT NULL,
+  `cantidad_bonos` int(11) NOT NULL,
+  `fecha_compra_bonos` date NOT NULL,
+  `precio_compra_bonos` decimal(10,2) NOT NULL,
+  `ccl_compra` decimal(10,2) NOT NULL,
+  `fecha_venta_bonos` date DEFAULT NULL,
+  `precio_venta_bonos` decimal(10,2) NOT NULL,
+  `ccl_venta` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -132,19 +167,31 @@ INSERT INTO `balance` (`id`, `cliente_id`, `efectivo`) VALUES
 CREATE TABLE `cedear` (
   `id` int(11) NOT NULL,
   `cliente_id` int(11) NOT NULL,
-  `ticker` varchar(10) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `precio` decimal(10,2) NOT NULL,
-  `fecha` date NOT NULL
+  `ticker_cedear` varchar(10) NOT NULL,
+  `fecha_cedear` date NOT NULL,
+  `cantidad_cedear` int(11) NOT NULL,
+  `precio_cedear` decimal(10,2) NOT NULL,
+  `ccl_compra` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `cedear`
+-- Estructura de tabla para la tabla `cedear_historial`
 --
 
-INSERT INTO `cedear` (`id`, `cliente_id`, `ticker`, `cantidad`, `precio`, `fecha`) VALUES
-(1, 1, 'AAPL', 10, 14850.00, '2025-02-21'),
-(2, 1, 'PLTR', 10, 41450.00, '2025-02-21');
+CREATE TABLE `cedear_historial` (
+  `id` int(11) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `ticker_cedear` varchar(10) NOT NULL,
+  `cantidad_cedear` int(11) NOT NULL,
+  `fecha_compra_cedear` date NOT NULL,
+  `precio_compra_cedear` decimal(10,2) NOT NULL,
+  `ccl_compra` decimal(10,2) NOT NULL,
+  `fecha_venta_cedear` date DEFAULT NULL,
+  `precio_venta_cedear` decimal(10,2) NOT NULL,
+  `ccl_venta` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -171,6 +218,41 @@ INSERT INTO `clientes` (`email`, `password`, `nombre`, `apellido`, `telefono`, `
 ('el.bueno.de.harry@gmail.com', '$2y$10$7aQJdfZZGPUw5pGJMZgmT.v83vhG2iQ8cK4OaeGiGWHYCtyuwpr5O', 'Harry', 'Flashman', '123', 'Balanz', 'https://clientes.balanz.com/auth/login', 1),
 ('cafe.la.humedad@gmail.com', '$2y$10$s0gNWXGHERDw/aNdFc8kG.ovHC.zwfqvKV4ixSFlh8iaxGj90jOC6', 'Cacho', 'Castaña', '456', 'Allaria', 'https://allaria.com.ar', 2),
 ('24.de.nerca@gmail.com', '$2y$10$hoiodH8lYFVNpP/8YARR9ebT0RcPRZYWxhhXFe2FIeHodnCpS4Hdq', 'Rocco', 'Siffredi', '789', 'LEBSA', 'https://operar.winvest.ar', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `fondos`
+--
+
+CREATE TABLE `fondos` (
+  `id` int(11) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `ticker_fondos` varchar(10) NOT NULL,
+  `fecha_fondos` date NOT NULL,
+  `cantidad_fondos` int(11) NOT NULL,
+  `precio_fondos` decimal(10,2) NOT NULL,
+  `ccl_compra` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `fondos_historial`
+--
+
+CREATE TABLE `fondos_historial` (
+  `id` int(11) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `ticker_fondos` varchar(10) NOT NULL,
+  `cantidad_fondos` int(11) NOT NULL,
+  `fecha_compra_fondos` date NOT NULL,
+  `precio_compra_fondos` decimal(10,2) NOT NULL,
+  `ccl_compra` decimal(10,2) NOT NULL,
+  `fecha_venta_fondos` date DEFAULT NULL,
+  `precio_venta_fondos` decimal(10,2) NOT NULL,
+  `ccl_venta` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -607,6 +689,89 @@ INSERT INTO `tickers_cedears` (`id`, `ticker`, `company_name`) VALUES
 (316, 'YZCA', 'Yanzhou Coal Mining'),
 (317, 'ZM', 'Zoom Video Communications Inc');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ticker_bonos`
+--
+
+CREATE TABLE `ticker_bonos` (
+  `id` int(11) NOT NULL,
+  `ticker_bonos` varchar(10) NOT NULL,
+  `company_name_bonos` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ticker_bonos`
+--
+
+INSERT INTO `ticker_bonos` (`id`, `ticker_bonos`, `company_name_bonos`) VALUES
+(1, ' AE38', ' Bonos Argentina USD 2038 L.A\r'),
+(2, ' AL29', ' Bonos Argentina USD 2029 1% L.A\r'),
+(3, ' AL30', ' Bonos Argentina USD 2030 L.A\r'),
+(4, ' AL35', ' Bonos Argentina USD 2035 L.A\r'),
+(5, ' AL41', ' Bonos Argentina USD 2041 L.A\r'),
+(6, ' BPJ25', ' BOPREAL S.2 VTO30/06/25 U$S CG\r'),
+(7, ' BPOA7', ' BOPREAL S. 1 A VTO31/10/27 U$S CG\r'),
+(8, ' BPOB7', ' BOPREAL S. 1 B VTO31/10/27 U$S CG\r'),
+(9, ' BPOC7', ' BOPREAL S. 1 C VTO31/10/27 U$S CG\r'),
+(10, ' BPOD7', ' BOPREAL S. 1 D VTO31/10/27 U$S CG\r'),
+(11, ' BPY26', ' BOPREAL S.3 VTO31/05/26 U$S CG\r'),
+(12, ' CUAP', ' Cuasipar CER + 3,31\r'),
+(13, ' DICP', ' Discount 2033 CER + 5,83%\r'),
+(14, ' DIP0', ' Discount 2033 CER + 5,83% Emision 2010\r'),
+(15, ' GD29', ' Bonos Globales Argentina USD 1% 2029\r'),
+(16, ' GD30', ' Bonos Globales Argentina USD Step Up 2030\r'),
+(17, ' GD35', ' Bonos Globales Argentina USD Step Up 2035\r'),
+(18, ' GD38', ' Bonos Globales Argentina USD Step Up 2038\r'),
+(19, ' GD41', ' Bonos Globales Argentina USD Step Up 2041\r'),
+(20, ' GD46', ' Bonos Globales Argentina USD Step Up 2046\r'),
+(21, ' PAP0', ' Par 2038 CER + 2,5% Step-Up\r'),
+(22, ' PARP', ' Par 2038 CER + 2,00%\r'),
+(23, ' PR17', ' Bono Consolidación $ SR 10 V02/05/29\r'),
+(24, ' S31O5', ' Letras del Tesoro CAP $ V31/10/25 (Reapertura) S31O5\r'),
+(25, ' T13F6', ' Bono Tesoro Nacional CAP V.13/02/26 $ CG T13F6\r'),
+(26, ' T15D5', ' Bono Tesoro Nacionalonal V15/12/25 $ CG\r'),
+(27, ' T30E6', ' Bono Tesoro Nacional CAP V30/01/26\r'),
+(28, ' T30J6', ' BONCAP en Pesos 30/06/2026 T30J6\r'),
+(29, ' T3X5', ' Bono Tesoro $ AJ. CER 4,5% V18/06/25 CG\r'),
+(30, ' TB27', ' BONTE BADLAR 0,70 V23/11/27 $ CG\r'),
+(31, ' TC25P', ' Bono Tesoro Nacionalonal en Pesos CER+4% (BONCER 2025)\r'),
+(32, ' TG25', ' BONTE TG25 – reapertura TG25\r'),
+(33, ' TO26', ' Argentina 2026 PESOS Tasa Fija 15,50%\r'),
+(34, ' TTD26', ' Bono Nacion Tasa Dual 15/12/26 $ CG\r'),
+(35, ' TTJ26', ' Bono Nacion Tasa Dual 30/06/26 $ CG\r'),
+(36, ' TTM26', ' Bono Nacion Tasa Dual 16/03/26 $ CG\r'),
+(37, ' TV25', ' Bono Rep Arg Vinc USD V31/03/25\r'),
+(38, ' TX26', ' Bono del Tesoro Aj CER 2% V.9-11-26\r'),
+(39, ' TX28', ' Bonos del Tesoro BONCER 2.25% $ 2028\r'),
+(40, ' TX31', ' Bono Tesoro $ AJ CER 2,50% V.30/11/31\r'),
+(41, ' TZV25', ' Bono Dolar Linked TZV25 - REAPERTURA TZV25\r'),
+(42, ' TZV26', ' Bono Dolar Linked - TZV26 TZV26\r'),
+(43, ' TZVD5', ' Bono Dolar Linked - TZVD5 (Reapertura) TZVD5\r'),
+(44, ' TZX25', ' BONCER 30/06/2025 (Reapertura TZX25) TZX25\r'),
+(45, ' TZX26', ' Bono Rep Arg AJ CER V30/06/26 $ CG\r'),
+(46, ' TZX27', ' Bono Rep Arg AJ CER V30/06/27 $ CG\r'),
+(47, ' TZX28', ' Bono CER TZX28 - reapertura TZX28\r'),
+(48, ' TZXD5', ' BONTES $ A Desc Ajust CER V15/12/25\r'),
+(49, ' TZXD6', ' BONTES $ A Desc Ajust CER V15/12/26\r'),
+(50, ' TZXD7', ' BONTES $ A Desc Ajust CER V15/12/27\r'),
+(51, ' TZXM5', ' Bono Tesoro NAC AJ CER V31/03/25 $ CG\r'),
+(52, ' TZXM6', ' (TZXM6 - reapertura) TZXM6\r'),
+(53, ' TZXM7', ' BONCER $ Cupon Cero 31/03/2027 TZXM7');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ticker_fondos`
+--
+
+CREATE TABLE `ticker_fondos` (
+  `id` int(11) NOT NULL,
+  `ticker_fondos` varchar(10) NOT NULL,
+  `company_name_fondos` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Índices para tablas volcadas
 --
@@ -638,9 +803,27 @@ ALTER TABLE `balance`
   ADD KEY `usuario_id` (`cliente_id`);
 
 --
+-- Indices de la tabla `bonos`
+--
+ALTER TABLE `bonos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `bonos_historial`
+--
+ALTER TABLE `bonos_historial`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `cedear`
 --
 ALTER TABLE `cedear`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `cedear_historial`
+--
+ALTER TABLE `cedear_historial`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -649,6 +832,18 @@ ALTER TABLE `cedear`
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`cliente_id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indices de la tabla `fondos`
+--
+ALTER TABLE `fondos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `fondos_historial`
+--
+ALTER TABLE `fondos_historial`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `tickers_acciones`
@@ -660,6 +855,18 @@ ALTER TABLE `tickers_acciones`
 -- Indices de la tabla `tickers_cedears`
 --
 ALTER TABLE `tickers_cedears`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `ticker_bonos`
+--
+ALTER TABLE `ticker_bonos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `ticker_fondos`
+--
+ALTER TABLE `ticker_fondos`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -676,7 +883,7 @@ ALTER TABLE `acciones`
 -- AUTO_INCREMENT de la tabla `acciones_historial`
 --
 ALTER TABLE `acciones_historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `admin`
@@ -691,16 +898,46 @@ ALTER TABLE `balance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de la tabla `bonos`
+--
+ALTER TABLE `bonos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `bonos_historial`
+--
+ALTER TABLE `bonos_historial`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `cedear`
 --
 ALTER TABLE `cedear`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `cedear_historial`
+--
+ALTER TABLE `cedear_historial`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
   MODIFY `cliente_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `fondos`
+--
+ALTER TABLE `fondos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `fondos_historial`
+--
+ALTER TABLE `fondos_historial`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tickers_acciones`
@@ -713,6 +950,18 @@ ALTER TABLE `tickers_acciones`
 --
 ALTER TABLE `tickers_cedears`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=318;
+
+--
+-- AUTO_INCREMENT de la tabla `ticker_bonos`
+--
+ALTER TABLE `ticker_bonos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+
+--
+-- AUTO_INCREMENT de la tabla `ticker_fondos`
+--
+ALTER TABLE `ticker_fondos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

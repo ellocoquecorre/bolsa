@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $promedio_ccl = obtenerPromedioCCL();
 
         // Insertar los datos de la compra en la tabla "cedear"
-        $sql_insert_cedear = "INSERT INTO cedear (cliente_id, ticker_cedear, cantidad_cedear, precio_cedear, fecha_cedear, ccl_compra) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql_insert_cedear = "INSERT INTO cedear (cliente_id, ticker_cedear, cantidad_cedear, precio_cedear, fecha_cedear, ccl_compra_cedear) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt_insert_cedear = $conn->prepare($sql_insert_cedear);
         $stmt_insert_cedear->bind_param("isidsd", $cliente_id, $ticker, $cantidad, $precio, $fecha, $promedio_ccl);
         $stmt_insert_cedear->execute();

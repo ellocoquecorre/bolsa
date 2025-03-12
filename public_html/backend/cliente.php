@@ -578,7 +578,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                 <!-- Comprar Cedear -->
                 <div class="text-start">
-                    <a href="../funciones/compra_cedear.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
+                    <a href="../funciones/compra_cedears.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
                         <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
                     </a>
                 </div>

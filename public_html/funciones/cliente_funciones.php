@@ -56,7 +56,9 @@ $saldo_en_dolares = $saldo_en_pesos / $promedio_ccl;
 $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
 // FIN SALDO EN DÓLARES
 
-// RENDERIZAR ACCIONES
+//-- ACCIONES --//
+
+// Renderizar Acciones
 function obtenerAcciones($cliente_id)
 {
     global $conn;
@@ -80,35 +82,9 @@ function formatearFecha($fecha)
     $date = new DateTime($fecha);
     return $date->format('d-m-y');
 }
-// FIN RENDERIZAR ACCIONES
+// Fin Renderizar Acciones
 
-// RENDERIZAR CEDEAR
-function obtenerCedeares($cliente_id)
-{
-    global $conn;
-    $sql_cedeares = "SELECT ticker_cedear, fecha_cedear, cantidad_cedear, precio_cedear FROM cedear WHERE cliente_id = ?";
-    $stmt_cedeares = $conn->prepare($sql_cedeares);
-    $stmt_cedeares->bind_param("i", $cliente_id);
-    $stmt_cedeares->execute();
-    $result = $stmt_cedeares->get_result();
-
-    $cedeares = [];
-    while ($fila = $result->fetch_assoc()) {
-        $cedeares[] = $fila;
-    }
-
-    $stmt_cedeares->close();
-    return $cedeares;
-}
-
-function formatearFechaCedear($fecha)
-{
-    $date = new DateTime($fecha);
-    return $date->format('d-m-y');
-}
-// FIN RENDERIZAR CEDEAR
-
-// GOOGLE FINANCE ACCIONES
+// Precio Actual Acciones
 function obtenerPrecioActualGoogleFinance($ticker)
 {
     $url = "https://www.google.com/finance/quote/$ticker:BCBA?hl=es";
@@ -134,37 +110,9 @@ function obtenerPrecioActualGoogleFinance($ticker)
         return null;
     }
 }
-// FIN GOOGLE FINANCE ACCIONES
+// Fin Precio Actual Acciones
 
-// GOOGLE FINANCE CEDEAR
-function obtenerPrecioActualGoogleFinanceCedear($ticker_cedear)
-{
-    $url = "https://www.google.com/finance/quote/$ticker_cedear:BCBA?hl=es";
-    $html = file_get_contents($url);
-
-    // Crear un nuevo DOMDocument
-    $dom = new DOMDocument();
-    @$dom->loadHTML($html);
-
-    // Buscar el valor numérico en la etiqueta <div class="YMlKec fxKbKc">
-    $finder = new DomXPath($dom);
-    $classname = "YMlKec fxKbKc";
-    $nodes = $finder->query("//*[contains(@class, '$classname')]");
-
-    if ($nodes->length > 0) {
-        $valor = $nodes->item(0)->nodeValue;
-        // Formatear valor a número sin formato
-        $valor = str_replace(",", "", $valor); // Eliminar comas de miles
-        $valor = str_replace(".", "", substr($valor, 0, -3)) . "." . substr($valor, -2); // Reemplazar punto decimal y reconstruir
-        $valor = (float)$valor / 100; // Corregir el formato multiplicando por 0.01
-        return $valor;
-    } else {
-        return null;
-    }
-}
-// FIN GOOGLE FINANCE CEDEAR
-
-// CCL COMPRA
+// CCL Compra Acciones
 function obtenerCCLCompra($cliente_id, $ticker)
 {
     global $conn;
@@ -177,9 +125,9 @@ function obtenerCCLCompra($cliente_id, $ticker)
     $stmt->close();
     return $valor_compra_ccl;
 }
-// FIN CCL COMPRA
+// Fin CCL Compra Acciones
 
-// HISTORIAL ACCIONES
+// Historial Acciones
 function obtenerHistorialAcciones($cliente_id)
 {
     // Conexión a la base de datos
@@ -212,9 +160,9 @@ function obtenerHistorialAcciones($cliente_id)
 
 // Obtener el historial de acciones del cliente
 $historial_acciones = obtenerHistorialAcciones($cliente_id);
-// FIN HISTORIAL DE ACCIONES
+// Fin Historial Acciones
 
-// ACCIONES CONSOLIDADA
+// Acciones Consolidada
 function calcularValorInicialConsolidadoAccionesPesos($acciones)
 {
     $valor_inicial_consolidado_acciones_pesos = 0;
@@ -224,4 +172,6 @@ function calcularValorInicialConsolidadoAccionesPesos($acciones)
     }
     return $valor_inicial_consolidado_acciones_pesos;
 }
-// FIN ACCIONES CONSOLIDADA
+// Fin Acciones Consolidada
+
+//-- FIN ACCIONES --//

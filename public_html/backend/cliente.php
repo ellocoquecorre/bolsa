@@ -1144,6 +1144,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/eliminar_acciones.js"></script>
+    <script src="../js/eliminar_cedears.js"></script>
     <script src="../js/ingresar_efectivo.js"></script>
     <script src="../js/retirar_efectivo.js"></script>
     <script src="../js/valor_promedio_ccl.js"></script>

@@ -485,13 +485,13 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                                         <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_parcial_cedear.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-minus me-2'></i> Venta parcial</a>
+                                                        <a class='dropdown-item' href='../funciones/venta_parcial_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-minus me-2'></i> Venta parcial</a>
                                                         </li>
                                                         <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_total_cedear.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-dollar-sign me-2'></i> Venta total</a>
+                                                        <a class='dropdown-item' href='../funciones/venta_total_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-dollar-sign me-2'></i> Venta total</a>
                                                         </li>
                                                         <li>
-                                                        <a class='dropdown-item' href='../funciones/editar_compra_cedear.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i> Editar compra</a>
+                                                        <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i> Editar compra</a>
                                                         </li>
                                                         <li>
                                                         <a class='dropdown-item' href='#' onclick='eliminarCedear(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
@@ -611,13 +611,13 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                                         <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_parcial_cedear.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-minus me-2'></i> Venta parcial</a>
+                                                        <a class='dropdown-item' href='../funciones/venta_parcial_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-minus me-2'></i> Venta parcial</a>
                                                         </li>
                                                         <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_total_cedear.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-dollar-sign me-2'></i> Venta total</a>
+                                                        <a class='dropdown-item' href='../funciones/venta_total_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-dollar-sign me-2'></i> Venta total</a>
                                                         </li>
                                                         <li>
-                                                        <a class='dropdown-item' href='../funciones/editar_compra_cedear.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i> Editar compra</a>
+                                                        <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i> Editar compra</a>
                                                         </li>
                                                         <li>
                                                         <a class='dropdown-item' href='#' onclick='eliminarCedear(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>

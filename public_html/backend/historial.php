@@ -328,6 +328,12 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
         </div>
         <!-- FIN ACCIONES -->
 
+        <hr class="mod">
+
+        <!-- CEDEAR -->
+
+        <!-- FIN CEDEAR -->
+
         <hr class="mod" style="margin-bottom: 80px;">
 
     </div>

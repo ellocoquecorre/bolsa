@@ -291,3 +291,121 @@ function calcularValorInicialConsolidadoCedear($cedear)
 }
 // Fin Cedear Consolidada
 //-- FIN CEDEAR --//
+
+//-- BONOS --//
+// Renderizar Bonos
+function obtenerBonos($cliente_id)
+{
+    global $conn;
+    $sql_bonos = "SELECT ticker_bonos, fecha_bonos, cantidad_bonos, precio_bonos FROM bonos WHERE cliente_id = ?";
+    $stmt_bonos = $conn->prepare($sql_bonos);
+    $stmt_bonos->bind_param("i", $cliente_id);
+    $stmt_bonos->execute();
+    $result = $stmt_bonos->get_result();
+
+    $bonos = [];
+    while ($fila = $result->fetch_assoc()) {
+        $bonos[] = $fila;
+    }
+
+    $stmt_bonos->close();
+    return $bonos;
+}
+
+function formatearFechaBonos($fecha)
+{
+    $date = new DateTime($fecha);
+    return $date->format('d-m-y');
+}
+// Fin Renderizar Bonos
+
+// Precio Actual Bonos
+function obtenerPrecioActualBonos($ticker_bonos)
+{
+    $url = "https://www.google.com/finance/quote/$ticker_bonos:BCBA?hl=es";
+    $html = file_get_contents($url);
+
+    // Crear un nuevo DOMDocument
+    $dom = new DOMDocument();
+    @$dom->loadHTML($html);
+
+    // Buscar el valor numérico en la etiqueta <div class=\"YMlKec fxKbKc\">
+    $finder = new DomXPath($dom);
+    $classname = "YMlKec fxKbKc";
+    $nodes = $finder->query("//*[contains(@class, '$classname')]");
+
+    if ($nodes->length > 0) {
+        $valor = $nodes->item(0)->nodeValue;
+        // Formatear valor a número sin formato
+        $valor = str_replace(",", "", $valor); // Eliminar comas de miles
+        $valor = str_replace(".", "", substr($valor, 0, -3)) . "." . substr($valor, -2); // Reemplazar punto decimal y reconstruir
+        $valor = (float)$valor / 100; // Corregir el formato multiplicando por 0.01
+        return $valor;
+    } else {
+        return null;
+    }
+}
+// Fin Precio Actual Bonos
+
+// CCL Compra Bonos
+function obtenerCCLCompraBonos($cliente_id, $ticker_bonos)
+{
+    global $conn;
+    $sql = "SELECT ccl_compra FROM bonos WHERE cliente_id = ? AND ticker_bonos = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $cliente_id, $ticker_bonos);
+    $stmt->execute();
+    $stmt->bind_result($valor_compra_ccl);
+    $stmt->fetch();
+    $stmt->close();
+    return $valor_compra_ccl;
+}
+// Fin CCL Compra Bonos
+
+// Historial Bonos
+function obtenerHistorialBonos($cliente_id)
+{
+    // Conexión a la base de datos
+    $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    // Consulta SQL
+    $sql = "SELECT * FROM bonos_historial WHERE cliente_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $cliente_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Array para almacenar los resultados
+    $historial_bonos = array();
+    while ($row = $result->fetch_assoc()) {
+        $historial_bonos[] = $row;
+    }
+
+    // Cerrar la conexión
+    $stmt->close();
+    $conn->close();
+
+    return $historial_bonos;
+}
+
+// Obtener el historial de bonos del cliente
+$historial_bonos = obtenerHistorialBonos($cliente_id);
+// Fin Historial Bonos
+
+// Bonos Consolidada
+function calcularValorInicialConsolidadoBonos($bonos)
+{
+    $valor_inicial_consolidado_bonos = 0;
+    foreach ($bonos as $bono) {
+        $valor_inicial_bonos = $bono['precio_bonos'] * $bono['cantidad_bonos'];
+        $valor_inicial_consolidado_bonos += $valor_inicial_bonos;
+    }
+    return $valor_inicial_consolidado_bonos;
+}
+// Fin Bonos Consolidada
+//-- FIN BONOS --//

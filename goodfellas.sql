@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-03-2025 a las 22:16:33
+-- Tiempo de generación: 14-03-2025 a las 21:54:02
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -79,7 +79,7 @@ INSERT INTO `acciones_historial` (`id`, `cliente_id`, `ticker`, `cantidad`, `fec
 (4, 2, 'IRSA2', 10, '2024-11-01', 1545.00, 1177.29, '2025-01-31', 1775.00, 1180.70),
 (5, 3, 'EDN3', 10, '2024-11-01', 1820.00, 1177.29, '2025-01-31', 2305.00, 1180.70),
 (6, 3, 'IRSA3', 10, '2024-11-01', 1545.00, 1177.29, '2025-01-31', 1775.00, 1180.70),
-(23, 1, 'TRAN', 200, '2025-02-12', 2315.00, 1185.19, '2025-03-07', 2330.00, 1.22),
+(23, 1, 'TRAN', 200, '2025-02-12', 2315.00, 1185.19, '2025-03-07', 2330.00, 1221.94),
 (24, 1, 'TRAN', 232, '2025-02-12', 2315.00, 1185.19, '2025-03-07', 2330.00, 1221.94);
 
 -- --------------------------------------------------------
@@ -119,7 +119,7 @@ CREATE TABLE `balance` (
 --
 
 INSERT INTO `balance` (`id`, `cliente_id`, `efectivo`) VALUES
-(1, 1, 4922775.00),
+(1, 1, 4645360.00),
 (2, 2, 3891580.00),
 (3, 3, 2982732.50);
 
@@ -179,9 +179,8 @@ CREATE TABLE `cedear` (
 --
 
 INSERT INTO `cedear` (`id`, `cliente_id`, `ticker_cedear`, `fecha_cedear`, `cantidad_cedear`, `precio_cedear`, `ccl_compra_cedear`) VALUES
-(1, 1, 'AAPL', '2025-03-12', 10, 10.00, 1231.63),
-(2, 1, 'BA', '2025-03-12', 11, 11.00, 1231.63),
-(3, 1, 'TSLA', '2025-03-12', 12, 12.00, 1227.93);
+(1, 1, 'AAPL', '2025-03-12', 5, 13325.00, 1231.63),
+(3, 1, 'TSLA', '2025-03-12', 10, 20300.00, 1227.93);
 
 -- --------------------------------------------------------
 
@@ -201,6 +200,14 @@ CREATE TABLE `cedear_historial` (
   `precio_venta_cedear` decimal(10,2) NOT NULL,
   `ccl_venta` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cedear_historial`
+--
+
+INSERT INTO `cedear_historial` (`id`, `cliente_id`, `ticker_cedear`, `cantidad_cedear`, `fecha_compra_cedear`, `precio_compra_cedear`, `ccl_compra`, `fecha_venta_cedear`, `precio_venta_cedear`, `ccl_venta`) VALUES
+(1, 1, 'AAPL', 5, '2025-03-12', 13325.00, 1231.63, '2025-03-13', 12950.00, 1233.71),
+(2, 1, 'BA', 10, '2025-03-12', 8190.00, 1231.63, '2025-03-13', 8210.00, 1233.71);
 
 -- --------------------------------------------------------
 
@@ -922,13 +929,13 @@ ALTER TABLE `bonos_historial`
 -- AUTO_INCREMENT de la tabla `cedear`
 --
 ALTER TABLE `cedear`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `cedear_historial`
 --
 ALTER TABLE `cedear_historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`

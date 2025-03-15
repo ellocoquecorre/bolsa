@@ -320,7 +320,6 @@ function formatearFechaBonos($fecha)
 // Fin Renderizar Bonos
 
 // Precio Actual Bonos
-function obtenerPrecioActualBonos($ticker_bonos)
 
 // Fin Precio Actual Bonos
 

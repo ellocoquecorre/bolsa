@@ -321,30 +321,7 @@ function formatearFechaBonos($fecha)
 
 // Precio Actual Bonos
 function obtenerPrecioActualBonos($ticker_bonos)
-{
-    $url = "https://www.google.com/finance/quote/$ticker_bonos:BCBA?hl=es";
-    $html = file_get_contents($url);
 
-    // Crear un nuevo DOMDocument
-    $dom = new DOMDocument();
-    @$dom->loadHTML($html);
-
-    // Buscar el valor numérico en la etiqueta <div class=\"YMlKec fxKbKc\">
-    $finder = new DomXPath($dom);
-    $classname = "YMlKec fxKbKc";
-    $nodes = $finder->query("//*[contains(@class, '$classname')]");
-
-    if ($nodes->length > 0) {
-        $valor = $nodes->item(0)->nodeValue;
-        // Formatear valor a número sin formato
-        $valor = str_replace(",", "", $valor); // Eliminar comas de miles
-        $valor = str_replace(".", "", substr($valor, 0, -3)) . "." . substr($valor, -2); // Reemplazar punto decimal y reconstruir
-        $valor = (float)$valor / 100; // Corregir el formato multiplicando por 0.01
-        return $valor;
-    } else {
-        return null;
-    }
-}
 // Fin Precio Actual Bonos
 
 // CCL Compra Bonos

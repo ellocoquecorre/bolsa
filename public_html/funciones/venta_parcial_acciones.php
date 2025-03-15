@@ -31,7 +31,7 @@ function obtenerPromedioCCL()
     return ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 }
 $promedio_ccl = obtenerPromedioCCL();
-$promedio_ccl_formateado = formatear_dinero($promedio_ccl);
+$promedio_ccl_formateado = number_format($promedio_ccl, 2, '.', '');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener los valores del formulario

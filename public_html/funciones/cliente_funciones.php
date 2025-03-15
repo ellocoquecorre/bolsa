@@ -404,3 +404,116 @@ function calcularValorInicialConsolidadoBonos($bonos)
 }
 // Fin Bonos Consolidada
 //-- FIN BONOS --//
+
+//-- FONDOS --//
+// Renderizar Fondos
+function obtenerFondos($cliente_id)
+{
+    global $conn;
+    $sql_fondos = "SELECT ticker_fondos, fecha_fondos, cantidad_fondos, precio_fondos FROM fondos WHERE cliente_id = ?";
+    $stmt_fondos = $conn->prepare($sql_fondos);
+    $stmt_fondos->bind_param("i", $cliente_id);
+    $stmt_fondos->execute();
+    $result = $stmt_fondos->get_result();
+
+    $fondos = [];
+    while ($fila = $result->fetch_assoc()) {
+        $fondos[] = $fila;
+    }
+
+    $stmt_fondos->close();
+    return $fondos;
+}
+
+function formatearFechaFondos($fecha)
+{
+    $date = new DateTime($fecha);
+    return $date->format('d-m-y');
+}
+// Fin Renderizar Fondos
+
+// Precio Actual Fondos
+function obtenerValorActualRavaFondos($ticker_fondos)
+{
+    $url = "https://www.rava.com/perfil/$ticker_fondos";
+    $html = file_get_contents($url);
+
+    // Buscar el valor numérico después de ',&quot;ultimo&quot;:'
+    $pattern = '/,&quot;ultimo&quot;:([\d.]+)/';
+    preg_match($pattern, $html, $matches);
+
+    if (isset($matches[1])) {
+        $valor = $matches[1];
+        // Formatear valor a número sin formato
+        $valor = str_replace(".", "", $valor); // Eliminar separador de miles
+        $valor = str_replace(",", ".", $valor); // Reemplazar coma decimal por punto
+        $valor = (float)$valor;
+        return $valor;
+    } else {
+        return null;
+    }
+}
+// Fin Precio Actual Fondos
+
+// CCL Compra Fondos
+function obtenerCCLCompraFondos($cliente_id, $ticker_fondos)
+{
+    global $conn;
+    $sql = "SELECT ccl_compra FROM fondos WHERE cliente_id = ? AND ticker_fondos = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $cliente_id, $ticker_fondos);
+    $stmt->execute();
+    $stmt->bind_result($valor_compra_ccl);
+    $stmt->fetch();
+    $stmt->close();
+    return $valor_compra_ccl;
+}
+// Fin CCL Compra Fondos
+
+// Historial Fondos
+function obtenerHistorialFondos($cliente_id)
+{
+    // Conexión a la base de datos
+    $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    // Consulta SQL
+    $sql = "SELECT * FROM fondos_historial WHERE cliente_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $cliente_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Array para almacenar los resultados
+    $historial_fondos = array();
+    while ($row = $result->fetch_assoc()) {
+        $historial_fondos[] = $row;
+    }
+
+    // Cerrar la conexión
+    $stmt->close();
+    $conn->close();
+
+    return $historial_fondos;
+}
+
+// Obtener el historial de fondos del cliente
+$historial_fondos = obtenerHistorialFondos($cliente_id);
+// Fin Historial Fondos
+
+// Fondos Consolidada
+function calcularValorInicialConsolidadoFondos($fondos)
+{
+    $valor_inicial_consolidado_fondos = 0;
+    foreach ($fondos as $fondo) {
+        $valor_inicial_fondos = $fondo['precio_fondos'] * $fondo['cantidad_fondos'];
+        $valor_inicial_consolidado_fondos += $valor_inicial_fondos;
+    }
+    return $valor_inicial_consolidado_fondos;
+}
+// Fin Fondos Consolidada
+//-- FIN FONDOS --//

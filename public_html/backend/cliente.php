@@ -711,109 +711,14 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                     <!-- Consolidada Bonos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Valor Total Inicial</th>
-                                    <th>Valor Total Actual</th>
-                                    <th>Rendimiento</th>
-                                    <th>Rentabilidad</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $bonos = obtenerBonos($cliente_id);
-                                $valor_inicial_consolidado_bonos_pesos = 0;
-                                $valor_actual_consolidado_bonos_pesos = 0;
-
-                                foreach ($bonos as $bono) {
-                                    $precio_actual = obtenerPrecioActualBono($bono['ticker']);
-                                    $valor_inicial_bonos_pesos = $bono['precio'] * $bono['cantidad'];
-                                    $valor_inicial_consolidado_bonos_pesos += $valor_inicial_bonos_pesos;
-                                    $valor_actual_bonos_pesos = $precio_actual * $bono['cantidad'];
-                                    $valor_actual_consolidado_bonos_pesos += $valor_actual_bonos_pesos;
-                                }
-
-                                $rendimiento_consolidado_bonos_pesos = 0;
-                                $rentabilidad_consolidado_bonos_pesos = 0;
-
-                                if ($valor_inicial_consolidado_bonos_pesos != 0) {
-                                    $rendimiento_consolidado_bonos_pesos = $valor_actual_consolidado_bonos_pesos - $valor_inicial_consolidado_bonos_pesos;
-                                    $rentabilidad_consolidado_bonos_pesos = (($valor_actual_consolidado_bonos_pesos - $valor_inicial_consolidado_bonos_pesos) / $valor_inicial_consolidado_bonos_pesos) * 100;
-                                }
-                                ?>
-                                <tr>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_pesos)); ?></td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_pesos)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_pesos); ?></td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_pesos); ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <!-- insertar_acá -->
                     <!-- Fin Consolidada Bonos Pesos -->
 
                     <hr class="linea-accion">
 
                     <!-- Completa Bonos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor Unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
-                                    <th rowspan="2"></th>
-                                </tr>
-                                <tr>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Compra</th>
-                                    <th><!-- Valor -->Hoy</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-bonos-pesos">
-                                <tr data-ticker=''>
-                                    <td><!-- $ticker_bonos --></td>
-                                    <td><!-- $fecha_bonos --></td>
-                                    <td><!-- $cantidad_bonos --></td>
-                                    <td class='text-right'><!-- $precio_compra_bonos_pesos --></td>
-                                    <td class='text-right'><!-- $precio_actual_bonos_pesos --></td>
-                                    <td class='text-right'><!-- $valor_inicial_bonos_pesos --></td>
-                                    <td class='text-right'><!-- $valor_actual_bonos_pesos --></td>
-                                    <td class='text-right'><!-- $rendimiento_bonos_pesos --></td>
-                                    <td class='text-right'><!-- $rentabilidad_bonos_pesos --></td>
-                                    <td class='text-center'>
-                                        <div class='dropdown d-flex justify-content-center'>
-                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                <i class='fa-solid fa-bars'></i>
-                                            </button>
-                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                <li>
-                                                    <a class='dropdown-item' href='../funciones/venta_parcial_bonos.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
-                                                </li>
-                                                <li>
-                                                    <a class='dropdown-item' href='../funciones/venta_total_bonos.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-coins me-2'></i> Venta total</a>
-                                                </li>
-                                                <li>
-                                                    <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
-                                                </li>
-                                                <li>
-                                                    <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <!-- insertar_acá -->
                     <!-- Fin Completa Bonos Pesos -->
 
                 </div>
@@ -824,117 +729,14 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                     <!-- Consolidada Bonos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Valor Total Inicial</th>
-                                    <th>Valor Total Actual</th>
-                                    <th>Rendimiento</th>
-                                    <th>Rentabilidad</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $bonos = obtenerBonos($cliente_id);
-                                $valor_inicial_consolidado_bonos_dolares = 0;
-                                $valor_actual_consolidado_bonos_dolares = 0;
-                                $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-
-                                foreach ($bonos as $bono) {
-                                    $precio_actual = obtenerPrecioActualBono($bono['ticker']);
-                                    $valor_compra_ccl = obtenerCCLCompraBono($cliente_id, $bono['ticker']);
-                                    $valor_inicial_bonos_dolares = ($bono['precio'] * $bono['cantidad']) / $valor_compra_ccl;
-                                    $valor_inicial_consolidado_bonos_dolares += $valor_inicial_bonos_dolares;
-                                    $valor_actual_bonos_dolares = ($precio_actual * $bono['cantidad']) / $promedio_ccl;
-                                    $valor_actual_consolidado_bonos_dolares += $valor_actual_bonos_dolares;
-                                }
-
-                                $rendimiento_consolidado_bonos_dolares = 0;
-                                $rentabilidad_consolidado_bonos_dolares = 0;
-
-                                if ($valor_inicial_consolidado_bonos_dolares != 0) {
-                                    $rendimiento_consolidado_bonos_dolares = $valor_actual_consolidado_bonos_dolares - $valor_inicial_consolidado_bonos_dolares;
-                                    $rentabilidad_consolidado_bonos_dolares = (($valor_actual_consolidado_bonos_dolares - $valor_inicial_consolidado_bonos_dolares) / $valor_inicial_consolidado_bonos_dolares) * 100;
-                                }
-                                ?>
-                                <tr>
-                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_dolares)); ?></td>
-                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_dolares)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_dolares, 'u$s'); ?></td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_dolares); ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <!-- insertar_acá -->
                     <!-- Fin Consolidada Bonos Dólares -->
 
                     <hr class="linea-accion">
 
                     <!-- Completa Bonos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor Unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
-                                    <th rowspan="2"></th>
-                                </tr>
-                                <tr>
-                                    <th><!-- Valor CCL -->Compra</th>
-                                    <th><!-- Valor CCL -->Hoy</th>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- X -->Compra</th>
-                                    <th><!-- X -->Hoy</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-bonos-dolares">
-                                <tr data-ticker=''>
-                                    <td><!-- $ticker_bonos --></td>
-                                    <td><!-- $fecha_bonos --></td>
-                                    <td><!-- $cantidad_bonos --></td>
-                                    <td class='text-right'><!-- $precio_compra_ccl_bonos_dolares --></td>
-                                    <td class='text-right'><!-- $precio_actual_ccl_bonos_dolares --></td>
-                                    <td class='text-right'><!-- $precio_compra_bonos_dolares --></td>
-                                    <td class='text-right'><!-- $precio_actual_bonos_dolares --></td>
-                                    <td class='text-right'><!-- $valor_inicial_bonos_dolares --></td>
-                                    <td class='text-right'><!-- $valor_actual_bonos_dolares --></td>
-                                    <td class='text-right'><!-- $rendimiento_bonos_dolares --></td>
-                                    <td class='text-right'><!-- $rentabilidad_bonos_dolares --></td>
-                                    <td class='text-center'>
-                                        <div class='dropdown d-flex justify-content-center'>
-                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                <i class='fa-solid fa-bars'></i>
-                                            </button>
-                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                <li>
-                                                    <a class='dropdown-item' href='../funciones/venta_parcial_bonos.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
-                                                </li>
-                                                <li>
-                                                    <a class='dropdown-item' href='../funciones/venta_total_bonos.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-coins me-2'></i> Venta total</a>
-                                                </li>
-                                                <li>
-                                                    <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
-                                                </li>
-                                                <li>
-                                                    <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-
-                        </table>
-                    </div>
+                    <!-- insertar_acá -->
                     <!-- Fin Completa Bonos Dólares -->
 
                 </div>

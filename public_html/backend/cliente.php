@@ -145,8 +145,14 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
                                     $valor_actual_consolidado_acciones_pesos += $valor_actual_acciones_pesos;
                                 }
-                                $rendimiento_consolidado_acciones_pesos = $valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos;
-                                $rentabilidad_consolidado_acciones_pesos = (($valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos) / $valor_inicial_consolidado_acciones_pesos) * 100;
+
+                                $rendimiento_consolidado_acciones_pesos = 0;
+                                $rentabilidad_consolidado_acciones_pesos = 0;
+
+                                if ($valor_inicial_consolidado_acciones_pesos != 0) {
+                                    $rendimiento_consolidado_acciones_pesos = $valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos;
+                                    $rentabilidad_consolidado_acciones_pesos = (($valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos) / $valor_inicial_consolidado_acciones_pesos) * 100;
+                                }
                                 ?>
 
                                 <tr>
@@ -154,7 +160,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
                                     <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos); ?></td>
                                     <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos); ?></td>
-
                                 </tr>
                             </tbody>
                         </table>
@@ -258,6 +263,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 $valor_inicial_consolidado_acciones_dolares = 0;
                                 $valor_actual_consolidado_acciones_dolares = 0;
                                 $valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
+                                $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+
                                 foreach ($acciones as $accion) {
                                     $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
                                     $valor_inicial_acciones_dolares = ($accion['precio'] * $accion['cantidad']) / $valor_compra_ccl;
@@ -265,15 +272,20 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $valor_actual_acciones_dolares = ($precio_actual * $accion['cantidad']) / $promedio_ccl;
                                     $valor_actual_consolidado_acciones_dolares += $valor_actual_acciones_dolares;
                                 }
-                                $rendimiento_consolidado_acciones_dolares = $valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares;
-                                $rentabilidad_consolidado_acciones_dolares = (($valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares) / $valor_inicial_consolidado_acciones_dolares) * 100;
+
+                                $rendimiento_consolidado_acciones_dolares = 0;
+                                $rentabilidad_consolidado_acciones_dolares = 0;
+
+                                if ($valor_inicial_consolidado_acciones_dolares != 0) {
+                                    $rendimiento_consolidado_acciones_dolares = $valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares;
+                                    $rentabilidad_consolidado_acciones_dolares = (($valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares) / $valor_inicial_consolidado_acciones_dolares) * 100;
+                                }
                                 ?>
                                 <tr>
                                     <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_dolares)); ?></td>
                                     <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_dolares)); ?></td>
                                     <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares, 'u$s'); ?></td>
                                     <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_dolares); ?></td>
-
                                 </tr>
                             </tbody>
                         </table>
@@ -430,9 +442,16 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $valor_actual_cedear_pesos = $precio_actual * $c['cantidad_cedear'];
                                     $valor_actual_consolidado_cedear_pesos += $valor_actual_cedear_pesos;
                                 }
-                                $rendimiento_consolidado_cedear_pesos = $valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos;
-                                $rentabilidad_consolidado_cedear_pesos = (($valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos) / $valor_inicial_consolidado_cedear_pesos) * 100;
+
+                                $rendimiento_consolidado_cedear_pesos = 0;
+                                $rentabilidad_consolidado_cedear_pesos = 0;
+
+                                if ($valor_inicial_consolidado_cedear_pesos != 0) {
+                                    $rendimiento_consolidado_cedear_pesos = $valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos;
+                                    $rentabilidad_consolidado_cedear_pesos = (($valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos) / $valor_inicial_consolidado_cedear_pesos) * 100;
+                                }
                                 ?>
+
                                 <tr>
                                     <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_pesos)); ?></td>
                                     <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_pesos)); ?></td>
@@ -550,9 +569,16 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     $valor_actual_cedear_dolares = ($precio_actual * $c['cantidad_cedear']) / $promedio_ccl;
                                     $valor_actual_consolidado_cedear_dolares += $valor_actual_cedear_dolares;
                                 }
-                                $rendimiento_consolidado_cedear_dolares = $valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares;
-                                $rentabilidad_consolidado_cedear_dolares = (($valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares) / $valor_inicial_consolidado_cedear_dolares) * 100;
+
+                                $rendimiento_consolidado_cedear_dolares = 0;
+                                $rentabilidad_consolidado_cedear_dolares = 0;
+
+                                if ($valor_inicial_consolidado_cedear_dolares != 0) {
+                                    $rendimiento_consolidado_cedear_dolares = $valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares;
+                                    $rentabilidad_consolidado_cedear_dolares = (($valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares) / $valor_inicial_consolidado_cedear_dolares) * 100;
+                                }
                                 ?>
+
                                 <tr>
                                     <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_dolares)); ?></td>
                                     <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_dolares)); ?></td>
@@ -696,12 +722,32 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><!-- $valor_inicial_consolidado_bonos_pesos --></td>
-                                    <td><!-- $valor_actual_consolidado_bonos_pesos --></td>
-                                    <td><!-- $rendimiento_consolidado_bonos_pesos --></td>
-                                    <td><!-- $rentabilidad_consolidado_bonos_pesos --></td>
+                                <?php
+                                $bonos = obtenerBonos($cliente_id);
+                                $valor_inicial_consolidado_bonos_pesos = 0;
+                                $valor_actual_consolidado_bonos_pesos = 0;
 
+                                foreach ($bonos as $bono) {
+                                    $precio_actual = obtenerPrecioActualBono($bono['ticker']);
+                                    $valor_inicial_bonos_pesos = $bono['precio'] * $bono['cantidad'];
+                                    $valor_inicial_consolidado_bonos_pesos += $valor_inicial_bonos_pesos;
+                                    $valor_actual_bonos_pesos = $precio_actual * $bono['cantidad'];
+                                    $valor_actual_consolidado_bonos_pesos += $valor_actual_bonos_pesos;
+                                }
+
+                                $rendimiento_consolidado_bonos_pesos = 0;
+                                $rentabilidad_consolidado_bonos_pesos = 0;
+
+                                if ($valor_inicial_consolidado_bonos_pesos != 0) {
+                                    $rendimiento_consolidado_bonos_pesos = $valor_actual_consolidado_bonos_pesos - $valor_inicial_consolidado_bonos_pesos;
+                                    $rentabilidad_consolidado_bonos_pesos = (($valor_actual_consolidado_bonos_pesos - $valor_inicial_consolidado_bonos_pesos) / $valor_inicial_consolidado_bonos_pesos) * 100;
+                                }
+                                ?>
+                                <tr>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_pesos)); ?></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_pesos)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_pesos); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_pesos); ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -789,12 +835,34 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><!-- $valor_inicial_consolidado_bonos_dolares --></td>
-                                    <td><!-- $valor_actual_consolidado_bonos_dolares --></td>
-                                    <td><!-- $rendimiento_consolidado_bonos_dolares --></td>
-                                    <td><!-- $rentabilidad_consolidado_bonos_dolares --></td>
+                                <?php
+                                $bonos = obtenerBonos($cliente_id);
+                                $valor_inicial_consolidado_bonos_dolares = 0;
+                                $valor_actual_consolidado_bonos_dolares = 0;
+                                $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 
+                                foreach ($bonos as $bono) {
+                                    $precio_actual = obtenerPrecioActualBono($bono['ticker']);
+                                    $valor_compra_ccl = obtenerCCLCompraBono($cliente_id, $bono['ticker']);
+                                    $valor_inicial_bonos_dolares = ($bono['precio'] * $bono['cantidad']) / $valor_compra_ccl;
+                                    $valor_inicial_consolidado_bonos_dolares += $valor_inicial_bonos_dolares;
+                                    $valor_actual_bonos_dolares = ($precio_actual * $bono['cantidad']) / $promedio_ccl;
+                                    $valor_actual_consolidado_bonos_dolares += $valor_actual_bonos_dolares;
+                                }
+
+                                $rendimiento_consolidado_bonos_dolares = 0;
+                                $rentabilidad_consolidado_bonos_dolares = 0;
+
+                                if ($valor_inicial_consolidado_bonos_dolares != 0) {
+                                    $rendimiento_consolidado_bonos_dolares = $valor_actual_consolidado_bonos_dolares - $valor_inicial_consolidado_bonos_dolares;
+                                    $rentabilidad_consolidado_bonos_dolares = (($valor_actual_consolidado_bonos_dolares - $valor_inicial_consolidado_bonos_dolares) / $valor_inicial_consolidado_bonos_dolares) * 100;
+                                }
+                                ?>
+                                <tr>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_dolares, 'u$s'); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_dolares); ?></td>
                                 </tr>
                             </tbody>
                         </table>

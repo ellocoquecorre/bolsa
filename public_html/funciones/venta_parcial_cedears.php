@@ -31,7 +31,7 @@ function obtenerPromedioCCL()
     return ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 }
 $promedio_ccl = obtenerPromedioCCL();
-$promedio_ccl_formateado = formatear_dinero($promedio_ccl);
+$promedio_ccl_formateado = number_format($promedio_ccl, 2, '.', '');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener los valores del formulario
@@ -240,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label class="col-sm-4" for="precio_venta" class="col-sm-2 col-form-label">Precio Venta</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
-                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign\"></i></span>
                                         <input type="text" class="form-control" id="precio_venta" name="precio_venta"
                                             placeholder="0,00" required>
                                     </div>
@@ -253,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label class="col-sm-4" for="ccl_venta" class="col-sm-2 col-form-label">CCL Venta</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
-                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign\"></i></span>
                                         <input type="text" class="form-control" id="ccl_venta" name="ccl_venta"
                                             value="<?php echo htmlspecialchars($promedio_ccl_formateado); ?>" readonly>
                                     </div>
@@ -269,9 +269,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <!-- Botones -->
                     <div class="text-end">
-                        <button type="submit" id="btnAceptar" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
+                        <button type="submit" id="btnAceptar" class="btn btn-custom ver"><i class="fa-solid fa-check me-2\"></i>Aceptar</button>
                         <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#cedear"
-                            class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
+                            class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2\"></i>Cancelar</a>
                     </div>
                     <!-- Fin Botones -->
                 </form>

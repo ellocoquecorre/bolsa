@@ -36,7 +36,7 @@ $promedio_ccl_formateado = number_format($promedio_ccl, 2, '.', '');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener los valores del formulario
     $cantidad = floatval($_POST['cantidad']);
-    $fecha_venta = date('Y-m-d', strtotime($_POST['fecha_venta']));
+    $fecha_venta = date('Y-m-d');
     $precio_venta = floatval(str_replace(',', '.', $_POST['precio_venta']));
     $ccl_venta = floatval(str_replace(',', '.', $_POST['ccl_venta']));
 

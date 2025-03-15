@@ -346,6 +346,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                 <!-- Cedear Pesos -->
                 <div id="tablaCedearPesos">
+
                     <!-- Consolidada Cedear Pesos -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
@@ -439,6 +440,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                         </table>
                     </div>
                     <!-- Fin Completa Cedear Pesos -->
+
                 </div>
                 <!-- Fin Cedear Pesos -->
 
@@ -549,6 +551,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <!-- Fin Completa Cedear Dólares -->
 
                 </div>
+                <!-- Fin Cedear Dólares -->
 
             </div>
         </div>

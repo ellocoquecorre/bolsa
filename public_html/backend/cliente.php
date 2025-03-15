@@ -258,10 +258,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <?php
                                 $valor_inicial_consolidado_acciones_dolares = 0;
                                 $valor_actual_consolidado_acciones_dolares = 0;
-                                $valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
+                                $valor_compra_ccl = 0; // Inicializar la variable
 
                                 if (!empty($acciones)) {
                                     foreach ($acciones as $accion) {
+                                        $valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
                                         $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
                                         $valor_inicial_acciones_dolares = ($accion['precio'] * $accion['cantidad']) / $valor_compra_ccl;
                                         $valor_inicial_consolidado_acciones_dolares += $valor_inicial_acciones_dolares;

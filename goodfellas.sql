@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-03-2025 a las 15:24:28
+-- Tiempo de generación: 15-03-2025 a las 16:13:01
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -47,7 +47,7 @@ INSERT INTO `acciones` (`id`, `cliente_id`, `ticker`, `cantidad`, `precio`, `fec
 (29, 2, 'BYMA', 10, 467.00, '2025-02-26', 1219.99),
 (30, 3, 'CEPU', 10, 1545.00, '2025-02-12', 1185.19),
 (31, 3, 'COME', 10, 181.75, '2025-02-26', 1219.99),
-(70, 1, 'ALUA', 10, 794.00, '2025-02-12', 1185.19);
+(70, 1, 'ALUA', 9, 794.00, '2025-02-12', 1185.19);
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,8 @@ INSERT INTO `acciones_historial` (`id`, `cliente_id`, `ticker`, `cantidad`, `fec
 (5, 3, 'EDN3', 10, '2024-11-01', 1820.00, 1177.29, '2025-01-31', 2305.00, 1180.70),
 (6, 3, 'IRSA3', 10, '2024-11-01', 1545.00, 1177.29, '2025-01-31', 1775.00, 1180.70),
 (23, 1, 'TRAN', 200, '2025-02-12', 2315.00, 1185.19, '2025-03-07', 2330.00, 1221.94),
-(24, 1, 'TRAN', 232, '2025-02-12', 2315.00, 1185.19, '2025-03-07', 2330.00, 1221.94);
+(24, 1, 'TRAN', 232, '2025-02-12', 2315.00, 1185.19, '2025-03-07', 2330.00, 1221.94),
+(25, 1, 'ALUA', 1, '2025-02-12', 794.00, 1185.19, '0000-00-00', 805.00, 1.29);
 
 -- --------------------------------------------------------
 
@@ -119,7 +120,7 @@ CREATE TABLE `balance` (
 --
 
 INSERT INTO `balance` (`id`, `cliente_id`, `efectivo`) VALUES
-(1, 1, 2739360.00),
+(1, 1, 4233815.00),
 (2, 2, 3891580.00),
 (3, 3, 2982732.50);
 
@@ -145,9 +146,7 @@ CREATE TABLE `bonos` (
 
 INSERT INTO `bonos` (`id`, `cliente_id`, `ticker_bonos`, `fecha_bonos`, `cantidad_bonos`, `precio_bonos`, `ccl_compra`) VALUES
 (1, 1, 'GD35', '2025-03-14', 10, 81500.00, 1291.71),
-(2, 1, 'AE38', '2025-03-14', 10, 82800.00, 1291.71),
-(3, 1, 'AL30', '2025-03-14', 10, 79490.00, 1291.71),
-(4, 1, 'CO26', '2025-03-14', 10, 28300.00, 1291.71);
+(2, 1, 'AE38', '2025-03-14', 5, 82800.00, 1291.71);
 
 -- --------------------------------------------------------
 
@@ -167,6 +166,14 @@ CREATE TABLE `bonos_historial` (
   `precio_venta_bonos` decimal(10,2) NOT NULL,
   `ccl_venta` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `bonos_historial`
+--
+
+INSERT INTO `bonos_historial` (`id`, `cliente_id`, `ticker_bonos`, `cantidad_bonos`, `fecha_compra_bonos`, `precio_compra_bonos`, `ccl_compra`, `fecha_venta_bonos`, `precio_venta_bonos`, `ccl_venta`) VALUES
+(1, 1, 'AE38', 5, '2025-03-14', 82800.00, 1291.71, '2025-03-15', 83050.00, 1291.71),
+(2, 1, 'AL30', 10, '2025-03-14', 79490.00, 1291.71, '2025-03-15', 79540.00, 1291.71);
 
 -- --------------------------------------------------------
 
@@ -980,7 +987,7 @@ ALTER TABLE `acciones`
 -- AUTO_INCREMENT de la tabla `acciones_historial`
 --
 ALTER TABLE `acciones_historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `admin`
@@ -1004,7 +1011,7 @@ ALTER TABLE `bonos`
 -- AUTO_INCREMENT de la tabla `bonos_historial`
 --
 ALTER TABLE `bonos_historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `cedear`

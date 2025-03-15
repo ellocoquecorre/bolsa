@@ -320,7 +320,26 @@ function formatearFechaBonos($fecha)
 // Fin Renderizar Bonos
 
 // Precio Actual Bonos
+function obtenerValorActualRava($ticker_bonos)
+{
+    $url = "https://www.rava.com/perfil/$ticker_bonos";
+    $html = file_get_contents($url);
 
+    // Buscar el valor numérico después de ',&quot;ultimo&quot;:'
+    $pattern = '/,&quot;ultimo&quot;:([\d.]+)/';
+    preg_match($pattern, $html, $matches);
+
+    if (isset($matches[1])) {
+        $valor = $matches[1];
+        // Formatear valor a número sin formato
+        $valor = str_replace(".", "", $valor); // Eliminar separador de miles
+        $valor = str_replace(",", ".", $valor); // Reemplazar coma decimal por punto
+        $valor = (float)$valor;
+        return $valor;
+    } else {
+        return null;
+    }
+}
 // Fin Precio Actual Bonos
 
 // CCL Compra Bonos

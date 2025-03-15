@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Insertar en la tabla cedear_historial
     $sql_insert_historial = "INSERT INTO cedear_historial (cliente_id, ticker_cedear, cantidad_cedear, fecha_compra_cedear, precio_compra_cedear, ccl_compra, fecha_venta_cedear, precio_venta_cedear, ccl_venta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt_insert = $conn->prepare($sql_insert_historial);
-    $stmt_insert->bind_param("isissssdd", $cliente_id, $ticker, $cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
+    $stmt_insert->bind_param("isisssddd", $cliente_id, $ticker, $cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
     $stmt_insert->execute();
     $stmt_insert->close();
 
@@ -67,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: ../backend/cliente.php?cliente_id=$cliente_id#cedear");
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>

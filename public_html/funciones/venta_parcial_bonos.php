@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Insertar en la tabla bonos_historial
     $sql_insert_historial = "INSERT INTO bonos_historial (cliente_id, ticker_bonos, cantidad_bonos, fecha_compra_bonos, precio_compra_bonos, ccl_compra, fecha_venta_bonos, precio_venta_bonos, ccl_venta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt_insert = $conn->prepare($sql_insert_historial);
-    $stmt_insert->bind_param("isissssdd", $cliente_id, $ticker, $cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
+    $stmt_insert->bind_param("isisssddd", $cliente_id, $ticker, $cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
     $stmt_insert->execute();
     $stmt_insert->close();
 
@@ -253,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label class="col-sm-4" for="ccl_venta" class="col-sm-2 col-form-label">CCL Venta</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
-                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign\"></i></span>
                                         <input type="text" class="form-control" id="ccl_venta" name="ccl_venta"
                                             value="<?php echo htmlspecialchars($promedio_ccl_formateado); ?>" readonly>
                                     </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-03-2025 a las 21:54:02
+-- Tiempo de generación: 15-03-2025 a las 15:24:28
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -100,7 +100,7 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`id`, `email`, `password`) VALUES
 (1, 'paimarino@gmail.com', '$2y$10$9xTgQDcSkpQBK9gNNIMWwufNMuOgQzzopkPZcdQ8.m9NOumkVgZh2'),
-(2, 'm_laguzzi@gmail.com', '$2y$10$TxUOKcwzcxcFRKEgqX/iOeZSzH64OAXGLLS6gNtb5wcK2h6ydcF7K');
+(2, 'manuellaguzzi@gmail.com', '$2y$10$TxUOKcwzcxcFRKEgqX/iOeZSzH64OAXGLLS6gNtb5wcK2h6ydcF7K');
 
 -- --------------------------------------------------------
 
@@ -119,7 +119,7 @@ CREATE TABLE `balance` (
 --
 
 INSERT INTO `balance` (`id`, `cliente_id`, `efectivo`) VALUES
-(1, 1, 4645360.00),
+(1, 1, 2739360.00),
 (2, 2, 3891580.00),
 (3, 3, 2982732.50);
 
@@ -138,6 +138,16 @@ CREATE TABLE `bonos` (
   `precio_bonos` decimal(10,2) NOT NULL,
   `ccl_compra` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `bonos`
+--
+
+INSERT INTO `bonos` (`id`, `cliente_id`, `ticker_bonos`, `fecha_bonos`, `cantidad_bonos`, `precio_bonos`, `ccl_compra`) VALUES
+(1, 1, 'GD35', '2025-03-14', 10, 81500.00, 1291.71),
+(2, 1, 'AE38', '2025-03-14', 10, 82800.00, 1291.71),
+(3, 1, 'AL30', '2025-03-14', 10, 79490.00, 1291.71),
+(4, 1, 'CO26', '2025-03-14', 10, 28300.00, 1291.71);
 
 -- --------------------------------------------------------
 
@@ -722,59 +732,130 @@ CREATE TABLE `ticker_bonos` (
 --
 
 INSERT INTO `ticker_bonos` (`id`, `ticker_bonos`, `company_name_bonos`) VALUES
-(1, ' AE38', ' Bonos Argentina USD 2038 L.A\r'),
-(2, ' AL29', ' Bonos Argentina USD 2029 1% L.A\r'),
-(3, ' AL30', ' Bonos Argentina USD 2030 L.A\r'),
-(4, ' AL35', ' Bonos Argentina USD 2035 L.A\r'),
-(5, ' AL41', ' Bonos Argentina USD 2041 L.A\r'),
-(6, ' BPJ25', ' BOPREAL S.2 VTO30/06/25 U$S CG\r'),
-(7, ' BPOA7', ' BOPREAL S. 1 A VTO31/10/27 U$S CG\r'),
-(8, ' BPOB7', ' BOPREAL S. 1 B VTO31/10/27 U$S CG\r'),
-(9, ' BPOC7', ' BOPREAL S. 1 C VTO31/10/27 U$S CG\r'),
-(10, ' BPOD7', ' BOPREAL S. 1 D VTO31/10/27 U$S CG\r'),
-(11, ' BPY26', ' BOPREAL S.3 VTO31/05/26 U$S CG\r'),
-(12, ' CUAP', ' Cuasipar CER + 3,31\r'),
-(13, ' DICP', ' Discount 2033 CER + 5,83%\r'),
-(14, ' DIP0', ' Discount 2033 CER + 5,83% Emision 2010\r'),
-(15, ' GD29', ' Bonos Globales Argentina USD 1% 2029\r'),
-(16, ' GD30', ' Bonos Globales Argentina USD Step Up 2030\r'),
-(17, ' GD35', ' Bonos Globales Argentina USD Step Up 2035\r'),
-(18, ' GD38', ' Bonos Globales Argentina USD Step Up 2038\r'),
-(19, ' GD41', ' Bonos Globales Argentina USD Step Up 2041\r'),
-(20, ' GD46', ' Bonos Globales Argentina USD Step Up 2046\r'),
-(21, ' PAP0', ' Par 2038 CER + 2,5% Step-Up\r'),
-(22, ' PARP', ' Par 2038 CER + 2,00%\r'),
-(23, ' PR17', ' Bono Consolidación $ SR 10 V02/05/29\r'),
-(24, ' S31O5', ' Letras del Tesoro CAP $ V31/10/25 (Reapertura) S31O5\r'),
-(25, ' T13F6', ' Bono Tesoro Nacional CAP V.13/02/26 $ CG T13F6\r'),
-(26, ' T15D5', ' Bono Tesoro Nacionalonal V15/12/25 $ CG\r'),
-(27, ' T30E6', ' Bono Tesoro Nacional CAP V30/01/26\r'),
-(28, ' T30J6', ' BONCAP en Pesos 30/06/2026 T30J6\r'),
-(29, ' T3X5', ' Bono Tesoro $ AJ. CER 4,5% V18/06/25 CG\r'),
-(30, ' TB27', ' BONTE BADLAR 0,70 V23/11/27 $ CG\r'),
-(31, ' TC25P', ' Bono Tesoro Nacionalonal en Pesos CER+4% (BONCER 2025)\r'),
-(32, ' TG25', ' BONTE TG25 – reapertura TG25\r'),
-(33, ' TO26', ' Argentina 2026 PESOS Tasa Fija 15,50%\r'),
-(34, ' TTD26', ' Bono Nacion Tasa Dual 15/12/26 $ CG\r'),
-(35, ' TTJ26', ' Bono Nacion Tasa Dual 30/06/26 $ CG\r'),
-(36, ' TTM26', ' Bono Nacion Tasa Dual 16/03/26 $ CG\r'),
-(37, ' TV25', ' Bono Rep Arg Vinc USD V31/03/25\r'),
-(38, ' TX26', ' Bono del Tesoro Aj CER 2% V.9-11-26\r'),
-(39, ' TX28', ' Bonos del Tesoro BONCER 2.25% $ 2028\r'),
-(40, ' TX31', ' Bono Tesoro $ AJ CER 2,50% V.30/11/31\r'),
-(41, ' TZV25', ' Bono Dolar Linked TZV25 - REAPERTURA TZV25\r'),
-(42, ' TZV26', ' Bono Dolar Linked - TZV26 TZV26\r'),
-(43, ' TZVD5', ' Bono Dolar Linked - TZVD5 (Reapertura) TZVD5\r'),
-(44, ' TZX25', ' BONCER 30/06/2025 (Reapertura TZX25) TZX25\r'),
-(45, ' TZX26', ' Bono Rep Arg AJ CER V30/06/26 $ CG\r'),
-(46, ' TZX27', ' Bono Rep Arg AJ CER V30/06/27 $ CG\r'),
-(47, ' TZX28', ' Bono CER TZX28 - reapertura TZX28\r'),
-(48, ' TZXD5', ' BONTES $ A Desc Ajust CER V15/12/25\r'),
-(49, ' TZXD6', ' BONTES $ A Desc Ajust CER V15/12/26\r'),
-(50, ' TZXD7', ' BONTES $ A Desc Ajust CER V15/12/27\r'),
-(51, ' TZXM5', ' Bono Tesoro NAC AJ CER V31/03/25 $ CG\r'),
-(52, ' TZXM6', ' (TZXM6 - reapertura) TZXM6\r'),
-(53, ' TZXM7', ' BONCER $ Cupon Cero 31/03/2027 TZXM7');
+(1, 'AE38', 'Bono Rep. Argentina USD Step Up 2038\r'),
+(2, 'AE38C', 'Bono Rep. Argentina USD Step Up 2038\r'),
+(3, 'AE38D', 'Bono Rep. Argentina USD Step Up 2038\r'),
+(4, 'AL29', 'Bono Rep Argentina USD 1% 2029\r'),
+(5, 'AL29C', 'Bono Rep Argentina USD 1% 2029\r'),
+(6, 'AL29D', 'Bono Rep Argentina USD 1% 2029\r'),
+(7, 'AL30', 'Bono Rep. Argentina USD Step Up 2030\r'),
+(8, 'AL30C', 'Bono Rep. Argentina USD Step Up 2030\r'),
+(9, 'AL30D', 'Bono Rep. Argentina USD Step Up 2030\r'),
+(10, 'AL35', 'Bono Rep. Argentina USD Step Up 2035\r'),
+(11, 'AL35C', 'Bono Rep. Argentina USD Step Up 2035\r'),
+(12, 'AL35D', 'Bono Rep. Argentina USD Step Up 2035\r'),
+(13, 'AL41', 'Bono Rep. Argentina USD Step Up 2041\r'),
+(14, 'AL41C', 'Bono Rep. Argentina USD Step Up 2041\r'),
+(15, 'AL41D', 'Bono Rep. Argentina USD Step Up 2041\r'),
+(16, 'BA37D', 'Bono Pcia. Bs. As Regs New U$S 2037 A\r'),
+(17, 'BA7DC', 'Bono Pcia. Bs. As Regs New U$S 2037 A\r'),
+(18, 'BA7DD', 'Bono Pcia. Bs. As Regs New U$S 2037 A\r'),
+(19, 'BAO25', 'Td Gar Muni Cordoba S1 $ V27/10/25 Cg\r'),
+(20, 'BB37D', 'Bono Pcia. Bs. As. Regs New U$S 2037 B\r'),
+(21, 'BB7DD', 'Bono Pcia. Bs. As. Regs New U$S 2037 B\r'),
+(22, 'BC37D', 'Bono Pcia Bs As Regs New U$S 2037 C\r'),
+(23, 'BC37E', 'Bono Pcia Bs As Regs New Eur 2037 C\r'),
+(24, 'BDC28', 'Titulos De Deuda Publica Clase N&#17623 A Tasa Variable Con Vencimiento En 2028\r'),
+(25, 'BNA26', 'Lt P Neuquen D1739/23 S1 Cl1 V19/04/26 U$S Cg\r'),
+(26, 'BPA7C', 'Bopreal Serie 1A Vto. 31/10/27\r'),
+(27, 'BPA7D', 'Bopreal Serie 1A Vto. 31/10/27\r'),
+(28, 'BPB7C', 'Bopreal Serie 1B Vto. 31/10/27\r'),
+(29, 'BPB7D', 'Bopreal Serie 1B Vto. 31/10/27\r'),
+(30, 'BPC7C', 'Bopreal Serie 1C Vto 31/10/27\r'),
+(31, 'BPC7D', 'Bopreal Serie 1C Vto 31/10/27\r'),
+(32, 'BPD7C', 'Bopreal Serie 1D Vto. 31/10/27\r'),
+(33, 'BPD7D', 'Bopreal Serie 1D Vto. 31/10/27\r'),
+(34, 'BPJ25', 'Bopreal Serie 2 Vto. 30/06/25 U$S\r'),
+(35, 'BPJ5C', 'Bopreal Serie 2 Vto. 30/06/25 U$S\r'),
+(36, 'BPJ5D', 'Bopreal Serie 2 Vto. 30/06/25 U$S\r'),
+(37, 'BPOA7', 'Bopreal Serie 1A Vto. 31/10/27\r'),
+(38, 'BPOB7', 'Bopreal Serie 1B Vto. 31/10/27\r'),
+(39, 'BPOC7', 'Bopreal Serie 1C Vto 31/10/27\r'),
+(40, 'BPOD7', 'Bopreal Serie 1D Vto. 31/10/27\r'),
+(41, 'BPY26', 'Bopreal Serie 3 Vto 31/05/26\r'),
+(42, 'BPY6C', 'Bopreal Serie 3 Vto 31/05/26\r'),
+(43, 'BPY6D', 'Bopreal Serie 3 Vto 31/05/26\r'),
+(44, 'CO26', 'Bono Prov. De Cordoba USD V2026\r'),
+(45, 'CO26D', 'Bono Prov. De Cordoba USD V2026\r'),
+(46, 'CUAP', 'Bonos Cuasi Par $ 3,31% 2045 (Ley Arg)\r'),
+(47, 'D16E6', 'Bono Rep Arg Vinc USD V 16/01/2026\r'),
+(48, 'DICP', 'Bono Discount $ 2033 (Ley Arg)\r'),
+(49, 'DIP0', 'Bono Discount $ + Cer 2033 (Ley Arg)\r'),
+(50, 'EF25D', 'Bono Pcia Entre Rios Regs 8,75% Vto 08/02/25\r'),
+(51, 'ERF25', 'Bono Pcia Entre Rios Regs 8,75% Vto 08/02/25\r'),
+(52, 'GD29', 'Bonos Rep. Arg. U$S 1% Step Up V09/07/29\r'),
+(53, 'GD29C', 'Bonos Rep. Arg. U$S 1% Step Up V09/07/29\r'),
+(54, 'GD29D', 'Bonos Rep. Arg. U$S 1% Step Up V09/07/29\r'),
+(55, 'GD30', 'Bonos Rep. Arg. U$S Step Up V.09/07/30\r'),
+(56, 'GD30C', 'Bonos Rep. Arg. U$S Step Up V.09/07/30\r'),
+(57, 'GD30D', 'Bonos Rep. Arg. U$S Step Up V.09/07/30\r'),
+(58, 'GD35', 'Bonos Rep. Arg. U$S Step Up V.09/07/35\r'),
+(59, 'GD35C', 'Bonos Rep. Arg. U$S Step Up V.09/07/35\r'),
+(60, 'GD35D', 'Bonos Rep. Arg. U$S Step Up V.09/07/35\r'),
+(61, 'GD38', 'Bonos Rep. Arg. U$S Step Up V.09/01/38\r'),
+(62, 'GD38C', 'Bonos Rep. Arg. U$S Step Up V.09/01/38\r'),
+(63, 'GD38D', 'Bonos Rep. Arg. U$S Step Up V.09/01/38\r'),
+(64, 'GD41', 'Bonos Rep. Arg. U$S Step Up V.09/07/41\r'),
+(65, 'GD41C', 'Bonos Rep. Arg. U$S Step Up V.09/07/41\r'),
+(66, 'GD41D', 'Bonos Rep. Arg. U$S Step Up V.09/07/41\r'),
+(67, 'GD46', 'Bonos Rep. Arg. U$S Step Up V.09/07/46\r'),
+(68, 'GD46C', 'Bonos Rep. Arg. U$S Step Up V.09/07/46\r'),
+(69, 'GD46D', 'Bonos Rep. Arg. U$S Step Up V.09/07/46\r'),
+(70, 'NDT25', 'Bono Prov. Neuquen Regs Vt 27/10/2030\r'),
+(71, 'NDT5D', 'Bono Prov. Neuquen Regs Vt 27/10/2030\r'),
+(72, 'PAP0', 'Bonos Par Ar$ + Cer 2038 (Ley Arg)\r'),
+(73, 'PARP', 'Bono Par $ (Ley Arg)\r'),
+(74, 'PBA25', 'T.D. Pcia. Buenos Aires $ V. 12/04/25\r'),
+(75, 'PBY26', 'T.D. Pcia. Buenos Aires T.V. Vto. 05/05/26 $\r'),
+(76, 'PM29C', 'Bono Pcia.Mendoza Regs 2.75% V.19/11/29\r'),
+(77, 'PM29D', 'Bono Pcia.Mendoza Regs 2.75% Vto 19/11/29\r'),
+(78, 'PMM29', 'Bono Pcia.Mendoza Regs 2.75% Vto 19/11/29\r'),
+(79, 'PR17', 'Bono Consolidacion $ Sr 10 V02/05/29\r'),
+(80, 'PUL26', 'Bono Pcia. Chubut 7,75% V.26/07/2026\r'),
+(81, 'SA24D', 'Bono Prov. Salta 9,125% V2024\r'),
+(82, 'T13F6', 'Boncap 13F6 Vto 13/02/2026\r'),
+(83, 'T15D5', 'Bono Tesoro Nacional Vto. 15/12/25 $\r'),
+(84, 'T15E7', 'Bono Tesoro Nac Cap V.15/01/27  $ Cg\r'),
+(85, 'T17O5', 'Boncap 17O5 Vto 17/10/2025\r'),
+(86, 'T30E6', 'Bono Tesoro Naci Cap V30/01/26 $ Cg\r'),
+(87, 'T30J6', 'Boncap T30J6 Vto 30/06/2026\r'),
+(88, 'TC25P', 'Bono Tesoro Nacional $ Cer 4% 27/04/2025\r'),
+(89, 'TFU27', 'Bono Tierra Del Fuego USD 8.95% V27\r'),
+(90, 'TG25', 'Bonte Vto.23/08/2025 $ Cg\r'),
+(91, 'TO26', 'Bonos Del Tesoro Nac. Ars 15,5% V2026\r'),
+(92, 'TTD26', 'Bono Nacion Tasa Dual 15/12/26\r'),
+(93, 'TTJ26', 'Bono Nacion Tasa Dual 30/06/26\r'),
+(94, 'TTM26', 'Bono Nacion Tasa Dual16/03/26\r'),
+(95, 'TTS26', 'Bono Nacion Tasa Dual15/09/26\r'),
+(96, 'TV25', 'Bono Rep Arg Vinc USD V31/03/25\r'),
+(97, 'TVPA', 'Cup?n Vinculado Al Pbi Us$ 2035 (Ley Arg)\r'),
+(98, 'TVPE', 'Cup?n Vinculado Al Pbi Euros 2035\r'),
+(99, 'TVPP', 'Cup?n Vinculado Al Pbi $ 2035 (Ley Arg)\r'),
+(100, 'TVPY', 'Cup?n Vinculado Al Pbi Us$ 2035 (Ley Ny)\r'),
+(101, 'TX25', 'Bono Del Tesoro Boncer 1,8% $ 2025\r'),
+(102, 'TX26', 'Bono Del Tesoro Boncer 2% $ 2026\r'),
+(103, 'TX26D', 'Bono Del Tesoro Boncer 2% $ 2026\r'),
+(104, 'TX28', 'Bonos Del Tesoro Boncer 2.25% $ 2028\r'),
+(105, 'TX28D', 'Bonos Del Tesoro Boncer 2.25% $ 2028\r'),
+(106, 'TX31', 'Bono Tesoro $ Aj Cer 2,50% V.30/11/31\r'),
+(107, 'TY27P', 'Bono Del Tesoro Nacional En Pesos Cer Vto. 23/05/2\r'),
+(108, 'TZV25', 'Bono Rep Arg Vinc USD V 30/06/25\r'),
+(109, 'TZV26', 'Bono Del Tesoro Nacional Vto. 30/06/26 U$S\r'),
+(110, 'TZVD5', 'Bono Rep Arg Vinc USD V 15/12/25\r'),
+(111, 'TZX25', 'Boncer $ Cupon Cero Vto. 30/06/2025\r'),
+(112, 'TZX26', 'Bono Rep Arg Aj Cer V30/06/26 $ Cg\r'),
+(113, 'TZX27', 'Bono Rep Arg Aj Cer Vto. 30/06/27\r'),
+(114, 'TZX28', 'Bono Rep Arg Aj Cer V30/06/28\r'),
+(115, 'TZX6D', 'Bono Rep Arg Aj Cer V30/06/26 $ Cg\r'),
+(116, 'TZXD5', 'Bono Del Tesoro Boncer Vto 15/12/25\r'),
+(117, 'TZXD6', 'Bono Del Tesoro Boncer Vto 15/12/26\r'),
+(118, 'TZXD7', 'Bontes $ A Desc Aj Cer Vto. 15/12/27\r'),
+(119, 'TZXM5', 'Bono Del Tesoro Nac. Aj Cer Vto 31/03/25 $\r'),
+(120, 'TZXM6', 'Bono Del Tesoro Boncer Vto 31/03/2026\r'),
+(121, 'TZXM7', 'Bono Tesoro Nac Aj Cer V31/03/27 $ Cg\r'),
+(122, 'TZXO5', 'Bono Del Tesoro Boncer Vto 31/10/2025\r'),
+(123, 'TZXO6', 'Bono Del Tesoro Boncer Vto 31/10/2026\r'),
+(124, 'TZXY5', 'Bono Del Tesoro Boncer Vto 31/05/2025\r');
 
 -- --------------------------------------------------------
 
@@ -917,7 +998,7 @@ ALTER TABLE `balance`
 -- AUTO_INCREMENT de la tabla `bonos`
 --
 ALTER TABLE `bonos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `bonos_historial`
@@ -971,7 +1052,7 @@ ALTER TABLE `tickers_cedears`
 -- AUTO_INCREMENT de la tabla `ticker_bonos`
 --
 ALTER TABLE `ticker_bonos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT de la tabla `ticker_fondos`

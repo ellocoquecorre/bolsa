@@ -182,6 +182,14 @@ h5 {
   width: 100%;
 }
 
+.posiciones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 .saldo, .ingresar-efectivo, .retirar-efectivo {
   display: flex;
   align-items: center;

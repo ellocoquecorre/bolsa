@@ -446,6 +446,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                 <!-- Cedear Dólares -->
                 <div id="tablaCedearDolares" class="d-none">
+
                     <!-- Consolidada Cedear Dólares -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">

@@ -115,10 +115,13 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 </div>
                 <!-- Fin Botones -->
 
+                <hr class="linea-accion">
+
                 <!-- Acciones Pesos -->
                 <div id="tablaAccionesPesos">
 
                     <!-- Consolidada Acciones Pesos -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Consolidada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -161,6 +164,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <hr class="linea-accion">
 
                     <!-- Completa Acciones Pesos -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Detallada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -237,6 +241,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 <div id="tablaAccionesDolares" class="d-none">
 
                     <!-- Consolidada Acciones Dólares -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Consolidada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -278,6 +283,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <hr class="linea-accion">
 
                     <!-- Completa Acciones Dólares -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Detallada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -394,10 +400,13 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 </div>
                 <!-- Fin Botones -->
 
+                <hr class="linea-accion">
+
                 <!-- Cedear Pesos -->
                 <div id="tablaCedearPesos">
 
                     <!-- Consolidada Cedear Pesos -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Consolidada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -438,6 +447,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <hr class="linea-accion">
 
                     <!-- Completa Cedear Pesos -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Detallada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -514,6 +524,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 <div id="tablaCedearDolares" class="d-none">
 
                     <!-- Consolidada Cedear Dólares -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Consolidada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -556,6 +567,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <hr class="linea-accion">
 
                     <!-- Completa Cedear Dólares -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Detallada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -666,10 +678,13 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 </div>
                 <!-- Fin Botones -->
 
+                <hr class="linea-accion">
+
                 <!-- Bonos Pesos -->
                 <div id="tablaBonosPesos">
 
                     <!-- Consolidada Bonos Pesos -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Consolidada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -696,6 +711,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <hr class="linea-accion">
 
                     <!-- Completa Bonos Pesos -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Detallada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -761,6 +777,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 <div id="tablaBonosDolares" class="d-none">
 
                     <!-- Consolidada Bonos Dólares -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Consolidada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -787,6 +804,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <hr class="linea-accion">
 
                     <!-- Completa Bonos Dólares -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Detallada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -884,10 +902,13 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 </div>
                 <!-- Fin Botones -->
 
+                <hr class="linea-accion">
+
                 <!-- Fondos Pesos -->
                 <div id="tablaFondosPesos">
 
                     <!-- Consolidada Fondos Pesos -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Consolidada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -914,6 +935,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <hr class="linea-accion">
 
                     <!-- Completa Fondos Pesos -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Detallada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -979,6 +1001,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 <div id="tablaFondosDolares" class="d-none">
 
                     <!-- Consolidada Fondos Dólares -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Consolidada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -1005,6 +1028,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <hr class="linea-accion">
 
                     <!-- Completa Fondos Dólares -->
+                    <h5 class="me-2 cartera posiciones mb-4">Posición Detallada</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>

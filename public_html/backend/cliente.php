@@ -135,24 +135,31 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 $valor_inicial_consolidado_acciones_pesos = 0;
                                 $valor_actual_consolidado_acciones_pesos = 0;
 
-                                foreach ($acciones as $accion) {
-                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
-                                    $valor_inicial_consolidado_acciones_pesos += $valor_inicial_acciones_pesos;
-                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
-                                    $valor_actual_consolidado_acciones_pesos += $valor_actual_acciones_pesos;
-                                }
-                                $rendimiento_consolidado_acciones_pesos = $valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos;
-                                $rentabilidad_consolidado_acciones_pesos = (($valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos) / $valor_inicial_consolidado_acciones_pesos) * 100;
+                                if (!empty($acciones)) {
+                                    foreach ($acciones as $accion) {
+                                        $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+                                        $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+                                        $valor_inicial_consolidado_acciones_pesos += $valor_inicial_acciones_pesos;
+                                        $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
+                                        $valor_actual_consolidado_acciones_pesos += $valor_actual_acciones_pesos;
+                                    }
+                                    if ($valor_inicial_consolidado_acciones_pesos != 0) {
+                                        $rendimiento_consolidado_acciones_pesos = $valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos;
+                                        $rentabilidad_consolidado_acciones_pesos = (($valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos) / $valor_inicial_consolidado_acciones_pesos) * 100;
+                                    } else {
+                                        $rendimiento_consolidado_acciones_pesos = 0;
+                                        $rentabilidad_consolidado_acciones_pesos = 0;
+                                    }
                                 ?>
-
-                                <tr>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_pesos)); ?></td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos); ?></td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos); ?></td>
-
-                                </tr>
+                                    <tr>
+                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_pesos)); ?></td>
+                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
+                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos); ?></td>
+                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos); ?></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -183,46 +190,46 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </thead>
                             <tbody id="tabla-acciones-pesos">
                                 <?php
-                                $acciones = obtenerAcciones($cliente_id);
-                                foreach ($acciones as $accion) {
-                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
-                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
-                                    $rendimiento_acciones_pesos = $valor_actual_acciones_pesos - $valor_inicial_acciones_pesos;
-                                    $rentabilidad_acciones_pesos = (($rendimiento_acciones_pesos) / $valor_inicial_acciones_pesos) * 100;
-
-                                    echo "<tr data-ticker='{$accion['ticker']}'>
-                                            <td>{$accion['ticker']}</td>
-                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                            <td>{$accion['cantidad']}</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                if (!empty($acciones)) {
+                                    foreach ($acciones as $accion) {
+                                        $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+                                        $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+                                        $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
+                                        $rendimiento_acciones_pesos = $valor_actual_acciones_pesos - $valor_inicial_acciones_pesos;
+                                        $rentabilidad_acciones_pesos = (($rendimiento_acciones_pesos) / $valor_inicial_acciones_pesos) * 100;
+                                        echo "<tr data-ticker='{$accion['ticker']}'>
+                                        <td>{$accion['ticker']}</td>
+                                        <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                        <td>{$accion['cantidad']}</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
+                                        <td class='text-center'>
+                                            <div class='dropdown d-flex justify-content-center'>
+                                                <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
                                                     <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_parcial_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-coins me-2'></i> Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                        <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
-                                                        </li>
-                                                        <li>
-                                                        <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                                </button>
+                                                <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-minus-circle me-2'></i> Venta Parcial</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-times-circle me-2'></i> Venta Total</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>";
+                                    }
                                 }
                                 ?>
                             </tbody>
@@ -249,27 +256,35 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </thead>
                             <tbody>
                                 <?php
-                                $acciones = obtenerAcciones($cliente_id);
                                 $valor_inicial_consolidado_acciones_dolares = 0;
                                 $valor_actual_consolidado_acciones_dolares = 0;
                                 $valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
-                                foreach ($acciones as $accion) {
-                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                    $valor_inicial_acciones_dolares = ($accion['precio'] * $accion['cantidad']) / $valor_compra_ccl;
-                                    $valor_inicial_consolidado_acciones_dolares += $valor_inicial_acciones_dolares;
-                                    $valor_actual_acciones_dolares = ($precio_actual * $accion['cantidad']) / $promedio_ccl;
-                                    $valor_actual_consolidado_acciones_dolares += $valor_actual_acciones_dolares;
-                                }
-                                $rendimiento_consolidado_acciones_dolares = $valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares;
-                                $rentabilidad_consolidado_acciones_dolares = (($valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares) / $valor_inicial_consolidado_acciones_dolares) * 100;
-                                ?>
-                                <tr>
-                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_dolares)); ?></td>
-                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_dolares)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares, 'u$s'); ?></td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_dolares); ?></td>
 
-                                </tr>
+                                if (!empty($acciones)) {
+                                    foreach ($acciones as $accion) {
+                                        $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+                                        $valor_inicial_acciones_dolares = ($accion['precio'] * $accion['cantidad']) / $valor_compra_ccl;
+                                        $valor_inicial_consolidado_acciones_dolares += $valor_inicial_acciones_dolares;
+                                        $valor_actual_acciones_dolares = ($precio_actual * $accion['cantidad']) / $promedio_ccl;
+                                        $valor_actual_consolidado_acciones_dolares += $valor_actual_acciones_dolares;
+                                    }
+                                    if ($valor_inicial_consolidado_acciones_dolares != 0) {
+                                        $rendimiento_consolidado_acciones_dolares = $valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares;
+                                        $rentabilidad_consolidado_acciones_dolares = (($valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares) / $valor_inicial_consolidado_acciones_dolares) * 100;
+                                    } else {
+                                        $rendimiento_consolidado_acciones_dolares = 0;
+                                        $rentabilidad_consolidado_acciones_dolares = 0;
+                                    }
+                                ?>
+                                    <tr>
+                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_dolares)); ?></td>
+                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_dolares)); ?></td>
+                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares, 'u$s'); ?></td>
+                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_dolares); ?></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -303,60 +318,58 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </thead>
                             <tbody id="tabla-acciones-dolares">
                                 <?php
-                                $acciones = obtenerAcciones($cliente_id);
-                                foreach ($acciones as $accion) {
-                                    // pesos
-                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
-                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
-                                    // dolares
-                                    $valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
-                                    $precio_actual_dolares = $precio_actual / $promedio_ccl;
-                                    $valor_inicial_acciones_dolares = $valor_inicial_acciones_pesos / $valor_compra_ccl;
-                                    $valor_actual_acciones_dolares = $valor_actual_acciones_pesos / $promedio_ccl;
-                                    $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
-                                    $rentabilidad_acciones_dolares = (($valor_actual_acciones_dolares - $valor_inicial_acciones_dolares) / $valor_inicial_acciones_dolares) * 100;
+                                if (!empty($acciones)) {
+                                    foreach ($acciones as $accion) {
+                                        // pesos
+                                        $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+                                        $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+                                        $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
+                                        // dolares
+                                        $valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
+                                        $precio_actual_dolares = $precio_actual / $promedio_ccl;
+                                        $valor_inicial_acciones_dolares = $valor_inicial_acciones_pesos / $valor_compra_ccl;
+                                        $valor_actual_acciones_dolares = $valor_actual_acciones_pesos / $promedio_ccl;
+                                        $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
+                                        $rentabilidad_acciones_dolares = (($valor_actual_acciones_dolares - $valor_inicial_acciones_dolares) / $valor_inicial_acciones_dolares) * 100;
 
-
-                                    echo "<tr data-ticker='{$accion['ticker']}'>
-                                            <td>{$accion['ticker']}</td>
-                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                            <td>{$accion['cantidad']}</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(obtenerCCLCompra($cliente_id, $accion['ticker'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
-                                                    <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_parcial_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-check-circle me-2'></i> Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                        <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-pen me-2'></i> Editar</a>
-                                                        </li>
-                                                        <li>
-                                                        <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
-
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                        echo "<tr data-ticker='{$accion['ticker']}'>
+                                        <td>{$accion['ticker']}</td>
+                                        <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                        <td>{$accion['cantidad']}</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(obtenerCCLCompra($cliente_id, $accion['ticker'])) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_compra_ccl)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
+                                        <td class='text-center'>
+                                            <div class='dropdown d-flex justify-content-center'>
+                                                <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                <i class='fa-solid fa-bars'></i>
+                                                </button>
+                                                <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-minus-circle me-2'></i> Venta Parcial</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-times-circle me-2'></i> Venta Total</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>";
+                                    }
                                 }
                                 ?>
                             </tbody>
-
                         </table>
                     </div>
                     <!-- Fin Completa Acciones Dólares -->
@@ -414,22 +427,31 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 $valor_inicial_consolidado_cedear_pesos = 0;
                                 $valor_actual_consolidado_cedear_pesos = 0;
 
-                                foreach ($cedear as $c) {
-                                    $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
-                                    $valor_inicial_cedear_pesos = $c['precio_cedear'] * $c['cantidad_cedear'];
-                                    $valor_inicial_consolidado_cedear_pesos += $valor_inicial_cedear_pesos;
-                                    $valor_actual_cedear_pesos = $precio_actual * $c['cantidad_cedear'];
-                                    $valor_actual_consolidado_cedear_pesos += $valor_actual_cedear_pesos;
-                                }
-                                $rendimiento_consolidado_cedear_pesos = $valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos;
-                                $rentabilidad_consolidado_cedear_pesos = (($valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos) / $valor_inicial_consolidado_cedear_pesos) * 100;
+                                if (!empty($cedear)) {
+                                    foreach ($cedear as $c) {
+                                        $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
+                                        $valor_inicial_cedear_pesos = $c['precio_cedear'] * $c['cantidad_cedear'];
+                                        $valor_inicial_consolidado_cedear_pesos += $valor_inicial_cedear_pesos;
+                                        $valor_actual_cedear_pesos = $precio_actual * $c['cantidad_cedear'];
+                                        $valor_actual_consolidado_cedear_pesos += $valor_actual_cedear_pesos;
+                                    }
+                                    if ($valor_inicial_consolidado_cedear_pesos != 0) {
+                                        $rendimiento_consolidado_cedear_pesos = $valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos;
+                                        $rentabilidad_consolidado_cedear_pesos = (($valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos) / $valor_inicial_consolidado_cedear_pesos) * 100;
+                                    } else {
+                                        $rendimiento_consolidado_cedear_pesos = 0;
+                                        $rentabilidad_consolidado_cedear_pesos = 0;
+                                    }
                                 ?>
-                                <tr>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_pesos)); ?></td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_pesos)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_pesos); ?></td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_pesos); ?></td>
-                                </tr>
+                                    <tr>
+                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_pesos)); ?></td>
+                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_pesos)); ?></td>
+                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_pesos); ?></td>
+                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_pesos); ?></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -460,46 +482,47 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </thead>
                             <tbody id="tabla-cedear-pesos">
                                 <?php
-                                $cedear = obtenerCedear($cliente_id);
-                                foreach ($cedear as $c) {
-                                    $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
-                                    $valor_inicial_cedear_pesos = $c['precio_cedear'] * $c['cantidad_cedear'];
-                                    $valor_actual_cedear_pesos = $precio_actual * $c['cantidad_cedear'];
-                                    $rendimiento_cedear_pesos = $valor_actual_cedear_pesos - $valor_inicial_cedear_pesos;
-                                    $rentabilidad_cedear_pesos = (($rendimiento_cedear_pesos) / $valor_inicial_cedear_pesos) * 100;
+                                if (!empty($cedear)) {
+                                    foreach ($cedear as $c) {
+                                        $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
+                                        $valor_inicial_cedear_pesos = $c['precio_cedear'] * $c['cantidad_cedear'];
+                                        $valor_actual_cedear_pesos = $precio_actual * $c['cantidad_cedear'];
+                                        $rendimiento_cedear_pesos = $valor_actual_cedear_pesos - $valor_inicial_cedear_pesos;
+                                        $rentabilidad_cedear_pesos = (($rendimiento_cedear_pesos) / $valor_inicial_cedear_pesos) * 100;
 
-                                    echo "<tr data-ticker='{$c['ticker_cedear']}'>
-                                            <td>{$c['ticker_cedear']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
-                                            <td>{$c['cantidad_cedear']}</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($c['precio_cedear'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_cedear_pesos)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_cedear_pesos)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_cedear_pesos) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_cedear_pesos) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                        <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_parcial_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-minus me-2'></i> Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_total_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-dollar-sign me-2'></i> Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                        <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i> Editar compra</a>
-                                                        </li>
-                                                        <li>
-                                                        <a class='dropdown-item' href='#' onclick='eliminarCedear(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                        echo "<tr data-ticker='{$c['ticker_cedear']}'>
+                                        <td>{$c['ticker_cedear']}</td>
+                                        <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
+                                        <td>{$c['cantidad_cedear']}</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($c['precio_cedear'])) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_cedear_pesos)) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_cedear_pesos)) . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_cedear_pesos) . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_cedear_pesos) . "</td>
+                                        <td class='text-center'>
+                                            <div class='dropdown d-flex justify-content-center'>
+                                                <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                    <i class='fa-solid fa-bars'></i>
+                                                </button>
+                                                <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-minus-circle me-2'></i> Venta Parcial</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-times-circle me-2'></i> Venta Total</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='#' onclick='eliminarCedear(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>";
+                                    }
                                 }
                                 ?>
                             </tbody>
@@ -526,28 +549,36 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </thead>
                             <tbody>
                                 <?php
-                                $cedear = obtenerCedear($cliente_id);
                                 $valor_inicial_consolidado_cedear_dolares = 0;
                                 $valor_actual_consolidado_cedear_dolares = 0;
                                 $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 
-                                foreach ($cedear as $c) {
-                                    $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
-                                    $valor_compra_ccl = obtenerCCLCompraCedear($cliente_id, $c['ticker_cedear']);
-                                    $valor_inicial_cedear_dolares = ($c['precio_cedear'] * $c['cantidad_cedear']) / $valor_compra_ccl;
-                                    $valor_inicial_consolidado_cedear_dolares += $valor_inicial_cedear_dolares;
-                                    $valor_actual_cedear_dolares = ($precio_actual * $c['cantidad_cedear']) / $promedio_ccl;
-                                    $valor_actual_consolidado_cedear_dolares += $valor_actual_cedear_dolares;
-                                }
-                                $rendimiento_consolidado_cedear_dolares = $valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares;
-                                $rentabilidad_consolidado_cedear_dolares = (($valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares) / $valor_inicial_consolidado_cedear_dolares) * 100;
+                                if (!empty($cedear)) {
+                                    foreach ($cedear as $c) {
+                                        $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
+                                        $valor_compra_ccl = obtenerCCLCompraCedear($cliente_id, $c['ticker_cedear']);
+                                        $valor_inicial_cedear_dolares = ($c['precio_cedear'] * $c['cantidad_cedear']) / $valor_compra_ccl;
+                                        $valor_inicial_consolidado_cedear_dolares += $valor_inicial_cedear_dolares;
+                                        $valor_actual_cedear_dolares = ($precio_actual * $c['cantidad_cedear']) / $promedio_ccl;
+                                        $valor_actual_consolidado_cedear_dolares += $valor_actual_cedear_dolares;
+                                    }
+                                    if ($valor_inicial_consolidado_cedear_dolares != 0) {
+                                        $rendimiento_consolidado_cedear_dolares = $valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares;
+                                        $rentabilidad_consolidado_cedear_dolares = (($valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares) / $valor_inicial_consolidado_cedear_dolares) * 100;
+                                    } else {
+                                        $rendimiento_consolidado_cedear_dolares = 0;
+                                        $rentabilidad_consolidado_cedear_dolares = 0;
+                                    }
                                 ?>
-                                <tr>
-                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_dolares)); ?></td>
-                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_dolares)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_dolares, 'u$s'); ?></td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_dolares); ?></td>
-                                </tr>
+                                    <tr>
+                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_dolares)); ?></td>
+                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_dolares)); ?></td>
+                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_dolares, 'u$s'); ?></td>
+                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_dolares); ?></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -581,51 +612,51 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </thead>
                             <tbody id="tabla-cedear-dolares">
                                 <?php
-                                $cedear = obtenerCedear($cliente_id);
-                                $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-                                foreach ($cedear as $c) {
-                                    $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
-                                    $valor_compra_ccl = obtenerCCLCompraCedear($cliente_id, $c['ticker_cedear']);
-                                    $precio_actual_dolares = $precio_actual / $promedio_ccl;
-                                    $valor_inicial_cedear_dolares = ($c['precio_cedear'] * $c['cantidad_cedear']) / $valor_compra_ccl;
-                                    $valor_actual_cedear_dolares = ($precio_actual * $c['cantidad_cedear']) / $promedio_ccl;
-                                    $rendimiento_cedear_dolares = $valor_actual_cedear_dolares - $valor_inicial_cedear_dolares;
-                                    $rentabilidad_cedear_dolares = (($valor_actual_cedear_dolares - $valor_inicial_cedear_dolares) / $valor_inicial_cedear_dolares) * 100;
+                                if (!empty($cedear)) {
+                                    foreach ($cedear as $c) {
+                                        $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
+                                        $valor_compra_ccl = obtenerCCLCompraCedear($cliente_id, $c['ticker_cedear']);
+                                        $precio_actual_dolares = $precio_actual / $promedio_ccl;
+                                        $valor_inicial_cedear_dolares = ($c['precio_cedear'] * $c['cantidad_cedear']) / $valor_compra_ccl;
+                                        $valor_actual_cedear_dolares = ($precio_actual * $c['cantidad_cedear']) / $promedio_ccl;
+                                        $rendimiento_cedear_dolares = $valor_actual_cedear_dolares - $valor_inicial_cedear_dolares;
+                                        $rentabilidad_cedear_dolares = (($valor_actual_cedear_dolares - $valor_inicial_cedear_dolares) / $valor_inicial_cedear_dolares) * 100;
 
-                                    echo "<tr data-ticker='{$c['ticker_cedear']}'>
-                                            <td>{$c['ticker_cedear']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
-                                            <td>{$c['cantidad_cedear']}</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($c['precio_cedear'] / $valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_cedear_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_cedear_dolares)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_cedear_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_cedear_dolares) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                        <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_parcial_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-minus me-2'></i> Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                        <a class='dropdown-item' href='../funciones/venta_total_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-dollar-sign me-2'></i> Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                        <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i> Editar compra</a>
-                                                        </li>
-                                                        <li>
-                                                        <a class='dropdown-item' href='#' onclick='eliminarCedear(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                        echo "<tr data-ticker='{$c['ticker_cedear']}'>
+                                        <td>{$c['ticker_cedear']}</td>
+                                        <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
+                                        <td>{$c['cantidad_cedear']}</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($c['precio_cedear'] / $valor_compra_ccl)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_cedear_dolares)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_cedear_dolares)) . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_cedear_dolares, 'u$s') . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_cedear_dolares) . "</td>
+                                        <td class='text-center'>
+                                            <div class='dropdown d-flex justify-content-center'>
+                                                <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                    <i class='fa-solid fa-bars'></i>
+                                                </button>
+                                                <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-minus-circle me-2'></i> Venta Parcial</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-times-circle me-2'></i> Venta Total</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='#' onclick='eliminarCedear(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>";
+                                    }
                                 }
                                 ?>
                             </tbody>
@@ -686,22 +717,31 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 $valor_inicial_consolidado_bonos_pesos = 0;
                                 $valor_actual_consolidado_bonos_pesos = 0;
 
-                                foreach ($bonos as $bono) {
-                                    $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
-                                    $valor_inicial_bonos_pesos = $bono['precio_bonos'] * $bono['cantidad_bonos'];
-                                    $valor_inicial_consolidado_bonos_pesos += $valor_inicial_bonos_pesos;
-                                    $valor_actual_bonos_pesos = $precio_actual * $bono['cantidad_bonos'];
-                                    $valor_actual_consolidado_bonos_pesos += $valor_actual_bonos_pesos;
-                                }
-                                $rendimiento_consolidado_bonos_pesos = $valor_actual_consolidado_bonos_pesos - $valor_inicial_consolidado_bonos_pesos;
-                                $rentabilidad_consolidado_bonos_pesos = (($valor_actual_consolidado_bonos_pesos - $valor_inicial_consolidado_bonos_pesos) / $valor_inicial_consolidado_bonos_pesos) * 100;
+                                if (!empty($bonos)) {
+                                    foreach ($bonos as $bono) {
+                                        $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
+                                        $valor_inicial_bonos_pesos = $bono['precio_bonos'] * $bono['cantidad_bonos'];
+                                        $valor_inicial_consolidado_bonos_pesos += $valor_inicial_bonos_pesos;
+                                        $valor_actual_bonos_pesos = $precio_actual * $bono['cantidad_bonos'];
+                                        $valor_actual_consolidado_bonos_pesos += $valor_actual_bonos_pesos;
+                                    }
+                                    if ($valor_inicial_consolidado_bonos_pesos != 0) {
+                                        $rendimiento_consolidado_bonos_pesos = $valor_actual_consolidado_bonos_pesos - $valor_inicial_consolidado_bonos_pesos;
+                                        $rentabilidad_consolidado_bonos_pesos = (($valor_actual_consolidado_bonos_pesos - $valor_inicial_consolidado_bonos_pesos) / $valor_inicial_consolidado_bonos_pesos) * 100;
+                                    } else {
+                                        $rendimiento_consolidado_bonos_pesos = 0;
+                                        $rentabilidad_consolidado_bonos_pesos = 0;
+                                    }
                                 ?>
-                                <tr>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_pesos)); ?></td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_pesos)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_pesos); ?></td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_pesos); ?></td>
-                                </tr>
+                                    <tr>
+                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_pesos)); ?></td>
+                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_pesos)); ?></td>
+                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_pesos); ?></td>
+                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_pesos); ?></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -732,46 +772,47 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </thead>
                             <tbody id="tabla-bonos-pesos">
                                 <?php
-                                $bonos = obtenerBonos($cliente_id);
-                                foreach ($bonos as $bono) {
-                                    $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
-                                    $valor_inicial_bonos_pesos = $bono['precio_bonos'] * $bono['cantidad_bonos'];
-                                    $valor_actual_bonos_pesos = $precio_actual * $bono['cantidad_bonos'];
-                                    $rendimiento_bonos_pesos = $valor_actual_bonos_pesos - $valor_inicial_bonos_pesos;
-                                    $rentabilidad_bonos_pesos = (($rendimiento_bonos_pesos) / $valor_inicial_bonos_pesos) * 100;
+                                if (!empty($bonos)) {
+                                    foreach ($bonos as $bono) {
+                                        $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
+                                        $valor_inicial_bonos_pesos = $bono['precio_bonos'] * $bono['cantidad_bonos'];
+                                        $valor_actual_bonos_pesos = $precio_actual * $bono['cantidad_bonos'];
+                                        $rendimiento_bonos_pesos = $valor_actual_bonos_pesos - $valor_inicial_bonos_pesos;
+                                        $rentabilidad_bonos_pesos = (($rendimiento_bonos_pesos) / $valor_inicial_bonos_pesos) * 100;
 
-                                    echo "<tr data-ticker='{$bono['ticker_bonos']}'>
-                                            <td>{$bono['ticker_bonos']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
-                                            <td>{$bono['cantidad_bonos']}</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bono['precio_bonos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_bonos_pesos)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_bonos_pesos)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_bonos_pesos) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_bonos_pesos) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                        <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_parcial_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-cart-arrow-down me-2'></i>Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_total_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-chart-pie me-2'></i>Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='#' onclick='eliminarBono(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                        echo "<tr data-ticker='{$bono['ticker_bonos']}'>
+                                        <td>{$bono['ticker_bonos']}</td>
+                                        <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
+                                        <td>{$bono['cantidad_bonos']}</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bono['precio_bonos'])) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_bonos_pesos)) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_bonos_pesos)) . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_bonos_pesos) . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_bonos_pesos) . "</td>
+                                        <td class='text-center'>
+                                            <div class='dropdown d-flex justify-content-center'>
+                                                <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                    <i class='fa-solid fa-bars'></i>
+                                                </button>
+                                                <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-minus-circle me-2'></i> Venta Parcial</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-times-circle me-2'></i> Venta Total</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='#' onclick='eliminarBono(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>";
+                                    }
                                 }
                                 ?>
                             </tbody>
@@ -798,28 +839,36 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </thead>
                             <tbody>
                                 <?php
-                                $bonos = obtenerBonos($cliente_id);
                                 $valor_inicial_consolidado_bonos_dolares = 0;
                                 $valor_actual_consolidado_bonos_dolares = 0;
                                 $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 
-                                foreach ($bonos as $bono) {
-                                    $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
-                                    $valor_compra_ccl = obtenerCCLCompraBonos($cliente_id, $bono['ticker_bonos']);
-                                    $valor_inicial_bonos_dolares = ($bono['precio_bonos'] * $bono['cantidad_bonos']) / $valor_compra_ccl;
-                                    $valor_inicial_consolidado_bonos_dolares += $valor_inicial_bonos_dolares;
-                                    $valor_actual_bonos_dolares = ($precio_actual * $bono['cantidad_bonos']) / $promedio_ccl;
-                                    $valor_actual_consolidado_bonos_dolares += $valor_actual_bonos_dolares;
-                                }
-                                $rendimiento_consolidado_bonos_dolares = $valor_actual_consolidado_bonos_dolares - $valor_inicial_consolidado_bonos_dolares;
-                                $rentabilidad_consolidado_bonos_dolares = (($valor_actual_consolidado_bonos_dolares - $valor_inicial_consolidado_bonos_dolares) / $valor_inicial_consolidado_bonos_dolares) * 100;
+                                if (!empty($bonos)) {
+                                    foreach ($bonos as $bono) {
+                                        $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
+                                        $valor_compra_ccl = obtenerCCLCompraBonos($cliente_id, $bono['ticker_bonos']);
+                                        $valor_inicial_bonos_dolares = ($bono['precio_bonos'] * $bono['cantidad_bonos']) / $valor_compra_ccl;
+                                        $valor_inicial_consolidado_bonos_dolares += $valor_inicial_bonos_dolares;
+                                        $valor_actual_bonos_dolares = ($precio_actual * $bono['cantidad_bonos']) / $promedio_ccl;
+                                        $valor_actual_consolidado_bonos_dolares += $valor_actual_bonos_dolares;
+                                    }
+                                    if ($valor_inicial_consolidado_bonos_dolares != 0) {
+                                        $rendimiento_consolidado_bonos_dolares = $valor_actual_consolidado_bonos_dolares - $valor_inicial_consolidado_bonos_dolares;
+                                        $rentabilidad_consolidado_bonos_dolares = (($valor_actual_consolidado_bonos_dolares - $valor_inicial_consolidado_bonos_dolares) / $valor_inicial_consolidado_bonos_dolares) * 100;
+                                    } else {
+                                        $rendimiento_consolidado_bonos_dolares = 0;
+                                        $rentabilidad_consolidado_bonos_dolares = 0;
+                                    }
                                 ?>
-                                <tr>
-                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_dolares)); ?></td>
-                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_dolares)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_dolares, 'u$s'); ?></td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_dolares); ?></td>
-                                </tr>
+                                    <tr>
+                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_dolares)); ?></td>
+                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_dolares)); ?></td>
+                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_dolares, 'u$s'); ?></td>
+                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_dolares); ?></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -847,57 +896,57 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th><!-- Valor CCL -->Hoy</th>
                                     <th><!-- Precio -->Compra</th>
                                     <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Compra</th>
-                                    <th><!-- Valor -->Hoy</th>
+                                    <th><!-- X -->Compra</th>
+                                    <th><!-- X -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-bonos-dolares">
                                 <?php
-                                $bonos = obtenerBonos($cliente_id);
-                                $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-                                foreach ($bonos as $bono) {
-                                    $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
-                                    $valor_compra_ccl = obtenerCCLCompraBonos($cliente_id, $bono['ticker_bonos']);
-                                    $precio_actual_dolares = $precio_actual / $promedio_ccl;
-                                    $valor_inicial_bonos_dolares = ($bono['precio_bonos'] * $bono['cantidad_bonos']) / $valor_compra_ccl;
-                                    $valor_actual_bonos_dolares = ($precio_actual * $bono['cantidad_bonos']) / $promedio_ccl;
-                                    $rendimiento_bonos_dolares = $valor_actual_bonos_dolares - $valor_inicial_bonos_dolares;
-                                    $rentabilidad_bonos_dolares = (($valor_actual_bonos_dolares - $valor_inicial_bonos_dolares) / $valor_inicial_bonos_dolares) * 100;
+                                if (!empty($bonos)) {
+                                    foreach ($bonos as $bono) {
+                                        $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
+                                        $valor_compra_ccl = obtenerCCLCompraBonos($cliente_id, $bono['ticker_bonos']);
+                                        $precio_actual_dolares = $precio_actual / $promedio_ccl;
+                                        $valor_inicial_bonos_dolares = ($bono['precio_bonos'] * $bono['cantidad_bonos']) / $valor_compra_ccl;
+                                        $valor_actual_bonos_dolares = ($precio_actual * $bono['cantidad_bonos']) / $promedio_ccl;
+                                        $rendimiento_bonos_dolares = $valor_actual_bonos_dolares - $valor_inicial_bonos_dolares;
+                                        $rentabilidad_bonos_dolares = (($valor_actual_bonos_dolares - $valor_inicial_bonos_dolares) / $valor_inicial_bonos_dolares) * 100;
 
-                                    echo "<tr data-ticker='{$bono['ticker_bonos']}'>
-                                            <td>{$bono['ticker_bonos']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
-                                            <td>{$bono['cantidad_bonos']}</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($bono['precio_bonos'] / $valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_bonos_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_bonos_dolares)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_bonos_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_bonos_dolares) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                        <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_parcial_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-cart-arrow-down me-2'></i>Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_total_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-chart-pie me-2'></i>Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='#' onclick='eliminarBono(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                        echo "<tr data-ticker='{$bono['ticker_bonos']}'>
+                                        <td>{$bono['ticker_bonos']}</td>
+                                        <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
+                                        <td>{$bono['cantidad_bonos']}</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($bono['precio_bonos'] / $valor_compra_ccl)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_bonos_dolares)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_bonos_dolares)) . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_bonos_dolares, 'u$s') . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_bonos_dolares) . "</td>
+                                        <td class='text-center'>
+                                            <div class='dropdown d-flex justify-content-center'>
+                                                <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                    <i class='fa-solid fa-bars'></i>
+                                                </button>
+                                                <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-minus-circle me-2'></i> Venta Parcial</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-times-circle me-2'></i> Venta Total</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
+                                                    </li>
+                                                    <li>
+                                                    <a class='dropdown-item' href='#' onclick='eliminarBono(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>";
+                                    }
                                 }
                                 ?>
                             </tbody>

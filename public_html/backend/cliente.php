@@ -1016,12 +1016,32 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><!-- $valor_inicial_consolidado_fondos_pesos --></td>
-                                    <td><!-- $valor_actual_consolidado_fondos_pesos --></td>
-                                    <td><!-- $rendimiento_consolidado_fondos_pesos --></td>
-                                    <td><!-- $rentabilidad_consolidado_fondos_pesos --></td>
+                                <?php
+                                $fondos = obtenerFondos($cliente_id);
+                                $valor_inicial_consolidado_fondos_pesos = 0;
+                                $valor_actual_consolidado_fondos_pesos = 0;
 
+                                foreach ($fondos as $fondo) {
+                                    $precio_actual = obtenerValorActualRavaFondos($fondo['ticker_fondos']);
+                                    $valor_inicial_fondos_pesos = $fondo['precio_fondos'] * $fondo['cantidad_fondos'];
+                                    $valor_inicial_consolidado_fondos_pesos += $valor_inicial_fondos_pesos;
+                                    $valor_actual_fondos_pesos = $precio_actual * $fondo['cantidad_fondos'];
+                                    $valor_actual_consolidado_fondos_pesos += $valor_actual_fondos_pesos;
+                                }
+
+                                $rendimiento_consolidado_fondos_pesos = 0;
+                                $rentabilidad_consolidado_fondos_pesos = 0;
+
+                                if ($valor_inicial_consolidado_fondos_pesos != 0) {
+                                    $rendimiento_consolidado_fondos_pesos = $valor_actual_consolidado_fondos_pesos - $valor_inicial_consolidado_fondos_pesos;
+                                    $rentabilidad_consolidado_fondos_pesos = (($valor_actual_consolidado_fondos_pesos - $valor_inicial_consolidado_fondos_pesos) / $valor_inicial_consolidado_fondos_pesos) * 100;
+                                }
+                                ?>
+                                <tr>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_fondos_pesos)); ?></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_fondos_pesos)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_pesos); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_pesos); ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1053,38 +1073,49 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody id="tabla-fondos-pesos">
-                                <tr data-ticker=''>
-                                    <td><!-- $ticker_fondos --></td>
-                                    <td><!-- $fecha_fondos --></td>
-                                    <td><!-- $cantidad_fondos --></td>
-                                    <td class='text-right'><!-- $precio_compra_fondos_pesos --></td>
-                                    <td class='text-right'><!-- $precio_actual_fondos_pesos --></td>
-                                    <td class='text-right'><!-- $valor_inicial_fondos_pesos --></td>
-                                    <td class='text-right'><!-- $valor_actual_fondos_pesos --></td>
-                                    <td class='text-right'><!-- $rendimiento_fondos_pesos --></td>
-                                    <td class='text-right'><!-- $rentabilidad_fondos_pesos --></td>
-                                    <td class='text-center'>
-                                        <div class='dropdown d-flex justify-content-center'>
-                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                <i class='fa-solid fa-bars'></i>
-                                            </button>
-                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                <li>
-                                                    <a class='dropdown-item' href='../funciones/venta_parcial_fondos.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
-                                                </li>
-                                                <li>
-                                                    <a class='dropdown-item' href='../funciones/venta_total_fondos.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-coins me-2'></i> Venta total</a>
-                                                </li>
-                                                <li>
-                                                    <a class='dropdown-item' href='../funciones/editar_compra_fondos.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
-                                                </li>
-                                                <li>
-                                                    <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <?php
+                                $fondos = obtenerFondos($cliente_id);
+                                foreach ($fondos as $fondo) {
+                                    $precio_actual = obtenerValorActualRavaFondos($fondo['ticker_fondos']);
+                                    $valor_inicial_fondos_pesos = $fondo['precio_fondos'] * $fondo['cantidad_fondos'];
+                                    $valor_actual_fondos_pesos = $precio_actual * $fondo['cantidad_fondos'];
+                                    $rendimiento_fondos_pesos = $valor_actual_fondos_pesos - $valor_inicial_fondos_pesos;
+                                    $rentabilidad_fondos_pesos = (($rendimiento_fondos_pesos) / $valor_inicial_fondos_pesos) * 100;
+
+                                    echo "<tr data-ticker='{$fondo['ticker_fondos']}'>
+                                            <td>{$fondo['ticker_fondos']}</td>
+                                            <td>" . htmlspecialchars(formatearFechaFondos($fondo['fecha_fondos'])) . "</td>
+                                            <td>{$fondo['cantidad_fondos']}</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondo['precio_fondos'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_fondos_pesos)) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_fondos_pesos)) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_fondos_pesos) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_fondos_pesos) . "</td>
+                                            <td class='text-center'>
+                                                <div class='dropdown d-flex justify-content-center'>
+                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                        <i class='fa-solid fa-bars'></i>
+                                                    </button>
+                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                        <li>
+                                                            <a class='dropdown-item' href='../funciones/venta_parcial_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-minus-circle me-2'></i> Venta Parcial</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class='dropdown-item' href='../funciones/venta_total_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-times-circle me-2'></i> Venta Total</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class='dropdown-item' href='../funciones/editar_compra_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-edit me-2'></i> Editar Compra</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class='dropdown-item' href='#' onclick='eliminarFondo(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>";
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -1109,12 +1140,34 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><!-- $valor_inicial_consolidado_fondos_dolares --></td>
-                                    <td><!-- $valor_actual_consolidado_fondos_dolares --></td>
-                                    <td><!-- $rendimiento_consolidado_fondos_dolares --></td>
-                                    <td><!-- $rentabilidad_consolidado_fondos_dolares --></td>
+                                <?php
+                                $fondos = obtenerFondos($cliente_id);
+                                $valor_inicial_consolidado_fondos_dolares = 0;
+                                $valor_actual_consolidado_fondos_dolares = 0;
+                                $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 
+                                foreach ($fondos as $fondo) {
+                                    $precio_actual = obtenerValorActualRavaFondos($fondo['ticker_fondos']);
+                                    $valor_compra_ccl = obtenerCCLCompraFondos($cliente_id, $fondo['ticker_fondos']);
+                                    $valor_inicial_fondos_dolares = ($fondo['precio_fondos'] * $fondo['cantidad_fondos']) / $valor_compra_ccl;
+                                    $valor_inicial_consolidado_fondos_dolares += $valor_inicial_fondos_dolares;
+                                    $valor_actual_fondos_dolares = ($precio_actual * $fondo['cantidad_fondos']) / $promedio_ccl;
+                                    $valor_actual_consolidado_fondos_dolares += $valor_actual_fondos_dolares;
+                                }
+
+                                $rendimiento_consolidado_fondos_dolares = 0;
+                                $rentabilidad_consolidado_fondos_dolares = 0;
+
+                                if ($valor_inicial_consolidado_fondos_dolares != 0) {
+                                    $rendimiento_consolidado_fondos_dolares = $valor_actual_consolidado_fondos_dolares - $valor_inicial_consolidado_fondos_dolares;
+                                    $rentabilidad_consolidado_fondos_dolares = (($valor_actual_consolidado_fondos_dolares - $valor_inicial_consolidado_fondos_dolares) / $valor_inicial_consolidado_fondos_dolares) * 100;
+                                }
+                                ?>
+                                <tr>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_fondos_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_fondos_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_dolares, 'u$s'); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_dolares); ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1149,42 +1202,59 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 </tr>
                             </thead>
                             <tbody id="tabla-fondos-dolares">
-                                <tr data-ticker=''>
-                                    <td><!-- $ticker_fondos --></td>
-                                    <td><!-- $fecha_fondos --></td>
-                                    <td><!-- $cantidad_fondos --></td>
-                                    <td class='text-right'><!-- $precio_compra_ccl_fondos_dolares --></td>
-                                    <td class='text-right'><!-- $precio_actual_ccl_fondos_dolares --></td>
-                                    <td class='text-right'><!-- $precio_compra_fondos_dolares --></td>
-                                    <td class='text-right'><!-- $precio_actual_fondos_dolares --></td>
-                                    <td class='text-right'><!-- $valor_inicial_fondos_dolares --></td>
-                                    <td class='text-right'><!-- $valor_actual_fondos_dolares --></td>
-                                    <td class='text-right'><!-- $rendimiento_fondos_dolares --></td>
-                                    <td class='text-right'><!-- $rentabilidad_fondos_dolares --></td>
-                                    <td class='text-center'>
-                                        <div class='dropdown d-flex justify-content-center'>
-                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                <i class='fa-solid fa-bars'></i>
-                                            </button>
-                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                <li>
-                                                    <a class='dropdown-item' href='../funciones/venta_parcial_fondos.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
-                                                </li>
-                                                <li>
-                                                    <a class='dropdown-item' href='../funciones/venta_total_fondos.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-coins me-2'></i> Venta total</a>
-                                                </li>
-                                                <li>
-                                                    <a class='dropdown-item' href='../funciones/editar_compra_fondos.php?cliente_id={$cliente_id}&ticker={$accion[' ticker']}'><i class='fa-solid fa-edit me-2'></i> Editar</a>
-                                                </li>
-                                                <li>
-                                                    <a class='dropdown-item' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
+                                <?php
+                                $fondos = obtenerFondos($cliente_id);
+                                $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+                                foreach ($fondos as $fondo) {
+                                    // pesos
+                                    $precio_actual = obtenerValorActualRavaFondos($fondo['ticker_fondos']);
+                                    $valor_inicial_fondos_pesos = $fondo['precio_fondos'] * $fondo['cantidad_fondos'];
+                                    $valor_actual_fondos_pesos = $precio_actual * $fondo['cantidad_fondos'];
+                                    // dolares
+                                    $valor_compra_ccl = obtenerCCLCompraFondos($cliente_id, $fondo['ticker_fondos']);
+                                    $precio_actual_dolares = $precio_actual / $promedio_ccl;
+                                    $valor_inicial_fondos_dolares = $valor_inicial_fondos_pesos / $valor_compra_ccl;
+                                    $valor_actual_fondos_dolares = $valor_actual_fondos_pesos / $promedio_ccl;
+                                    $rendimiento_fondos_dolares = $valor_actual_fondos_dolares - $valor_inicial_fondos_dolares;
+                                    $rentabilidad_fondos_dolares = (($valor_actual_fondos_dolares - $valor_inicial_fondos_dolares) / $valor_inicial_fondos_dolares) * 100;
 
+                                    echo "<tr data-ticker='{$fondo['ticker_fondos']}'>
+                                            <td>{$fondo['ticker_fondos']}</td>
+                                            <td>" . htmlspecialchars(formatearFechaFondos($fondo['fecha_fondos'])) . "</td>
+                                            <td>{$fondo['cantidad_fondos']}</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(obtenerCCLCompraFondos($cliente_id, $fondo['ticker_fondos'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($fondo['precio_fondos'] / $valor_compra_ccl)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_fondos_dolares)) . "</td>
+                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_fondos_dolares)) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_fondos_dolares, 'u$s') . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_fondos_dolares) . "</td>
+                                            <td class='text-center'>
+                                                <div class='dropdown d-flex justify-content-center'>
+                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                        <i class='fa-solid fa-bars'></i>
+                                                    </button>
+                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                        <li>
+                                                            <a class='dropdown-item' href='../funciones/venta_parcial_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-minus-circle me-2'></i> Venta Parcial</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class='dropdown-item' href='../funciones/venta_total_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-times-circle me-2'></i> Venta Total</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class='dropdown-item' href='../funciones/editar_compra_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-edit me-2'></i> Editar Compra</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class='dropdown-item' href='#' onclick='eliminarFondo(this)'><i class='fa-solid fa-trash me-2'></i> Eliminar</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>";
+                                }
+                                ?>
+                            </tbody>
                         </table>
                     </div>
                     <!-- Fin Completa Fondos Dólares -->

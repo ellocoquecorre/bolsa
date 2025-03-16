@@ -518,3 +518,182 @@ function calcularValorInicialConsolidadoFondos($fondos)
 }
 // Fin Fondos Consolidada
 //-- FIN FONDOS --//
+
+//-- TENENCIAS CONSOLIDADAS --//
+// Tenencia Acciones Pesos
+$acciones = obtenerAcciones($cliente_id);
+$valor_inicial_consolidado_acciones_pesos = 0;
+$valor_actual_consolidado_acciones_pesos = 0;
+
+foreach ($acciones as $accion) {
+    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+    $valor_inicial_consolidado_acciones_pesos += $valor_inicial_acciones_pesos;
+    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
+    $valor_actual_consolidado_acciones_pesos += $valor_actual_acciones_pesos;
+}
+
+$rendimiento_consolidado_acciones_pesos = 0;
+$rentabilidad_consolidado_acciones_pesos = 0;
+
+if ($valor_inicial_consolidado_acciones_pesos != 0) {
+    $rendimiento_consolidado_acciones_pesos = $valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos;
+    $rentabilidad_consolidado_acciones_pesos = (($valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos) / $valor_inicial_consolidado_acciones_pesos) * 100;
+}
+
+// Tenencia Acciones Dolares
+$acciones = obtenerAcciones($cliente_id);
+$valor_inicial_consolidado_acciones_dolares = 0;
+$valor_actual_consolidado_acciones_dolares = 0;
+$valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
+$promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+
+foreach ($acciones as $accion) {
+    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+    $valor_inicial_acciones_dolares = ($accion['precio'] * $accion['cantidad']) / $valor_compra_ccl;
+    $valor_inicial_consolidado_acciones_dolares += $valor_inicial_acciones_dolares;
+    $valor_actual_acciones_dolares = ($precio_actual * $accion['cantidad']) / $promedio_ccl;
+    $valor_actual_consolidado_acciones_dolares += $valor_actual_acciones_dolares;
+}
+
+$rendimiento_consolidado_acciones_dolares = 0;
+$rentabilidad_consolidado_acciones_dolares = 0;
+
+if ($valor_inicial_consolidado_acciones_dolares != 0) {
+    $rendimiento_consolidado_acciones_dolares = $valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares;
+    $rentabilidad_consolidado_acciones_dolares = (($valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares) / $valor_inicial_consolidado_acciones_dolares) * 100;
+}
+
+// Tenencia Cedear Pesos
+$cedear = obtenerCedear($cliente_id);
+$valor_inicial_consolidado_cedear_pesos = 0;
+$valor_actual_consolidado_cedear_pesos = 0;
+
+foreach ($cedear as $c) {
+    $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
+    $valor_inicial_cedear_pesos = $c['precio_cedear'] * $c['cantidad_cedear'];
+    $valor_inicial_consolidado_cedear_pesos += $valor_inicial_cedear_pesos;
+    $valor_actual_cedear_pesos = $precio_actual * $c['cantidad_cedear'];
+    $valor_actual_consolidado_cedear_pesos += $valor_actual_cedear_pesos;
+}
+
+$rendimiento_consolidado_cedear_pesos = 0;
+$rentabilidad_consolidado_cedear_pesos = 0;
+
+if ($valor_inicial_consolidado_cedear_pesos != 0) {
+    $rendimiento_consolidado_cedear_pesos = $valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos;
+    $rentabilidad_consolidado_cedear_pesos = (($valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos) / $valor_inicial_consolidado_cedear_pesos) * 100;
+}
+
+// Tenencia Cedear Dolares
+$cedear = obtenerCedear($cliente_id);
+$valor_inicial_consolidado_cedear_dolares = 0;
+$valor_actual_consolidado_cedear_dolares = 0;
+$promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+
+foreach ($cedear as $c) {
+    $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
+    $valor_compra_ccl = obtenerCCLCompraCedear($cliente_id, $c['ticker_cedear']);
+    $valor_inicial_cedear_dolares = ($c['precio_cedear'] * $c['cantidad_cedear']) / $valor_compra_ccl;
+    $valor_inicial_consolidado_cedear_dolares += $valor_inicial_cedear_dolares;
+    $valor_actual_cedear_dolares = ($precio_actual * $c['cantidad_cedear']) / $promedio_ccl;
+    $valor_actual_consolidado_cedear_dolares += $valor_actual_cedear_dolares;
+}
+
+$rendimiento_consolidado_cedear_dolares = 0;
+$rentabilidad_consolidado_cedear_dolares = 0;
+
+if ($valor_inicial_consolidado_cedear_dolares != 0) {
+    $rendimiento_consolidado_cedear_dolares = $valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares;
+    $rentabilidad_consolidado_cedear_dolares = (($valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares) / $valor_inicial_consolidado_cedear_dolares) * 100;
+}
+
+// Tenencia Bonos Pesos
+$bonos = obtenerBonos($cliente_id);
+$valor_inicial_consolidado_bonos_pesos = 0;
+$valor_actual_consolidado_bonos_pesos = 0;
+
+foreach ($bonos as $bono) {
+    $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
+    $valor_inicial_bonos_pesos = $bono['precio_bonos'] * $bono['cantidad_bonos'];
+    $valor_inicial_consolidado_bonos_pesos += $valor_inicial_bonos_pesos;
+    $valor_actual_bonos_pesos = $precio_actual * $bono['cantidad_bonos'];
+    $valor_actual_consolidado_bonos_pesos += $valor_actual_bonos_pesos;
+}
+
+$rendimiento_consolidado_bonos_pesos = 0;
+$rentabilidad_consolidado_bonos_pesos = 0;
+
+if ($valor_inicial_consolidado_bonos_pesos != 0) {
+    $rendimiento_consolidado_bonos_pesos = $valor_actual_consolidado_bonos_pesos - $valor_inicial_consolidado_bonos_pesos;
+    $rentabilidad_consolidado_bonos_pesos = (($valor_actual_consolidado_bonos_pesos - $valor_inicial_consolidado_bonos_pesos) / $valor_inicial_consolidado_bonos_pesos) * 100;
+}
+
+// Tenencia Bonos Dolares
+$bonos = obtenerBonos($cliente_id);
+$valor_inicial_consolidado_bonos_dolares = 0;
+$valor_actual_consolidado_bonos_dolares = 0;
+$promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+
+foreach ($bonos as $bono) {
+    $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
+    $valor_compra_ccl = obtenerCCLCompraBonos($cliente_id, $bono['ticker_bonos']);
+    $valor_inicial_bonos_dolares = ($bono['precio_bonos'] * $bono['cantidad_bonos']) / $valor_compra_ccl;
+    $valor_inicial_consolidado_bonos_dolares += $valor_inicial_bonos_dolares;
+    $valor_actual_bonos_dolares = ($precio_actual * $bono['cantidad_bonos']) / $promedio_ccl;
+    $valor_actual_consolidado_bonos_dolares += $valor_actual_bonos_dolares;
+}
+
+$rendimiento_consolidado_bonos_dolares = 0;
+$rentabilidad_consolidado_bonos_dolares = 0;
+
+if ($valor_inicial_consolidado_bonos_dolares != 0) {
+    $rendimiento_consolidado_bonos_dolares = $valor_actual_consolidado_bonos_dolares - $valor_inicial_consolidado_bonos_dolares;
+    $rentabilidad_consolidado_bonos_dolares = (($valor_actual_consolidado_bonos_dolares - $valor_inicial_consolidado_bonos_dolares) / $valor_inicial_consolidado_bonos_dolares) * 100;
+}
+
+// Tenencia Fondos Pesos
+$fondos = obtenerFondos($cliente_id);
+$valor_inicial_consolidado_fondos_pesos = 0;
+$valor_actual_consolidado_fondos_pesos = 0;
+
+foreach ($fondos as $fondo) {
+    $precio_actual = obtenerValorActualRavaFondos($fondo['ticker_fondos']);
+    $valor_inicial_fondos_pesos = $fondo['precio_fondos'] * $fondo['cantidad_fondos'];
+    $valor_inicial_consolidado_fondos_pesos += $valor_inicial_fondos_pesos;
+    $valor_actual_fondos_pesos = $precio_actual * $fondo['cantidad_fondos'];
+    $valor_actual_consolidado_fondos_pesos += $valor_actual_fondos_pesos;
+}
+
+$rendimiento_consolidado_fondos_pesos = 0;
+$rentabilidad_consolidado_fondos_pesos = 0;
+
+if ($valor_inicial_consolidado_fondos_pesos != 0) {
+    $rendimiento_consolidado_fondos_pesos = $valor_actual_consolidado_fondos_pesos - $valor_inicial_consolidado_fondos_pesos;
+    $rentabilidad_consolidado_fondos_pesos = (($valor_actual_consolidado_fondos_pesos - $valor_inicial_consolidado_fondos_pesos) / $valor_inicial_consolidado_fondos_pesos) * 100;
+}
+
+// Tenencia Fondos Dolares
+$fondos = obtenerFondos($cliente_id);
+$valor_inicial_consolidado_fondos_dolares = 0;
+$valor_actual_consolidado_fondos_dolares = 0;
+$promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+
+foreach ($fondos as $fondo) {
+    $precio_actual = obtenerValorActualRavaFondos($fondo['ticker_fondos']);
+    $valor_compra_ccl = obtenerCCLCompraFondos($cliente_id, $fondo['ticker_fondos']);
+    $valor_inicial_fondos_dolares = ($fondo['precio_fondos'] * $fondo['cantidad_fondos']) / $valor_compra_ccl;
+    $valor_inicial_consolidado_fondos_dolares += $valor_inicial_fondos_dolares;
+    $valor_actual_fondos_dolares = ($precio_actual * $fondo['cantidad_fondos']) / $promedio_ccl;
+    $valor_actual_consolidado_fondos_dolares += $valor_actual_fondos_dolares;
+}
+
+$rendimiento_consolidado_fondos_dolares = 0;
+$rentabilidad_consolidado_fondos_dolares = 0;
+
+if ($valor_inicial_consolidado_fondos_dolares != 0) {
+    $rendimiento_consolidado_fondos_dolares = $valor_actual_consolidado_fondos_dolares - $valor_inicial_consolidado_fondos_dolares;
+    $rentabilidad_consolidado_fondos_dolares = (($valor_actual_consolidado_fondos_dolares - $valor_inicial_consolidado_fondos_dolares) / $valor_inicial_consolidado_fondos_dolares) * 100;
+}
+
+//-- FIN TENENCIAS CONSOLIDADAS --//

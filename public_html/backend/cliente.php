@@ -82,61 +82,116 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     </div>
                 </div>
                 <!-- Fin Botones -->
+                <div class="row">
 
-                <!-- Resumen Pesos -->
-                <div id="tablaResumenPesos">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Acciones</th>
-                                    <th>Cedears</th>
-                                    <th>Bonos</th>
-                                    <th>Fondos</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Valor Inicial</td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_pesos)); ?></td>
-                                    <td>Cedears</td>
-                                    <td>Bonos</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Valor Actual</td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
-                                    <td>Cedears</td>
-                                    <td>Bonos</td>
-                                    <td>Fondos</td>
-                                </tr>
-                                <tr>
-                                    <td>Rendimiento</td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos); ?></td>
-                                    <td>Cedears</td>
-                                    <td>Bonos</td>
-                                    <td>Fondos</td>
-                                </tr>
-                                <tr>
-                                    <td>Rentabilidad</td>
-                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos); ?></td>
-                                    <td>Cedears</td>
-                                    <td>Bonos</td>
-                                    <td>Fondos</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <!-- Resumen -->
+                    <div class="col-6 text-center">
+
+                        <!-- Pesos -->
+                        <div id="tablaResumenPesos">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Acciones</th>
+                                            <th>Cedears</th>
+                                            <th>Bonos</th>
+                                            <th>Fondos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Valor Inicial</td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_pesos)); ?></td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_pesos)); ?></td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_pesos)); ?></td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_fondos_pesos)); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Valor Actual</td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_pesos)); ?></td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_pesos)); ?></td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_fondos_pesos)); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rendimiento</td>
+                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos); ?></td>
+                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_pesos); ?></td>
+                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_pesos); ?></td>
+                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_pesos); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rentabilidad</td>
+                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos); ?></td>
+                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_pesos); ?></td>
+                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_pesos); ?></td>
+                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_pesos); ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Fin Pesos -->
+
+                        <!-- Dólares -->
+                        <div id="tablaResumenDolares" class="d-none">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Acciones</th>
+                                            <th>Cedears</th>
+                                            <th>Bonos</th>
+                                            <th>Fondos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Valor Inicial</td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_dolares)); ?></td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_dolares)); ?></td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_dolares)); ?></td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_fondos_dolares)); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Valor Actual</td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_dolares)); ?></td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_dolares)); ?></td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_dolares)); ?></td>
+                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_fondos_dolares)); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rendimiento</td>
+                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares); ?></td>
+                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_dolares); ?></td>
+                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_dolares); ?></td>
+                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_dolares); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rentabilidad</td>
+                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_dolares); ?></td>
+                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_dolares); ?></td>
+                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_dolares); ?></td>
+                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_dolares); ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Fin Dólares -->
+
                     </div>
-                </div>
-                <!-- Fin Resumen Pesos -->
+                    <!-- Fin Resumen -->
 
-                <!-- Resumen Dólares -->
-                <div id="tablaResumenDolares" class="d-none">
-                    <p>dólares</p>
+                    <!-- Grafico -->
+                    <div class="col-6 text-center">
+                        <!-- insertar_acá -->
+                    </div>
+                    <!-- Fin Grafico -->
                 </div>
-                <!-- Fin Resumen Dólares -->
-
             </div>
         </div>
         <!-- FIN RESUMEN -->

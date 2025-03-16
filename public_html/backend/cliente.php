@@ -83,112 +83,100 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 </div>
                 <!-- Fin Botones -->
 
+                <hr class="linea-accion">
+
                 <!-- Pesos -->
                 <div id="tablaResumenPesos">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Valor Inicial</th>
-                                            <th>Valor Actual</th>
-                                            <th>Rendimiento</th>
-                                            <th>Rentabilidad</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><strong>Acciones</strong></td>
-                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_pesos)); ?></td>
-                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
-                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos); ?></td>
-                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos); ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Cedears</strong></td>
-                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_pesos)); ?></td>
-                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_pesos)); ?></td>
-                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_pesos); ?></td>
-                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_pesos); ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Bonos</strong></td>
-                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_pesos)); ?></td>
-                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_pesos)); ?></td>
-                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_pesos); ?></td>
-                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_pesos); ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Fondos</strong></td>
-                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_fondos_pesos)); ?></td>
-                                            <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_fondos_pesos)); ?></td>
-                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_pesos); ?></td>
-                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_pesos); ?></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-12">
-                            <canvas id="pieChart"></canvas>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Valor Inicial</th>
+                                    <th>Valor Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Acciones</strong></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_pesos)); ?></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cedears</strong></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_pesos)); ?></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_pesos)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_pesos); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_pesos); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bonos</strong></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_pesos)); ?></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_pesos)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_pesos); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_pesos); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fondos</strong></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_fondos_pesos)); ?></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_fondos_pesos)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_pesos); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_pesos); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <!-- Fin Pesos -->
 
                 <!-- Dolares -->
                 <div id="tablaResumenDolares" class="d-none">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Valor Inicial</th>
-                                            <th>Valor Actual</th>
-                                            <th>Rendimiento</th>
-                                            <th>Rentabilidad</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><strong>Acciones</strong></td>
-                                            <td>u$S <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_dolares)); ?></td>
-                                            <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_dolares)); ?></td>
-                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares, 'u$s'); ?></td>
-                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_dolares); ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Cedears</strong></td>
-                                            <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_dolares)); ?></td>
-                                            <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_dolares)); ?></td>
-                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_dolares, 'u$s'); ?></td>
-                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_dolares); ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Bonos</strong></td>
-                                            <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_dolares)); ?></td>
-                                            <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_dolares)); ?></td>
-                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_dolares, 'u$s'); ?></td>
-                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_dolares); ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Fondos</strong></td>
-                                            <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_fondos_dolares)); ?></td>
-                                            <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_fondos_dolares)); ?></td>
-                                            <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_dolares, 'u$s'); ?></td>
-                                            <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_dolares); ?></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-12">
-                            <canvas id="pieChart2"></canvas>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Valor Inicial</th>
+                                    <th>Valor Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Acciones</strong></td>
+                                    <td>u$S <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares, 'u$s'); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_dolares); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cedears</strong></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_dolares, 'u$s'); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_dolares); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bonos</strong></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_dolares, 'u$s'); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_dolares); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fondos</strong></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_fondos_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_fondos_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_dolares, 'u$s'); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_dolares); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <!-- Fin Dolares -->
@@ -1270,7 +1258,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <!-- FIN FOOTER -->
 
     <!-- JS -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -1281,56 +1268,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="../js/ingresar_efectivo.js"></script>
     <script src="../js/retirar_efectivo.js"></script>
     <script src="../js/valor_promedio_ccl.js"></script>
-
     <!-- FIN JS -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const ctx = document.getElementById('pieChart').getContext('2d');
-            const data = {
-                labels: ['Acciones', 'Cedears', 'Bonos', 'Fondos'],
-                datasets: [{
-                    data: [
-                        <?php echo $valor_actual_consolidado_acciones_pesos; ?>,
-                        <?php echo $valor_actual_consolidado_cedear_pesos; ?>,
-                        <?php echo $valor_actual_consolidado_bonos_pesos; ?>,
-                        <?php echo $valor_actual_consolidado_fondos_pesos; ?>
-                    ],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            };
 
-            const config = {
-                type: 'pie',
-                data: data,
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'left',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Distribución de Inversiones'
-                        }
-                    }
-                },
-            };
-
-            const pieChart = new Chart(ctx, config);
-        });
-    </script>
 </body>
 
 </html>

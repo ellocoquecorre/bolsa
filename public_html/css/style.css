@@ -336,3 +336,7 @@ form label {
   margin-left: 10px;
   vertical-align: middle;
 }
+#pieChart {
+  max-width: 400px;  /* Ajusta el ancho máximo */
+  max-height: 300px; /* Ajusta la altura máxima */
+}

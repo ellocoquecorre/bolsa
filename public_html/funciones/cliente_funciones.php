@@ -435,18 +435,19 @@ function formatearFechaFondos($fecha)
 // Precio Actual Fondos
 function obtenerValorActualRavaFondos($ticker_fondos)
 {
-    $url = "https://www.rava.com/perfil/$ticker_fondos";
+    $url = "https://www.fondosonline.com/Information/FundData?ticker=$ticker_fondos";
     $html = file_get_contents($url);
 
-    // Buscar el valor numérico después de ',&quot;ultimo&quot;:'
-    $pattern = '/,&quot;ultimo&quot;:([\d.]+)/';
+    // Buscar el valor numérico después de '<td>Último Precio:</td>\s*<td>'
+    $pattern = '/<td>Último Precio:<\/td>\s*<td>([\d.,]+)/';
     preg_match($pattern, $html, $matches);
 
     if (isset($matches[1])) {
         $valor = $matches[1];
-        // Formatear valor a número sin formato
-        $valor = str_replace(".", "", $valor); // Eliminar separador de miles
-        $valor = str_replace(",", ".", $valor); // Reemplazar coma decimal por punto
+        // Eliminar separador de miles
+        $valor = str_replace(".", "", $valor);
+        // Reemplazar coma decimal por punto
+        $valor = str_replace(",", ".", $valor);
         $valor = (float)$valor;
         return $valor;
     } else {

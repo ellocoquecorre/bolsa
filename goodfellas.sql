@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-03-2025 a las 21:41:49
+-- Tiempo de generación: 17-03-2025 a las 15:29:05
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,7 +42,10 @@ CREATE TABLE `acciones` (
 --
 
 INSERT INTO `acciones` (`id`, `cliente_id`, `ticker`, `cantidad`, `precio`, `fecha`, `ccl_compra`) VALUES
-(79, 1, 'ALUA', 100, 780.00, '2025-03-14', 1291.71);
+(79, 1, 'ALUA', 280, 893.00, '2025-01-02', 1186.83),
+(80, 1, 'BBAR', 29, 8570.00, '2025-01-02', 1186.83),
+(81, 1, 'BYMA', 484, 516.00, '2025-01-02', 1186.83),
+(82, 1, 'CRES', 160, 1560.00, '2025-01-02', 1186.83);
 
 -- --------------------------------------------------------
 
@@ -100,7 +103,7 @@ CREATE TABLE `balance` (
 --
 
 INSERT INTO `balance` (`id`, `cliente_id`, `efectivo`) VALUES
-(1, 1, 3982500.00),
+(1, 1, 960626.33),
 (2, 2, 3891580.00),
 (3, 3, 2982732.50);
 
@@ -125,7 +128,10 @@ CREATE TABLE `bonos` (
 --
 
 INSERT INTO `bonos` (`id`, `cliente_id`, `ticker_bonos`, `fecha_bonos`, `cantidad_bonos`, `precio_bonos`, `ccl_compra`) VALUES
-(5, 1, 'GD35', '2025-03-15', 10, 81050.00, 1291.71);
+(5, 1, 'GD35', '2025-01-02', 3, 81050.00, 1186.83),
+(6, 1, 'AE38', '2025-01-02', 3, 86500.00, 1186.83),
+(7, 1, 'AL29', '2025-01-02', 3, 96800.00, 1186.83),
+(8, 1, 'GD38', '2025-01-02', 3, 87000.00, 1186.83);
 
 -- --------------------------------------------------------
 
@@ -167,7 +173,10 @@ CREATE TABLE `cedear` (
 --
 
 INSERT INTO `cedear` (`id`, `cliente_id`, `ticker_cedear`, `fecha_cedear`, `cantidad_cedear`, `precio_cedear`, `ccl_compra_cedear`) VALUES
-(5, 1, 'AAPL', '2025-03-14', 10, 12900.00, 1291.71);
+(5, 1, 'AAPL', '2025-01-02', 19, 12900.00, 1186.83),
+(6, 1, 'AMZN', '2025-01-02', 139, 1795.00, 1186.83),
+(7, 1, 'BIDU', '2025-01-02', 28, 8850.00, 1186.83),
+(8, 1, 'JPM', '2025-01-02', 13, 18875.00, 1186.83);
 
 -- --------------------------------------------------------
 
@@ -229,6 +238,16 @@ CREATE TABLE `fondos` (
   `precio_fondos` decimal(10,2) NOT NULL,
   `ccl_compra` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `fondos`
+--
+
+INSERT INTO `fondos` (`id`, `cliente_id`, `ticker_fondos`, `fecha_fondos`, `cantidad_fondos`, `precio_fondos`, `ccl_compra`) VALUES
+(2, 1, 'BCPE06A', '2025-01-02', 350436, 0.71, 1186.83),
+(3, 1, 'IAMRECR', '2025-01-02', 3018, 82.83, 1186.83),
+(4, 1, 'ALGIIIA', '2025-01-02', 225986, 1.11, 1186.83),
+(5, 1, 'IAMRCAB', '2025-01-02', 4977, 50.23, 1186.83);
 
 -- --------------------------------------------------------
 
@@ -839,6 +858,316 @@ CREATE TABLE `ticker_fondos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Volcado de datos para la tabla `ticker_fondos`
+--
+
+INSERT INTO `ticker_fondos` (`id`, `ticker_fondos`, `company_name_fondos`) VALUES
+(1, 'ADBAICA', 'ADCAP Cobertura - Clase A\r'),
+(2, 'ADRDOB', 'ADCAP Ahorro Pesos - Clase B\r'),
+(3, 'ADRDOLA', 'ADCAP Ahorro Pesos - Clase A \r'),
+(4, 'ALADOFA', 'Allaria Dolar Ahorro - Clase A\r'),
+(5, 'ALADOFB', 'Allaria Dolar Ahorro - Clase B\r'),
+(6, 'ALADOLA', 'Allaria Dolar Dinamico - Clase A\r'),
+(7, 'ALAHORA', 'Allaria Ahorro - Clase A\r'),
+(8, 'ALAHORB', 'Allaria Ahorro - Clase B\r'),
+(9, 'ALAHPLA', 'Allaria Ahorro Plus - Clase A\r'),
+(10, 'ALAHPLB', 'Allaria Ahorro Plus - Clase B\r'),
+(11, 'ALDIVEA', 'Allaria Diversificado - Clase A\r'),
+(12, 'ALDIVEB', 'Allaria Diversificado - Clase B\r'),
+(13, 'ALDIVEC', 'Allaria Diversificado - Clase C\r'),
+(14, 'ALDOLPA', 'Allaria Dolar Ahorro Plus - Clase A\r'),
+(15, 'ALDOLPB', 'Allaria Dolar Ahorro Plus - Clase B\r'),
+(16, 'ALDOPLA', 'Allaria Dolar Global - Clase A\r'),
+(17, 'ALDOPLB', 'Allaria Dolar Global - Clase B\r'),
+(18, 'ALGIIIA', 'Allaria Agro - Clase A\r'),
+(19, 'ALGIIIB', 'Allaria Agro - Clase B\r'),
+(20, 'ALLAEQA', 'Allaria Equity Selection - Clase A\r'),
+(21, 'ALLAEQB', 'Allaria Equity Selection - Clase B\r'),
+(22, 'ALLARTA', 'Allaria Dolar Retorno Total - Clase A\r'),
+(23, 'ALLRDLC', 'Allaria Renta Dolar Ley 27260 - Clase C\r'),
+(24, 'ALRTAFA', 'Allaria Renta Fija - Clase A\r'),
+(25, 'ALRTAFB', 'Allaria Renta Fija - Clase B\r'),
+(26, 'ALRTAVA', 'Allaria Acciones - Clase A\r'),
+(27, 'ALRTAVB', 'Allaria Acciones - Clase B\r'),
+(28, 'ALRVIIA', 'Allaria Renta Mixta II - Clase A\r'),
+(29, 'ALRVIIB', 'Allaria Renta Mixta II - Clase B\r'),
+(30, 'AXAHORA', 'MAF Ahorro Pesos - Clase A\r'),
+(31, 'AXRFCOA', 'MAF Renta Fija Cobertura - Clase A\r'),
+(32, 'BAINGLA', 'Balanz Retorno Total - Clase A\r'),
+(33, 'BALADOA', 'Balanz Ahorro en Dolares - Clase A\r'),
+(34, 'BALADOB', 'Balanz Ahorro en Dolares - Clase B\r'),
+(35, 'BALMMIC', 'Balanz Institucional - Clase A\r'),
+(36, 'BALPE3DA', 'Balanz Performance III - Clase A\r'),
+(37, 'BALPE3DB', 'Balanz Performance III - Clase B\r'),
+(38, 'BALPIIA', 'Balanz Performance II - Clase A\r'),
+(39, 'BCAHORA', 'Balanz Capital Ahorro - Clase A\r'),
+(40, 'BCAHORB', 'Balanz Capital Ahorro - Clase B\r'),
+(41, 'BCMMUSDA', 'Balanz Money Market Usd - Clase A\r'),
+(42, 'BCPE06A', 'Balanz Soja - Clase A\r'),
+(43, 'BCRFDOA', 'Balanz Capital Renta Fija en Dolares - Clase A\r'),
+(44, 'BCRTAFA', 'Balanz Capital Renta Fija - Clase A\r'),
+(45, 'BCRTAFB', 'Balanz Capital Renta Fija - Clase B\r'),
+(46, 'BMACTAA', 'Bull Market Active Renta Fija Argentina - Clase A\r'),
+(47, 'BMACTAI', 'Bull Market Active Renta Fija Argentina - Clase B\r'),
+(48, 'BMFCBBA', 'Bull Market Smart Money Market - Clase B\r'),
+(49, 'BMSCPBR', 'Bull Market Smart Corto Plazo FCI - Clase B\r'),
+(50, 'BMSCPLA', 'Bull Market Smart Corto Plazo FCI - Clase A\r'),
+(51, 'BMSMMAA', 'Bull Market Smart Money Market - Clase A\r'),
+(52, 'BULMAAA', 'Bull Market Acciones Argentinas - Clase A\r'),
+(53, 'BULMAAB', 'Bull Market Acciones Argentinas - Clase B\r'),
+(54, 'BULMADA', 'Bull Market Ahorro Dolares FCI - Clase A\r'),
+(55, 'BULMADB', 'Bull Market Ahorro Dolares FCI - Clase B\r'),
+(56, 'BZCAAAA', 'Balanz Acciones - Clase A\r'),
+(57, 'BZCAAAB', 'Balanz Acciones - Clase B\r'),
+(58, 'CBESIDA', 'Compass Best Ideas - Clase A\r'),
+(59, 'CBESIDB', 'Compass Best Ideas - Clase B\r'),
+(60, 'CCREIIA', 'Compass Crecimiento II - Clase A\r'),
+(61, 'CCREIIB', 'Compass Crecimiento II - Clase B\r'),
+(62, 'CDEUARA', 'Consultatio Deuda Argentina - Clase A\r'),
+(63, 'CMAPRFA', 'CMA Performance - Clase A\r'),
+(64, 'CMAPRFB', 'CMA Performance - Clase B\r'),
+(65, 'CMAPROB', 'CMA Proteccion - Clase B\r'),
+(66, 'CMAPROT', 'CMA Proteccion - Clase A\r'),
+(67, 'CNXPOPA', 'ADCAP Pesos Plus - Clase A\r'),
+(68, 'COAHDOA', 'Compass Ahorro en Dolares - Clase A\r'),
+(69, 'COAHDOB', 'Compass Ahorro en Dolares - Clase B\r'),
+(70, 'COBALAT', 'Consultatio Balance Fund - Clase B\r'),
+(71, 'COGRLMF', 'Consultatio Acciones Argentina - Clase B\r'),
+(72, 'COHRFDA', 'Cohen Renta Fija Dolares - Clase A\r'),
+(73, 'COHRFDB', 'Cohen Renta Fija Dolares - Clase B\r'),
+(74, 'COIOLAC', 'ADCAP Acciones - Clase B\r'),
+(75, 'COMCREA', 'Compass Crecimiento FCI- Clase A\r'),
+(76, 'COMCREB', 'Compass Crecimiento FCI - Clase B\r'),
+(77, 'COMFSAF', 'Consultatio Deuda Argentina - Clase B\r'),
+(78, 'COMIAUS', 'Consultatio Multimercado III - Clase A\r'),
+(79, 'COMIBUS', 'Consultatio Multimercado III - Clase B\r'),
+(80, 'COMOPPA', 'Compass Opportunity - Clase A\r'),
+(81, 'COMOPPB', 'Compass Opportunity - Clase B\r'),
+(82, 'COMPEUA', 'Compass Ahorro - Clase A\r'),
+(83, 'COMPEUB', 'Compass Ahorro - Clase B\r'),
+(84, 'COMPLIA', 'Compass Liquidez - Clase A\r'),
+(85, 'COMPLIB', 'Compass Liquidez - Clase B\r'),
+(86, 'COMREFA', 'Compass Renta Fija - Clase A\r'),
+(87, 'COMREFB', 'Compass Renta Fija - Clase B\r'),
+(88, 'COMRF4A', 'Compass Renta Fija IV - Clase A\r'),
+(89, 'COMRF4B', 'Compass Renta Fija IV - Clase B\r'),
+(90, 'COMUSAA', 'Compass Renta Fija III - Clase A\r'),
+(91, 'COMUSAB', 'Compass Renta Fija III - Clase B\r'),
+(92, 'CONAAFA', 'Consultatio Acciones Argentina - Clase A\r'),
+(93, 'CONAARA', 'Consultatio Renta Fija Argentina - Clase A\r'),
+(94, 'CONAPAA', 'Consultatio Ahorro Plus Argentina - Clase A\r'),
+(95, 'CONAPAB', 'Consultatio Ahorro Plus Argentina - Clase B\r'),
+(96, 'CONBALA', 'Consultatio Balance Fund - Clase A\r'),
+(97, 'CONESTC', 'Consultatio Estrategia - Clase C\r'),
+(98, 'CONIOLA', 'ADCAP Acciones - Clase A\r'),
+(99, 'CONPPLB', 'ADCAP Pesos Plus - Clase B\r'),
+(100, 'CONRETB', 'ADCAP Moneda - Clase B\r'),
+(101, 'CONRETO', 'ADCAP Moneda - Clase A\r'),
+(102, 'CRTAFAA', 'ADCAP Renta Fija - Clase A\r'),
+(103, 'CRTAFAB', 'ADCAP Renta Fija - Clase B\r'),
+(104, 'CRTAFAI', 'Cohen Pesos - Clase B\r'),
+(105, 'CRTAFAM', 'Cohen Pesos - Clase A\r'),
+(106, 'CRTAFPA', 'Cohen Renta Fija Plus - Clase A\r'),
+(107, 'CRTAFPB', 'Cohen Renta Fija Plus - Clase B\r'),
+(108, 'CRTANAA', 'Consultatio Renta Nacional - Clase A\r'),
+(109, 'CRTANAB', 'Consultatio Renta Nacional - Clase B\r'),
+(110, 'DBSDMRA', 'MEGAQM Retorno Total - Clase A\r'),
+(111, 'DELFEIA', 'Delta Federal I - Clase A\r'),
+(112, 'DELFEIB', 'Delta Federal I - Clase B\r'),
+(113, 'DELPAIA', 'Delta Patrimonio I - Clase A\r'),
+(114, 'DELPAIB', 'Delta Patrimonio I - Clase B\r'),
+(115, 'DFSACCA', 'CMA Acciones - Clase A\r'),
+(116, 'DFSRPLA', 'CMA Renta Dolar - Clase A\r'),
+(117, 'DFSRPLB', 'CMA Renta Dolar - Clase B\r'),
+(118, 'DGEST8A', 'Delta Retorno Real - Clase A\r'),
+(119, 'DGEST8B', 'Delta Retorno Real - Clase B\r'),
+(120, 'FIACCA', 'FIMA Acciones - Clase A\r'),
+(121, 'FIACCB', 'FIMA Acciones - Clase B \r'),
+(122, 'FIAHPLA', 'FIMA Ahorro Plus - Clase A\r'),
+(123, 'FIAHPLB', 'FIMA Ahorro Plus - Clase B\r'),
+(124, 'FIAHPLC', 'FIMA Ahorro Plus - Clase C\r'),
+(125, 'FIAPBA', 'FIMA PB Acciones - Clase A \r'),
+(126, 'FIAPBB', 'FIMA PB Acciones - Clase B \r'),
+(127, 'FIAPESA', 'FIMA Ahorro Pesos - Clase A\r'),
+(128, 'FIAPESB', 'FIMA Ahorro Pesos - Clase B\r'),
+(129, 'FIAPESC', 'FIMA Ahorro Pesos - Clase C\r'),
+(130, 'FICAPLA', 'FIMA Capital Plus - Clase A\r'),
+(131, 'FICAPLB', 'FIMA Capital Plus - Clase B\r'),
+(132, 'FICAPLC', 'FIMA Capital Plus - Clase C\r'),
+(133, 'FIMAMPA', 'FIMA Premium - Clase A \r'),
+(134, 'FIMAMPB', 'FIMA Premium - Clase B\r'),
+(135, 'FIMIXIA', 'FIMA Mix I - Clase A \r'),
+(136, 'FIMIXIB', 'FIMA Mix I - Clase B \r'),
+(137, 'FIMIXIC', 'FIMA Mix I - Clase C \r'),
+(138, 'FIMREPA', 'FIMA Renta en Pesos - Clase A\r'),
+(139, 'FIMREPB', 'FIMA Renta en Pesos - Clase B\r'),
+(140, 'FIMREPC', 'FIMA Renta en Pesos - Clase C\r'),
+(141, 'FMIXIIA', 'FIMA Mix II - Clase A\r'),
+(142, 'FRTREDA', 'First Renta Dolares - Clase A\r'),
+(143, 'FRTREDB', 'First Renta Dolares - Clase B\r'),
+(144, 'FSTACCA', 'MEGAQM Acciones - Clase A\r'),
+(145, 'FSTACCB', 'MEGAQM Acciones - Clase B\r'),
+(146, 'FSTBALA', 'MEGAQM Balanceado - Clase A\r'),
+(147, 'FSTBALB', 'MEGAQM Balanceado - Clase B\r'),
+(148, 'FSTPESA', 'MEGAQM Pesos - Clase A\r'),
+(149, 'FSTPESB', 'MEGAQM Pesos - Clase B\r'),
+(150, 'FSTREMIA', 'First Renta Mixta I - Clase A\r'),
+(151, 'FSTREMIB', 'First Renta Mixta I - Clase B\r'),
+(152, 'FSTREMIIA', 'First Renta Mixta II - Clase A\r'),
+(153, 'FSTREMIIB', 'First Renta Mixta II - Clase B\r'),
+(154, 'FSTREPA', 'First Renta Pesos - Clase A\r'),
+(155, 'FSTREPB', 'First Renta Pesos - Clase B\r'),
+(156, 'FTSLFDN', 'SBS Latam - Clase A\r'),
+(157, 'FTSLJDN', 'SBS Latam - Clase B\r'),
+(158, 'GAALSGA', 'Galileo Sustentable - Clase A\r'),
+(159, 'GAAPYMB', 'Galileo Abierto Pymes - Clase B\r'),
+(160, 'GALACCI', 'Galileo Acciones - Clase A\r'),
+(161, 'GALAHOR', 'Galileo Ahorro - Clase A\r'),
+(162, 'GALGLBB', 'Galileo Ahorro Plus - Clase B\r'),
+(163, 'GALGLOB', 'Galileo Ahorro Plus - Clase A\r'),
+(164, 'GALIARA', 'Galileo Argentina - Clase A\r'),
+(165, 'GALIRFI', 'Galileo Renta Fija - Clase A\r'),
+(166, 'GALPESA', 'Galileo Pesos - Clase A\r'),
+(167, 'GALPESB', 'Galileo Pesos - Clase B\r'),
+(168, 'GAMMIIA', 'Galileo Multimercado II - Clase A\r'),
+(169, 'GAMMIIB', 'Galileo Multimercado II - Clase B\r'),
+(170, 'GAMULTIA', 'Galileo Multi-Strategy - Clase A\r'),
+(171, 'GPSLATA', 'Quiron Latam - Clase A\r'),
+(172, 'GPSSAVA', 'Quiron Savings - Clase A\r'),
+(173, 'GPSSAVB', 'Quiron Savings - Clase B\r'),
+(174, 'IAMAHPB', 'IAM Ahorro Pesos - Clase B\r'),
+(175, 'IAMAHPE', 'IAM Ahorro Pesos - Clase A\r'),
+(176, 'IAMRCAA', 'IAM Renta Capital - Clase A\r'),
+(177, 'IAMRCAB', 'IAM Renta Capital - Clase B\r'),
+(178, 'IAMRDOA', 'IAM Renta Dolares - Clase A\r'),
+(179, 'IAMRDOB', 'IAM Renta Dolares - Clase B\r'),
+(180, 'IAMRECB', 'IAM Renta Crecimiento - Clase B\r'),
+(181, 'IAMRECR', 'IAM Renta Crecimiento - Clase A\r'),
+(182, 'IAMREPB', 'IAM Renta Plus - Clase B\r'),
+(183, 'IAMREPL', 'IAM Renta Plus - Clase A\r'),
+(184, 'IEBAHPA', 'IEB Ahorro Plus - Clase A\r'),
+(185, 'IEBAHPB', 'IEB Ahorro Plus - Clase B\r'),
+(186, 'IEBMULA', 'IEB Multiestrategia - Clase A\r'),
+(187, 'IEBMULB', 'IEB Multiestrategia - Clase B\r'),
+(188, 'IEBRFDA', 'IEB Renta Fija Dolar - Clase A\r'),
+(189, 'IEBRFDB', 'IEB Renta Fija Dolar - Clase B\r'),
+(190, 'IEBRFJA', 'IEB Renta Fija - Clase A\r'),
+(191, 'IEBRFJB', 'IEB Renta Fija - Clase B\r'),
+(192, 'IEBVALA', 'IEB Value - Clase A\r'),
+(193, 'IEIAAA', 'IEB Ahorro - Clase A\r'),
+(194, 'IEIABAC', 'IEB Ahorro - Clase B\r'),
+(195, 'INTACCA', 'Integrae Acciones - Clase A\r'),
+(196, 'INTACCB', 'Integrae Acciones - Clase B\r'),
+(197, 'MAFACCA', 'MAF Acciones Argentina - Clase A\r'),
+(198, 'MAFACCB', 'MAF Acciones Argentina - Clase B\r'),
+(199, 'MAFMMKA', 'MAF Money Market - Clase A\r'),
+(200, 'MAFMMKB', 'MAF Money Market - Clase B\r'),
+(201, 'MAFPPLA', 'MAF Pesos Plus - Clase A\r'),
+(202, 'MAFPPLB', 'MAF Pesos Plus - Clase B\r'),
+(203, 'MEGAAHA', 'MEGAQM Ahorro - Clase A\r'),
+(204, 'MEGAAHB', 'MEGAQM Ahorro - Clase B\r'),
+(205, 'MGCORA2', 'MEGAQM Latam Corporativo - Clase A\r'),
+(206, 'MGRFUSA', 'MEGAQM Corporativo Dolares - Clase A\r'),
+(207, 'MGRFUSB', 'MEGAQM Corporativo Dolares - Clase B\r'),
+(208, 'MIDOALA', 'MEGAQM Liquidez Dolar - Clase A\r'),
+(209, 'MIDOALB', 'MEGAQM Liquidez Dolar - Clase B\r'),
+(210, 'MIFIPRO', 'Megainver Abierto Pymes - Clase B\r'),
+(211, 'MILATMA', 'MEGAQM Renta Fija Latam - Clase A\r'),
+(212, 'MILATMB', 'MEGAQM Renta Fija Latam - Clase B\r'),
+(213, 'MIRTMXA', 'MEGAQM Renta Mixta - Clase A\r'),
+(214, 'MIRTMXB', 'MEGAQM Renta Mixta- Clase B\r'),
+(215, 'MRTAFCA', 'MEGAQM Cobertura - Clase A\r'),
+(216, 'MRTAFCB', 'MEGAQM Cobertura - Clase B\r'),
+(217, 'PKTCAPA', 'Parakeet Capital Plus - Clase A\r'),
+(218, 'PKTCAPB', 'Parakeet Capital Plus - Clase B\r'),
+(219, 'PKTINCA', 'Parakeet Income - Clase A\r'),
+(220, 'PKTINCB', 'Parakeet Income - Clase B\r'),
+(221, 'PKTPESA', 'Parakeet Pesos - Clase A\r'),
+(222, 'PKTPESB', 'Parakeet Pesos - Clase B\r'),
+(223, 'PKTRNTA', 'Parakeet Renta Pesos - Clase A\r'),
+(224, 'PKTRNTB', 'Parakeet Renta Pesos - Clase B\r'),
+(225, 'QTOTALA', 'MEGAQM Retorno Absoluto - Clase A\r'),
+(226, 'QTOTALB', 'MEGAQM Retorno Absoluto - Clase B\r'),
+(227, 'QUDEARA', 'MEGAQM Provincial - Clase A\r'),
+(228, 'QUDEARB', 'MEGAQM Provincial - Clase B\r'),
+(229, 'RJDAC2A', 'Delta Recursos Naturales - Clase A\r'),
+(230, 'RJDAC2B', 'Delta Recursos Naturales - Clase B\r'),
+(231, 'RJDAC3A', 'Delta Select - Clase A\r'),
+(232, 'RJDAC3B', 'Delta Select - Clase B\r'),
+(233, 'RJDAHOA', 'Delta Ahorro - Clase A\r'),
+(234, 'RJDAHOB', 'Delta Ahorro - Clase B\r'),
+(235, 'RJDBRAA', 'Delta Latinoamerica - Clase A\r'),
+(236, 'RJDBRAB', 'Delta Latinoamerica - Clase B\r'),
+(237, 'RJDELTA', 'Delta Acciones - Clase A\r'),
+(238, 'RJDELTB', 'Delta Acciones - Clase B\r'),
+(239, 'RJDEMAA', 'Delta Pyme - Clase A\r'),
+(240, 'RJDEMAP', 'Delta Pyme - Clase B\r'),
+(241, 'RJDGLOA', 'Delta Moneda - Clase A\r'),
+(242, 'RJDGLOB', 'Delta Moneda - Clase B\r'),
+(243, 'RJDMM3B', 'Delta Renta Dolares - Clase B\r'),
+(244, 'RJDRT3A', 'Delta Pesos - Clase A\r'),
+(245, 'RJDRT3B', 'Delta Pesos - Clase B\r'),
+(246, 'RJDRTAA', 'Delta Renta - Clase A\r'),
+(247, 'RJDRTAB', 'Delta Renta - Clase B\r'),
+(248, 'RJDUSAA', 'Delta Internacional - Clase A\r'),
+(249, 'RJDUSAB', 'Delta Internacional - Clase B\r'),
+(250, 'RJMMIIA', 'Delta Performance - Clase A\r'),
+(251, 'RJMMIIB', 'Delta Performance - Clase B\r'),
+(252, 'RJMULIA', 'Delta Multimercado I - Clase A\r'),
+(253, 'RJMULIB', 'Delta Multimercado I - Clase B\r'),
+(254, 'RJRTA4A', 'Delta Ahorro Plus - Clase A\r'),
+(255, 'RJRTA4B', 'Delta Ahorro Plus - Clase B\r'),
+(256, 'RTAPLUA', 'FIMA Renta Plus - Clase A\r'),
+(257, 'RTAPLUB', 'FIMA Renta Plus - Clase B\r'),
+(258, 'RTAPLUC', 'FIMA Renta Plus - Clase C\r'),
+(259, 'RTAVAAA', 'IAM Renta Variable - Clase A\r'),
+(260, 'RTAVAAB', 'IAM Renta Variable - Clase B\r'),
+(261, 'RTAVARA', 'Consultatio Renta Variable - Clase A\r'),
+(262, 'RTAVARB', 'Consultatio Renta Variable - Clase B\r'),
+(263, 'SBSACAB', 'SBS Acciones Argentina - Clase B\r'),
+(264, 'SBSACAR', 'SBS Acciones Argentina - Clase A\r'),
+(265, 'SBSAPEA', 'SBS Ahorro Pesos - Clase A\r'),
+(266, 'SBSAPEB', 'SBS Ahorro Pesos - Clase B\r'),
+(267, 'SBSBALA', 'SBS Balanceado - Clase A\r'),
+(268, 'SBSBALB', 'SBS Balanceado - Clase B\r'),
+(269, 'SBSCAPL', 'SBS Capital Plus - Clase A\r'),
+(270, 'SBSESTA', 'SBS Estrategia - Clase A\r'),
+(271, 'SBSESTB', 'SBS Estrategia - Clase B\r'),
+(272, 'SBSGRFA', 'SBS Gestion Renta Fija - Clase A\r'),
+(273, 'SBSGRFB', 'SBS Gestion Renta Fija - Clase B\r'),
+(274, 'SBSPESA', 'SBS Pesos Plus - Clase A\r'),
+(275, 'SBSPESB', 'SBS Pesos Plus - Clase B\r'),
+(276, 'SBSRPEA', 'SBS Renta Pesos - Clase A\r'),
+(277, 'SBSRTOA', 'SBS Retorno Total - Clase A\r'),
+(278, 'SCHARGA', 'Schroder Argentina - Clase A\r'),
+(279, 'SCHASIA', 'Schroder Infraestructura - Clase A\r'),
+(280, 'SCHASIB', 'Schroder Infraestructura - Clase B\r'),
+(281, 'SCHRTTA', 'Schroder Income - Clase A\r'),
+(282, 'SCHRTTB', 'Schroder Income - Clase B\r'),
+(283, 'SCRTAPA', 'Schroder Renta Plus - Clase A\r'),
+(284, 'SCRTAPL', 'Schroder Renta Plus - Clase B\r'),
+(285, 'SMIMRVA', 'Schroder Renta Variable - Clase A\r'),
+(286, 'TANDERB', 'Tandem Pesos Ahorro Plus - Clase B\r'),
+(287, 'TANDERI', 'Tandem Pesos Ahorro Plus - Clase A\r'),
+(288, 'TORONTR', 'Toronto Trust - Clase A\r'),
+(289, 'TORRTOA', 'Toronto Trust Retorno Total - Clase A\r'),
+(290, 'TORRTOB', 'Toronto Trust Retorno Total - Clase B\r'),
+(291, 'TOTCREA', 'Toronto Trust Crecimiento - Clase A\r'),
+(292, 'TOTCREB', 'Toronto Trust Crecimiento - Clase B\r'),
+(293, 'TRTINFA', 'Toronto Trust Global Capital - Clase A\r'),
+(294, 'TRTRDFA', 'Toronto Trust Renta Dolar - Clase A\r'),
+(295, 'TTAHORA', 'Toronto Trust Ahorro - Clase A\r'),
+(296, 'TTAHORB', 'Toronto Trust Ahorro - Clase B\r'),
+(297, 'TTARGAA', 'Toronto Trust Argentina 2021 - Clase A\r'),
+(298, 'TTARGAB', 'Toronto Trust Argentina 2021 - Clase B\r'),
+(299, 'TTMULTA', 'Toronto Trust Multimercado - Clase A\r'),
+(300, 'TTMULTB', 'Toronto Trust Multimercado - Clase B\r'),
+(301, 'TTRTFIA', 'Toronto Trust Renta Fija - Clase A\r'),
+(302, 'TTRTFPA', 'Toronto Trust Renta Fija Plus - Clase A\r'),
+(303, 'TTRTFPB', 'Toronto Trust Renta Fija Plus - Clase B\r'),
+(304, 'TTRUSTB', 'Toronto Trust - Clase B\r');
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -943,7 +1272,7 @@ ALTER TABLE `ticker_fondos`
 -- AUTO_INCREMENT de la tabla `acciones`
 --
 ALTER TABLE `acciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT de la tabla `acciones_historial`
@@ -967,7 +1296,7 @@ ALTER TABLE `balance`
 -- AUTO_INCREMENT de la tabla `bonos`
 --
 ALTER TABLE `bonos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `bonos_historial`
@@ -979,7 +1308,7 @@ ALTER TABLE `bonos_historial`
 -- AUTO_INCREMENT de la tabla `cedear`
 --
 ALTER TABLE `cedear`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `cedear_historial`
@@ -997,7 +1326,7 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `fondos`
 --
 ALTER TABLE `fondos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `fondos_historial`
@@ -1027,7 +1356,7 @@ ALTER TABLE `ticker_bonos`
 -- AUTO_INCREMENT de la tabla `ticker_fondos`
 --
 ALTER TABLE `ticker_fondos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=305;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

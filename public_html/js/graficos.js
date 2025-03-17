@@ -38,10 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
         configPesos
     );
 
-// Gráfico Rendimiento Pesos
+// Gráfico Rentabilidad Pesos
 
 
-// Gráfico Rendimiento Dólares  
+// Gráfico Rentabilidad Dólares
 
 
 });

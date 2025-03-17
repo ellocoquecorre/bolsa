@@ -309,104 +309,123 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                 <!-- Gráficos -->
                 <div class="row">
-                    <div class="col-lg-6 col-md-12">
-                        <h6 class="me-2 cartera posiciones mb-4">Pesos</h6>
-                        <div class="chart-container" style="position: relative; height:40vh; width:100%;">
-                            <canvas id="ChartPesos"></canvas>
+                    <div class="col-lg-4 col-md-12">
+                        <h6 class="me-2 cartera posiciones mb-4">Distribución de la tenencia</h6>
+                        <div class="chart-container" style="position: relative; height:50vh; width:100%;">
+                            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                <canvas id="ChartPesos"></canvas>
+                            </div>
+                            <!-- Agregar datos ocultos para el gráfico -->
+                            <span id="valor_actual_consolidado_acciones_pesos" style="display: none;"><?php echo $valor_actual_consolidado_acciones_pesos; ?></span>
+                            <span id="valor_actual_consolidado_cedear_pesos" style="display: none;"><?php echo $valor_actual_consolidado_cedear_pesos; ?></span>
+                            <span id="valor_actual_consolidado_bonos_pesos" style="display: none;"><?php echo $valor_actual_consolidado_bonos_pesos; ?></span>
+                            <span id="valor_actual_consolidado_fondos_pesos" style="display: none;"><?php echo $valor_actual_consolidado_fondos_pesos; ?></span>
+                            <span id="saldo_en_pesos" style="display: none;"><?php echo $saldo_en_pesos; ?></span>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-12">
-                        <h6 class="me-2 cartera posiciones mb-4">Dólares</h6>
-                        <div class="chart-container" style="position: relative; height:40vh; width:100%;">
-                            <canvas id="ChartDolares"></canvas>
+                    <div class="col-lg-4 col-md-12">
+                        <h6 class="me-2 cartera posiciones mb-4">Rentabilidad en Pesos</h6>
+                        <div class="chart-container" style="position: relative; height:50vh; width:100%;">
+                            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                <canvas id="ChartRentPesos"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <h6 class="me-2 cartera posiciones mb-4">Rentabilidad en Dólares</h6>
+                        <div class="chart-container" style="position: relative; height:50vh; width:100%;">
+                            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                <canvas id="ChartRentDolares"></canvas>
+                            </div>
                         </div>
                     </div>
                     <!-- Fin Gráficos -->
-
                 </div>
+
             </div>
-            <!-- FIN TOTAL -->
+        </div>
+        <!-- FIN TOTAL -->
 
-            <hr class="mod">
+        <hr class="mod">
 
-            <!-- ACCIONES -->
-            <div class="col-12 text-center">
-                <div class="container-fluid my-4 efectivo" id="acciones">
-                    <h5 class="me-2 cartera titulo-botones mb-4">Acciones</h5>
+        <!-- ACCIONES -->
+        <div class="col-12 text-center">
+            <div class="container-fluid my-4 efectivo" id="acciones">
+                <h5 class="me-2 cartera titulo-botones mb-4">Acciones</h5>
 
-                    <!-- Botones -->
-                    <div class="text-start">
-                        <div class="btn-group mb-3" role="group">
-                            <button id="btnAccionesPesos" class="btn btn-custom ver active">Posición en Pesos</button>
-                            <button id="btnAccionesDolares" class="btn btn-custom ver">Posición en Dólares</button>
-                        </div>
+                <!-- Botones -->
+                <div class="text-start">
+                    <div class="btn-group mb-3" role="group">
+                        <button id="btnAccionesPesos" class="btn btn-custom ver active">Posición en Pesos</button>
+                        <button id="btnAccionesDolares" class="btn btn-custom ver">Posición en Dólares</button>
                     </div>
-                    <!-- Fin Botones -->
+                </div>
+                <!-- Fin Botones -->
+
+                <hr class="linea-accion">
+
+                <!-- Acciones Pesos -->
+                <div id="tablaAccionesPesos">
+
+                    <!-- Consolidada Acciones Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Valor Total Inicial</th>
+                                    <th>Valor Total Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_pesos)); ?></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Fin Consolidada Acciones Pesos -->
 
                     <hr class="linea-accion">
 
-                    <!-- Acciones Pesos -->
-                    <div id="tablaAccionesPesos">
+                    <!-- Completa Acciones Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Hoy</th>
+                                    <th><!-- Valor -->Compra</th>
+                                    <th><!-- Valor -->Hoy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-acciones-pesos">
+                                <?php
+                                $acciones = obtenerAcciones($cliente_id);
+                                foreach ($acciones as $accion) {
+                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
+                                    $rendimiento_acciones_pesos = $valor_actual_acciones_pesos - $valor_inicial_acciones_pesos;
+                                    $rentabilidad_acciones_pesos = (($rendimiento_acciones_pesos) / $valor_inicial_acciones_pesos) * 100;
 
-                        <!-- Consolidada Acciones Pesos -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Valor Total Inicial</th>
-                                        <th>Valor Total Actual</th>
-                                        <th>Rendimiento</th>
-                                        <th>Rentabilidad</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_pesos)); ?></td>
-                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
-                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos); ?></td>
-                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos); ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Consolidada Acciones Pesos -->
-
-                        <hr class="linea-accion">
-
-                        <!-- Completa Acciones Pesos -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                        <th colspan="2">Valor Unitario</th>
-                                        <th colspan="2">Valor total</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
-                                        <th rowspan="2"></th>
-                                    </tr>
-                                    <tr>
-                                        <th><!-- Precio -->Compra</th>
-                                        <th><!-- Precio -->Hoy</th>
-                                        <th><!-- Valor -->Compra</th>
-                                        <th><!-- Valor -->Hoy</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabla-acciones-pesos">
-                                    <?php
-                                    $acciones = obtenerAcciones($cliente_id);
-                                    foreach ($acciones as $accion) {
-                                        $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                        $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
-                                        $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
-                                        $rendimiento_acciones_pesos = $valor_actual_acciones_pesos - $valor_inicial_acciones_pesos;
-                                        $rentabilidad_acciones_pesos = (($rendimiento_acciones_pesos) / $valor_inicial_acciones_pesos) * 100;
-
-                                        echo "<tr data-ticker='{$accion['ticker']}'>
+                                    echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
                                             <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
                                             <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
@@ -441,88 +460,88 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                 </div>
                                             </td>
                                         </tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Completa Acciones Pesos -->
-
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- Fin Acciones Pesos -->
+                    <!-- Fin Completa Acciones Pesos -->
 
-                    <!-- Acciones Dólares -->
-                    <div id="tablaAccionesDolares" class="d-none">
+                </div>
+                <!-- Fin Acciones Pesos -->
 
-                        <!-- Consolidada Acciones Dólares -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Valor Total Inicial</th>
-                                        <th>Valor Total Actual</th>
-                                        <th>Rendimiento</th>
-                                        <th>Rentabilidad</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_dolares)); ?></td>
-                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_dolares)); ?></td>
-                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares, 'u$s'); ?></td>
-                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_dolares); ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Consolidada Acciones Dólares -->
+                <!-- Acciones Dólares -->
+                <div id="tablaAccionesDolares" class="d-none">
 
-                        <hr class="linea-accion">
+                    <!-- Consolidada Acciones Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Valor Total Inicial</th>
+                                    <th>Valor Total Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares, 'u$s'); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_dolares); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Fin Consolidada Acciones Dólares -->
 
-                        <!-- Completa Acciones Dólares -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                        <th colspan="2">Dólar CCL</th>
-                                        <th colspan="2">Valor Unitario</th>
-                                        <th colspan="2">Valor total</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
-                                        <th rowspan="2"></th>
-                                    </tr>
-                                    <tr>
-                                        <th><!-- Valor CCL -->Compra</th>
-                                        <th><!-- Valor CCL -->Hoy</th>
-                                        <th><!-- Precio -->Compra</th>
-                                        <th><!-- Precio -->Hoy</th>
-                                        <th><!-- X -->Compra</th>
-                                        <th><!-- X -->Hoy</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabla-acciones-dolares">
-                                    <?php
-                                    $acciones = obtenerAcciones($cliente_id);
-                                    foreach ($acciones as $accion) {
-                                        // pesos
-                                        $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                        $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
-                                        $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
-                                        // dolares
-                                        $valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
-                                        $precio_actual_dolares = $precio_actual / $promedio_ccl;
-                                        $valor_inicial_acciones_dolares = $valor_inicial_acciones_pesos / $valor_compra_ccl;
-                                        $valor_actual_acciones_dolares = $valor_actual_acciones_pesos / $promedio_ccl;
-                                        $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
-                                        $rentabilidad_acciones_dolares = (($valor_actual_acciones_dolares - $valor_inicial_acciones_dolares) / $valor_inicial_acciones_dolares) * 100;
+                    <hr class="linea-accion">
+
+                    <!-- Completa Acciones Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="2">Dólar CCL</th>
+                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th><!-- Valor CCL -->Compra</th>
+                                    <th><!-- Valor CCL -->Hoy</th>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Hoy</th>
+                                    <th><!-- X -->Compra</th>
+                                    <th><!-- X -->Hoy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-acciones-dolares">
+                                <?php
+                                $acciones = obtenerAcciones($cliente_id);
+                                foreach ($acciones as $accion) {
+                                    // pesos
+                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
+                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
+                                    // dolares
+                                    $valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
+                                    $precio_actual_dolares = $precio_actual / $promedio_ccl;
+                                    $valor_inicial_acciones_dolares = $valor_inicial_acciones_pesos / $valor_compra_ccl;
+                                    $valor_actual_acciones_dolares = $valor_actual_acciones_pesos / $promedio_ccl;
+                                    $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
+                                    $rentabilidad_acciones_dolares = (($valor_actual_acciones_dolares - $valor_inicial_acciones_dolares) / $valor_inicial_acciones_dolares) * 100;
 
 
-                                        echo "<tr data-ticker='{$accion['ticker']}'>
+                                    echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
                                             <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
                                             <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
@@ -559,111 +578,111 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                 </div>
                                             </td>
                                         </tr>";
-                                    }
-                                    ?>
-                                </tbody>
+                                }
+                                ?>
+                            </tbody>
 
-                            </table>
-                        </div>
-                        <!-- Fin Completa Acciones Dólares -->
-
+                        </table>
                     </div>
-                    <!-- Fin Acciones Dólares -->
-
-                    <hr class="linea-accion">
-
-                    <!-- Comprar Acciones -->
-                    <div class="text-start">
-                        <a href="../funciones/compra_acciones.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
-                            <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
-                        </a>
-                    </div>
-                    <!-- Fin Comprar Acciones -->
+                    <!-- Fin Completa Acciones Dólares -->
 
                 </div>
+                <!-- Fin Acciones Dólares -->
+
+                <hr class="linea-accion">
+
+                <!-- Comprar Acciones -->
+                <div class="text-start">
+                    <a href="../funciones/compra_acciones.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
+                        <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
+                    </a>
+                </div>
+                <!-- Fin Comprar Acciones -->
+
             </div>
-            <!-- FIN ACCIONES -->
+        </div>
+        <!-- FIN ACCIONES -->
 
-            <hr class="mod">
+        <hr class="mod">
 
-            <!-- CEDEAR -->
-            <div class="col-12 text-center">
-                <div class="container-fluid my-4 efectivo" id="cedear">
-                    <h5 class="me-2 cartera titulo-botones mb-4">Cedear</h5>
+        <!-- CEDEAR -->
+        <div class="col-12 text-center">
+            <div class="container-fluid my-4 efectivo" id="cedear">
+                <h5 class="me-2 cartera titulo-botones mb-4">Cedear</h5>
 
-                    <!-- Botones -->
-                    <div class="text-start">
-                        <div class="btn-group mb-3" role="group">
-                            <button id="btnCedearPesos" class="btn btn-custom ver active">Posición en Pesos</button>
-                            <button id="btnCedearDolares" class="btn btn-custom ver">Posición en Dólares</button>
-                        </div>
+                <!-- Botones -->
+                <div class="text-start">
+                    <div class="btn-group mb-3" role="group">
+                        <button id="btnCedearPesos" class="btn btn-custom ver active">Posición en Pesos</button>
+                        <button id="btnCedearDolares" class="btn btn-custom ver">Posición en Dólares</button>
                     </div>
-                    <!-- Fin Botones -->
+                </div>
+                <!-- Fin Botones -->
+
+                <hr class="linea-accion">
+
+                <!-- Cedear Pesos -->
+                <div id="tablaCedearPesos">
+
+                    <!-- Consolidada Cedear Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Valor Total Inicial</th>
+                                    <th>Valor Total Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_pesos)); ?></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_pesos)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_pesos); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_pesos); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Fin Consolidada Cedear Pesos -->
 
                     <hr class="linea-accion">
 
-                    <!-- Cedear Pesos -->
-                    <div id="tablaCedearPesos">
+                    <!-- Completa Cedear Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Hoy</th>
+                                    <th><!-- Valor -->Compra</th>
+                                    <th><!-- Valor -->Hoy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-cedear-pesos">
+                                <?php
+                                $cedear = obtenerCedear($cliente_id);
+                                foreach ($cedear as $c) {
+                                    $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
+                                    $valor_inicial_cedear_pesos = $c['precio_cedear'] * $c['cantidad_cedear'];
+                                    $valor_actual_cedear_pesos = $precio_actual * $c['cantidad_cedear'];
+                                    $rendimiento_cedear_pesos = $valor_actual_cedear_pesos - $valor_inicial_cedear_pesos;
+                                    $rentabilidad_cedear_pesos = (($rendimiento_cedear_pesos) / $valor_inicial_cedear_pesos) * 100;
 
-                        <!-- Consolidada Cedear Pesos -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Valor Total Inicial</th>
-                                        <th>Valor Total Actual</th>
-                                        <th>Rendimiento</th>
-                                        <th>Rentabilidad</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_pesos)); ?></td>
-                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_pesos)); ?></td>
-                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_pesos); ?></td>
-                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_pesos); ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Consolidada Cedear Pesos -->
-
-                        <hr class="linea-accion">
-
-                        <!-- Completa Cedear Pesos -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                        <th colspan="2">Valor Unitario</th>
-                                        <th colspan="2">Valor total</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
-                                        <th rowspan="2"></th>
-                                    </tr>
-                                    <tr>
-                                        <th><!-- Precio -->Compra</th>
-                                        <th><!-- Precio -->Hoy</th>
-                                        <th><!-- Valor -->Compra</th>
-                                        <th><!-- Valor -->Hoy</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabla-cedear-pesos">
-                                    <?php
-                                    $cedear = obtenerCedear($cliente_id);
-                                    foreach ($cedear as $c) {
-                                        $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
-                                        $valor_inicial_cedear_pesos = $c['precio_cedear'] * $c['cantidad_cedear'];
-                                        $valor_actual_cedear_pesos = $precio_actual * $c['cantidad_cedear'];
-                                        $rendimiento_cedear_pesos = $valor_actual_cedear_pesos - $valor_inicial_cedear_pesos;
-                                        $rentabilidad_cedear_pesos = (($rendimiento_cedear_pesos) / $valor_inicial_cedear_pesos) * 100;
-
-                                        echo "<tr data-ticker='{$c['ticker_cedear']}'>
+                                    echo "<tr data-ticker='{$c['ticker_cedear']}'>
                                             <td>{$c['ticker_cedear']}</td>
                                             <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
                                             <td class='text-right'>" . htmlspecialchars(formatear_numero($c['cantidad_cedear'])) . "</td>
@@ -698,84 +717,84 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                 </div>
                                             </td>
                                         </tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Completa Cedear Pesos -->
-
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- Fin Cedear Pesos -->
+                    <!-- Fin Completa Cedear Pesos -->
 
-                    <!-- Cedear Dólares -->
-                    <div id="tablaCedearDolares" class="d-none">
+                </div>
+                <!-- Fin Cedear Pesos -->
 
-                        <!-- Consolidada Cedear Dólares -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Valor Total Inicial</th>
-                                        <th>Valor Total Actual</th>
-                                        <th>Rendimiento</th>
-                                        <th>Rentabilidad</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_dolares)); ?></td>
-                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_dolares)); ?></td>
-                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_dolares, 'u$s'); ?></td>
-                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_dolares); ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Consolidada Cedear Dólares -->
+                <!-- Cedear Dólares -->
+                <div id="tablaCedearDolares" class="d-none">
 
-                        <hr class="linea-accion">
+                    <!-- Consolidada Cedear Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Valor Total Inicial</th>
+                                    <th>Valor Total Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_cedear_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_cedear_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_dolares, 'u$s'); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_dolares); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Fin Consolidada Cedear Dólares -->
 
-                        <!-- Completa Cedear Dólares -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                        <th colspan="2">Dólar CCL</th>
-                                        <th colspan="2">Valor Unitario</th>
-                                        <th colspan="2">Valor total</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
-                                        <th rowspan="2"></th>
-                                    </tr>
-                                    <tr>
-                                        <th><!-- Valor CCL -->Compra</th>
-                                        <th><!-- Valor CCL -->Hoy</th>
-                                        <th><!-- Precio -->Compra</th>
-                                        <th><!-- Precio -->Hoy</th>
-                                        <th><!-- X -->Compra</th>
-                                        <th><!-- X -->Hoy</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabla-cedear-dolares">
-                                    <?php
-                                    $cedear = obtenerCedear($cliente_id);
-                                    $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-                                    foreach ($cedear as $c) {
-                                        $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
-                                        $valor_compra_ccl = obtenerCCLCompraCedear($cliente_id, $c['ticker_cedear']);
-                                        $precio_actual_dolares = $precio_actual / $promedio_ccl;
-                                        $valor_inicial_cedear_dolares = ($c['precio_cedear'] * $c['cantidad_cedear']) / $valor_compra_ccl;
-                                        $valor_actual_cedear_dolares = ($precio_actual * $c['cantidad_cedear']) / $promedio_ccl;
-                                        $rendimiento_cedear_dolares = $valor_actual_cedear_dolares - $valor_inicial_cedear_dolares;
-                                        $rentabilidad_cedear_dolares = (($valor_actual_cedear_dolares - $valor_inicial_cedear_dolares) / $valor_inicial_cedear_dolares) * 100;
+                    <hr class="linea-accion">
 
-                                        echo "<tr data-ticker='{$c['ticker_cedear']}'>
+                    <!-- Completa Cedear Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="2">Dólar CCL</th>
+                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th><!-- Valor CCL -->Compra</th>
+                                    <th><!-- Valor CCL -->Hoy</th>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Hoy</th>
+                                    <th><!-- X -->Compra</th>
+                                    <th><!-- X -->Hoy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-cedear-dolares">
+                                <?php
+                                $cedear = obtenerCedear($cliente_id);
+                                $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+                                foreach ($cedear as $c) {
+                                    $precio_actual = obtenerPrecioActualCedear($c['ticker_cedear']);
+                                    $valor_compra_ccl = obtenerCCLCompraCedear($cliente_id, $c['ticker_cedear']);
+                                    $precio_actual_dolares = $precio_actual / $promedio_ccl;
+                                    $valor_inicial_cedear_dolares = ($c['precio_cedear'] * $c['cantidad_cedear']) / $valor_compra_ccl;
+                                    $valor_actual_cedear_dolares = ($precio_actual * $c['cantidad_cedear']) / $promedio_ccl;
+                                    $rendimiento_cedear_dolares = $valor_actual_cedear_dolares - $valor_inicial_cedear_dolares;
+                                    $rentabilidad_cedear_dolares = (($valor_actual_cedear_dolares - $valor_inicial_cedear_dolares) / $valor_inicial_cedear_dolares) * 100;
+
+                                    echo "<tr data-ticker='{$c['ticker_cedear']}'>
                                             <td>{$c['ticker_cedear']}</td>
                                             <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
                                             <td class='text-right'>" . htmlspecialchars(formatear_numero($c['cantidad_cedear'])) . "</td>
@@ -812,110 +831,110 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                 </div>
                                             </td>
                                         </tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Completa Cedear Dólares -->
-
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- Fin Cedear Dólares -->
-
-                    <hr class="linea-accion">
-
-                    <!-- Comprar Cedear -->
-                    <div class="text-start">
-                        <a href="../funciones/compra_cedears.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
-                            <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
-                        </a>
-                    </div>
-                    <!-- Fin Comprar Cedear -->
+                    <!-- Fin Completa Cedear Dólares -->
 
                 </div>
+                <!-- Fin Cedear Dólares -->
+
+                <hr class="linea-accion">
+
+                <!-- Comprar Cedear -->
+                <div class="text-start">
+                    <a href="../funciones/compra_cedears.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
+                        <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
+                    </a>
+                </div>
+                <!-- Fin Comprar Cedear -->
+
             </div>
-            <!-- FIN CEDEAR -->
+        </div>
+        <!-- FIN CEDEAR -->
 
-            <hr class="mod">
+        <hr class="mod">
 
-            <!-- BONOS -->
-            <div class="col-12 text-center">
-                <div class="container-fluid my-4 efectivo" id="bonos">
-                    <h5 class="me-2 cartera titulo-botones mb-4">Bonos</h5>
+        <!-- BONOS -->
+        <div class="col-12 text-center">
+            <div class="container-fluid my-4 efectivo" id="bonos">
+                <h5 class="me-2 cartera titulo-botones mb-4">Bonos</h5>
 
-                    <!-- Botones -->
-                    <div class="text-start">
-                        <div class="btn-group mb-3" role="group">
-                            <button id="btnBonosPesos" class="btn btn-custom ver active">Posición en Pesos</button>
-                            <button id="btnBonosDolares" class="btn btn-custom ver">Posición en Dólares</button>
-                        </div>
+                <!-- Botones -->
+                <div class="text-start">
+                    <div class="btn-group mb-3" role="group">
+                        <button id="btnBonosPesos" class="btn btn-custom ver active">Posición en Pesos</button>
+                        <button id="btnBonosDolares" class="btn btn-custom ver">Posición en Dólares</button>
                     </div>
-                    <!-- Fin Botones -->
+                </div>
+                <!-- Fin Botones -->
+
+                <hr class="linea-accion">
+
+                <!-- Bonos Pesos -->
+                <div id="tablaBonosPesos">
+
+                    <!-- Consolidada Bonos Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Valor Total Inicial</th>
+                                    <th>Valor Total Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_pesos)); ?></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_pesos)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_pesos); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_pesos); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Fin Consolidada Bonos Pesos -->
 
                     <hr class="linea-accion">
 
-                    <!-- Bonos Pesos -->
-                    <div id="tablaBonosPesos">
+                    <!-- Completa Bonos Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Hoy</th>
+                                    <th><!-- Valor -->Compra</th>
+                                    <th><!-- Valor -->Hoy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-bonos-pesos">
+                                <?php
+                                $bonos = obtenerBonos($cliente_id);
+                                foreach ($bonos as $bono) {
+                                    $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
+                                    $valor_inicial_bonos_pesos = $bono['precio_bonos'] * $bono['cantidad_bonos'];
+                                    $valor_actual_bonos_pesos = $precio_actual * $bono['cantidad_bonos'];
+                                    $rendimiento_bonos_pesos = $valor_actual_bonos_pesos - $valor_inicial_bonos_pesos;
+                                    $rentabilidad_bonos_pesos = (($rendimiento_bonos_pesos) / $valor_inicial_bonos_pesos) * 100;
 
-                        <!-- Consolidada Bonos Pesos -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Valor Total Inicial</th>
-                                        <th>Valor Total Actual</th>
-                                        <th>Rendimiento</th>
-                                        <th>Rentabilidad</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_pesos)); ?></td>
-                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_pesos)); ?></td>
-                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_pesos); ?></td>
-                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_pesos); ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Consolidada Bonos Pesos -->
-
-                        <hr class="linea-accion">
-
-                        <!-- Completa Bonos Pesos -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                        <th colspan="2">Valor Unitario</th>
-                                        <th colspan="2">Valor total</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
-                                        <th rowspan="2"></th>
-                                    </tr>
-                                    <tr>
-                                        <th><!-- Precio -->Compra</th>
-                                        <th><!-- Precio -->Hoy</th>
-                                        <th><!-- Valor -->Compra</th>
-                                        <th><!-- Valor -->Hoy</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabla-bonos-pesos">
-                                    <?php
-                                    $bonos = obtenerBonos($cliente_id);
-                                    foreach ($bonos as $bono) {
-                                        $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
-                                        $valor_inicial_bonos_pesos = $bono['precio_bonos'] * $bono['cantidad_bonos'];
-                                        $valor_actual_bonos_pesos = $precio_actual * $bono['cantidad_bonos'];
-                                        $rendimiento_bonos_pesos = $valor_actual_bonos_pesos - $valor_inicial_bonos_pesos;
-                                        $rentabilidad_bonos_pesos = (($rendimiento_bonos_pesos) / $valor_inicial_bonos_pesos) * 100;
-
-                                        echo "<tr data-ticker='{$bono['ticker_bonos']}'>
+                                    echo "<tr data-ticker='{$bono['ticker_bonos']}'>
                                             <td>{$bono['ticker_bonos']}</td>
                                             <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
                                             <td class='text-right'>" . htmlspecialchars(formatear_numero($bono['cantidad_bonos'])) . "</td>
@@ -950,88 +969,88 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                 </div>
                                             </td>
                                         </tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Completa Bonos Pesos -->
-
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- Fin Bonos Pesos -->
+                    <!-- Fin Completa Bonos Pesos -->
 
-                    <!-- Bonos Dólares -->
-                    <div id="tablaBonosDolares" class="d-none">
+                </div>
+                <!-- Fin Bonos Pesos -->
 
-                        <!-- Consolidada Bonos Dólares -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Valor Total Inicial</th>
-                                        <th>Valor Total Actual</th>
-                                        <th>Rendimiento</th>
-                                        <th>Rentabilidad</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_dolares)); ?></td>
-                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_dolares)); ?></td>
-                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_dolares, 'u$s'); ?></td>
-                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_dolares); ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Consolidada Bonos Dólares -->
+                <!-- Bonos Dólares -->
+                <div id="tablaBonosDolares" class="d-none">
 
-                        <hr class="linea-accion">
+                    <!-- Consolidada Bonos Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Valor Total Inicial</th>
+                                    <th>Valor Total Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_bonos_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_bonos_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_dolares, 'u$s'); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_dolares); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Fin Consolidada Bonos Dólares -->
 
-                        <!-- Completa Bonos Dólares -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                        <th colspan="2">Dólar CCL</th>
-                                        <th colspan="2">Valor Unitario</th>
-                                        <th colspan="2">Valor total</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
-                                        <th rowspan="2"></th>
-                                    </tr>
-                                    <tr>
-                                        <th><!-- Valor CCL -->Compra</th>
-                                        <th><!-- Valor CCL -->Hoy</th>
-                                        <th><!-- Precio -->Compra</th>
-                                        <th><!-- Precio -->Hoy</th>
-                                        <th><!-- X -->Compra</th>
-                                        <th><!-- X -->Hoy</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabla-bonos-dolares">
-                                    <?php
-                                    $bonos = obtenerBonos($cliente_id);
-                                    $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-                                    foreach ($bonos as $bono) {
-                                        // pesos
-                                        $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
-                                        $valor_inicial_bonos_pesos = $bono['precio_bonos'] * $bono['cantidad_bonos'];
-                                        $valor_actual_bonos_pesos = $precio_actual * $bono['cantidad_bonos'];
-                                        // dolares
-                                        $valor_compra_ccl = obtenerCCLCompraBonos($cliente_id, $bono['ticker_bonos']);
-                                        $precio_actual_dolares = $precio_actual / $promedio_ccl;
-                                        $valor_inicial_bonos_dolares = $valor_inicial_bonos_pesos / $valor_compra_ccl;
-                                        $valor_actual_bonos_dolares = $valor_actual_bonos_pesos / $promedio_ccl;
-                                        $rendimiento_bonos_dolares = $valor_actual_bonos_dolares - $valor_inicial_bonos_dolares;
-                                        $rentabilidad_bonos_dolares = (($valor_actual_bonos_dolares - $valor_inicial_bonos_dolares) / $valor_inicial_bonos_dolares) * 100;
+                    <hr class="linea-accion">
 
-                                        echo "<tr data-ticker='{$bono['ticker_bonos']}'>
+                    <!-- Completa Bonos Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="2">Dólar CCL</th>
+                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th><!-- Valor CCL -->Compra</th>
+                                    <th><!-- Valor CCL -->Hoy</th>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Hoy</th>
+                                    <th><!-- X -->Compra</th>
+                                    <th><!-- X -->Hoy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-bonos-dolares">
+                                <?php
+                                $bonos = obtenerBonos($cliente_id);
+                                $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+                                foreach ($bonos as $bono) {
+                                    // pesos
+                                    $precio_actual = obtenerValorActualRava($bono['ticker_bonos']);
+                                    $valor_inicial_bonos_pesos = $bono['precio_bonos'] * $bono['cantidad_bonos'];
+                                    $valor_actual_bonos_pesos = $precio_actual * $bono['cantidad_bonos'];
+                                    // dolares
+                                    $valor_compra_ccl = obtenerCCLCompraBonos($cliente_id, $bono['ticker_bonos']);
+                                    $precio_actual_dolares = $precio_actual / $promedio_ccl;
+                                    $valor_inicial_bonos_dolares = $valor_inicial_bonos_pesos / $valor_compra_ccl;
+                                    $valor_actual_bonos_dolares = $valor_actual_bonos_pesos / $promedio_ccl;
+                                    $rendimiento_bonos_dolares = $valor_actual_bonos_dolares - $valor_inicial_bonos_dolares;
+                                    $rentabilidad_bonos_dolares = (($valor_actual_bonos_dolares - $valor_inicial_bonos_dolares) / $valor_inicial_bonos_dolares) * 100;
+
+                                    echo "<tr data-ticker='{$bono['ticker_bonos']}'>
                                             <td>{$bono['ticker_bonos']}</td>
                                             <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
                                             <td class='text-right'>" . htmlspecialchars(formatear_numero($bono['cantidad_bonos'])) . "</td>
@@ -1068,110 +1087,110 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                 </div>
                                             </td>
                                         </tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Completa Bonos Dólares -->
-
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- Fin Bonos Dólares -->
-
-                    <hr class="linea-accion">
-
-                    <!-- Comprar Bonos -->
-                    <div class="text-start">
-                        <a href="../funciones/compra_bonos.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
-                            <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
-                        </a>
-                    </div>
-                    <!-- Fin Comprar Bonos -->
+                    <!-- Fin Completa Bonos Dólares -->
 
                 </div>
+                <!-- Fin Bonos Dólares -->
+
+                <hr class="linea-accion">
+
+                <!-- Comprar Bonos -->
+                <div class="text-start">
+                    <a href="../funciones/compra_bonos.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
+                        <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
+                    </a>
+                </div>
+                <!-- Fin Comprar Bonos -->
+
             </div>
-            <!-- FIN BONOS -->
+        </div>
+        <!-- FIN BONOS -->
 
-            <hr class="mod">
+        <hr class="mod">
 
-            <!-- FONDOS -->
-            <div class="col-12 text-center">
-                <div class="container-fluid my-4 efectivo" id="fondos">
-                    <h5 class="me-2 cartera titulo-botones mb-4">Fondos</h5>
+        <!-- FONDOS -->
+        <div class="col-12 text-center">
+            <div class="container-fluid my-4 efectivo" id="fondos">
+                <h5 class="me-2 cartera titulo-botones mb-4">Fondos</h5>
 
-                    <!-- Botones -->
-                    <div class="text-start">
-                        <div class="btn-group mb-3" role="group">
-                            <button id="btnFondosPesos" class="btn btn-custom ver active">Posición en Pesos</button>
-                            <button id="btnFondosDolares" class="btn btn-custom ver">Posición en Dólares</button>
-                        </div>
+                <!-- Botones -->
+                <div class="text-start">
+                    <div class="btn-group mb-3" role="group">
+                        <button id="btnFondosPesos" class="btn btn-custom ver active">Posición en Pesos</button>
+                        <button id="btnFondosDolares" class="btn btn-custom ver">Posición en Dólares</button>
                     </div>
-                    <!-- Fin Botones -->
+                </div>
+                <!-- Fin Botones -->
+
+                <hr class="linea-accion">
+
+                <!-- Fondos Pesos -->
+                <div id="tablaFondosPesos">
+
+                    <!-- Consolidada Fondos Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Valor Total Inicial</th>
+                                    <th>Valor Total Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_fondos_pesos)); ?></td>
+                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_fondos_pesos)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_pesos); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_pesos); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Fin Consolidada Fondos Pesos -->
 
                     <hr class="linea-accion">
 
-                    <!-- Fondos Pesos -->
-                    <div id="tablaFondosPesos">
+                    <!-- Completa Fondos Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Hoy</th>
+                                    <th><!-- Valor -->Compra</th>
+                                    <th><!-- Valor -->Hoy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-fondos-pesos">
+                                <?php
+                                $fondos = obtenerFondos($cliente_id);
+                                foreach ($fondos as $fondo) {
+                                    $precio_actual = obtenerValorActualRavaFondos($fondo['ticker_fondos']);
+                                    $valor_inicial_fondos_pesos = $fondo['precio_fondos'] * $fondo['cantidad_fondos'];
+                                    $valor_actual_fondos_pesos = $precio_actual * $fondo['cantidad_fondos'];
+                                    $rendimiento_fondos_pesos = $valor_actual_fondos_pesos - $valor_inicial_fondos_pesos;
+                                    $rentabilidad_fondos_pesos = (($rendimiento_fondos_pesos) / $valor_inicial_fondos_pesos) * 100;
 
-                        <!-- Consolidada Fondos Pesos -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Valor Total Inicial</th>
-                                        <th>Valor Total Actual</th>
-                                        <th>Rendimiento</th>
-                                        <th>Rentabilidad</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_fondos_pesos)); ?></td>
-                                        <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_fondos_pesos)); ?></td>
-                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_pesos); ?></td>
-                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_pesos); ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Consolidada Fondos Pesos -->
-
-                        <hr class="linea-accion">
-
-                        <!-- Completa Fondos Pesos -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                        <th colspan="2">Valor Unitario</th>
-                                        <th colspan="2">Valor total</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
-                                        <th rowspan="2"></th>
-                                    </tr>
-                                    <tr>
-                                        <th><!-- Precio -->Compra</th>
-                                        <th><!-- Precio -->Hoy</th>
-                                        <th><!-- Valor -->Compra</th>
-                                        <th><!-- Valor -->Hoy</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabla-fondos-pesos">
-                                    <?php
-                                    $fondos = obtenerFondos($cliente_id);
-                                    foreach ($fondos as $fondo) {
-                                        $precio_actual = obtenerValorActualRavaFondos($fondo['ticker_fondos']);
-                                        $valor_inicial_fondos_pesos = $fondo['precio_fondos'] * $fondo['cantidad_fondos'];
-                                        $valor_actual_fondos_pesos = $precio_actual * $fondo['cantidad_fondos'];
-                                        $rendimiento_fondos_pesos = $valor_actual_fondos_pesos - $valor_inicial_fondos_pesos;
-                                        $rentabilidad_fondos_pesos = (($rendimiento_fondos_pesos) / $valor_inicial_fondos_pesos) * 100;
-
-                                        echo "<tr data-ticker='{$fondo['ticker_fondos']}'>
+                                    echo "<tr data-ticker='{$fondo['ticker_fondos']}'>
                                             <td>{$fondo['ticker_fondos']}</td>
                                             <td>" . htmlspecialchars(formatearFechaFondos($fondo['fecha_fondos'])) . "</td>
                                             <td class='text-right'>" . htmlspecialchars(formatear_numero($fondo['cantidad_fondos'])) . "</td>
@@ -1206,88 +1225,88 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                 </div>
                                             </td>
                                         </tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Completa Fondos Pesos -->
-
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- Fin Fondos Pesos -->
+                    <!-- Fin Completa Fondos Pesos -->
 
-                    <!-- Fondos Dólares -->
-                    <div id="tablaFondosDolares" class="d-none">
+                </div>
+                <!-- Fin Fondos Pesos -->
 
-                        <!-- Consolidada Fondos Dólares -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Valor Total Inicial</th>
-                                        <th>Valor Total Actual</th>
-                                        <th>Rendimiento</th>
-                                        <th>Rentabilidad</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_fondos_dolares)); ?></td>
-                                        <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_fondos_dolares)); ?></td>
-                                        <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_dolares, 'u$s'); ?></td>
-                                        <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_dolares); ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Consolidada Fondos Dólares -->
+                <!-- Fondos Dólares -->
+                <div id="tablaFondosDolares" class="d-none">
 
-                        <hr class="linea-accion">
+                    <!-- Consolidada Fondos Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Valor Total Inicial</th>
+                                    <th>Valor Total Actual</th>
+                                    <th>Rendimiento</th>
+                                    <th>Rentabilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_fondos_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_fondos_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_dolares, 'u$s'); ?></td>
+                                    <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_dolares); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Fin Consolidada Fondos Dólares -->
 
-                        <!-- Completa Fondos Dólares -->
-                        <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                        <th colspan="2">Dólar CCL</th>
-                                        <th colspan="2">Valor Unitario</th>
-                                        <th colspan="2">Valor total</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                        <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
-                                        <th rowspan="2"></th>
-                                    </tr>
-                                    <tr>
-                                        <th><!-- Valor CCL -->Compra</th>
-                                        <th><!-- Valor CCL -->Hoy</th>
-                                        <th><!-- Precio -->Compra</th>
-                                        <th><!-- Precio -->Hoy</th>
-                                        <th><!-- X -->Compra</th>
-                                        <th><!-- X -->Hoy</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabla-fondos-dolares">
-                                    <?php
-                                    $fondos = obtenerFondos($cliente_id);
-                                    $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-                                    foreach ($fondos as $fondo) {
-                                        // pesos
-                                        $precio_actual = obtenerValorActualRavaFondos($fondo['ticker_fondos']);
-                                        $valor_inicial_fondos_pesos = $fondo['precio_fondos'] * $fondo['cantidad_fondos'];
-                                        $valor_actual_fondos_pesos = $precio_actual * $fondo['cantidad_fondos'];
-                                        // dolares
-                                        $valor_compra_ccl = obtenerCCLCompraFondos($cliente_id, $fondo['ticker_fondos']);
-                                        $precio_actual_dolares = $precio_actual / $promedio_ccl;
-                                        $valor_inicial_fondos_dolares = $valor_inicial_fondos_pesos / $valor_compra_ccl;
-                                        $valor_actual_fondos_dolares = $valor_actual_fondos_pesos / $promedio_ccl;
-                                        $rendimiento_fondos_dolares = $valor_actual_fondos_dolares - $valor_inicial_fondos_dolares;
-                                        $rentabilidad_fondos_dolares = (($valor_actual_fondos_dolares - $valor_inicial_fondos_dolares) / $valor_inicial_fondos_dolares) * 100;
+                    <hr class="linea-accion">
 
-                                        echo "<tr data-ticker='{$fondo['ticker_fondos']}'>
+                    <!-- Completa Fondos Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th colspan="2">Dólar CCL</th>
+                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th><!-- Valor CCL -->Compra</th>
+                                    <th><!-- Valor CCL -->Hoy</th>
+                                    <th><!-- Precio -->Compra</th>
+                                    <th><!-- Precio -->Hoy</th>
+                                    <th><!-- X -->Compra</th>
+                                    <th><!-- X -->Hoy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-fondos-dolares">
+                                <?php
+                                $fondos = obtenerFondos($cliente_id);
+                                $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+                                foreach ($fondos as $fondo) {
+                                    // pesos
+                                    $precio_actual = obtenerValorActualRavaFondos($fondo['ticker_fondos']);
+                                    $valor_inicial_fondos_pesos = $fondo['precio_fondos'] * $fondo['cantidad_fondos'];
+                                    $valor_actual_fondos_pesos = $precio_actual * $fondo['cantidad_fondos'];
+                                    // dolares
+                                    $valor_compra_ccl = obtenerCCLCompraFondos($cliente_id, $fondo['ticker_fondos']);
+                                    $precio_actual_dolares = $precio_actual / $promedio_ccl;
+                                    $valor_inicial_fondos_dolares = $valor_inicial_fondos_pesos / $valor_compra_ccl;
+                                    $valor_actual_fondos_dolares = $valor_actual_fondos_pesos / $promedio_ccl;
+                                    $rendimiento_fondos_dolares = $valor_actual_fondos_dolares - $valor_inicial_fondos_dolares;
+                                    $rentabilidad_fondos_dolares = (($valor_actual_fondos_dolares - $valor_inicial_fondos_dolares) / $valor_inicial_fondos_dolares) * 100;
+
+                                    echo "<tr data-ticker='{$fondo['ticker_fondos']}'>
                                             <td>{$fondo['ticker_fondos']}</td>
                                             <td>" . htmlspecialchars(formatearFechaFondos($fondo['fecha_fondos'])) . "</td>
                                             <td class='text-right'>" . htmlspecialchars(formatear_numero($fondo['cantidad_fondos'])) . "</td>
@@ -1324,55 +1343,55 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                 </div>
                                             </td>
                                         </tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Fin Completa Fondos Dólares -->
-
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- Fin Fondos Dólares -->
-
-                    <hr class="linea-accion">
-
-                    <!-- Comprar Fondos -->
-                    <div class="text-start">
-                        <a href="../funciones/compra_fondos.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
-                            <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
-                        </a>
-                    </div>
-                    <!-- Fin Comprar Fondos -->
+                    <!-- Fin Completa Fondos Dólares -->
 
                 </div>
+                <!-- Fin Fondos Dólares -->
+
+                <hr class="linea-accion">
+
+                <!-- Comprar Fondos -->
+                <div class="text-start">
+                    <a href="../funciones/compra_fondos.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
+                        <i class="fa-solid fa-cart-shopping me-2"></i>Comprar
+                    </a>
+                </div>
+                <!-- Fin Comprar Fondos -->
+
             </div>
-            <!-- FIN FONDOS -->
-
-            <hr class="mod" style="margin-bottom: 80px;">
-
         </div>
-        <!-- FIN CONTENIDO -->
+        <!-- FIN FONDOS -->
 
-        <!-- FOOTER -->
-        <img id="fixed-image" src="../img/chorro.png" alt="Imagen Fija" />
-        <footer class="footer bg-light">
-            <div class="container">
-                <span class="text-muted">© GoodFellas Inc.</span>
-            </div>
-        </footer>
-        <!-- FIN FOOTER -->
+        <hr class="mod" style="margin-bottom: 80px;">
 
-        <!-- JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="../js/tooltip.js"></script>
-        <script src="../js/botones_pesos_dolares.js"></script>
-        <script src="../js/eliminar_acciones.js"></script>
-        <script src="../js/eliminar_cedears.js"></script>
-        <script src="../js/ingresar_efectivo.js"></script>
-        <script src="../js/retirar_efectivo.js"></script>
-        <!-- FIN JS -->
+    </div>
+    <!-- FIN CONTENIDO -->
+
+    <!-- FOOTER -->
+    <img id="fixed-image" src="../img/chorro.png" alt="Imagen Fija" />
+    <footer class="footer bg-light">
+        <div class="container">
+            <span class="text-muted">© GoodFellas Inc.</span>
+        </div>
+    </footer>
+    <!-- FIN FOOTER -->
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../js/tooltip.js"></script>
+    <script src="../js/botones_pesos_dolares.js"></script>
+    <script src="../js/eliminar_acciones.js"></script>
+    <script src="../js/eliminar_cedears.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/graficos.js"></script>
+    <!-- FIN JS -->
 
 </body>
 

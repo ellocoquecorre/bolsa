@@ -141,7 +141,7 @@ h5 {
   color: #fff !important;
 }
 .table-responsive {
-  overflow-x: visible;
+  overflow-x: auto;
 }
 
 .dropdown-menu {

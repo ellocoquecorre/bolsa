@@ -329,6 +329,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
                                 <canvas id="ChartRentPesos"></canvas>
                             </div>
+                            <!-- Datos ocultos para la rentabilidad en pesos -->
+                            <span id="rentabilidad_consolidado_acciones_pesos" style="display: none;"><?php echo $rentabilidad_consolidado_acciones_pesos; ?></span>
+                            <span id="rentabilidad_consolidado_cedear_pesos" style="display: none;"><?php echo $rentabilidad_consolidado_cedear_pesos; ?></span>
+                            <span id="rentabilidad_consolidado_bonos_pesos" style="display: none;"><?php echo $rentabilidad_consolidado_bonos_pesos; ?></span>
+                            <span id="rentabilidad_consolidado_fondos_pesos" style="display: none;"><?php echo $rentabilidad_consolidado_fondos_pesos; ?></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12">
@@ -337,6 +342,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
                                 <canvas id="ChartRentDolares"></canvas>
                             </div>
+                            <!-- Datos ocultos para la rentabilidad en dólares -->
+                            <span id="rentabilidad_consolidado_acciones_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_acciones_dolares; ?></span>
+                            <span id="rentabilidad_consolidado_cedear_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_cedear_dolares; ?></span>
+                            <span id="rentabilidad_consolidado_bonos_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_bonos_dolares; ?></span>
+                            <span id="rentabilidad_consolidado_fondos_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_fondos_dolares; ?></span>
                         </div>
                     </div>
                     <!-- Fin Gráficos -->

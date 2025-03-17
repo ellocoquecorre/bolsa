@@ -106,8 +106,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 $valor_compra_consolidado_historial_pesos = $valor_compra_consolidado_acciones_pesos + $valor_compra_consolidado_cedear_pesos + $valor_compra_consolidado_bonos_pesos + $valor_compra_consolidado_fondos_pesos;
                                 $valor_venta_consolidado_historial_pesos = $valor_venta_consolidado_acciones_pesos + $valor_venta_consolidado_cedear_pesos + $valor_venta_consolidado_bonos_pesos + $valor_venta_consolidado_fondos_pesos;
                                 $rendimiento_consolidado_historial_pesos = $valor_venta_consolidado_historial_pesos - $valor_compra_consolidado_historial_pesos;
-                                $rentabilidad_consolidado_historial_pesos = (($valor_venta_consolidado_historial_pesos - $valor_compra_consolidado_historial_pesos) / $valor_compra_consolidado_historial_pesos) * 100;
-                                ?>
+                                if ($valor_compra_consolidado_historial_pesos != 0) {
+                                    $rentabilidad_consolidado_historial_pesos = (($valor_venta_consolidado_historial_pesos - $valor_compra_consolidado_historial_pesos) / $valor_compra_consolidado_historial_pesos) * 100;
+                                } else {
+                                    $rentabilidad_consolidado_historial_pesos = 0; // O cualquier valor que consideres apropiado
+                                }                                ?>
                                 <tr>
                                     <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_historial_pesos)); ?></td>
                                     <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_venta_consolidado_historial_pesos)); ?></td>
@@ -191,8 +194,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 $valor_compra_consolidado_historial_dolares = $valor_compra_consolidado_acciones_dolares + $valor_compra_consolidado_cedear_dolares + $valor_compra_consolidado_bonos_dolares + $valor_compra_consolidado_fondos_dolares;
                                 $valor_venta_consolidado_historial_dolares = $valor_venta_consolidado_acciones_dolares + $valor_venta_consolidado_cedear_dolares + $valor_venta_consolidado_bonos_dolares + $valor_venta_consolidado_fondos_dolares;
                                 $rendimiento_consolidado_historial_dolares = $valor_venta_consolidado_historial_dolares - $valor_compra_consolidado_historial_dolares;
-                                $rentabilidad_consolidado_historial_dolares = (($valor_venta_consolidado_historial_dolares - $valor_compra_consolidado_historial_dolares) / $valor_compra_consolidado_historial_dolares) * 100;
-                                ?>
+                                if ($valor_compra_consolidado_historial_dolares != 0) {
+                                    $rentabilidad_consolidado_historial_dolares = (($valor_venta_consolidado_historial_dolares - $valor_compra_consolidado_historial_dolares) / $valor_compra_consolidado_historial_dolares) * 100;
+                                } else {
+                                    $rentabilidad_consolidado_historial_dolares = 0; // O cualquier valor que consideres apropiado
+                                }                                 ?>
                                 <tr>
                                     <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_historial_dolares)); ?></td>
                                     <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_venta_consolidado_historial_dolares)); ?></td>
@@ -222,7 +228,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             <tbody>
                                 <tr>
                                     <td><strong>Acciones</strong></td>
-                                    <td class='text-right'>u$S <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_acciones_dolares)); ?></td>
+                                    <td class='text-right'>u$s <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_acciones_dolares)); ?></td>
                                     <td class='text-right'>u$s <?php echo htmlspecialchars(formatear_dinero($valor_venta_consolidado_acciones_dolares)); ?></td>
                                     <td class='text-right'><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares, 'u$s'); ?></td>
                                     <td class='text-right'><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_dolares); ?></td>

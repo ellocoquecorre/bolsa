@@ -186,22 +186,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                         <td style="width: 50%;">Saldo en dólares: </td>
                                         <td style="width: 50%;">u$s <?php echo $saldo_en_dolares_formateado; ?></td>
                                     </tr>
-                                    <tr style="table-layout: fixed; width: 100%;">
-                                        <td colspan="2">
-                                            <div class="d-flex" style="justify-content: space-evenly;">
-                                                <div class=" align-items-center">
-                                                    <label for="ingresar_efectivo">Ingresar</label>
-                                                    <input type="text" id="ingresar_efectivo" placeholder="0,00" class="form-control d-inline-block" style="width: 150px; text-align: right;">
-                                                    <input type="button" value="+" class="btn btn-info btn-custom ver" id="ingresar_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresar efectivo" style="width: 40px;">
-                                                </div>
-                                                <div class=" align-items-center">
-                                                    <label for="retirar_efectivo">Retirar</label>
-                                                    <input type="text" id="retirar_efectivo" placeholder="0,00" class="form-control d-inline-block" style="width: 150px; text-align: right;">
-                                                    <input type="button" value="-" class="btn btn-info btn-custom eliminar" id="retirar_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar efectivo" style="width: 40px;">
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -311,22 +295,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <tr>
                                         <td style="width: 50%;">Saldo en dólares: </td>
                                         <td style="width: 50%;">u$s <?php echo $saldo_en_dolares_formateado; ?></td>
-                                    </tr>
-                                    <tr style="table-layout: fixed; width: 100%;">
-                                        <td colspan="2">
-                                            <div class="d-flex" style="justify-content: space-evenly;">
-                                                <div class=" align-items-center">
-                                                    <label for="ingresar_efectivo">Ingresar</label>
-                                                    <input type="text" id="ingresar_efectivo" placeholder="0,00" class="form-control d-inline-block" style="width: 150px; text-align: right;">
-                                                    <input type="button" value="+" class="btn btn-info btn-custom ver" id="ingresar_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresar efectivo" style="width: 40px;">
-                                                </div>
-                                                <div class=" align-items-center">
-                                                    <label for="retirar_efectivo">Retirar</label>
-                                                    <input type="text" id="retirar_efectivo" placeholder="0,00" class="form-control d-inline-block" style="width: 150px; text-align: right;">
-                                                    <input type="button" value="-" class="btn btn-info btn-custom eliminar" id="retirar_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar efectivo" style="width: 40px;">
-                                                </div>
-                                            </div>
-                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

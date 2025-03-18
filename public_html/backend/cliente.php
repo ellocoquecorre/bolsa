@@ -105,7 +105,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 $valor_inicial_consolidado_resumen_pesos = $valor_inicial_consolidado_acciones_pesos + $valor_inicial_consolidado_cedear_pesos + $valor_inicial_consolidado_bonos_pesos + $valor_inicial_consolidado_fondos_pesos;
                                 $valor_actual_consolidado_resumen_pesos = $valor_actual_consolidado_acciones_pesos + $valor_actual_consolidado_cedear_pesos + $valor_actual_consolidado_bonos_pesos + $valor_actual_consolidado_fondos_pesos;
                                 $rendimiento_consolidado_resumen_pesos = $valor_actual_consolidado_resumen_pesos - $valor_inicial_consolidado_resumen_pesos;
-                                $rentabilidad_consolidado_resumen_pesos = (($valor_actual_consolidado_resumen_pesos - $valor_inicial_consolidado_resumen_pesos) / $valor_inicial_consolidado_resumen_pesos) * 100;
+                                $rentabilidad_consolidado_resumen_pesos = ($valor_inicial_consolidado_resumen_pesos != 0) ? (($valor_actual_consolidado_resumen_pesos - $valor_inicial_consolidado_resumen_pesos) / $valor_inicial_consolidado_resumen_pesos) * 100 : 0;
                                 ?>
                                 <tr>
                                     <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_resumen_pesos)); ?></td>
@@ -215,7 +215,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 $valor_inicial_consolidado_resumen_dolares = $valor_inicial_consolidado_acciones_dolares + $valor_inicial_consolidado_cedear_dolares + $valor_inicial_consolidado_bonos_dolares + $valor_inicial_consolidado_fondos_dolares;
                                 $valor_actual_consolidado_resumen_dolares = $valor_actual_consolidado_acciones_dolares + $valor_actual_consolidado_cedear_dolares + $valor_actual_consolidado_bonos_dolares + $valor_actual_consolidado_fondos_dolares;
                                 $rendimiento_consolidado_resumen_dolares = $valor_actual_consolidado_resumen_dolares - $valor_inicial_consolidado_resumen_dolares;
-                                $rentabilidad_consolidado_resumen_dolares = (($valor_actual_consolidado_resumen_dolares - $valor_inicial_consolidado_resumen_dolares) / $valor_inicial_consolidado_resumen_dolares) * 100;
+                                $rentabilidad_consolidado_resumen_dolares = ($valor_inicial_consolidado_resumen_dolares != 0) ? (($valor_actual_consolidado_resumen_dolares - $valor_inicial_consolidado_resumen_dolares) / $valor_inicial_consolidado_resumen_dolares) * 100 : 0;
                                 ?>
                                 <tr>
                                     <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_resumen_dolares)); ?></td>

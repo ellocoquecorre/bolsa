@@ -546,14 +546,21 @@ if ($valor_inicial_consolidado_acciones_pesos != 0) {
 $acciones = obtenerAcciones($cliente_id);
 $valor_inicial_consolidado_acciones_dolares = 0;
 $valor_actual_consolidado_acciones_dolares = 0;
-$valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
 $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 
 foreach ($acciones as $accion) {
+    $valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
     $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-    $valor_inicial_acciones_dolares = ($accion['precio'] * $accion['cantidad']) / $valor_compra_ccl;
+
+    if ($accion['precio'] !== null && $accion['cantidad'] !== null && $valor_compra_ccl !== 0) {
+        $valor_inicial_acciones_dolares = ($accion['precio'] * $accion['cantidad']) / $valor_compra_ccl;
+        $valor_actual_acciones_dolares = ($precio_actual * $accion['cantidad']) / $promedio_ccl;
+    } else {
+        $valor_inicial_acciones_dolares = 0; // O maneja el caso según sea necesario
+        $valor_actual_acciones_dolares = 0; // O maneja el caso según sea necesario
+    }
+
     $valor_inicial_consolidado_acciones_dolares += $valor_inicial_acciones_dolares;
-    $valor_actual_acciones_dolares = ($precio_actual * $accion['cantidad']) / $promedio_ccl;
     $valor_actual_consolidado_acciones_dolares += $valor_actual_acciones_dolares;
 }
 

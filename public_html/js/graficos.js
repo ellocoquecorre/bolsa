@@ -50,8 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
         configPesos
     );
 
-    // Gráfico Rendimiento Pesos
-
     // Gráfico Rentabilidad Pesos
     const dataRentPesos = {
         labels: ['Acciones', 'Cedears', 'Bonos', 'Fondos'],
@@ -77,11 +75,24 @@ document.addEventListener('DOMContentLoaded', function () {
             plugins: {
                 legend: {
                     display: false // Ocultar la leyenda
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            const value = tooltipItem.raw.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                            return value + '%';
+                        }
+                    }
                 }
             },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
                 }
             }
         }
@@ -90,6 +101,62 @@ document.addEventListener('DOMContentLoaded', function () {
     const chartRentPesos = new Chart(
         document.getElementById('ChartRentPesos'),
         configRentPesos
+    );
+
+    // Gráfico Rendimiento Pesos
+    const dataRendPesos = {
+        labels: ['Acciones', 'Cedears', 'Bonos', 'Fondos'],
+        datasets: [{
+            data: [
+                parseFloat(document.getElementById('rendimiento_consolidado_acciones_pesos').textContent),
+                parseFloat(document.getElementById('rendimiento_consolidado_cedear_pesos').textContent),
+                parseFloat(document.getElementById('rendimiento_consolidado_bonos_pesos').textContent),
+                parseFloat(document.getElementById('rendimiento_consolidado_fondos_pesos').textContent)
+            ],
+            backgroundColor: function(context) {
+                const value = context.dataset.data[context.dataIndex];
+                return value > 0 ? 'green' : 'red';
+            },
+            borderWidth: 1
+        }]
+    };
+
+    const configRendPesos = {
+        type: 'bar',
+        data: dataRendPesos,
+        options: {
+            plugins: {
+                legend: {
+                    display: false // Ocultar la leyenda
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            const value = tooltipItem.raw.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                            return value;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            if (value >= 1000) {
+                                return (value / 1000) + 'k';
+                            }
+                            return value;
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    const chartRendPesos = new Chart(
+        document.getElementById('ChartRendPesos'),
+        configRendPesos
     );
     //-- FIN PESOS --//
 
@@ -119,11 +186,24 @@ document.addEventListener('DOMContentLoaded', function () {
             plugins: {
                 legend: {
                     display: false // Ocultar la leyenda
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            const value = tooltipItem.raw.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                            return value + '%';
+                        }
+                    }
                 }
             },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
                 }
             }
         }

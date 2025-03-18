@@ -196,7 +196,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                     <!-- Gráficos Pesos -->
                     <div class="row">
-                        <!-- Tenencia Pesos -->
+                        <!-- Activos Pesos -->
                         <div class="col-lg-4 col-md-12">
                             <h6 class="me-2 cartera posiciones mb-4">Distribución de activos</h6>
                             <div class="chart-container" style="position: relative; height:50vh; width:100%;">
@@ -211,14 +211,19 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 <span id="saldo_en_pesos" style="display: none;"><?php echo $saldo_en_pesos; ?></span>
                             </div>
                         </div>
-                        <!-- Fin Tenencia Pesos -->
+                        <!-- Fin Activos Pesos -->
                         <!-- Rendimiento Pesos -->
                         <div class="col-lg-4 col-md-12">
                             <h6 class="me-2 cartera posiciones mb-4">Rendimiento en Pesos</h6>
                             <div class="chart-container" style="position: relative; height:50vh; width:100%;">
                                 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                                    <!-- rendimiento_en_pesos -->
+                                    <canvas id="ChartRendimientoPesos"></canvas>
                                 </div>
+                                <!-- Agregar datos ocultos para el gráfico -->
+                                <span id="rendimiento_consolidado_acciones_pesos" style="display: none;"><?php echo $rendimiento_consolidado_acciones_pesos; ?></span>
+                                <span id="rendimiento_consolidado_cedear_pesos" style="display: none;"><?php echo $rendimiento_consolidado_cedear_pesos; ?></span>
+                                <span id="rendimiento_consolidado_bonos_pesos" style="display: none;"><?php echo $rendimiento_consolidado_bonos_pesos; ?></span>
+                                <span id="rendimiento_consolidado_fondos_pesos" style="display: none;"><?php echo $rendimiento_consolidado_fondos_pesos; ?></span>
                             </div>
                         </div>
                         <!-- Fin Rendimiento Pesos -->
@@ -354,16 +359,22 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                     <!-- Gráficos Dolares -->
                     <div class="row">
-                        <!-- Tenencia Dólares -->
+                        <!-- Activos Dólares -->
                         <div class="col-lg-4 col-md-12">
                             <h6 class="me-2 cartera posiciones mb-4">Distribución de activos</h6>
                             <div class="chart-container" style="position: relative; height:50vh; width:100%;">
                                 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                                    <!-- activos_dolares -->
+                                    <canvas id="ChartDolares"></canvas>
                                 </div>
+                                <!-- Agregar datos ocultos para el gráfico -->
+                                <span id="valor_actual_consolidado_acciones_dolares" style="display: none;"><?php echo $valor_actual_consolidado_acciones_dolares; ?></span>
+                                <span id="valor_actual_consolidado_cedear_dolares" style="display: none;"><?php echo $valor_actual_consolidado_cedear_dolares; ?></span>
+                                <span id="valor_actual_consolidado_bonos_dolares" style="display: none;"><?php echo $valor_actual_consolidado_bonos_dolares; ?></span>
+                                <span id="valor_actual_consolidado_fondos_dolares" style="display: none;"><?php echo $valor_actual_consolidado_fondos_dolares; ?></span>
+                                <span id="saldo_en_dolares" style="display: none;"><?php echo $saldo_en_dolares; ?></span>
                             </div>
                         </div>
-                        <!-- Fin Tenencia Dólares -->
+                        <!-- Fin Activos Dólares -->
                         <!-- Rendimiento Dólares -->
                         <div class="col-lg-4 col-md-12">
                             <h6 class="me-2 cartera posiciones mb-4">Rendimiento en Dólares</h6>

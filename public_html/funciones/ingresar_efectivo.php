@@ -113,11 +113,11 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                     </div>
                     <!-- Monto -->
                     <div class="row mb-3 align-items-center">
-                        <label for="precio" class="col-sm-2 col-form-label">Monto</label>
+                        <label for="monto" class="col-sm-2 col-form-label">Monto</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                <input type="text" step="0.01" class="form-control" id="precio" name="precio"
+                                <input type="text" step="0.01" class="form-control" id="monto" name="monto"
                                     placeholder="0,00" required>
                             </div>
                         </div>

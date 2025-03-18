@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-//-- PESOS --//
+    //-- PESOS --//
     // Datos para el gráfico en pesos
     const dataPesos = {
         labels: ['Acciones', 'Cedears', 'Bonos', 'Fondos', 'Efectivo'],
@@ -29,6 +29,16 @@ document.addEventListener('DOMContentLoaded', function () {
                             size: 16 // Tamaño de la fuente de las etiquetas
                         }
                     }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            const total = tooltipItem.dataset.data.reduce((acc, value) => acc + value, 0);
+                            const currentValue = tooltipItem.raw;
+                            const percentage = ((currentValue / total) * 100).toFixed(2).replace('.', ',');
+                            return percentage + '%';
+                        }
+                    }
                 }
             }
         }
@@ -39,6 +49,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('ChartPesos'),
         configPesos
     );
+
+    // Gráfico Rendimiento Pesos
 
     // Gráfico Rentabilidad Pesos
     const dataRentPesos = {
@@ -79,9 +91,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('ChartRentPesos'),
         configRentPesos
     );
-//-- FIN PESOS --//
+    //-- FIN PESOS --//
 
-//-- DOLARES --//
+    //-- DOLARES --//
     // Gráfico Rentabilidad Dólares
     const dataRentDolares = {
         labels: ['Acciones', 'Cedears', 'Bonos', 'Fondos'],
@@ -121,5 +133,5 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('ChartRentDolares'),
         configRentDolares
     );
-//-- FIN DOLARES --//
+    //-- FIN DOLARES --//
 });

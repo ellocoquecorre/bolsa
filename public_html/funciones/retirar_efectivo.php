@@ -1,3 +1,14 @@
+<?php
+// Incluir archivo de configuración
+require_once '../../config/config.php';
+
+// Incluir las funciones necesarias
+include '../funciones/cliente_funciones.php';
+
+// Obtener el id del cliente desde la URL
+$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -54,17 +65,17 @@
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy">Nombre</h4>
+            <h4 class="fancy"><?php echo $nombre_completo; ?></h4>
         </div>
         <!-- FIN TITULO -->
 
         <hr class="mod">
 
-        <!-- RETIRA EFECTIVO -->
+        <!-- INGRESA EFECTIVO -->
         <div class="col-4"></div>
         <div class="col-4 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones mb-4">Retirar Efectivo</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Ingresar Efectivo</h5>
                 <form id="compra_acciones" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
                     <!-- Saldo -->
@@ -101,7 +112,7 @@
             </div>
         </div>
         <div class="col-4"></div>
-        <!-- FIN RETIRA EFECTIVO -->
+        <!-- FIN INGRESA EFECTIVO -->
 
     </div>
     <!-- FIN CONTENIDO -->

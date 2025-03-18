@@ -1,3 +1,36 @@
+<?php
+// Incluir archivo de configuración
+require_once '../../config/config.php';
+require_once '../funciones/formato_dinero.php';
+
+// Obtener el id del cliente desde la URL
+$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+
+// Obtener los datos del cliente
+$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $cliente_id);
+$stmt->execute();
+$stmt->bind_result($nombre, $apellido);
+$stmt->fetch();
+$stmt->close();
+
+// Obtener el saldo en pesos del cliente
+$sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
+$stmt_saldo = $conn->prepare($sql_saldo);
+$stmt_saldo->bind_param("i", $cliente_id);
+$stmt_saldo->execute();
+$stmt_saldo->bind_result($saldo_en_pesos);
+$stmt_saldo->fetch();
+$stmt_saldo->close();
+$saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
+
+// Renderizar los datos obtenidos
+$nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -54,13 +87,13 @@
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy">Nombre</h4>
+            <h4 class="fancy"><?php echo $nombre_y_apellido; ?></h4>
         </div>
         <!-- FIN TITULO -->
 
         <hr class="mod">
 
-        <!-- INGRESA EFECTIVO -->
+        <!-- INGRESAR EFECTIVO -->
         <div class="col-4"></div>
         <div class="col-4 text-center">
             <div class="container-fluid my-4 efectivo">
@@ -94,14 +127,14 @@
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
                         <button type="button" class="btn btn-custom eliminar"
-                            onclick="window.location.href='../backend/lista_cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones'">
+                            onclick="window.location.href='../backend/lista_clientes.php'">
                             <i class="fa-solid fa-times me-2"></i>Cancelar</button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="col-4"></div>
-        <!-- FIN INGRESA EFECTIVO -->
+        <!-- FIN INGRESAR EFECTIVO -->
 
     </div>
     <!-- FIN CONTENIDO -->

@@ -105,13 +105,12 @@ $conn->close();
                                     </td>
                                     <td class="text-center">
                                         <a href="../funciones/ingresar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresar Efectivo">
-                                            <i class="fa-solid fa-circle-plus"></i>
+                                            <i class="fa-solid fa-plus"></i>
                                         </a>
                                     </td>
                                     <td class="text-center">
                                         <a href="../funciones/retirar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar Efectivo">
-                                            <i class="fa-solid fa-circle-minus"></i>
-                                        </a>
+                                            <i class="fa-solid fa-minus"></i>
                                     </td>
                                     <td class="text-center">
                                         <a href="../funciones/editar_cliente.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
@@ -120,7 +119,7 @@ $conn->close();
                                     </td>
                                     <td class="text-center">
                                         <button class="btn btn-info btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
-                                            <i class="fa-solid fa-trash"></i>
+                                            <i class="fa-regular fa-trash-can"></i>
                                         </button>
                                     </td>
                                 </tr>

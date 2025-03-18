@@ -349,8 +349,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             <span id="rentabilidad_consolidado_fondos_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_fondos_dolares; ?></span>
                         </div>
                     </div>
-                    <!-- Fin Gráficos -->
                 </div>
+                <!-- Fin Gráficos -->
 
             </div>
         </div>

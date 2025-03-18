@@ -511,7 +511,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/comprar_mas_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                            <a class='dropdown-item' href='../funciones/compra_mas_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='../funciones/venta_parcial_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
@@ -629,7 +629,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/comprar_mas_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                            <a class='dropdown-item' href='../funciones/compra_mas_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='../funciones/venta_parcial_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
@@ -768,7 +768,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/comprar_mas_cedears.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                            <a class='dropdown-item' href='../funciones/compra_mas_cedears.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='../funciones/venta_parcial_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
@@ -882,7 +882,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/comprar_mas_cedears.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                            <a class='dropdown-item' href='../funciones/compra_mas_cedears.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='../funciones/venta_parcial_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
@@ -1020,7 +1020,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/comprar_mas_bonos.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                            <a class='dropdown-item' href='../funciones/compra_mas_bonos.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='../funciones/venta_parcial_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
@@ -1138,7 +1138,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/comprar_mas_bonos.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                            <a class='dropdown-item' href='../funciones/compra_mas_bonos.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='../funciones/venta_parcial_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
@@ -1276,7 +1276,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/comprar_mas_fondos.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                            <a class='dropdown-item' href='../funciones/compra_mas_fondos.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='../funciones/venta_parcial_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
@@ -1394,7 +1394,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                     </button>
                                                     <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/comprar_mas_fondos.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                            <a class='dropdown-item' href='../funciones/compra_mas_fondos.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='../funciones/venta_parcial_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>

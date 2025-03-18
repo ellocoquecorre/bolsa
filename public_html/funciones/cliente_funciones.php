@@ -540,6 +540,7 @@ if ($valor_inicial_consolidado_acciones_pesos != 0) {
     $rendimiento_consolidado_acciones_pesos = $valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos;
     $rentabilidad_consolidado_acciones_pesos = (($valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos) / $valor_inicial_consolidado_acciones_pesos) * 100;
 }
+// Fin Tenencia Acciones Pesos
 
 // Tenencia Acciones Dolares
 $acciones = obtenerAcciones($cliente_id);
@@ -563,6 +564,7 @@ if ($valor_inicial_consolidado_acciones_dolares != 0) {
     $rendimiento_consolidado_acciones_dolares = $valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares;
     $rentabilidad_consolidado_acciones_dolares = (($valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares) / $valor_inicial_consolidado_acciones_dolares) * 100;
 }
+// Fin Tenencia Acciones Dolares
 
 // Tenencia Cedear Pesos
 $cedear = obtenerCedear($cliente_id);
@@ -584,6 +586,7 @@ if ($valor_inicial_consolidado_cedear_pesos != 0) {
     $rendimiento_consolidado_cedear_pesos = $valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos;
     $rentabilidad_consolidado_cedear_pesos = (($valor_actual_consolidado_cedear_pesos - $valor_inicial_consolidado_cedear_pesos) / $valor_inicial_consolidado_cedear_pesos) * 100;
 }
+// Fin Tenencia Cedear Pesos
 
 // Tenencia Cedear Dolares
 $cedear = obtenerCedear($cliente_id);
@@ -607,6 +610,7 @@ if ($valor_inicial_consolidado_cedear_dolares != 0) {
     $rendimiento_consolidado_cedear_dolares = $valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares;
     $rentabilidad_consolidado_cedear_dolares = (($valor_actual_consolidado_cedear_dolares - $valor_inicial_consolidado_cedear_dolares) / $valor_inicial_consolidado_cedear_dolares) * 100;
 }
+// Fin Tenencia Cedear Dolares
 
 // Tenencia Bonos Pesos
 $bonos = obtenerBonos($cliente_id);
@@ -628,6 +632,7 @@ if ($valor_inicial_consolidado_bonos_pesos != 0) {
     $rendimiento_consolidado_bonos_pesos = $valor_actual_consolidado_bonos_pesos - $valor_inicial_consolidado_bonos_pesos;
     $rentabilidad_consolidado_bonos_pesos = (($valor_actual_consolidado_bonos_pesos - $valor_inicial_consolidado_bonos_pesos) / $valor_inicial_consolidado_bonos_pesos) * 100;
 }
+// Fin Tenencia Bonos Pesos
 
 // Tenencia Bonos Dolares
 $bonos = obtenerBonos($cliente_id);
@@ -651,6 +656,7 @@ if ($valor_inicial_consolidado_bonos_dolares != 0) {
     $rendimiento_consolidado_bonos_dolares = $valor_actual_consolidado_bonos_dolares - $valor_inicial_consolidado_bonos_dolares;
     $rentabilidad_consolidado_bonos_dolares = (($valor_actual_consolidado_bonos_dolares - $valor_inicial_consolidado_bonos_dolares) / $valor_inicial_consolidado_bonos_dolares) * 100;
 }
+// Fin Tenencia Bonos Dolares
 
 // Tenencia Fondos Pesos
 $fondos = obtenerFondos($cliente_id);
@@ -672,6 +678,7 @@ if ($valor_inicial_consolidado_fondos_pesos != 0) {
     $rendimiento_consolidado_fondos_pesos = $valor_actual_consolidado_fondos_pesos - $valor_inicial_consolidado_fondos_pesos;
     $rentabilidad_consolidado_fondos_pesos = (($valor_actual_consolidado_fondos_pesos - $valor_inicial_consolidado_fondos_pesos) / $valor_inicial_consolidado_fondos_pesos) * 100;
 }
+// Fin Tenencia Fondos Pesos
 
 // Tenencia Fondos Dolares
 $fondos = obtenerFondos($cliente_id);
@@ -695,5 +702,5 @@ if ($valor_inicial_consolidado_fondos_dolares != 0) {
     $rendimiento_consolidado_fondos_dolares = $valor_actual_consolidado_fondos_dolares - $valor_inicial_consolidado_fondos_dolares;
     $rentabilidad_consolidado_fondos_dolares = (($valor_actual_consolidado_fondos_dolares - $valor_inicial_consolidado_fondos_dolares) / $valor_inicial_consolidado_fondos_dolares) * 100;
 }
-
+// Fin Tenencia Fondos Dolares
 //-- FIN TENENCIAS CONSOLIDADAS --//

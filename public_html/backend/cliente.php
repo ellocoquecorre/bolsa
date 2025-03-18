@@ -198,7 +198,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <div class="row">
                         <!-- Tenencia Pesos -->
                         <div class="col-lg-4 col-md-12">
-                            <h6 class="me-2 cartera posiciones mb-4">Distribución de la tenencia</h6>
+                            <h6 class="me-2 cartera posiciones mb-4">Distribución de activos</h6>
                             <div class="chart-container" style="position: relative; height:50vh; width:100%;">
                                 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
                                     <canvas id="ChartPesos"></canvas>
@@ -217,12 +217,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             <h6 class="me-2 cartera posiciones mb-4">Rendimiento en Pesos</h6>
                             <div class="chart-container" style="position: relative; height:50vh; width:100%;">
                                 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                                    <canvas id="chartRendPesos"></canvas>
-                                    <!-- Agregar datos ocultos para el gráfico -->
-                                    <span id="rendimiento_consolidado_acciones_pesos" style="display: none;"><?php echo $rendimiento_consolidado_acciones_pesos; ?></span>
-                                    <span id="rendimiento_consolidado_cedear_pesos" style="display: none;"><?php echo $rendimiento_consolidado_cedear_pesos; ?></span>
-                                    <span id="rendimiento_consolidado_bonos_pesos" style="display: none;"><?php echo $rendimiento_consolidado_bonos_pesos; ?></span>
-                                    <span id="rendimiento_consolidado_fondos_pesos" style="display: none;"><?php echo $rendimiento_consolidado_fondos_pesos; ?></span>
+                                    <!-- rendimiento_en_pesos -->
                                 </div>
                             </div>
                         </div>
@@ -361,9 +356,10 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <div class="row">
                         <!-- Tenencia Dólares -->
                         <div class="col-lg-4 col-md-12">
-                            <h6 class="me-2 cartera posiciones mb-4">Distribución de la tenencia</h6>
+                            <h6 class="me-2 cartera posiciones mb-4">Distribución de activos</h6>
                             <div class="chart-container" style="position: relative; height:50vh; width:100%;">
                                 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                    <!-- activos_dolares -->
                                 </div>
                             </div>
                         </div>
@@ -373,6 +369,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             <h6 class="me-2 cartera posiciones mb-4">Rendimiento en Dólares</h6>
                             <div class="chart-container" style="position: relative; height:50vh; width:100%;">
                                 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                    <!-- rendimiento_en_dolares -->
                                 </div>
                             </div>
                         </div>

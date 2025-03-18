@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     callbacks: {
                         label: function(tooltipItem) {
                             const value = tooltipItem.raw.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                            return (tooltipItem.raw < 0 ? '-$' : '$') + value;
+                            return (tooltipItem.raw < 0 ? '$ ' : '$ ') + value;
                         }
                     }
                 }
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         callback: function(value) {
                             const absValue = Math.abs(value);
                             const sign = value < 0 ? '-' : '';
-                            return sign + '$' + (absValue / 1000) + 'k';
+                            return '$ ' + sign + (absValue / 1000) + 'k';
                         }
                     }
                 }
@@ -210,7 +210,59 @@ document.addEventListener('DOMContentLoaded', function () {
         // Fin Torta Dolares
 
     // Rendimiento Dólares
+    const dataRendimientoDolares = {
+        labels: ['Acciones', 'Cedears', 'Bonos', 'Fondos'],
+        datasets: [{
+            data: [
+                parseFloat(document.getElementById('rendimiento_consolidado_acciones_dolares').textContent),
+                parseFloat(document.getElementById('rendimiento_consolidado_cedear_dolares').textContent),
+                parseFloat(document.getElementById('rendimiento_consolidado_bonos_dolares').textContent),
+                parseFloat(document.getElementById('rendimiento_consolidado_fondos_dolares').textContent)
+            ],
+            backgroundColor: function(context) {
+                const value = context.dataset.data[context.dataIndex];
+                return value > 0 ? 'green' : 'red';
+            },
+            borderWidth: 1
+        }]
+    };
 
+    const configRendimientoDolares = {
+        type: 'bar',
+        data: dataRendimientoDolares,
+        options: {
+            plugins: {
+                legend: {
+                    display: false // Ocultar la leyenda
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            const value = tooltipItem.raw.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                            return (tooltipItem.raw < 0 ? 'u$s ' : 'u$s ') + value;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            const absValue = Math.abs(value);
+                            const sign = value < 0 ? '-' : '';
+                            return 'u$s ' + sign + absValue;
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    const chartRendimientoDolares = new Chart(
+        document.getElementById('ChartRendimientoDolares'),
+        configRendimientoDolares
+    );
     // Fin Rendimiento Dólares
 
     // Rentabilidad Dólares

@@ -380,8 +380,13 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             <h6 class="me-2 cartera posiciones mb-4">Rendimiento en Dólares</h6>
                             <div class="chart-container" style="position: relative; height:50vh; width:100%;">
                                 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                                    <!-- rendimiento_en_dolares -->
+                                    <canvas id="ChartRendimientoDolares"></canvas>
                                 </div>
+                                <!-- Agregar datos ocultos para el gráfico -->
+                                <span id="rendimiento_consolidado_acciones_dolares" style="display: none;"><?php echo $rendimiento_consolidado_acciones_dolares; ?></span>
+                                <span id="rendimiento_consolidado_cedear_dolares" style="display: none;"><?php echo $rendimiento_consolidado_cedear_dolares; ?></span>
+                                <span id="rendimiento_consolidado_bonos_dolares" style="display: none;"><?php echo $rendimiento_consolidado_bonos_dolares; ?></span>
+                                <span id="rendimiento_consolidado_fondos_dolares" style="display: none;"><?php echo $rendimiento_consolidado_fondos_dolares; ?></span>
                             </div>
                         </div>
                         <!-- Fin Rendimiento Dólares -->

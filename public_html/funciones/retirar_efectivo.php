@@ -6,6 +6,38 @@ require_once '../funciones/formato_dinero.php';
 // Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
+// Manejar la solicitud POST
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Obtener el monto a retirar
+    $monto = isset($_POST['monto']) ? floatval($_POST['monto']) : 0.00;
+
+    // Obtener el saldo actual
+    $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
+    $stmt_saldo = $conn->prepare($sql_saldo);
+    $stmt_saldo->bind_param("i", $cliente_id);
+    $stmt_saldo->execute();
+    $stmt_saldo->bind_result($saldo_en_pesos);
+    $stmt_saldo->fetch();
+    $stmt_saldo->close();
+
+    // Calcular el nuevo saldo
+    $nuevo_saldo = $saldo_en_pesos - $monto;
+
+    // Actualizar el saldo en la base de datos
+    $sql_update = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
+    $stmt_update = $conn->prepare($sql_update);
+    $stmt_update->bind_param("di", $nuevo_saldo, $cliente_id);
+    $stmt_update->execute();
+    $stmt_update->close();
+
+    // Redirigir con mensaje de éxito
+    echo "<script>
+    alert('Operación realizada con éxito');
+    window.location.href='../backend/lista_clientes.php';
+    </script>";
+    exit;
+}
+
 // Obtener los datos del cliente
 $sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
 $stmt = $conn->prepare($sql);
@@ -27,7 +59,6 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
 
 // Renderizar los datos obtenidos
 $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
-
 
 ?>
 

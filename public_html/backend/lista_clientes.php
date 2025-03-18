@@ -82,7 +82,7 @@ $conn->close();
                                 <th>Mail</th>
                                 <th>Teléfono</th>
                                 <th>Corredora</th>
-                                <th colspan="4" class="text-center">Acciones</th>
+                                <th colspan="6" class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -101,6 +101,16 @@ $conn->close();
                                     <td class="text-center">
                                         <a href="historial.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Historial">
                                             <i class="fa-solid fa-clock-rotate-left"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="../funciones/ingresar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresar Efectivo">
+                                            <i class="fa-solid fa-circle-plus"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="../funciones/retirar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar Efectivo">
+                                            <i class="fa-solid fa-circle-minus"></i>
                                         </a>
                                     </td>
                                     <td class="text-center">

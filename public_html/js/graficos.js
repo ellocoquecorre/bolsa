@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+//-- PESOS --//
     // Datos para el gráfico en pesos
     const dataPesos = {
         labels: ['Acciones', 'Cedears', 'Bonos', 'Fondos', 'Efectivo'],
@@ -77,7 +79,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('ChartRentPesos'),
         configRentPesos
     );
+//-- FIN PESOS --//
 
+//-- DOLARES --//
     // Gráfico Rentabilidad Dólares
     const dataRentDolares = {
         labels: ['Acciones', 'Cedears', 'Bonos', 'Fondos'],
@@ -117,4 +121,5 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('ChartRentDolares'),
         configRentDolares
     );
+//-- FIN DOLARES --//
 });

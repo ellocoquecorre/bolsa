@@ -88,7 +88,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 <!-- Pesos -->
                 <div id="tablaResumenPesos">
 
-                    <!-- Consolidada -->
+                    <!-- Consolidada Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
@@ -116,11 +116,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </tbody>
                         </table>
                     </div>
-                    <!-- Fin Consolidada -->
+                    <!-- Fin Consolidada Pesos -->
 
                     <hr class="linea-accion">
 
-                    <!-- Detalle -->
+                    <!-- Detalle Pesos -->
                     <div class="row">
                         <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                         <div class="col-lg-6 col-md-12 table-responsive">
@@ -190,7 +190,55 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </table>
                         </div>
                     </div>
-                    <!-- Fin Detalle -->
+                    <!-- Fin Detalle Pesos -->
+
+                    <hr class="linea-accion">
+
+                    <!-- Gráficos Pesos -->
+                    <div class="row">
+                        <!-- Tenencia Pesos -->
+                        <div class="col-lg-4 col-md-12">
+                            <h6 class="me-2 cartera posiciones mb-4">Distribución de la tenencia</h6>
+                            <div class="chart-container" style="position: relative; height:50vh; width:100%;">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                    <canvas id="ChartPesos"></canvas>
+                                </div>
+                                <!-- Agregar datos ocultos para el gráfico -->
+                                <span id="valor_actual_consolidado_acciones_pesos" style="display: none;"><?php echo $valor_actual_consolidado_acciones_pesos; ?></span>
+                                <span id="valor_actual_consolidado_cedear_pesos" style="display: none;"><?php echo $valor_actual_consolidado_cedear_pesos; ?></span>
+                                <span id="valor_actual_consolidado_bonos_pesos" style="display: none;"><?php echo $valor_actual_consolidado_bonos_pesos; ?></span>
+                                <span id="valor_actual_consolidado_fondos_pesos" style="display: none;"><?php echo $valor_actual_consolidado_fondos_pesos; ?></span>
+                                <span id="saldo_en_pesos" style="display: none;"><?php echo $saldo_en_pesos; ?></span>
+                            </div>
+                        </div>
+                        <!-- Fin Tenencia Pesos -->
+                        <!-- Rendimiento Pesos -->
+                        <div class="col-lg-4 col-md-12">
+                            <h6 class="me-2 cartera posiciones mb-4">Rendimiento en Pesos</h6>
+                            <div class="chart-container" style="position: relative; height:50vh; width:100%;">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                    <span>Rendimiento en Pesos</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Rendimiento Pesos -->
+                        <!-- Rentabilidad Pesos -->
+                        <div class="col-lg-4 col-md-12">
+                            <h6 class="me-2 cartera posiciones mb-4">Rentabilidad en Pesos</h6>
+                            <div class="chart-container" style="position: relative; height:50vh; width:100%;">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                    <canvas id="ChartRentPesos"></canvas>
+                                </div>
+                                <!-- Datos ocultos para la rentabilidad en pesos -->
+                                <span id="rentabilidad_consolidado_acciones_pesos" style="display: none;"><?php echo $rentabilidad_consolidado_acciones_pesos; ?></span>
+                                <span id="rentabilidad_consolidado_cedear_pesos" style="display: none;"><?php echo $rentabilidad_consolidado_cedear_pesos; ?></span>
+                                <span id="rentabilidad_consolidado_bonos_pesos" style="display: none;"><?php echo $rentabilidad_consolidado_bonos_pesos; ?></span>
+                                <span id="rentabilidad_consolidado_fondos_pesos" style="display: none;"><?php echo $rentabilidad_consolidado_fondos_pesos; ?></span>
+                            </div>
+                        </div>
+                        <!-- Fin Rentabilidad Pesos -->
+                    </div>
+                    <!-- Fin Gráficos Pesos -->
 
                 </div>
                 <!-- Fin Pesos -->
@@ -198,7 +246,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                 <!-- Dolares -->
                 <div id="tablaResumenDolares" class="d-none">
 
-                    <!-- Consolidada -->
+                    <!-- Consolidada Dolares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
@@ -226,11 +274,11 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </tbody>
                         </table>
                     </div>
-                    <!-- Fin Consolidada -->
+                    <!-- Fin Consolidada Dolares -->
 
                     <hr class="linea-accion">
 
-                    <!-- Detalle -->
+                    <!-- Detalle Dolares -->
                     <div class="row">
                         <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                         <div class="col-lg-6 col-md-12 table-responsive">
@@ -300,57 +348,50 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </table>
                         </div>
                     </div>
-                    <!-- Fin Detalle -->
+                    <!-- Fin Detalle Dolares -->
+
+                    <hr class="linea-accion">
+
+                    <!-- Gráficos Dolares -->
+                    <div class="row">
+                        <!-- Tenencia Dólares -->
+                        <div class="col-lg-4 col-md-12">
+                            <h6 class="me-2 cartera posiciones mb-4">Distribución de la tenencia</h6>
+                            <div class="chart-container" style="position: relative; height:50vh; width:100%;">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Tenencia Dólares -->
+                        <!-- Rendimiento Dólares -->
+                        <div class="col-lg-4 col-md-12">
+                            <h6 class="me-2 cartera posiciones mb-4">Rendimiento en Dólares</h6>
+                            <div class="chart-container" style="position: relative; height:50vh; width:100%;">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Rendimiento Dólares -->
+                        <!-- Rentabilidad Dólares -->
+                        <div class="col-lg-4 col-md-12">
+                            <h6 class="me-2 cartera posiciones mb-4">Rentabilidad en Dólares</h6>
+                            <div class="chart-container" style="position: relative; height:50vh; width:100%;">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                    <canvas id="ChartRentDolares"></canvas>
+                                </div>
+                                <!-- Datos ocultos para la rentabilidad en dólares -->
+                                <span id="rentabilidad_consolidado_acciones_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_acciones_dolares; ?></span>
+                                <span id="rentabilidad_consolidado_cedear_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_cedear_dolares; ?></span>
+                                <span id="rentabilidad_consolidado_bonos_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_bonos_dolares; ?></span>
+                                <span id="rentabilidad_consolidado_fondos_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_fondos_dolares; ?></span>
+                            </div>
+                        </div>
+                        <!-- Fin Rentabilidad Dólares -->
+                    </div>
+                    <!-- Fin Gráficos Dolares -->
 
                 </div>
                 <!-- Fin Dolares -->
-
-                <hr class="linea-accion">
-
-                <!-- Gráficos -->
-                <div class="row">
-                    <div class="col-lg-4 col-md-12">
-                        <h6 class="me-2 cartera posiciones mb-4">Distribución de la tenencia</h6>
-                        <div class="chart-container" style="position: relative; height:50vh; width:100%;">
-                            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                                <canvas id="ChartPesos"></canvas>
-                            </div>
-                            <!-- Agregar datos ocultos para el gráfico -->
-                            <span id="valor_actual_consolidado_acciones_pesos" style="display: none;"><?php echo $valor_actual_consolidado_acciones_pesos; ?></span>
-                            <span id="valor_actual_consolidado_cedear_pesos" style="display: none;"><?php echo $valor_actual_consolidado_cedear_pesos; ?></span>
-                            <span id="valor_actual_consolidado_bonos_pesos" style="display: none;"><?php echo $valor_actual_consolidado_bonos_pesos; ?></span>
-                            <span id="valor_actual_consolidado_fondos_pesos" style="display: none;"><?php echo $valor_actual_consolidado_fondos_pesos; ?></span>
-                            <span id="saldo_en_pesos" style="display: none;"><?php echo $saldo_en_pesos; ?></span>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <h6 class="me-2 cartera posiciones mb-4">Rentabilidad en Pesos</h6>
-                        <div class="chart-container" style="position: relative; height:50vh; width:100%;">
-                            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                                <canvas id="ChartRentPesos"></canvas>
-                            </div>
-                            <!-- Datos ocultos para la rentabilidad en pesos -->
-                            <span id="rentabilidad_consolidado_acciones_pesos" style="display: none;"><?php echo $rentabilidad_consolidado_acciones_pesos; ?></span>
-                            <span id="rentabilidad_consolidado_cedear_pesos" style="display: none;"><?php echo $rentabilidad_consolidado_cedear_pesos; ?></span>
-                            <span id="rentabilidad_consolidado_bonos_pesos" style="display: none;"><?php echo $rentabilidad_consolidado_bonos_pesos; ?></span>
-                            <span id="rentabilidad_consolidado_fondos_pesos" style="display: none;"><?php echo $rentabilidad_consolidado_fondos_pesos; ?></span>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <h6 class="me-2 cartera posiciones mb-4">Rentabilidad en Dólares</h6>
-                        <div class="chart-container" style="position: relative; height:50vh; width:100%;">
-                            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                                <canvas id="ChartRentDolares"></canvas>
-                            </div>
-                            <!-- Datos ocultos para la rentabilidad en dólares -->
-                            <span id="rentabilidad_consolidado_acciones_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_acciones_dolares; ?></span>
-                            <span id="rentabilidad_consolidado_cedear_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_cedear_dolares; ?></span>
-                            <span id="rentabilidad_consolidado_bonos_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_bonos_dolares; ?></span>
-                            <span id="rentabilidad_consolidado_fondos_dolares" style="display: none;"><?php echo $rentabilidad_consolidado_fondos_dolares; ?></span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Fin Gráficos -->
 
             </div>
         </div>

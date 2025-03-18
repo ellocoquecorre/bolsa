@@ -25,9 +25,32 @@ $stmt_saldo->fetch();
 $stmt_saldo->close();
 $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
 
+// Verificar si se envió el formulario
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Obtener el monto ingresado
+    $monto_ingresado = floatval(str_replace(',', '.', $_POST['monto']));
+    // Sumar el monto ingresado al saldo actual
+    $nuevo_saldo = $saldo_en_pesos + $monto_ingresado;
+
+    // Actualizar el saldo en la base de datos
+    $sql_update = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
+    $stmt_update = $conn->prepare($sql_update);
+    $stmt_update->bind_param("di", $nuevo_saldo, $cliente_id);
+
+    if ($stmt_update->execute()) {
+        // Mostrar mensaje de éxito y redirigir
+        echo "<script>
+            alert('Operación realizada con éxito');
+            window.location.href = '../backend/lista_clientes.php';
+        </script>";
+    } else {
+        echo "<script>alert('Error al realizar la operación');</script>";
+    }
+    $stmt_update->close();
+}
+
 // Renderizar los datos obtenidos
 $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
-
 
 ?>
 

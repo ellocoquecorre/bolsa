@@ -60,7 +60,7 @@
 
         <hr class="mod">
 
-        <!-- COMPRA ACCIONES -->
+        <!-- INGRESA EFECTIVO -->
         <div class="col-4"></div>
         <div class="col-4 text-center">
             <div class="container-fluid my-4 efectivo">
@@ -101,7 +101,7 @@
             </div>
         </div>
         <div class="col-4"></div>
-        <!-- FIN COMPRA ACCIONES -->
+        <!-- FIN INGRESA EFECTIVO -->
 
     </div>
     <!-- FIN CONTENIDO -->
@@ -119,20 +119,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="../js/tickers_acciones.js"></script>
-    <script>
-        function validarSaldo() {
-            var cantidad = parseFloat(document.getElementById('cantidad').value);
-            var precio = parseFloat(document.getElementById('precio').value.replace(',', '.'));
-            var saldo = parseFloat("<?php echo $saldo_en_pesos; ?>");
-
-            if (cantidad * precio > saldo) {
-                alert('Saldo insuficiente');
-                return false;
-            }
-            return true;
-        }
-    </script>
     <!-- FIN JS -->
 </body>
 

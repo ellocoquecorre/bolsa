@@ -18,40 +18,6 @@ $stmt->close();
 
 $cantidad_max = $db_cantidad - 1;
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $cantidad = floatval($_POST['cantidad']);
-    $precio_venta = floatval($_POST['precio_venta']);
-    $cliente_id = intval($_POST['cliente_id']);
-    $ticker = $_POST['ticker'];
-
-    // 2. Restar cantidad al valor de la columna 'cantidad' en la tabla 'acciones'
-    $nueva_cantidad = $db_cantidad - $cantidad;
-    $sql_actualizar_cantidad = "UPDATE acciones SET cantidad = ? WHERE cliente_id = ? AND ticker = ?";
-    $stmt = $conn->prepare($sql_actualizar_cantidad);
-    $stmt->bind_param("iis", $nueva_cantidad, $cliente_id, $ticker);
-    $stmt->execute();
-    $stmt->close();
-
-    // 3. Multiplicar 'cantidad' por 'precio_venta' y sumar al valor de la columna 'efectivo' en la tabla 'balance'
-    $total_venta = $cantidad * $precio_venta;
-    $sql_actualizar_efectivo = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
-    $stmt = $conn->prepare($sql_actualizar_efectivo);
-    $stmt->bind_param("di", $total_venta, $cliente_id);
-    $stmt->execute();
-    $stmt->close();
-
-    // 4. Crear una entrada en la tabla 'acciones_historial'
-    $fecha_venta = date('Y-m-d'); // Formatear la fecha correctamente
-    $sql_insertar_historial = "INSERT INTO acciones_historial (cliente_id, ticker, fecha_compra, precio_compra, fecha_venta, precio_venta, ccl_venta) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql_insertar_historial);
-    $stmt->bind_param("isssssd", $cliente_id, $db_ticker, $db_fecha_compra, $db_precio_compra, $fecha_venta, $precio_venta, $promedio_ccl);
-    $stmt->execute();
-    $stmt->close();
-
-    // 5. Redirigir al usuario
-    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
-    exit;
-}
 ?>
 
 <!DOCTYPE html>
@@ -102,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- CONTENIDO -->
     <div class="row mx-2 mt-navbar">
+
         <!-- TITULO -->
         <div class="col-12 text-center">
             <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
@@ -115,7 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="col-4 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Venta parcial de <?php echo htmlspecialchars($db_ticker); ?></h5>
-
                 <form id="venta_parcial" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
                     <input type="hidden" name="ticker" value="<?php echo $db_ticker; ?>">
@@ -155,6 +121,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                     </div>
                     <!-- Fin Precio Venta -->
+
+                    <!-- Fecha Venta -->
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <div class="row mb-3 align-items-center">
+                                <label class="col-sm-4" for="fecha_venta" class="col-sm-2 col-form-label">Fecha Venta</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                        <input type="date" class="form-control" id="fecha_venta" name="fecha_venta"
+                                            value="<?php echo date('Y-m-d'); ?>" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fin Fecha Venta -->
 
                     <hr class="mod mb-3">
 

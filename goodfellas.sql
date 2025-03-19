@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-03-2025 a las 15:29:05
+-- Tiempo de generación: 19-03-2025 a las 15:57:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,7 +42,7 @@ CREATE TABLE `acciones` (
 --
 
 INSERT INTO `acciones` (`id`, `cliente_id`, `ticker`, `cantidad`, `precio`, `fecha`, `ccl_compra`) VALUES
-(79, 1, 'ALUA', 280, 893.00, '2025-01-02', 1186.83),
+(79, 1, 'ALUA', 380, 885.63, '2025-03-19', 1216.37),
 (80, 1, 'BBAR', 29, 8570.00, '2025-01-02', 1186.83),
 (81, 1, 'BYMA', 484, 516.00, '2025-01-02', 1186.83),
 (82, 1, 'CRES', 160, 1560.00, '2025-01-02', 1186.83);
@@ -103,9 +103,9 @@ CREATE TABLE `balance` (
 --
 
 INSERT INTO `balance` (`id`, `cliente_id`, `efectivo`) VALUES
-(1, 1, 960626.33),
-(2, 2, 3891580.00),
-(3, 3, 2982732.50);
+(1, 1, 874126.93),
+(2, 2, 5000000.00),
+(3, 3, 5000000.00);
 
 -- --------------------------------------------------------
 
@@ -1175,7 +1175,8 @@ INSERT INTO `ticker_fondos` (`id`, `ticker_fondos`, `company_name_fondos`) VALUE
 -- Indices de la tabla `acciones`
 --
 ALTER TABLE `acciones`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_cliente_id_acciones` (`cliente_id`);
 
 --
 -- Indices de la tabla `acciones_historial`
@@ -1195,13 +1196,15 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `balance`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `usuario_id` (`cliente_id`);
+  ADD KEY `usuario_id` (`cliente_id`),
+  ADD KEY `idx_cliente_id_balance` (`cliente_id`);
 
 --
 -- Indices de la tabla `bonos`
 --
 ALTER TABLE `bonos`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_cliente_id_bonos` (`cliente_id`);
 
 --
 -- Indices de la tabla `bonos_historial`
@@ -1213,7 +1216,8 @@ ALTER TABLE `bonos_historial`
 -- Indices de la tabla `cedear`
 --
 ALTER TABLE `cedear`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_cliente_id_cedear` (`cliente_id`);
 
 --
 -- Indices de la tabla `cedear_historial`
@@ -1232,7 +1236,8 @@ ALTER TABLE `clientes`
 -- Indices de la tabla `fondos`
 --
 ALTER TABLE `fondos`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_cliente_id_fondos` (`cliente_id`);
 
 --
 -- Indices de la tabla `fondos_historial`

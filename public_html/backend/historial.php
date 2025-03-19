@@ -70,10 +70,10 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
         <hr class="mod">
 
-        <!-- TOTAL -->
+        <!-- RESUMEN -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo" id="resumen">
-                <h5 class="me-2 cartera titulo-botones mb-4">Total</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Resumen</h5>
 
                 <!-- Botones -->
                 <div class="text-start">
@@ -264,7 +264,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
             </div>
         </div>
-        <!-- FIN TOTAL -->
+        <!-- FIN RESUMEN -->
 
         <hr class="mod">
 
@@ -670,7 +670,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
         <!-- BONOS -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo" id="bonos">
-                <h5 class="me-2 cartera titulo-botones mb-4">Bonoss</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Bonos</h5>
 
                 <!-- Botones -->
                 <div class="text-start">
@@ -869,7 +869,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
         <!-- FONDOS -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo" id="fondos">
-                <h5 class="me-2 cartera titulo-botones mb-4">Fondoss</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Fondos</h5>
 
                 <!-- Botones -->
                 <div class="text-start">

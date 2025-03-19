@@ -193,6 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <div class="col-4"></div>
         <!-- FIN VENTA PARCIAL FONDOS -->
+
     </div>
     <!-- FIN CONTENIDO -->
 

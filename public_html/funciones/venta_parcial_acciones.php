@@ -18,6 +18,40 @@ $stmt->close();
 
 $cantidad_max = $db_cantidad - 1;
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $cantidad = floatval($_POST['cantidad']);
+    $precio_venta = floatval($_POST['precio_venta']);
+    $cliente_id = intval($_POST['cliente_id']);
+    $ticker = $_POST['ticker'];
+
+    // 2. Restar cantidad al valor de la columna 'cantidad' en la tabla 'acciones'
+    $nueva_cantidad = $db_cantidad - $cantidad;
+    $sql_actualizar_cantidad = "UPDATE acciones SET cantidad = ? WHERE cliente_id = ? AND ticker = ?";
+    $stmt = $conn->prepare($sql_actualizar_cantidad);
+    $stmt->bind_param("iis", $nueva_cantidad, $cliente_id, $ticker);
+    $stmt->execute();
+    $stmt->close();
+
+    // 3. Multiplicar 'cantidad' por 'precio_venta' y sumar al valor de la columna 'efectivo' en la tabla 'balance'
+    $total_venta = $cantidad * $precio_venta;
+    $sql_actualizar_efectivo = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
+    $stmt = $conn->prepare($sql_actualizar_efectivo);
+    $stmt->bind_param("di", $total_venta, $cliente_id);
+    $stmt->execute();
+    $stmt->close();
+
+    // 4. Crear una entrada en la tabla 'acciones_historial'
+    $fecha_venta = date('Y-m-d'); // Formatear la fecha correctamente
+    $sql_insertar_historial = "INSERT INTO acciones_historial (cliente_id, ticker, fecha_compra, precio_compra, fecha_venta, precio_venta, ccl_venta) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql_insertar_historial);
+    $stmt->bind_param("isssssd", $cliente_id, $db_ticker, $db_fecha_compra, $db_precio_compra, $fecha_venta, $precio_venta, $promedio_ccl);
+    $stmt->execute();
+    $stmt->close();
+
+    // 5. Redirigir al usuario
+    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>

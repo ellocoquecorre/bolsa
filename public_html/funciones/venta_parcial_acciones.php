@@ -18,6 +18,46 @@ $stmt->close();
 
 $cantidad_max = $db_cantidad - 1;
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $cantidad_vendida = (int) $_POST['cantidad'];
+    $precio_venta = (float) $_POST['precio_venta'];
+    $fecha_venta = $_POST['fecha_venta'];
+
+    if ($cantidad_vendida < $cantidad_max) {
+        // Restar la cantidad vendida de la columna cantidad en la tabla acciones
+        $nueva_cantidad = $db_cantidad - $cantidad_vendida;
+        $sql_update_acciones = "UPDATE acciones SET cantidad = ? WHERE cliente_id = ? AND ticker = ?";
+        $stmt_update_acciones = $conn->prepare($sql_update_acciones);
+        $stmt_update_acciones->bind_param("iis", $nueva_cantidad, $cliente_id, $ticker);
+        $stmt_update_acciones->execute();
+        $stmt_update_acciones->close();
+
+        // Sumar el total de la venta a la columna efectivo en la tabla balance
+        $total_venta = $cantidad_vendida * $precio_venta;
+        $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
+        $stmt_update_balance = $conn->prepare($sql_update_balance);
+        $stmt_update_balance->bind_param("di", $total_venta, $cliente_id);
+        $stmt_update_balance->execute();
+        $stmt_update_balance->close();
+
+        // Obtener el promedio del CCL desde cliente_funciones.php
+        global $promedio_ccl;
+
+        // Insertar una nueva entrada en la tabla acciones_historial
+        $sql_insert_historial = "INSERT INTO acciones_historial (cliente_id, ticker, cantidad, fecha_compra, precio_compra, ccl_compra, fecha_venta, precio_venta, ccl_venta)
+                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt_insert_historial = $conn->prepare($sql_insert_historial);
+        $stmt_insert_historial->bind_param("isissdssd", $cliente_id, $db_ticker, $cantidad_vendida, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $promedio_ccl);
+        $stmt_insert_historial->execute();
+        $stmt_insert_historial->close();
+
+        // Redirigir al cliente.php
+        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
+        exit();
+    } else {
+        echo "<script>alert('Cantidad máxima de acciones para una venta parcial = ' + $cantidad_max);</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>

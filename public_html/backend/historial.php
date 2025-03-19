@@ -349,7 +349,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
-                                            <td class='text-right'>" . htmlspecialchars($accion['cantidad']) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
                                             <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($accion['fecha_compra'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio_compra'])) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_compra_pesos_accion)) . "</td>
@@ -440,7 +440,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
-                                            <td class='text-right'>" . htmlspecialchars($accion['cantidad']) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
                                             <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($accion['fecha_compra'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['ccl_compra'])) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_compra_dolares_accion)) . "</td>
@@ -548,7 +548,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                                     echo "<tr data-ticker='{$cedear['ticker_cedear']}'>
                                             <td>{$cedear['ticker_cedear']}</td>
-                                            <td class='text-right'>" . htmlspecialchars($cedear['cantidad_cedear']) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($cedear['cantidad_cedear'])) . "</td>
                                             <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($cedear['fecha_compra_cedear'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($cedear['precio_compra_cedear'])) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_compra_pesos_cedear)) . "</td>
@@ -639,7 +639,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                                     echo "<tr data-ticker='{$cedear['ticker_cedear']}'>
                                             <td>{$cedear['ticker_cedear']}</td>
-                                            <td class='text-right'>" . htmlspecialchars($cedear['cantidad_cedear']) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($cedear['cantidad_cedear'])) . "</td>
                                             <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($cedear['fecha_compra_cedear'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($cedear['ccl_compra'])) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_compra_dolares_cedear)) . "</td>
@@ -747,7 +747,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                                     echo "<tr data-ticker='{$bonos['ticker_bonos']}'>
                                             <td>{$bonos['ticker_bonos']}</td>
-                                            <td class='text-right'>" . htmlspecialchars($bonos['cantidad_bonos']) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($bonos['cantidad_bonos'])) . "</td>
                                             <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($bonos['fecha_compra_bonos'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bonos['precio_compra_bonos'])) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_compra_pesos_bonos)) . "</td>
@@ -838,7 +838,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                                     echo "<tr data-ticker='{$bonos['ticker_bonos']}'>
                                             <td>{$bonos['ticker_bonos']}</td>
-                                            <td class='text-right'>" . htmlspecialchars($bonos['cantidad_bonos']) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($bonos['cantidad_bonos'])) . "</td>
                                             <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($bonos['fecha_compra_bonos'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bonos['ccl_compra'])) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_compra_dolares_bonos)) . "</td>
@@ -947,7 +947,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                                     echo "<tr data-ticker='{$fondos['ticker_fondos']}'>
                                             <td>{$fondos['ticker_fondos']}</td>
-                                            <td class='text-right'>" . htmlspecialchars($fondos['cantidad_fondos']) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($fondos['cantidad_fondos'])) . "</td>
                                             <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($fondos['fecha_compra_fondos'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondos['precio_compra_fondos'])) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_compra_pesos_fondos)) . "</td>
@@ -1038,7 +1038,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
                                     echo "<tr data-ticker='{$fondos['ticker_fondos']}'>
                                             <td>{$fondos['ticker_fondos']}</td>
-                                            <td class='text-right'>" . htmlspecialchars($fondos['cantidad_fondos']) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($fondos['cantidad_fondos'])) . "</td>
                                             <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($fondos['fecha_compra_fondos'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondos['ccl_compra'])) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_compra_dolares_fondos)) . "</td>

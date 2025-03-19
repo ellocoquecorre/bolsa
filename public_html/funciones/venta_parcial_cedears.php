@@ -169,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <label class="col-sm-4" for="fecha_venta" class="col-sm-2 col-form-label">Fecha Venta</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
-                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                         <input type="date" class="form-control" id="fecha_venta" name="fecha_venta"
                                             value="<?php echo date('Y-m-d'); ?>" required>
                                     </div>

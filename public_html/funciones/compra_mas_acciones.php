@@ -23,43 +23,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt_saldo->fetch();
     $stmt_saldo->close();
 
-    // Obtener los datos de la acción específica del cliente
-    $sql = "SELECT ticker, cantidad, fecha, precio, ccl_compra FROM acciones WHERE cliente_id = ? AND ticker = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("is", $cliente_id, $ticker);
-    $stmt->execute();
-    $stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra);
-    $stmt->fetch();
-    $stmt->close();
+    // Calcular el costo total de la compra
+    $costo_total = $cantidad_hoy * $precio_hoy;
 
-    // Calcular el promedio CCL
-    $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-    $ccl_compra_hoy = $promedio_ccl;
+    // Comprobar si el saldo es suficiente
+    if ($costo_total > $saldo_en_pesos) {
+        echo "<script>alert('Saldo insuficiente');</script>";
+    } else {
+        // Obtener los datos de la acción específica del cliente
+        $sql = "SELECT ticker, cantidad, fecha, precio, ccl_compra FROM acciones WHERE cliente_id = ? AND ticker = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("is", $cliente_id, $ticker);
+        $stmt->execute();
+        $stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra);
+        $stmt->fetch();
+        $stmt->close();
 
-    // Calcular nuevo precio y ccl_compra
-    $nuevo_precio = (($db_cantidad * $db_precio_compra) + ($cantidad_hoy * $precio_hoy)) / ($db_cantidad + $cantidad_hoy);
-    $nuevo_ccl_compra = (($db_cantidad * $db_ccl_compra) + ($cantidad_hoy * $ccl_compra_hoy)) / ($db_cantidad + $cantidad_hoy);
+        // Calcular el promedio CCL
+        $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+        $ccl_compra_hoy = $promedio_ccl;
 
-    // Actualizar la tabla acciones
-    $sql_update_acciones = "UPDATE acciones SET cantidad = cantidad + ?, precio = ?, ccl_compra = ?, fecha = ? WHERE cliente_id = ? AND ticker = ?";
-    $stmt_update_acciones = $conn->prepare($sql_update_acciones);
-    $stmt_update_acciones->bind_param("iddsis", $cantidad_hoy, $nuevo_precio, $nuevo_ccl_compra, $fecha_hoy, $cliente_id, $ticker);
-    $stmt_update_acciones->execute();
-    $stmt_update_acciones->close();
+        // Calcular nuevo precio y ccl_compra
+        $nuevo_precio = (($db_cantidad * $db_precio_compra) + ($cantidad_hoy * $precio_hoy)) / ($db_cantidad + $cantidad_hoy);
+        $nuevo_ccl_compra = (($db_cantidad * $db_ccl_compra) + ($cantidad_hoy * $ccl_compra_hoy)) / ($db_cantidad + $cantidad_hoy);
 
-    // Calcular el nuevo saldo en pesos
-    $nuevo_saldo_en_pesos = $saldo_en_pesos - ($cantidad_hoy * $precio_hoy);
+        // Actualizar la tabla acciones
+        $sql_update_acciones = "UPDATE acciones SET cantidad = cantidad + ?, precio = ?, ccl_compra = ?, fecha = ? WHERE cliente_id = ? AND ticker = ?";
+        $stmt_update_acciones = $conn->prepare($sql_update_acciones);
+        $stmt_update_acciones->bind_param("iddsis", $cantidad_hoy, $nuevo_precio, $nuevo_ccl_compra, $fecha_hoy, $cliente_id, $ticker);
+        $stmt_update_acciones->execute();
+        $stmt_update_acciones->close();
 
-    // Actualizar la tabla balance
-    $sql_update_balance = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
-    $stmt_update_balance = $conn->prepare($sql_update_balance);
-    $stmt_update_balance->bind_param("di", $nuevo_saldo_en_pesos, $cliente_id);
-    $stmt_update_balance->execute();
-    $stmt_update_balance->close();
+        // Calcular el nuevo saldo en pesos
+        $nuevo_saldo_en_pesos = $saldo_en_pesos - $costo_total;
 
-    // Redireccionar después de guardar los datos
-    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
-    exit();
+        // Actualizar la tabla balance
+        $sql_update_balance = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
+        $stmt_update_balance = $conn->prepare($sql_update_balance);
+        $stmt_update_balance->bind_param("di", $nuevo_saldo_en_pesos, $cliente_id);
+        $stmt_update_balance->execute();
+        $stmt_update_balance->close();
+
+        // Redireccionar después de guardar los datos
+        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
+        exit();
+    }
 }
 
 // Obtener los datos del cliente
@@ -98,6 +106,20 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <!-- FIN CSS -->
+    <script>
+        function validarSaldo() {
+            var cantidad = parseFloat(document.getElementById('cantidad').value);
+            var precio = parseFloat(document.getElementById('precio').value);
+            var saldo = <?php echo $saldo_en_pesos; ?>;
+            var costo_total = cantidad * precio;
+
+            if (costo_total > saldo) {
+                alert('Saldo insuficiente');
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 
 <body>
@@ -152,7 +174,7 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Comprar más acciones de <?php echo htmlspecialchars($ticker); ?></h5>
-                <form id="compra_acciones" method="POST" action="">
+                <form id="compra_acciones" method="POST" action="" onsubmit="return validarSaldo();">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
                     <!-- Saldo -->
                     <div class="row mb-3 align-items-center">

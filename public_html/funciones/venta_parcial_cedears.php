@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="row">
                         <div class="col-12 text-center">
                             <div class="row mb-3 align-items-center">
-                                <label class="col-sm-4" for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
+                                <label class="col-sm-4 col-sm-2 col-form-label" for="cantidad">Cantidad</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="row">
                         <div class="col-12 text-center">
                             <div class="row mb-3 align-items-center">
-                                <label class="col-sm-4" for="precio_venta" class="col-sm-2 col-form-label">Precio Venta</label>
+                                <label class="col-sm-4 col-sm-2 col-form-label" for="precio_venta">Precio Venta</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="row">
                         <div class="col-12 text-center">
                             <div class="row mb-3 align-items-center">
-                                <label class="col-sm-4" for="fecha_venta" class="col-sm-2 col-form-label">Fecha Venta</label>
+                                <label class="col-sm-4 col-sm-2 col-form-label" for="fecha_venta">Fecha Venta</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>

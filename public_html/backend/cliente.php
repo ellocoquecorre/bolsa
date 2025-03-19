@@ -471,7 +471,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -578,7 +578,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
                                     <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -728,7 +728,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -835,7 +835,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
                                     <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -980,7 +980,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -1087,7 +1087,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
                                     <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -1236,7 +1236,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -1343,7 +1343,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
                                     <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>

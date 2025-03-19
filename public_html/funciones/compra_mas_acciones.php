@@ -8,6 +8,60 @@ require_once '../funciones/cliente_funciones.php';
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Obtener los valores del formulario
+    $cantidad_hoy = isset($_POST['cantidad']) ? floatval($_POST['cantidad']) : 0;
+    $precio_hoy = isset($_POST['precio']) ? floatval($_POST['precio']) : 0;
+    $fecha_hoy = isset($_POST['fecha']) ? $_POST['fecha'] : date('Y-m-d');
+
+    // Obtener el saldo en pesos del cliente
+    $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
+    $stmt_saldo = $conn->prepare($sql_saldo);
+    $stmt_saldo->bind_param("i", $cliente_id);
+    $stmt_saldo->execute();
+    $stmt_saldo->bind_result($saldo_en_pesos);
+    $stmt_saldo->fetch();
+    $stmt_saldo->close();
+
+    // Obtener los datos de la acción específica del cliente
+    $sql = "SELECT ticker, cantidad, fecha, precio, ccl_compra FROM acciones WHERE cliente_id = ? AND ticker = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $cliente_id, $ticker);
+    $stmt->execute();
+    $stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Calcular el promedio CCL
+    $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+    $ccl_compra_hoy = $promedio_ccl;
+
+    // Calcular nuevo precio y ccl_compra
+    $nuevo_precio = (($db_cantidad * $db_precio_compra) + ($cantidad_hoy * $precio_hoy)) / ($db_cantidad + $cantidad_hoy);
+    $nuevo_ccl_compra = (($db_cantidad * $db_ccl_compra) + ($cantidad_hoy * $ccl_compra_hoy)) / ($db_cantidad + $cantidad_hoy);
+
+    // Actualizar la tabla acciones
+    $sql_update_acciones = "UPDATE acciones SET cantidad = cantidad + ?, precio = ?, ccl_compra = ?, fecha = ? WHERE cliente_id = ? AND ticker = ?";
+    $stmt_update_acciones = $conn->prepare($sql_update_acciones);
+    $stmt_update_acciones->bind_param("iddsis", $cantidad_hoy, $nuevo_precio, $nuevo_ccl_compra, $fecha_hoy, $cliente_id, $ticker);
+    $stmt_update_acciones->execute();
+    $stmt_update_acciones->close();
+
+    // Calcular el nuevo saldo en pesos
+    $nuevo_saldo_en_pesos = $saldo_en_pesos - ($cantidad_hoy * $precio_hoy);
+
+    // Actualizar la tabla balance
+    $sql_update_balance = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
+    $stmt_update_balance = $conn->prepare($sql_update_balance);
+    $stmt_update_balance->bind_param("di", $nuevo_saldo_en_pesos, $cliente_id);
+    $stmt_update_balance->execute();
+    $stmt_update_balance->close();
+
+    // Redireccionar después de guardar los datos
+    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
+    exit();
+}
+
 // Obtener los datos del cliente
 $sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
 $stmt = $conn->prepare($sql);
@@ -17,7 +71,10 @@ $stmt->bind_result($nombre, $apellido);
 $stmt->fetch();
 $stmt->close();
 
-// Obtener el saldo en pesos del cliente
+// Renderizar los datos obtenidos
+$nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
+
+// Obtener el saldo en pesos del cliente para mostrar en el formulario
 $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
 $stmt_saldo = $conn->prepare($sql_saldo);
 $stmt_saldo->bind_param("i", $cliente_id);
@@ -27,23 +84,7 @@ $stmt_saldo->fetch();
 $stmt_saldo->close();
 $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
 
-// Obtener los datos de la acción específica del cliente
-$sql = "SELECT ticker, cantidad, fecha, precio, ccl_compra FROM acciones WHERE cliente_id = ? AND ticker = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("is", $cliente_id, $ticker);
-$stmt->execute();
-$stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra);
-$stmt->fetch();
-$stmt->close();
-
-// Obtener la fecha actual
-$fecha_hoy = date('Y-m-d');
-
-// Renderizar los datos obtenidos
-$nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
-
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -110,7 +151,7 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
         <div class="col-3"></div>
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones mb-4">Comprar mas acciones de <?php echo htmlspecialchars($db_ticker); ?></h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Comprar más acciones de <?php echo htmlspecialchars($ticker); ?></h5>
                 <form id="compra_acciones" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
                     <!-- Saldo -->
@@ -152,7 +193,7 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
                                 <input type="date" class="form-control" id="fecha" name="fecha"
-                                    value="<?php echo $fecha_hoy; ?>" required>
+                                    value="<?php echo date('Y-m-d'); ?>" required>
                             </div>
                         </div>
                     </div>

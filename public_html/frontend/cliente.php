@@ -1,12 +1,12 @@
 <?php
+// Incluir archivo de configuración
 require_once '../../config/config.php';
+
+// Incluir las funciones necesarias
 include '../funciones/cliente_funciones.php';
 
+// Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
-
-$datos_corredora = obtenerDatosCorredora($cliente_id);
-$url_corredora = $datos_corredora['url'];
-$nombre_corredora = $datos_corredora['corredora'];
 
 ?>
 
@@ -26,24 +26,23 @@ $nombre_corredora = $datos_corredora['corredora'];
 </head>
 
 <body>
-
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle nav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="cliente.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-house me-2"></i>Inicio</a>
+                        <a class="nav-link active" href="lista_clientes.php"><i class="fa-solid fa-users me-2"></i>Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="historial.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-hourglass me-2"></i>Historial</a>
+                        <a class="nav-link" href="alta_clientes.php"><i class="fa-solid fa-user-plus me-2"></i>Alta Clientes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="dolares.php"><i class="fa-solid fa-dollar-sign me-2"></i>Dólares</a>
@@ -62,8 +61,9 @@ $nombre_corredora = $datos_corredora['corredora'];
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . htmlspecialchars($apellido)); ?></h4>
-            <p>Tu corredora es<br><a href="<?php echo $url_corredora; ?>" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><?php echo $nombre_corredora; ?></a></p>
+            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
+            <a href="historial.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
+                <i class="fa-solid fa-clock-rotate-left me-2"></i>Historial</a>
         </div>
         <!-- FIN TITULO -->
 
@@ -431,10 +431,13 @@ $nombre_corredora = $datos_corredora['corredora'];
                 </div>
                 <!-- Fin Botones -->
 
+                <hr class="linea-accion">
+
                 <!-- Acciones Pesos -->
                 <div id="tablaAccionesPesos">
 
                     <!-- Consolidada Acciones Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -446,28 +449,11 @@ $nombre_corredora = $datos_corredora['corredora'];
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $acciones = obtenerAcciones($cliente_id);
-                                $valor_inicial_consolidado_acciones_pesos = 0;
-                                $valor_actual_consolidado_acciones_pesos = 0;
-
-                                foreach ($acciones as $accion) {
-                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                    $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
-                                    $valor_inicial_consolidado_acciones_pesos += $valor_inicial_acciones_pesos;
-                                    $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
-                                    $valor_actual_consolidado_acciones_pesos += $valor_actual_acciones_pesos;
-                                }
-                                $rendimiento_consolidado_acciones_pesos = $valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos;
-                                $rentabilidad_consolidado_acciones_pesos = (($valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos) / $valor_inicial_consolidado_acciones_pesos) * 100;
-                                ?>
-
                                 <tr>
                                     <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_pesos)); ?></td>
                                     <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_pesos)); ?></td>
                                     <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_pesos); ?></td>
                                     <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_pesos); ?></td>
-
                                 </tr>
                             </tbody>
                         </table>
@@ -477,6 +463,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <hr class="linea-accion">
 
                     <!-- Completa Acciones Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -484,7 +471,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Precio unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -509,7 +496,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
                                             <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                            <td>{$accion['cantidad']}</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
@@ -531,6 +518,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                 <div id="tablaAccionesDolares" class="d-none">
 
                     <!-- Consolidada Acciones Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -542,27 +530,11 @@ $nombre_corredora = $datos_corredora['corredora'];
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $acciones = obtenerAcciones($cliente_id);
-                                $valor_inicial_consolidado_acciones_dolares = 0;
-                                $valor_actual_consolidado_acciones_dolares = 0;
-                                $valor_compra_ccl = obtenerCCLCompra($cliente_id, $accion['ticker']);
-                                foreach ($acciones as $accion) {
-                                    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
-                                    $valor_inicial_acciones_dolares = ($accion['precio'] * $accion['cantidad']) / $valor_compra_ccl;
-                                    $valor_inicial_consolidado_acciones_dolares += $valor_inicial_acciones_dolares;
-                                    $valor_actual_acciones_dolares = ($precio_actual * $accion['cantidad']) / $promedio_ccl;
-                                    $valor_actual_consolidado_acciones_dolares += $valor_actual_acciones_dolares;
-                                }
-                                $rendimiento_consolidado_acciones_dolares = $valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares;
-                                $rentabilidad_consolidado_acciones_dolares = (($valor_actual_consolidado_acciones_dolares - $valor_inicial_consolidado_acciones_dolares) / $valor_inicial_consolidado_acciones_dolares) * 100;
-                                ?>
                                 <tr>
                                     <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_inicial_consolidado_acciones_dolares)); ?></td>
                                     <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_actual_consolidado_acciones_dolares)); ?></td>
                                     <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares, 'u$s'); ?></td>
                                     <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_dolares); ?></td>
-
                                 </tr>
                             </tbody>
                         </table>
@@ -572,6 +544,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <hr class="linea-accion">
 
                     <!-- Completa Acciones Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -580,7 +553,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
                                     <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Precio unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -614,8 +587,8 @@ $nombre_corredora = $datos_corredora['corredora'];
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
                                             <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                            <td>{$accion['cantidad']}</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(obtenerCCLCompra($cliente_id, $accion['ticker'])) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_compra_ccl)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
@@ -643,7 +616,7 @@ $nombre_corredora = $datos_corredora['corredora'];
 
         <!-- CEDEAR -->
         <div class="col-12 text-center">
-            <div class="container-fluid my-4 efectivo" id="cedear">
+            <div class="container-fluid my-4 efectivo" id="cedears">
                 <h5 class="me-2 cartera titulo-botones mb-4">Cedear</h5>
 
                 <!-- Botones -->
@@ -695,7 +668,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -777,7 +750,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
                                     <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -826,6 +799,8 @@ $nombre_corredora = $datos_corredora['corredora'];
 
                 </div>
                 <!-- Fin Cedear Dólares -->
+
+                <hr class="linea-accion">
 
             </div>
         </div>
@@ -887,7 +862,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -969,7 +944,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
                                     <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -1022,6 +997,8 @@ $nombre_corredora = $datos_corredora['corredora'];
 
                 </div>
                 <!-- Fin Bonos Dólares -->
+
+                <hr class="linea-accion">
 
             </div>
         </div>
@@ -1083,7 +1060,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -1165,7 +1142,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
                                     <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor Unitario</th>
+                                    <th colspan="2">Valor unitario</th>
                                     <th colspan="2">Valor total</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
@@ -1246,6 +1223,7 @@ $nombre_corredora = $datos_corredora['corredora'];
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/graficos.js"></script>
     <!-- FIN JS -->
+
 </body>
 
 </html>

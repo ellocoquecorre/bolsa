@@ -94,26 +94,31 @@ $conn->close();
                                     <td><?php echo htmlspecialchars($row['telefono']); ?></td>
                                     <td><?php echo htmlspecialchars($row['corredora']); ?></td>
                                     <td class="text-center">
-                                        <a href="cliente.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver">
+                                        <a href="cliente.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Ver">
                                             <i class="fa-solid fa-magnifying-glass"></i>
                                         </a>
                                     </td>
                                     <td class="text-center">
-                                        <a href="historial.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Historial">
-                                            <i class="fa-solid fa-clock-rotate-left"></i>
+                                        <a href="historial.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Historial">
+                                            <i class="fa-solid fa-hourglass"></i>
                                         </a>
                                     </td>
                                     <td class="text-center">
-                                        <a href="../funciones/ingresar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver" data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresar Efectivo">
+                                        <a href="../funciones/ingresar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresar Efectivo">
                                             <i class="fa-solid fa-plus"></i>
                                         </a>
                                     </td>
                                     <td class="text-center">
-                                        <a href="../funciones/retirar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar Efectivo">
+                                        <a href="../funciones/retirar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom eliminar"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar Efectivo">
                                             <i class="fa-solid fa-minus"></i>
                                     </td>
                                     <td class="text-center">
-                                        <a href="../funciones/editar_cliente.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom editar" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                                        <a href="../funciones/editar_cliente.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom editar"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
                                     </td>

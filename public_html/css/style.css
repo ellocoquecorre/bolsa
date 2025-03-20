@@ -140,8 +140,23 @@ h5 {
 .dropdown-item:hover i {
   color: #fff !important;
 }
+/* Regla general para .table-responsive */
 .table-responsive {
   overflow-x: auto;
+}
+
+/* Media query para notebooks (ancho mínimo de 768px) */
+@media (min-width: 768px) {
+  .table-responsive {
+    overflow-x: visible;
+  }
+}
+
+/* Media query para teléfonos (ancho máximo de 767px) */
+@media (max-width: 767px) {
+  .table-responsive {
+    overflow-x: auto;
+  }
 }
 
 .dropdown-menu {

@@ -195,7 +195,7 @@ $stmt_fondos->close();
 
                     <!-- CCL -->
                     <div class="row mb-3 align-items-center">
-                        <label for="ccl_compra" class="col-sm-2 col-form-label">Dolar CCL</label>
+                        <label for="ccl_compra" class="col-sm-2 col-form-label">Dólar CCL</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>

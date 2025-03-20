@@ -182,7 +182,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                                         <td style="width: 50%;">$ <?php echo $saldo_en_pesos_formateado; ?></td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 50%;">Promedio dolar CCL: </td>
+                                        <td style="width: 50%;">Promedio dólar CCL: </td>
                                         <td style="width: 50%;">$ <?php echo (formatear_dinero($promedio_ccl)); ?></td>
                                     </tr>
                                     <tr>
@@ -345,7 +345,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                                         <td style="width: 50%;">$ <?php echo $saldo_en_pesos_formateado; ?></td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 50%;">Promedio dolar CCL: </td>
+                                        <td style="width: 50%;">Promedio dólar CCL: </td>
                                         <td style="width: 50%;">$ <?php echo (formatear_dinero($promedio_ccl)); ?></td>
                                     </tr>
                                     <tr>

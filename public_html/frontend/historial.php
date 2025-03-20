@@ -286,6 +286,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                 <div id="tablaAccionesPesos">
 
                     <!-- Consolidada Acciones Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -311,6 +312,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <hr class="linea-accion">
 
                     <!-- Completa Acciones Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -343,13 +345,17 @@ $nombre_corredora = $datos_corredora['corredora'];
                                         $rentabilidad_pesos_accion = 0;
                                     }
 
+                                    // Validar si fecha_compra y fecha_venta son fechas válidas antes de formatear
+                                    $fecha_compra = DateTime::createFromFormat('Y-m-d', $accion['fecha_compra']);
+                                    $fecha_venta = DateTime::createFromFormat('Y-m-d', $accion['fecha_venta']);
+
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatearFecha($accion['cantidad'])) . "</td>
-                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha_compra'])) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
+                                            <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($accion['fecha_compra'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio_compra'])) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_compra_pesos_accion)) . "</td>
-                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha_venta'])) . "</td>
+                                            <td>" . ($fecha_venta ? htmlspecialchars(formatearFecha($accion['fecha_venta'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio_venta'])) . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_venta_pesos_accion)) . "</td>
                                             <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_pesos_accion) . "</td>
@@ -369,6 +375,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                 <div id="tablaAccionesDolares" class="d-none">
 
                     <!-- Consolidada Acciones Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -394,6 +401,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <hr class="linea-accion">
 
                     <!-- Completa Acciones Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -430,14 +438,18 @@ $nombre_corredora = $datos_corredora['corredora'];
                                         $rentabilidad_dolares_accion = 0;
                                     }
 
+                                    // Validar si fecha_compra y fecha_venta son fechas válidas antes de formatear
+                                    $fecha_compra = DateTime::createFromFormat('Y-m-d', $accion['fecha_compra']);
+                                    $fecha_venta = DateTime::createFromFormat('Y-m-d', $accion['fecha_venta']);
+
                                     echo "<tr data-ticker='{$accion['ticker']}'>
                                             <td>{$accion['ticker']}</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatearFecha($accion['cantidad'])) . "</td>
-                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha_compra'])) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
+                                            <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($accion['fecha_compra'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['ccl_compra'])) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_compra_dolares_accion)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($total_compra_dolares_accion)) . "</td>
-                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha_venta'])) . "</td>
+                                            <td>" . ($fecha_venta ? htmlspecialchars(formatearFecha($accion['fecha_venta'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['ccl_venta'])) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_venta_dolares_accion)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($total_venta_dolares_accion)) . "</td>
@@ -477,6 +489,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                 <div id="tablaCedearPesos">
 
                     <!-- Consolidada Cedear Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -502,6 +515,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <hr class="linea-accion">
 
                     <!-- Completa Cedear Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -534,18 +548,22 @@ $nombre_corredora = $datos_corredora['corredora'];
                                         $rentabilidad_pesos_cedear = 0;
                                     }
 
+                                    // Validar si fecha_compra y fecha_venta son fechas válidas antes de formatear
+                                    $fecha_compra = DateTime::createFromFormat('Y-m-d', $cedear['fecha_compra_cedear']);
+                                    $fecha_venta = DateTime::createFromFormat('Y-m-d', $cedear['fecha_venta_cedear']);
+
                                     echo "<tr data-ticker='{$cedear['ticker_cedear']}'>
-                                    <td>{$cedear['ticker_cedear']}</td>
-                                    <td class='text-right'>" . htmlspecialchars(formatearFecha($cedear['cantidad_cedear'])) . "</td>
-                                    <td>" . htmlspecialchars(formatearFecha($cedear['fecha_compra_cedear'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($cedear['precio_compra_cedear'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_compra_pesos_cedear)) . "</td>
-                                    <td>" . htmlspecialchars(formatearFecha($cedear['fecha_venta_cedear'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($cedear['precio_venta_cedear'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_venta_pesos_cedear)) . "</td>
-                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_pesos_cedear) . "</td>
-                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_pesos_cedear) . "</td>
-                                </tr>";
+                                            <td>{$cedear['ticker_cedear']}</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($cedear['cantidad_cedear'])) . "</td>
+                                            <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($cedear['fecha_compra_cedear'])) : 'Fecha inválida') . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($cedear['precio_compra_cedear'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_compra_pesos_cedear)) . "</td>
+                                            <td>" . ($fecha_venta ? htmlspecialchars(formatearFecha($cedear['fecha_venta_cedear'])) : 'Fecha inválida') . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($cedear['precio_venta_cedear'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_venta_pesos_cedear)) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_pesos_cedear) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_pesos_cedear) . "</td>
+                                        </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -560,6 +578,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                 <div id="tablaCedearDolares" class="d-none">
 
                     <!-- Consolidada Cedear Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -585,6 +604,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <hr class="linea-accion">
 
                     <!-- Completa Cedear Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -621,14 +641,18 @@ $nombre_corredora = $datos_corredora['corredora'];
                                         $rentabilidad_dolares_cedear = 0;
                                     }
 
+                                    // Validar si fecha_compra y fecha_venta son fechas válidas antes de formatear
+                                    $fecha_compra = DateTime::createFromFormat('Y-m-d', $cedear['fecha_compra_cedear']);
+                                    $fecha_venta = DateTime::createFromFormat('Y-m-d', $cedear['fecha_venta_cedear']);
+
                                     echo "<tr data-ticker='{$cedear['ticker_cedear']}'>
                                             <td>{$cedear['ticker_cedear']}</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatearFecha($cedear['cantidad_cedear'])) . "</td>
-                                            <td>" . htmlspecialchars(formatearFecha($cedear['fecha_compra_cedear'])) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($cedear['cantidad_cedear'])) . "</td>
+                                            <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($cedear['fecha_compra_cedear'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($cedear['ccl_compra'])) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_compra_dolares_cedear)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($total_compra_dolares_cedear)) . "</td>
-                                            <td>" . htmlspecialchars(formatearFecha($cedear['fecha_venta_cedear'])) . "</td>
+                                            <td>" . ($fecha_venta ? htmlspecialchars(formatearFecha($cedear['fecha_venta_cedear'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($cedear['ccl_venta'])) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_venta_dolares_cedear)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($total_venta_dolares_cedear)) . "</td>
@@ -654,7 +678,7 @@ $nombre_corredora = $datos_corredora['corredora'];
         <!-- BONOS -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo" id="bonos">
-                <h5 class="me-2 cartera titulo-botones mb-4">Bonoss</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Bonos</h5>
 
                 <!-- Botones -->
                 <div class="text-start">
@@ -669,6 +693,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                 <div id="tablaBonosPesos">
 
                     <!-- Consolidada Bonos Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -694,6 +719,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <hr class="linea-accion">
 
                     <!-- Completa Bonos Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -726,18 +752,22 @@ $nombre_corredora = $datos_corredora['corredora'];
                                         $rentabilidad_pesos_bonos = 0;
                                     }
 
+                                    // Validar si fecha_compra y fecha_venta son fechas válidas antes de formatear
+                                    $fecha_compra = DateTime::createFromFormat('Y-m-d', $bonos['fecha_compra_bonos']);
+                                    $fecha_venta = DateTime::createFromFormat('Y-m-d', $bonos['fecha_venta_bonos']);
+
                                     echo "<tr data-ticker='{$bonos['ticker_bonos']}'>
-                                    <td>{$bonos['ticker_bonos']}</td>
-                                    <td class='text-right'>" . htmlspecialchars(formatearFecha($bonos['cantidad_bonos'])) . "</td>
-                                    <td>" . htmlspecialchars(formatearFecha($bonos['fecha_compra_bonos'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bonos['precio_compra_bonos'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_compra_pesos_bonos)) . "</td>
-                                    <td>" . htmlspecialchars(formatearFecha($bonos['fecha_venta_bonos'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bonos['precio_venta_bonos'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_venta_pesos_bonos)) . "</td>
-                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_pesos_bonos) . "</td>
-                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_pesos_bonos) . "</td>
-                                </tr>";
+                                            <td>{$bonos['ticker_bonos']}</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($bonos['cantidad_bonos'])) . "</td>
+                                            <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($bonos['fecha_compra_bonos'])) : 'Fecha inválida') . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bonos['precio_compra_bonos'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_compra_pesos_bonos)) . "</td>
+                                            <td>" . ($fecha_venta ? htmlspecialchars(formatearFecha($bonos['fecha_venta_bonos'])) : 'Fecha inválida') . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bonos['precio_venta_bonos'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_venta_pesos_bonos)) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_pesos_bonos) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_pesos_bonos) . "</td>
+                                        </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -752,6 +782,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                 <div id="tablaBonosDolares" class="d-none">
 
                     <!-- Consolidada Bonos Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -777,6 +808,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <hr class="linea-accion">
 
                     <!-- Completa Bonos Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -813,14 +845,18 @@ $nombre_corredora = $datos_corredora['corredora'];
                                         $rentabilidad_dolares_bonos = 0;
                                     }
 
+                                    // Validar si fecha_compra y fecha_venta son fechas válidas antes de formatear
+                                    $fecha_compra = DateTime::createFromFormat('Y-m-d', $bonos['fecha_compra_bonos']);
+                                    $fecha_venta = DateTime::createFromFormat('Y-m-d', $bonos['fecha_venta_bonos']);
+
                                     echo "<tr data-ticker='{$bonos['ticker_bonos']}'>
                                             <td>{$bonos['ticker_bonos']}</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatearFecha($bonos['cantidad_bonos'])) . "</td>
-                                            <td>" . htmlspecialchars(formatearFecha($bonos['fecha_compra_bonos'])) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($bonos['cantidad_bonos'])) . "</td>
+                                            <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($bonos['fecha_compra_bonos'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bonos['ccl_compra'])) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_compra_dolares_bonos)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($total_compra_dolares_bonos)) . "</td>
-                                            <td>" . htmlspecialchars(formatearFecha($bonos['fecha_venta_bonos'])) . "</td>
+                                            <td>" . ($fecha_venta ? htmlspecialchars(formatearFecha($bonos['fecha_venta_bonos'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bonos['ccl_venta'])) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_venta_dolares_bonos)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($total_venta_dolares_bonos)) . "</td>
@@ -846,7 +882,7 @@ $nombre_corredora = $datos_corredora['corredora'];
         <!-- FONDOS -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo" id="fondos">
-                <h5 class="me-2 cartera titulo-botones mb-4">Fondoss</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Fondos</h5>
 
                 <!-- Botones -->
                 <div class="text-start">
@@ -861,6 +897,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                 <div id="tablaFondosPesos">
 
                     <!-- Consolidada Fondos Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -886,6 +923,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <hr class="linea-accion">
 
                     <!-- Completa Fondos Pesos -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -918,18 +956,22 @@ $nombre_corredora = $datos_corredora['corredora'];
                                         $rentabilidad_pesos_fondos = 0;
                                     }
 
+                                    // Validar si fecha_compra y fecha_venta son fechas válidas antes de formatear
+                                    $fecha_compra = DateTime::createFromFormat('Y-m-d', $fondos['fecha_compra_fondos']);
+                                    $fecha_venta = DateTime::createFromFormat('Y-m-d', $fondos['fecha_venta_fondos']);
+
                                     echo "<tr data-ticker='{$fondos['ticker_fondos']}'>
-                                    <td>{$fondos['ticker_fondos']}</td>
-                                    <td class='text-right'>" . htmlspecialchars(formatearFecha($fondos['cantidad_fondos'])) . "</td>
-                                    <td>" . htmlspecialchars(formatearFecha($fondos['fecha_compra_fondos'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondos['precio_compra_fondos'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_compra_pesos_fondos)) . "</td>
-                                    <td>" . htmlspecialchars(formatearFecha($fondos['fecha_venta_fondos'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondos['precio_venta_fondos'])) . "</td>
-                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_venta_pesos_fondos)) . "</td>
-                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_pesos_fondos) . "</td>
-                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_pesos_fondos) . "</td>
-                                </tr>";
+                                            <td>{$fondos['ticker_fondos']}</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($fondos['cantidad_fondos'])) . "</td>
+                                            <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($fondos['fecha_compra_fondos'])) : 'Fecha inválida') . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondos['precio_compra_fondos'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_compra_pesos_fondos)) . "</td>
+                                            <td>" . ($fecha_venta ? htmlspecialchars(formatearFecha($fondos['fecha_venta_fondos'])) : 'Fecha inválida') . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondos['precio_venta_fondos'])) . "</td>
+                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($total_venta_pesos_fondos)) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_pesos_fondos) . "</td>
+                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_pesos_fondos) . "</td>
+                                        </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -944,6 +986,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                 <div id="tablaFondosDolares" class="d-none">
 
                     <!-- Consolidada Fondos Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -969,6 +1012,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <hr class="linea-accion">
 
                     <!-- Completa Fondos Dólares -->
+                    <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -1005,14 +1049,18 @@ $nombre_corredora = $datos_corredora['corredora'];
                                         $rentabilidad_dolares_fondos = 0;
                                     }
 
+                                    // Validar si fecha_compra y fecha_venta son fechas válidas antes de formatear
+                                    $fecha_compra = DateTime::createFromFormat('Y-m-d', $fondos['fecha_compra_fondos']);
+                                    $fecha_venta = DateTime::createFromFormat('Y-m-d', $fondos['fecha_venta_fondos']);
+
                                     echo "<tr data-ticker='{$fondos['ticker_fondos']}'>
                                             <td>{$fondos['ticker_fondos']}</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatearFecha($fondos['cantidad_fondos'])) . "</td>
-                                            <td>" . htmlspecialchars(formatearFecha($fondos['fecha_compra_fondos'])) . "</td>
+                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($fondos['cantidad_fondos'])) . "</td>
+                                            <td>" . ($fecha_compra ? htmlspecialchars(formatearFecha($fondos['fecha_compra_fondos'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondos['ccl_compra'])) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_compra_dolares_fondos)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($total_compra_dolares_fondos)) . "</td>
-                                            <td>" . htmlspecialchars(formatearFecha($fondos['fecha_venta_fondos'])) . "</td>
+                                            <td>" . ($fecha_venta ? htmlspecialchars(formatearFecha($fondos['fecha_venta_fondos'])) : 'Fecha inválida') . "</td>
                                             <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondos['ccl_venta'])) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_venta_dolares_fondos)) . "</td>
                                             <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($total_venta_dolares_fondos)) . "</td>

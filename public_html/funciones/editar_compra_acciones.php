@@ -122,18 +122,6 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                     </div>
                     <!-- Fin Precio -->
 
-                    <!-- Fecha -->
-                    <div class="row mb-3 align-items-center">
-                        <label for="fecha" class="col-sm-2 col-form-label">Fecha</label>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo htmlspecialchars($fecha); ?>" required>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Fin Fecha -->
-
                     <!-- CCL -->
                     <div class="row mb-3 align-items-center">
                         <label for="ccl_compra" class="col-sm-2 col-form-label">Dolar CCL</label>
@@ -145,6 +133,18 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                         </div>
                     </div>
                     <!-- Fin CCL -->
+
+                    <!-- Fecha -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="fecha" class="col-sm-2 col-form-label">Fecha</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
+                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo htmlspecialchars($fecha); ?>" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fin Fecha -->
 
                     <hr class="mod mb-3">
 

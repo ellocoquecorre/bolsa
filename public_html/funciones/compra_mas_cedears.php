@@ -4,6 +4,9 @@ require_once '../../config/config.php';
 require_once '../funciones/formato_dinero.php';
 require_once '../funciones/cliente_funciones.php';
 
+// Inicializar el mensaje de error
+$error_msg = '';
+
 // Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
@@ -28,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Comprobar si el saldo es suficiente
     if ($costo_total > $saldo_en_pesos) {
-        echo "<script>alert('Saldo insuficiente');</script>";
+        $error_msg = "Saldo insuficiente";
     } else {
         // Obtener los datos del cedear específico del cliente
         $sql = "SELECT ticker_cedear, cantidad_cedear, fecha_cedear, precio_cedear, ccl_compra_cedear FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?";
@@ -106,20 +109,6 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <!-- FIN CSS -->
-    <script>
-        function validarSaldo() {
-            var cantidad = parseFloat(document.getElementById('cantidad').value);
-            var precio = parseFloat(document.getElementById('precio').value);
-            var saldo = <?php echo $saldo_en_pesos; ?>;
-            var costo_total = cantidad * precio;
-
-            if (costo_total > saldo) {
-                alert('Saldo insuficiente');
-                return false;
-            }
-            return true;
-        }
-    </script>
 </head>
 
 <body>
@@ -174,7 +163,12 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Comprar más cedears de <?php echo htmlspecialchars($ticker); ?></h5>
-                <form id="compra_cedears" method="POST" action="" onsubmit="return validarSaldo();">
+                <?php if ($error_msg): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $error_msg; ?>
+                    </div>
+                <?php endif; ?>
+                <form id="compra_cedears" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
                     <!-- Saldo -->
                     <div class="row mb-3 align-items-center">

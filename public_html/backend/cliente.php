@@ -17,6 +17,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Goodfellas Inc.</title>
+    <meta name="cliente_id" content="<?php echo $cliente_id; ?>">
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
@@ -1458,6 +1459,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/eliminar_acciones.js"></script>
     <script src="../js/eliminar_cedears.js"></script>
+    <script src="../js/eliminar_bonos.js"></script>
+    <script src="../js/eliminar_fondos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/graficos.js"></script>
     <!-- FIN JS -->

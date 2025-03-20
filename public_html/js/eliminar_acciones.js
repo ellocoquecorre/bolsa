@@ -2,7 +2,7 @@ function eliminarAccion(element) {
     var ticker = element.closest('tr').getAttribute('data-ticker');
     var cliente_id = document.querySelector('meta[name="cliente_id"]').getAttribute('content');
 
-    if (confirm("¿Estás seguro de que deseas eliminar esta acción?")) {
+    if (confirm("¿Estás seguro que querés eliminar esta acción?")) {
         $.ajax({
             url: '../funciones/eliminar_acciones.php',
             type: 'POST',

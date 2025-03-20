@@ -1,12 +1,17 @@
 <?php
 // Incluir archivo de configuración
 require_once '../../config/config.php';
+require_once '../funciones/formato_dinero.php';
+require_once '../funciones/cliente_funciones.php';
 
-// Obtener el id del cliente y el ticker desde la URL
+// Inicializar el mensaje de error
+$error_msg = '';
+
+// Obtener el id del cliente desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
-$ticker_acciones = isset($_GET['ticker']) ? $_GET['ticker'] : '';
+$ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
-// Consulta para obtener los datos del cliente
+// Obtener los datos del cliente
 $sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $cliente_id);
@@ -15,80 +20,10 @@ $stmt->bind_result($nombre, $apellido);
 $stmt->fetch();
 $stmt->close();
 
-// Consulta para obtener los valores de cantidad, precio y id de la tabla acciones
-$sql = "SELECT id, cantidad, precio, fecha FROM acciones WHERE ticker = ? AND cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("si", $ticker_acciones, $cliente_id);
-$stmt->execute();
-$stmt->bind_result($id_accion, $cantidad_acciones_accion, $precio_acciones_accion, $fecha_acciones_accion);
-$stmt->fetch();
-$stmt->close();
+// Renderizar los datos obtenidos
+$nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
 
-// Obtener la fecha de hoy (por si el usuario no selecciona una)
-$fecha_acciones_hoy = date('Y-m-d');
-
-// Inicializar el mensaje de error
-$error_msg = '';
-
-// Verificar si se ha enviado el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener los datos del formulario
-    $accion_id = $_POST['accion_id'];  // Se obtiene el ID de la acción
-    $nuevo_cantidad = $_POST['cantidad'];
-    $nuevo_precio = $_POST['precio'];
-    $fecha_acciones = $_POST['fecha'];
-
-    // Calcular el costo de compra
-    $nuevo_precio_compra = $nuevo_cantidad * $nuevo_precio;
-
-    // Obtener el valor actual de efectivo del cliente
-    $sql = "SELECT efectivo FROM balance WHERE cliente_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $cliente_id);
-    $stmt->execute();
-    $stmt->bind_result($efectivo);
-    $stmt->fetch();
-    $stmt->close();
-
-    // Ajustar el saldo del cliente según la diferencia de inversión
-    $precio_acciones_compra_original = $cantidad_acciones_accion * $precio_acciones_accion;
-    if ($precio_acciones_compra_original > $nuevo_precio_compra) {
-        $diferencia = $precio_acciones_compra_original - $nuevo_precio_compra;
-        $nuevo_efectivo = $efectivo + $diferencia;
-        $actualizar_efectivo = true;
-    } else {
-        $diferencia = $nuevo_precio_compra - $precio_acciones_compra_original;
-        if ($efectivo >= $diferencia) {
-            $nuevo_efectivo = $efectivo - $diferencia;
-            $actualizar_efectivo = true;
-        } else {
-            $error_msg = "Saldo insuficiente";
-            $actualizar_efectivo = false;
-        }
-    }
-
-    if ($actualizar_efectivo) {
-        // Actualizar el efectivo en la tabla "balance"
-        $sql = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("di", $nuevo_efectivo, $cliente_id);
-        $stmt->execute();
-        $stmt->close();
-
-        // Actualizar solo la acción específica con el ID correspondiente
-        $sql = "UPDATE acciones SET cantidad = ?, precio = ?, fecha = ? WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("dssi", $nuevo_cantidad, $nuevo_precio, $fecha_acciones, $accion_id);
-        $stmt->execute();
-        $stmt->close();
-
-        // Redirigir al perfil del cliente
-        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
-        exit();
-    }
-}
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -140,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
+            <h4 class="fancy"><?php echo $nombre_y_apellido; ?></h4>
         </div>
         <!-- FIN TITULO -->
 
@@ -150,62 +85,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-3"></div>
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones mb-4">Editar los datos de <?php echo htmlspecialchars($ticker_acciones); ?></h5>
-                <?php if ($error_msg): ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?php echo $error_msg; ?>
-                    </div>
-                <?php endif; ?>
+                <h5 class="me-2 cartera titulo-botones mb-4">Editar los datos de <?php echo htmlspecialchars($ticker); ?></h5>
                 <form method="POST" action="">
-                    <input type="hidden" name="accion_id" value="<?php echo htmlspecialchars($id_accion); ?>">
-                    <!-- Ticker 
-                    <div class="row mb-3 align-items-center">
-                        <label for="ticker" class="col-sm-2 col-form-label">Ticker</label>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
-                                <input type="text" class="form-control" id="ticker" name="ticker" value="<?php echo htmlspecialchars($ticker_acciones); ?>" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    -->
+
                     <!-- Cantidad -->
                     <div class="row mb-3 align-items-center">
                         <label for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo htmlspecialchars($cantidad_acciones_accion); ?>" autofocus required>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad" value="" autofocus required>
                             </div>
                         </div>
                     </div>
+                    <!-- Fin Cantidad -->
+
                     <!-- Precio -->
                     <div class="row mb-3 align-items-center">
                         <label for="precio" class="col-sm-2 col-form-label">Precio</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                <input type="text" step="0.01" class="form-control" id="precio" name="precio" value="<?php echo htmlspecialchars($precio_acciones_accion); ?>" placeholder="0,00" required>
+                                <input type="text" step="0.01" class="form-control" id="precio" name="precio" placeholder="precio" value="" required>
                             </div>
                         </div>
                     </div>
+                    <!-- Fin Precio -->
+
+                    <!-- CCL -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="ccl" class="col-sm-2 col-form-label">Dolar CCL</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                <input type="text" step="0.01" class="form-control" id="ccl" name="ccl" placeholder="ccl" value="" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fin CCL -->
+
                     <!-- Fecha -->
                     <div class="row mb-3 align-items-center">
                         <label for="fecha" class="col-sm-2 col-form-label">Fecha</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo htmlspecialchars($fecha_acciones_accion); ?>" required>
+                                <input type="date" class="form-control" id="fecha" placeholder="fecha" name="fecha" value="" required>
                             </div>
                         </div>
                     </div>
+                    <!-- Fin Fecha -->
+
                     <hr class="mod mb-3">
+
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
                         <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones"
                             class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>
                     </div>
+                    <!-- Fin Botones -->
+
                 </form>
             </div>
         </div>
@@ -228,7 +168,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="../js/tickers_acciones.js"></script>
     <!-- FIN JS -->
 </body>
 

@@ -676,7 +676,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
         <!-- CEDEAR -->
         <div class="col-12 text-center">
-            <div class="container-fluid my-4 efectivo" id="cedear">
+            <div class="container-fluid my-4 efectivo" id="cedears">
                 <h5 class="me-2 cartera titulo-botones mb-4">Cedear</h5>
 
                 <!-- Botones -->

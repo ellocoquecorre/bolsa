@@ -29,6 +29,9 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
 // Obtener la fecha actual
 $fecha_hoy = date('Y-m-d');
 
+// Inicializar el mensaje de error
+$error_msg = '';
+
 // Renderizar los datos obtenidos
 $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
 
@@ -42,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $total_compra = $cantidad * $precio;
 
     if ($total_compra > $saldo_en_pesos) {
-        echo '<script>alert("Saldo insuficiente");</script>';
+        $error_msg = "Saldo insuficiente";
     } else {
         // Restar el valor de la compra al saldo en pesos
         $nuevo_saldo = $saldo_en_pesos - $total_compra;
@@ -66,12 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
         exit();
     }
-}
-
-function obtenerPromedioCCL()
-{
-    global $contadoconliqui_compra, $contadoconliqui_venta;
-    return ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 }
 ?>
 
@@ -142,6 +139,11 @@ function obtenerPromedioCCL()
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Comprar Acciones</h5>
+                <?php if ($error_msg): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $error_msg; ?>
+                    </div>
+                <?php endif; ?>
                 <form id="compra_acciones" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
                     <!-- Saldo -->
@@ -229,19 +231,6 @@ function obtenerPromedioCCL()
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tickers_acciones.js"></script>
-    <script>
-        function validarSaldo() {
-            var cantidad = parseFloat(document.getElementById('cantidad').value);
-            var precio = parseFloat(document.getElementById('precio').value.replace(',', '.'));
-            var saldo = parseFloat("<?php echo $saldo_en_pesos; ?>");
-
-            if (cantidad * precio > saldo) {
-                alert('Saldo insuficiente');
-                return false;
-            }
-            return true;
-        }
-    </script>
     <!-- FIN JS -->
 </body>
 

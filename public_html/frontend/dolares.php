@@ -62,7 +62,7 @@ $nombre_corredora = $datos_corredora['corredora'];
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy">Cotización del dólar</h4>
+            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
             <p>Tu corredora es<br><a href="<?php echo $url_corredora; ?>" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><?php echo $nombre_corredora; ?></a></p>
         </div>
         <!-- FIN TITULO -->

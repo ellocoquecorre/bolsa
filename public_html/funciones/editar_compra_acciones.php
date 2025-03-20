@@ -122,18 +122,6 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                     </div>
                     <!-- Fin Precio -->
 
-                    <!-- CCL -->
-                    <div class="row mb-3 align-items-center">
-                        <label for="ccl_compra" class="col-sm-2 col-form-label">Dolar CCL</label>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                <input type="text" step="0.01" class="form-control" id="ccl_compra" name="ccl_compra" placeholder="<?php echo htmlspecialchars($ccl_compra); ?>" value="" required>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Fin CCL -->
-
                     <!-- Fecha -->
                     <div class="row mb-3 align-items-center">
                         <label for="fecha" class="col-sm-2 col-form-label">Fecha</label>
@@ -145,6 +133,18 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                         </div>
                     </div>
                     <!-- Fin Fecha -->
+
+                    <!-- CCL -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="ccl_compra" class="col-sm-2 col-form-label">Dolar CCL</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                <input type="text" step="0.01" class="form-control" id="ccl_compra" name="ccl_compra" placeholder="<?php echo htmlspecialchars($ccl_compra); ?>" value="" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fin CCL -->
 
                     <hr class="mod mb-3">
 

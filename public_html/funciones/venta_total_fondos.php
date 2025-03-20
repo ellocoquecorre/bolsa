@@ -16,6 +16,41 @@ $stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra
 $stmt->fetch();
 $stmt->close();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Calcular el valor de la venta
+    $precio_venta = $_POST['precio_venta'];
+    $fecha_venta = $_POST['fecha_venta'];
+    $valor_venta = $db_cantidad * $precio_venta;
+
+    // Actualizar el saldo en la tabla balance
+    $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
+    $stmt_update_balance = $conn->prepare($sql_update_balance);
+    $stmt_update_balance->bind_param("di", $valor_venta, $cliente_id);
+    $stmt_update_balance->execute();
+    $stmt_update_balance->close();
+
+    // Obtener el promedio ccl
+    $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+
+    // Insertar los datos en la tabla fondos_historial
+    $sql_insert_historial = "INSERT INTO fondos_historial (cliente_id, ticker_fondos, cantidad_fondos, fecha_compra_fondos, precio_compra_fondos, ccl_compra, fecha_venta_fondos, precio_venta_fondos, ccl_venta) 
+                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt_insert_historial = $conn->prepare($sql_insert_historial);
+    $stmt_insert_historial->bind_param("isissdssd", $cliente_id, $db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $promedio_ccl);
+    $stmt_insert_historial->execute();
+    $stmt_insert_historial->close();
+
+    // Borrar el registro de la tabla fondos
+    $sql_delete_fondos = "DELETE FROM fondos WHERE cliente_id = ? AND ticker_fondos = ?";
+    $stmt_delete_fondos = $conn->prepare($sql_delete_fondos);
+    $stmt_delete_fondos->bind_param("is", $cliente_id, $ticker);
+    $stmt_delete_fondos->execute();
+    $stmt_delete_fondos->close();
+
+    // Redirigir a la página del cliente
+    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#fondos");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -111,7 +146,7 @@ $stmt->close();
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                         <input type="text" class="form-control" id="precio_venta" name="precio_venta"
-                                            placeholder="0,00" required>
+                                            placeholder="0,00" required autofocus>
                                     </div>
                                 </div>
                             </div>
@@ -168,7 +203,6 @@ $stmt->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <!-- FIN JS -->
 </body>
 

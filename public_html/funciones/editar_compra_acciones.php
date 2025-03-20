@@ -20,10 +20,20 @@ $stmt->bind_result($nombre, $apellido);
 $stmt->fetch();
 $stmt->close();
 
+// Obtener los datos de la compra de acciones
+$sql_acciones = "SELECT cantidad, precio, fecha, ccl_compra FROM acciones WHERE cliente_id = ? AND ticker = ?";
+$stmt_acciones = $conn->prepare($sql_acciones);
+$stmt_acciones->bind_param("is", $cliente_id, $ticker);
+$stmt_acciones->execute();
+$stmt_acciones->bind_result($cantidad, $precio, $fecha, $ccl_compra);
+$stmt_acciones->fetch();
+$stmt_acciones->close();
+
 // Renderizar los datos obtenidos
 $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
 
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -94,7 +104,7 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad" value="" autofocus required>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="<?php echo htmlspecialchars($cantidad); ?>" value="" autofocus required>
                             </div>
                         </div>
                     </div>
@@ -106,7 +116,7 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                <input type="text" step="0.01" class="form-control" id="precio" name="precio" placeholder="precio" value="" required>
+                                <input type="text" step="0.01" class="form-control" id="precio" name="precio" placeholder="<?php echo htmlspecialchars($precio); ?>" value="" required>
                             </div>
                         </div>
                     </div>
@@ -114,11 +124,11 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
 
                     <!-- CCL -->
                     <div class="row mb-3 align-items-center">
-                        <label for="ccl" class="col-sm-2 col-form-label">Dolar CCL</label>
+                        <label for="ccl_compra" class="col-sm-2 col-form-label">Dolar CCL</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
-                                <input type="text" step="0.01" class="form-control" id="ccl" name="ccl" placeholder="ccl" value="" required>
+                                <input type="text" step="0.01" class="form-control" id="ccl_compra" name="ccl_compra" placeholder="<?php echo htmlspecialchars($ccl_compra); ?>" value="" required>
                             </div>
                         </div>
                     </div>
@@ -130,7 +140,7 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="fecha" placeholder="fecha" name="fecha" value="" required>
+                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo htmlspecialchars($fecha); ?>" required>
                             </div>
                         </div>
                     </div>

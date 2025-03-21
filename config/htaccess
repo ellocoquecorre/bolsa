@@ -1,0 +1,4 @@
+# Deniega todo acceso desde el navegador
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>

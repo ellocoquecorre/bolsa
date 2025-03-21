@@ -1,4 +1,4 @@
-# Deny access to the config directory
-<Directory "C:/xampp/htdocs/bolsa/config">
-    Require all denied
-</Directory>
+RewriteEngine On
+
+# Bloquea el acceso directo a la carpeta config desde el navegador
+RewriteRule ^config/ - [F,L]

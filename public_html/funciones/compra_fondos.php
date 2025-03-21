@@ -71,11 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-function obtenerPromedioCCL()
-{
-    global $contadoconliqui_compra, $contadoconliqui_venta;
-    return ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-}
 ?>
 
 <!DOCTYPE html>

@@ -8,6 +8,13 @@ include '../funciones/dolar_cronista.php';
 
 // CLIENTE_ID
 $cliente_id = isset($_POST['cliente_id']) ? $_POST['cliente_id'] : (isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1);
+
+// Añadir aquí la función obtenerPromedioCCL
+function obtenerPromedioCCL()
+{
+    global $contadoconliqui_compra, $contadoconliqui_venta;
+    return ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+}
 // FIN CLIENTE_ID
 
 // DATOS DEL CLIENTE

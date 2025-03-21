@@ -31,7 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Si la contraseña es correcta
                 $_SESSION['loggedin'] = true;
                 $_SESSION['email'] = $email;
-                header("Location: backend/lista_clientes.php");
+                $_SESSION['cliente_id'] = null; // Los administradores no tienen cliente_id
+                header("Location: backend/lista_clientes.php"); // Redirigir a la lista de clientes
                 exit;
             }
         }
@@ -52,8 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Si la contraseña es correcta
                 $_SESSION['loggedin'] = true;
                 $_SESSION['email'] = $email;
-                $cliente_id = $row['cliente_id']; // Obtener el cliente_id
-                header("Location: frontend/cliente.php?cliente_id=" . $cliente_id);
+                $_SESSION['cliente_id'] = $row['cliente_id']; // Guardar cliente_id en la sesión
+                header("Location: frontend/cliente.php?cliente_id=" . $row['cliente_id']); // Redirigir al cliente
                 exit;
             }
         }

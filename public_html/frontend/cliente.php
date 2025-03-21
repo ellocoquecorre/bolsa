@@ -1,18 +1,30 @@
 <?php
-// Incluir archivo de configuración
+session_start(); // Asegúrate de que la sesión esté iniciada
+
+// Verificar si el cliente está logueado
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: login.php"); // Redirigir al login si no está logueado
+    exit;
+}
+
+// Obtener el cliente_id desde la URL
+$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : null;
+
+// Verificar que el cliente_id de la URL coincida con el cliente_id en la sesión
+if ($cliente_id != $_SESSION['cliente_id']) {
+    header("Location: error.php"); // Redirigir a una página de error si el cliente_id no coincide
+    exit;
+}
+
+// El resto del código
 require_once '../../config/config.php';
-
-// Incluir las funciones necesarias
 include '../funciones/cliente_funciones.php';
-
-// Obtener el id del cliente desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 
 $datos_corredora = obtenerDatosCorredora($cliente_id);
 $url_corredora = $datos_corredora['url'];
 $nombre_corredora = $datos_corredora['corredora'];
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">

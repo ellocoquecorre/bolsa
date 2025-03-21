@@ -34,7 +34,7 @@ $conn->close();
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navbar">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -115,6 +115,7 @@ $conn->close();
                                         <a href="../funciones/retirar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom eliminar"
                                             data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar Efectivo">
                                             <i class="fa-solid fa-minus"></i>
+                                        </a>
                                     </td>
                                     <td class="text-center">
                                         <a href="../funciones/editar_cliente.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom editar"
@@ -123,7 +124,7 @@ $conn->close();
                                         </a>
                                     </td>
                                     <td class="text-center">
-                                        <button class="btn btn-info btn-custom eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                                        <button class="btn btn-info btn-custom eliminar" data-cliente-id="<?php echo $row['cliente_id']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </button>
                                     </td>
@@ -153,6 +154,7 @@ $conn->close();
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tooltip.js"></script>
+    <script src="../js/eliminar_cliente.js"></script>
     <!-- FIN JS -->
 
 </body>

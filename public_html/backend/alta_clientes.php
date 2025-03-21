@@ -118,6 +118,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-3 align-items-center">
+                        <label for="url" class="col-sm-2 col-form-label text-right">URL Corredora</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-link"></i></span>
+                                <input type="text" class="form-control" id="url" name="url" required>
+                            </div>
+                        </div>
+                    </div>
                     <hr class="mod mb-3">
                     <div class="text-right">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
@@ -128,6 +137,8 @@
         </div>
         <div class="col-3"></div>
         <!-- FIN ALTA CLIENTES -->
+
+        <hr class="mod" style="margin-bottom: 80px;">
 
     </div>
     <!-- FIN CONTENIDO -->

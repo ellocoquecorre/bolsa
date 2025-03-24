@@ -2,6 +2,7 @@
 // Incluir archivo de configuración
 require_once '../../config/config.php';
 require_once '../funciones/cliente_funciones.php';
+require_once '../funciones/formato_dinero.php';
 
 // Obtener el id del cliente y el ticker desde la URL
 $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
@@ -161,6 +162,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                     </div>
                     <!-- Fin Precio Venta -->
+
+                    <!-- CCL Venta -->
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <div class="row mb-3 align-items-center">
+                                <label class="col-sm-4 col-sm-2 col-form-label" for="ccl_venta">Dólar CCL</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                        <input type="text" class="form-control" id="ccl_venta" name="ccl_venta"
+                                            value="<?php echo formatear_dinero($promedio_ccl); ?>" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Fin CCL Venta -->
 
                     <!-- Fecha Venta -->
                     <div class="row">

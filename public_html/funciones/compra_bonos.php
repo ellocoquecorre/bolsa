@@ -147,6 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
                 <form id="compra_bonos" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
+
                     <!-- Saldo -->
                     <div class="row mb-3 align-items-center">
                         <label for="saldo" class="col-sm-2 col-form-label">Saldo</label>
@@ -158,6 +159,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                     </div>
+                    <!-- Fin Saldo -->
+
                     <!-- Ticker -->
                     <div class="row mb-3 align-items-center">
                         <label for="ticker_bonos" class="col-sm-2 col-form-label">Ticker</label>
@@ -169,6 +172,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div id="tickerDropdown_bonos" class="dropdown-menu" style="display: none; width: 100%;"></div>
                         </div>
                     </div>
+                    <!-- Fin Ticker -->
+
                     <!-- Cantidad -->
                     <div class="row mb-3 align-items-center">
                         <label for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
@@ -179,6 +184,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                     </div>
+                    <!-- Fin Cantidad -->
+
                     <!-- Precio -->
                     <div class="row mb-3 align-items-center">
                         <label for="precio" class="col-sm-2 col-form-label">Precio</label>
@@ -190,6 +197,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                     </div>
+                    <!-- Fin Precio -->
+
+                    <!-- CCL -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="ccl_compra" class="col-sm-2 col-form-label">Dólar CCL</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                <input type="text" step="0.01" class="form-control" id="ccl_compra" name="ccl_compra"
+                                    placeholder="0,00" value="<?php echo formatear_dinero($promedio_ccl); ?>" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fin CCL -->
+
                     <!-- Fecha -->
                     <div class="row mb-3 align-items-center">
                         <label for="fecha" class="col-sm-2 col-form-label">Fecha</label>
@@ -201,7 +223,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                     </div>
+
                     <hr class="mod mb-3">
+
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
@@ -209,6 +233,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#bonos'">
                             <i class="fa-solid fa-times me-2"></i>Cancelar</button>
                     </div>
+                    <!-- Fin Botones -->
+
                 </form>
             </div>
         </div>

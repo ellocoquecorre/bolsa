@@ -300,8 +300,11 @@ td.text-center {
 .mt-navbar {
     margin-top: 77px; /* Ajusta el valor según la altura de tu navbar */
 }
-#acciones, #cedear, #bonos {
+#acciones, #bonos {
   scroll-margin-top: 70px; /* Ajusta el valor según sea necesario */
+}
+#fondos, #cedears {
+  scroll-margin-top: 100px; /* Ajusta el valor según sea necesario */
 }
 /* Estilo para el elemento seleccionado en el dropdown */
 .selected {

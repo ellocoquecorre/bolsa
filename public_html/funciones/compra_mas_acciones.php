@@ -170,6 +170,7 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
                 <?php endif; ?>
                 <form id="compra_acciones" method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
+
                     <!-- Saldo -->
                     <div class="row mb-3 align-items-center">
                         <label for="saldo" class="col-sm-2 col-form-label">Saldo</label>
@@ -181,6 +182,8 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
                             </div>
                         </div>
                     </div>
+                    <!-- Fin Saldo -->
+
                     <!-- Cantidad -->
                     <div class="row mb-3 align-items-center">
                         <label for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
@@ -191,6 +194,8 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
                             </div>
                         </div>
                     </div>
+                    <!-- Fin Cantidad -->
+
                     <!-- Precio -->
                     <div class="row mb-3 align-items-center">
                         <label for="precio" class="col-sm-2 col-form-label">Precio</label>
@@ -202,6 +207,21 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
                             </div>
                         </div>
                     </div>
+                    <!-- Fin Precio -->
+
+                    <!-- CCL -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="ccl_compra" class="col-sm-2 col-form-label">Dólar CCL</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
+                                <input type="text" step="0.01" class="form-control" id="ccl_compra" name="ccl_compra"
+                                    placeholder="0,00" value="<?php echo formatear_dinero($promedio_ccl); ?>" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fin CCL -->
+
                     <!-- Fecha -->
                     <div class="row mb-3 align-items-center">
                         <label for="fecha" class="col-sm-2 col-form-label">Fecha</label>
@@ -213,7 +233,9 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
                             </div>
                         </div>
                     </div>
+
                     <hr class="mod mb-3">
+
                     <!-- Botones -->
                     <div class="text-end">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
@@ -221,6 +243,8 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
                             onclick="window.location.href='../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#acciones'">
                             <i class="fa-solid fa-times me-2"></i>Cancelar</button>
                     </div>
+                    <!-- Fin Botones -->
+
                 </form>
             </div>
         </div>

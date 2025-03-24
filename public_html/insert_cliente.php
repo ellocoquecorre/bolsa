@@ -16,34 +16,14 @@ if ($conn->connect_error) {
 // Datos a insertar
 $clientes = [
     [
-        'cliente_id' => 1,
-        'email' => 'el.bueno.de.harry@gmail.com',
-        'password' => 'N250ctK8',
-        'nombre' => 'Harry',
-        'apellido' => 'Flashman',
-        'telefono' => '123',
+        'cliente_id' => 4,
+        'email' => 'peilo@gmail.com',
+        'password' => 'tgy107Duna',
+        'nombre' => 'Pablo',
+        'apellido' => 'Marino',
+        'telefono' => '2944-69-3756',
         'corredora' => 'Balanz',
         'url' => 'https://clientes.balanz.com/auth/login'
-    ],
-    [
-        'cliente_id' => 2,
-        'email' => 'cafe.la.humedad@gmail.com',
-        'password' => 'Rn109Nzx',
-        'nombre' => 'Cacho',
-        'apellido' => 'Castaña',
-        'telefono' => '456',
-        'corredora' => 'Allaria',
-        'url' => 'https://allaria.com.ar'
-    ],
-    [
-        'cliente_id' => 3,
-        'email' => '24.de.nerca@gmail.com',
-        'password' => 'MGBgabsZ',
-        'nombre' => 'Rocco',
-        'apellido' => 'Siffredi',
-        'telefono' => '789',
-        'corredora' => 'LEBSA',
-        'url' => 'https://operar.winvest.ar'
     ]
 ];
 

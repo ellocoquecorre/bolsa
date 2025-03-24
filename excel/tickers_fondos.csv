@@ -1,0 +1,304 @@
+1;ADBAICA;ADCAP Cobertura - Clase A
+2;ADRDOB;ADCAP Ahorro Pesos - Clase B
+3;ADRDOLA;ADCAP Ahorro Pesos - Clase A 
+4;ALADOFA;Allaria Dolar Ahorro - Clase A
+5;ALADOFB;Allaria Dolar Ahorro - Clase B
+6;ALADOLA;Allaria Dolar Dinamico - Clase A
+7;ALAHORA;Allaria Ahorro - Clase A
+8;ALAHORB;Allaria Ahorro - Clase B
+9;ALAHPLA;Allaria Ahorro Plus - Clase A
+10;ALAHPLB;Allaria Ahorro Plus - Clase B
+11;ALDIVEA;Allaria Diversificado - Clase A
+12;ALDIVEB;Allaria Diversificado - Clase B
+13;ALDIVEC;Allaria Diversificado - Clase C
+14;ALDOLPA;Allaria Dolar Ahorro Plus - Clase A
+15;ALDOLPB;Allaria Dolar Ahorro Plus - Clase B
+16;ALDOPLA;Allaria Dolar Global - Clase A
+17;ALDOPLB;Allaria Dolar Global - Clase B
+18;ALGIIIA;Allaria Agro - Clase A
+19;ALGIIIB;Allaria Agro - Clase B
+20;ALLAEQA;Allaria Equity Selection - Clase A
+21;ALLAEQB;Allaria Equity Selection - Clase B
+22;ALLARTA;Allaria Dolar Retorno Total - Clase A
+23;ALLRDLC;Allaria Renta Dolar Ley 27260 - Clase C
+24;ALRTAFA;Allaria Renta Fija - Clase A
+25;ALRTAFB;Allaria Renta Fija - Clase B
+26;ALRTAVA;Allaria Acciones - Clase A
+27;ALRTAVB;Allaria Acciones - Clase B
+28;ALRVIIA;Allaria Renta Mixta II - Clase A
+29;ALRVIIB;Allaria Renta Mixta II - Clase B
+30;AXAHORA;MAF Ahorro Pesos - Clase A
+31;AXRFCOA;MAF Renta Fija Cobertura - Clase A
+32;BAINGLA;Balanz Retorno Total - Clase A
+33;BALADOA;Balanz Ahorro en Dolares - Clase A
+34;BALADOB;Balanz Ahorro en Dolares - Clase B
+35;BALMMIC;Balanz Institucional - Clase A
+36;BALPE3DA;Balanz Performance III - Clase A
+37;BALPE3DB;Balanz Performance III - Clase B
+38;BALPIIA;Balanz Performance II - Clase A
+39;BCAHORA;Balanz Capital Ahorro - Clase A
+40;BCAHORB;Balanz Capital Ahorro - Clase B
+41;BCMMUSDA;Balanz Money Market Usd - Clase A
+42;BCPE06A;Balanz Soja - Clase A
+43;BCRFDOA;Balanz Capital Renta Fija en Dolares - Clase A
+44;BCRTAFA;Balanz Capital Renta Fija - Clase A
+45;BCRTAFB;Balanz Capital Renta Fija - Clase B
+46;BMACTAA;Bull Market Active Renta Fija Argentina - Clase A
+47;BMACTAI;Bull Market Active Renta Fija Argentina - Clase B
+48;BMFCBBA;Bull Market Smart Money Market - Clase B
+49;BMSCPBR;Bull Market Smart Corto Plazo FCI - Clase B
+50;BMSCPLA;Bull Market Smart Corto Plazo FCI - Clase A
+51;BMSMMAA;Bull Market Smart Money Market - Clase A
+52;BULMAAA;Bull Market Acciones Argentinas - Clase A
+53;BULMAAB;Bull Market Acciones Argentinas - Clase B
+54;BULMADA;Bull Market Ahorro Dolares FCI - Clase A
+55;BULMADB;Bull Market Ahorro Dolares FCI - Clase B
+56;BZCAAAA;Balanz Acciones - Clase A
+57;BZCAAAB;Balanz Acciones - Clase B
+58;CBESIDA;Compass Best Ideas - Clase A
+59;CBESIDB;Compass Best Ideas - Clase B
+60;CCREIIA;Compass Crecimiento II - Clase A
+61;CCREIIB;Compass Crecimiento II - Clase B
+62;CDEUARA;Consultatio Deuda Argentina - Clase A
+63;CMAPRFA;CMA Performance - Clase A
+64;CMAPRFB;CMA Performance - Clase B
+65;CMAPROB;CMA Proteccion - Clase B
+66;CMAPROT;CMA Proteccion - Clase A
+67;CNXPOPA;ADCAP Pesos Plus - Clase A
+68;COAHDOA;Compass Ahorro en Dolares - Clase A
+69;COAHDOB;Compass Ahorro en Dolares - Clase B
+70;COBALAT;Consultatio Balance Fund - Clase B
+71;COGRLMF;Consultatio Acciones Argentina - Clase B
+72;COHRFDA;Cohen Renta Fija Dolares - Clase A
+73;COHRFDB;Cohen Renta Fija Dolares - Clase B
+74;COIOLAC;ADCAP Acciones - Clase B
+75;COMCREA;Compass Crecimiento FCI- Clase A
+76;COMCREB;Compass Crecimiento FCI - Clase B
+77;COMFSAF;Consultatio Deuda Argentina - Clase B
+78;COMIAUS;Consultatio Multimercado III - Clase A
+79;COMIBUS;Consultatio Multimercado III - Clase B
+80;COMOPPA;Compass Opportunity - Clase A
+81;COMOPPB;Compass Opportunity - Clase B
+82;COMPEUA;Compass Ahorro - Clase A
+83;COMPEUB;Compass Ahorro - Clase B
+84;COMPLIA;Compass Liquidez - Clase A
+85;COMPLIB;Compass Liquidez - Clase B
+86;COMREFA;Compass Renta Fija - Clase A
+87;COMREFB;Compass Renta Fija - Clase B
+88;COMRF4A;Compass Renta Fija IV - Clase A
+89;COMRF4B;Compass Renta Fija IV - Clase B
+90;COMUSAA;Compass Renta Fija III - Clase A
+91;COMUSAB;Compass Renta Fija III - Clase B
+92;CONAAFA;Consultatio Acciones Argentina - Clase A
+93;CONAARA;Consultatio Renta Fija Argentina - Clase A
+94;CONAPAA;Consultatio Ahorro Plus Argentina - Clase A
+95;CONAPAB;Consultatio Ahorro Plus Argentina - Clase B
+96;CONBALA;Consultatio Balance Fund - Clase A
+97;CONESTC;Consultatio Estrategia - Clase C
+98;CONIOLA;ADCAP Acciones - Clase A
+99;CONPPLB;ADCAP Pesos Plus - Clase B
+100;CONRETB;ADCAP Moneda - Clase B
+101;CONRETO;ADCAP Moneda - Clase A
+102;CRTAFAA;ADCAP Renta Fija - Clase A
+103;CRTAFAB;ADCAP Renta Fija - Clase B
+104;CRTAFAI;Cohen Pesos - Clase B
+105;CRTAFAM;Cohen Pesos - Clase A
+106;CRTAFPA;Cohen Renta Fija Plus - Clase A
+107;CRTAFPB;Cohen Renta Fija Plus - Clase B
+108;CRTANAA;Consultatio Renta Nacional - Clase A
+109;CRTANAB;Consultatio Renta Nacional - Clase B
+110;DBSDMRA;MEGAQM Retorno Total - Clase A
+111;DELFEIA;Delta Federal I - Clase A
+112;DELFEIB;Delta Federal I - Clase B
+113;DELPAIA;Delta Patrimonio I - Clase A
+114;DELPAIB;Delta Patrimonio I - Clase B
+115;DFSACCA;CMA Acciones - Clase A
+116;DFSRPLA;CMA Renta Dolar - Clase A
+117;DFSRPLB;CMA Renta Dolar - Clase B
+118;DGEST8A;Delta Retorno Real - Clase A
+119;DGEST8B;Delta Retorno Real - Clase B
+120;FIACCA;FIMA Acciones - Clase A
+121;FIACCB;FIMA Acciones - Clase B 
+122;FIAHPLA;FIMA Ahorro Plus - Clase A
+123;FIAHPLB;FIMA Ahorro Plus - Clase B
+124;FIAHPLC;FIMA Ahorro Plus - Clase C
+125;FIAPBA;FIMA PB Acciones - Clase A 
+126;FIAPBB;FIMA PB Acciones - Clase B 
+127;FIAPESA;FIMA Ahorro Pesos - Clase A
+128;FIAPESB;FIMA Ahorro Pesos - Clase B
+129;FIAPESC;FIMA Ahorro Pesos - Clase C
+130;FICAPLA;FIMA Capital Plus - Clase A
+131;FICAPLB;FIMA Capital Plus - Clase B
+132;FICAPLC;FIMA Capital Plus - Clase C
+133;FIMAMPA;FIMA Premium - Clase A 
+134;FIMAMPB;FIMA Premium - Clase B
+135;FIMIXIA;FIMA Mix I - Clase A 
+136;FIMIXIB;FIMA Mix I - Clase B 
+137;FIMIXIC;FIMA Mix I - Clase C 
+138;FIMREPA;FIMA Renta en Pesos - Clase A
+139;FIMREPB;FIMA Renta en Pesos - Clase B
+140;FIMREPC;FIMA Renta en Pesos - Clase C
+141;FMIXIIA;FIMA Mix II - Clase A
+142;FRTREDA;First Renta Dolares - Clase A
+143;FRTREDB;First Renta Dolares - Clase B
+144;FSTACCA;MEGAQM Acciones - Clase A
+145;FSTACCB;MEGAQM Acciones - Clase B
+146;FSTBALA;MEGAQM Balanceado - Clase A
+147;FSTBALB;MEGAQM Balanceado - Clase B
+148;FSTPESA;MEGAQM Pesos - Clase A
+149;FSTPESB;MEGAQM Pesos - Clase B
+150;FSTREMIA;First Renta Mixta I - Clase A
+151;FSTREMIB;First Renta Mixta I - Clase B
+152;FSTREMIIA;First Renta Mixta II - Clase A
+153;FSTREMIIB;First Renta Mixta II - Clase B
+154;FSTREPA;First Renta Pesos - Clase A
+155;FSTREPB;First Renta Pesos - Clase B
+156;FTSLFDN;SBS Latam - Clase A
+157;FTSLJDN;SBS Latam - Clase B
+158;GAALSGA;Galileo Sustentable - Clase A
+159;GAAPYMB;Galileo Abierto Pymes - Clase B
+160;GALACCI;Galileo Acciones - Clase A
+161;GALAHOR;Galileo Ahorro - Clase A
+162;GALGLBB;Galileo Ahorro Plus - Clase B
+163;GALGLOB;Galileo Ahorro Plus - Clase A
+164;GALIARA;Galileo Argentina - Clase A
+165;GALIRFI;Galileo Renta Fija - Clase A
+166;GALPESA;Galileo Pesos - Clase A
+167;GALPESB;Galileo Pesos - Clase B
+168;GAMMIIA;Galileo Multimercado II - Clase A
+169;GAMMIIB;Galileo Multimercado II - Clase B
+170;GAMULTIA;Galileo Multi-Strategy - Clase A
+171;GPSLATA;Quiron Latam - Clase A
+172;GPSSAVA;Quiron Savings - Clase A
+173;GPSSAVB;Quiron Savings - Clase B
+174;IAMAHPB;IAM Ahorro Pesos - Clase B
+175;IAMAHPE;IAM Ahorro Pesos - Clase A
+176;IAMRCAA;IAM Renta Capital - Clase A
+177;IAMRCAB;IAM Renta Capital - Clase B
+178;IAMRDOA;IAM Renta Dolares - Clase A
+179;IAMRDOB;IAM Renta Dolares - Clase B
+180;IAMRECB;IAM Renta Crecimiento - Clase B
+181;IAMRECR;IAM Renta Crecimiento - Clase A
+182;IAMREPB;IAM Renta Plus - Clase B
+183;IAMREPL;IAM Renta Plus - Clase A
+184;IEBAHPA;IEB Ahorro Plus - Clase A
+185;IEBAHPB;IEB Ahorro Plus - Clase B
+186;IEBMULA;IEB Multiestrategia - Clase A
+187;IEBMULB;IEB Multiestrategia - Clase B
+188;IEBRFDA;IEB Renta Fija Dolar - Clase A
+189;IEBRFDB;IEB Renta Fija Dolar - Clase B
+190;IEBRFJA;IEB Renta Fija - Clase A
+191;IEBRFJB;IEB Renta Fija - Clase B
+192;IEBVALA;IEB Value - Clase A
+193;IEIAAA;IEB Ahorro - Clase A
+194;IEIABAC;IEB Ahorro - Clase B
+195;INTACCA;Integrae Acciones - Clase A
+196;INTACCB;Integrae Acciones - Clase B
+197;MAFACCA;MAF Acciones Argentina - Clase A
+198;MAFACCB;MAF Acciones Argentina - Clase B
+199;MAFMMKA;MAF Money Market - Clase A
+200;MAFMMKB;MAF Money Market - Clase B
+201;MAFPPLA;MAF Pesos Plus - Clase A
+202;MAFPPLB;MAF Pesos Plus - Clase B
+203;MEGAAHA;MEGAQM Ahorro - Clase A
+204;MEGAAHB;MEGAQM Ahorro - Clase B
+205;MGCORA2;MEGAQM Latam Corporativo - Clase A
+206;MGRFUSA;MEGAQM Corporativo Dolares - Clase A
+207;MGRFUSB;MEGAQM Corporativo Dolares - Clase B
+208;MIDOALA;MEGAQM Liquidez Dolar - Clase A
+209;MIDOALB;MEGAQM Liquidez Dolar - Clase B
+210;MIFIPRO;Megainver Abierto Pymes - Clase B
+211;MILATMA;MEGAQM Renta Fija Latam - Clase A
+212;MILATMB;MEGAQM Renta Fija Latam - Clase B
+213;MIRTMXA;MEGAQM Renta Mixta - Clase A
+214;MIRTMXB;MEGAQM Renta Mixta- Clase B
+215;MRTAFCA;MEGAQM Cobertura - Clase A
+216;MRTAFCB;MEGAQM Cobertura - Clase B
+217;PKTCAPA;Parakeet Capital Plus - Clase A
+218;PKTCAPB;Parakeet Capital Plus - Clase B
+219;PKTINCA;Parakeet Income - Clase A
+220;PKTINCB;Parakeet Income - Clase B
+221;PKTPESA;Parakeet Pesos - Clase A
+222;PKTPESB;Parakeet Pesos - Clase B
+223;PKTRNTA;Parakeet Renta Pesos - Clase A
+224;PKTRNTB;Parakeet Renta Pesos - Clase B
+225;QTOTALA;MEGAQM Retorno Absoluto - Clase A
+226;QTOTALB;MEGAQM Retorno Absoluto - Clase B
+227;QUDEARA;MEGAQM Provincial - Clase A
+228;QUDEARB;MEGAQM Provincial - Clase B
+229;RJDAC2A;Delta Recursos Naturales - Clase A
+230;RJDAC2B;Delta Recursos Naturales - Clase B
+231;RJDAC3A;Delta Select - Clase A
+232;RJDAC3B;Delta Select - Clase B
+233;RJDAHOA;Delta Ahorro - Clase A
+234;RJDAHOB;Delta Ahorro - Clase B
+235;RJDBRAA;Delta Latinoamerica - Clase A
+236;RJDBRAB;Delta Latinoamerica - Clase B
+237;RJDELTA;Delta Acciones - Clase A
+238;RJDELTB;Delta Acciones - Clase B
+239;RJDEMAA;Delta Pyme - Clase A
+240;RJDEMAP;Delta Pyme - Clase B
+241;RJDGLOA;Delta Moneda - Clase A
+242;RJDGLOB;Delta Moneda - Clase B
+243;RJDMM3B;Delta Renta Dolares - Clase B
+244;RJDRT3A;Delta Pesos - Clase A
+245;RJDRT3B;Delta Pesos - Clase B
+246;RJDRTAA;Delta Renta - Clase A
+247;RJDRTAB;Delta Renta - Clase B
+248;RJDUSAA;Delta Internacional - Clase A
+249;RJDUSAB;Delta Internacional - Clase B
+250;RJMMIIA;Delta Performance - Clase A
+251;RJMMIIB;Delta Performance - Clase B
+252;RJMULIA;Delta Multimercado I - Clase A
+253;RJMULIB;Delta Multimercado I - Clase B
+254;RJRTA4A;Delta Ahorro Plus - Clase A
+255;RJRTA4B;Delta Ahorro Plus - Clase B
+256;RTAPLUA;FIMA Renta Plus - Clase A
+257;RTAPLUB;FIMA Renta Plus - Clase B
+258;RTAPLUC;FIMA Renta Plus - Clase C
+259;RTAVAAA;IAM Renta Variable - Clase A
+260;RTAVAAB;IAM Renta Variable - Clase B
+261;RTAVARA;Consultatio Renta Variable - Clase A
+262;RTAVARB;Consultatio Renta Variable - Clase B
+263;SBSACAB;SBS Acciones Argentina - Clase B
+264;SBSACAR;SBS Acciones Argentina - Clase A
+265;SBSAPEA;SBS Ahorro Pesos - Clase A
+266;SBSAPEB;SBS Ahorro Pesos - Clase B
+267;SBSBALA;SBS Balanceado - Clase A
+268;SBSBALB;SBS Balanceado - Clase B
+269;SBSCAPL;SBS Capital Plus - Clase A
+270;SBSESTA;SBS Estrategia - Clase A
+271;SBSESTB;SBS Estrategia - Clase B
+272;SBSGRFA;SBS Gestion Renta Fija - Clase A
+273;SBSGRFB;SBS Gestion Renta Fija - Clase B
+274;SBSPESA;SBS Pesos Plus - Clase A
+275;SBSPESB;SBS Pesos Plus - Clase B
+276;SBSRPEA;SBS Renta Pesos - Clase A
+277;SBSRTOA;SBS Retorno Total - Clase A
+278;SCHARGA;Schroder Argentina - Clase A
+279;SCHASIA;Schroder Infraestructura - Clase A
+280;SCHASIB;Schroder Infraestructura - Clase B
+281;SCHRTTA;Schroder Income - Clase A
+282;SCHRTTB;Schroder Income - Clase B
+283;SCRTAPA;Schroder Renta Plus - Clase A
+284;SCRTAPL;Schroder Renta Plus - Clase B
+285;SMIMRVA;Schroder Renta Variable - Clase A
+286;TANDERB;Tandem Pesos Ahorro Plus - Clase B
+287;TANDERI;Tandem Pesos Ahorro Plus - Clase A
+288;TORONTR;Toronto Trust - Clase A
+289;TORRTOA;Toronto Trust Retorno Total - Clase A
+290;TORRTOB;Toronto Trust Retorno Total - Clase B
+291;TOTCREA;Toronto Trust Crecimiento - Clase A
+292;TOTCREB;Toronto Trust Crecimiento - Clase B
+293;TRTINFA;Toronto Trust Global Capital - Clase A
+294;TRTRDFA;Toronto Trust Renta Dolar - Clase A
+295;TTAHORA;Toronto Trust Ahorro - Clase A
+296;TTAHORB;Toronto Trust Ahorro - Clase B
+297;TTARGAA;Toronto Trust Argentina 2021 - Clase A
+298;TTARGAB;Toronto Trust Argentina 2021 - Clase B
+299;TTMULTA;Toronto Trust Multimercado - Clase A
+300;TTMULTB;Toronto Trust Multimercado - Clase B
+301;TTRTFIA;Toronto Trust Renta Fija - Clase A
+302;TTRTFPA;Toronto Trust Renta Fija Plus - Clase A
+303;TTRTFPB;Toronto Trust Renta Fija Plus - Clase B
+304;TTRUSTB;Toronto Trust - Clase B

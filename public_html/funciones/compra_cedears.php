@@ -41,6 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $precio = floatval(str_replace(',', '.', $_POST['precio']));
     $ticker = $_POST['ticker'];
     $fecha = $_POST['fecha'];
+    $ccl_compra = $_POST['ccl_compra'];
+
+    // Formatear el valor de ccl_compra para guardarlo en la base de datos
+    $ccl_compra = str_replace('.', '', $ccl_compra); // Eliminar separador de miles
+    $ccl_compra = str_replace(',', '.', $ccl_compra); // Reemplazar coma decimal por punto
 
     $total_compra = $cantidad * $precio;
 
@@ -55,13 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_update_saldo->execute();
         $stmt_update_saldo->close();
 
-        // Obtener el promedio CCL
-        $promedio_ccl = obtenerPromedioCCL();
-
         // Insertar los datos de la compra en la tabla "cedear"
         $sql_insert_cedear = "INSERT INTO cedear (cliente_id, ticker_cedear, cantidad_cedear, precio_cedear, fecha_cedear, ccl_compra_cedear) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt_insert_cedear = $conn->prepare($sql_insert_cedear);
-        $stmt_insert_cedear->bind_param("isidsd", $cliente_id, $ticker, $cantidad, $precio, $fecha, $promedio_ccl);
+        $stmt_insert_cedear->bind_param("isidsd", $cliente_id, $ticker, $cantidad, $precio, $fecha, $ccl_compra);
         $stmt_insert_cedear->execute();
         $stmt_insert_cedear->close();
 
@@ -70,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -208,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                 <input type="text" step="0.01" class="form-control" id="ccl_compra" name="ccl_compra"
-                                    placeholder="0,00" value="<?php echo formatear_dinero($promedio_ccl); ?>" required>
+                                    value="<?php echo formatear_dinero($promedio_ccl); ?>" required>
                             </div>
                         </div>
                     </div>

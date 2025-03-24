@@ -216,7 +216,7 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                 <input type="text" step="0.01" class="form-control" id="ccl_compra" name="ccl_compra"
-                                    placeholder="0,00" value="<?php echo formatear_dinero($promedio_ccl); ?>" required>
+                                    value="<?php echo formatear_dinero($promedio_ccl); ?>" required>
                             </div>
                         </div>
                     </div>

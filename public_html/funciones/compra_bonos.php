@@ -41,6 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $precio = floatval(str_replace(',', '.', $_POST['precio']));
     $ticker = $_POST['ticker'];
     $fecha = $_POST['fecha'];
+    $ccl_compra = $_POST['ccl_compra'];
+
+    // Formatear el valor de ccl_compra para guardarlo en la base de datos
+    $ccl_compra = str_replace('.', '', $ccl_compra); // Eliminar separador de miles
+    $ccl_compra = str_replace(',', '.', $ccl_compra); // Reemplazar coma decimal por punto
 
     $total_compra = $cantidad * $precio;
 
@@ -55,13 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_update_saldo->execute();
         $stmt_update_saldo->close();
 
-        // Obtener el promedio CCL
-        $promedio_ccl = obtenerPromedioCCL();
-
         // Insertar los datos de la compra en la tabla "bonos"
         $sql_insert_bono = "INSERT INTO bonos (cliente_id, ticker_bonos, cantidad_bonos, precio_bonos, fecha_bonos, ccl_compra) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt_insert_bono = $conn->prepare($sql_insert_bono);
-        $stmt_insert_bono->bind_param("isidsd", $cliente_id, $ticker, $cantidad, $precio, $fecha, $promedio_ccl);
+        $stmt_insert_bono->bind_param("isidsd", $cliente_id, $ticker, $cantidad, $precio, $fecha, $ccl_compra);
         $stmt_insert_bono->execute();
         $stmt_insert_bono->close();
 
@@ -70,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -206,7 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
                                 <input type="text" step="0.01" class="form-control" id="ccl_compra" name="ccl_compra"
-                                    placeholder="0,00" value="<?php echo formatear_dinero($promedio_ccl); ?>" required>
+                                    value="<?php echo formatear_dinero($promedio_ccl); ?>" required>
                             </div>
                         </div>
                     </div>

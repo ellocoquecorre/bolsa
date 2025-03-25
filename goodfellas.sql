@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-03-2025 a las 17:03:10
+-- Tiempo de generación: 25-03-2025 a las 12:35:19
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,7 +44,8 @@ CREATE TABLE `acciones` (
 INSERT INTO `acciones` (`id`, `cliente_id`, `ticker`, `cantidad`, `precio`, `fecha`, `ccl_compra`) VALUES
 (79, 1, 'ALUA', 300, 885.63, '2025-03-19', 1216.37),
 (80, 1, 'BBAR', 29, 8570.00, '2025-01-02', 1186.83),
-(83, 3, 'ALUA', 5, 850.00, '2025-03-21', 1297.30);
+(89, 2, 'ALUA', 20, 851.00, '2025-03-24', 1262.10),
+(90, 2, 'BBAR', 10, 8200.00, '2025-03-24', 1289.63);
 
 -- --------------------------------------------------------
 
@@ -72,7 +73,9 @@ CREATE TABLE `acciones_historial` (
 INSERT INTO `acciones_historial` (`id`, `cliente_id`, `ticker`, `cantidad`, `fecha_compra`, `precio_compra`, `ccl_compra`, `fecha_venta`, `precio_venta`, `ccl_venta`) VALUES
 (29, 1, 'ALUA', 80, '2025-03-19', 885.63, 1216.37, '2025-03-19', 866.00, 1285.49),
 (30, 1, 'CRES', 160, '2025-01-02', 1560.00, 1186.83, '2025-03-19', 1405.00, 1294.51),
-(31, 3, 'ALUA', 5, '2025-03-21', 850.00, 1297.30, '2025-03-21', 857.00, 1297.43);
+(35, 4, 'BBAR', 20, '2024-06-12', 4326.00, 1289.63, '2024-06-27', 4092.00, 1289.63),
+(36, 4, 'BBAR', 10, '2025-01-02', 8020.00, 1289.63, '2025-01-27', 8570.00, 1289.63),
+(37, 4, 'BBAR', 16, '2025-01-30', 9200.00, 1289.63, '2025-02-11', 7900.00, 1289.63);
 
 -- --------------------------------------------------------
 
@@ -112,8 +115,8 @@ CREATE TABLE `balance` (
 
 INSERT INTO `balance` (`id`, `cliente_id`, `efectivo`) VALUES
 (1, 1, 2860299.36),
-(2, 2, 5000000.00),
-(3, 3, 4958705.00);
+(2, 2, 1673396.10),
+(4, 4, 14845585.00);
 
 -- --------------------------------------------------------
 
@@ -137,7 +140,9 @@ CREATE TABLE `bonos` (
 
 INSERT INTO `bonos` (`id`, `cliente_id`, `ticker_bonos`, `fecha_bonos`, `cantidad_bonos`, `precio_bonos`, `ccl_compra`) VALUES
 (5, 1, 'GD35', '2025-03-19', 3, 81667.50, 1217.90),
-(6, 1, 'AE38', '2025-01-02', 3, 86500.00, 1186.83);
+(6, 1, 'AE38', '2025-01-02', 3, 86500.00, 1186.83),
+(9, 2, 'AE38', '2025-03-24', 20, 85821.00, 1262.10),
+(10, 2, 'AL29', '2025-03-24', 10, 88800.00, 1289.63);
 
 -- --------------------------------------------------------
 
@@ -189,7 +194,9 @@ CREATE TABLE `cedear` (
 INSERT INTO `cedear` (`id`, `cliente_id`, `ticker_cedear`, `fecha_cedear`, `cantidad_cedear`, `precio_cedear`, `ccl_compra_cedear`) VALUES
 (5, 1, 'AAPL', '2025-03-19', 29, 13339.66, 1229.73),
 (6, 1, 'AMZN', '2025-01-03', 138, 1795.00, 1186.83),
-(9, 3, 'NVDA', '2025-03-21', 5, 6000.00, 1297.43);
+(10, 4, 'TSLA', '2024-12-23', 3, 33725.00, 1289.63),
+(11, 4, 'NVDA', '2024-12-23', 2, 6640.00, 1289.63),
+(14, 2, 'AAPL', '2025-03-25', 20, 14001.00, 694.81);
 
 -- --------------------------------------------------------
 
@@ -216,8 +223,7 @@ CREATE TABLE `cedear_historial` (
 
 INSERT INTO `cedear_historial` (`id`, `cliente_id`, `ticker_cedear`, `cantidad_cedear`, `fecha_compra_cedear`, `precio_compra_cedear`, `ccl_compra`, `fecha_venta_cedear`, `precio_venta_cedear`, `ccl_venta`) VALUES
 (6, 1, 'BIDU', 8, '2025-01-02', 8850.00, 1186.83, '2025-03-19', 11550.00, 1294.51),
-(7, 1, 'JPM', 13, '2025-01-02', 18875.00, 1186.83, '2025-03-19', 20625.00, 1294.51),
-(8, 3, 'NVDA', 5, '2025-03-21', 6000.00, 1297.43, '2025-03-21', 6300.00, 1297.43);
+(7, 1, 'JPM', 13, '2025-01-02', 18875.00, 1186.83, '2025-03-19', 20625.00, 1294.51);
 
 -- --------------------------------------------------------
 
@@ -243,7 +249,7 @@ CREATE TABLE `clientes` (
 INSERT INTO `clientes` (`email`, `password`, `nombre`, `apellido`, `telefono`, `corredora`, `url`, `cliente_id`) VALUES
 ('el.bueno.de.harry@gmail.com', '$2y$10$7aQJdfZZGPUw5pGJMZgmT.v83vhG2iQ8cK4OaeGiGWHYCtyuwpr5O', 'Harry', 'Flashman', '123', 'Balanz', 'https://clientes.balanz.com/auth/login', 1),
 ('cafe.la.humedad@gmail.com', '$2y$10$s0gNWXGHERDw/aNdFc8kG.ovHC.zwfqvKV4ixSFlh8iaxGj90jOC6', 'Cacho', 'Castaña', '456', 'Allaria', 'https://allaria.com.ar', 2),
-('24.de.nerca@gmail.com', '$2y$10$hoiodH8lYFVNpP/8YARR9ebT0RcPRZYWxhhXFe2FIeHodnCpS4Hdq', 'Rocco', 'Siffredi', '789', 'LEBSA', 'https://operar.winvest.ar', 3);
+('peilo@gmail.com', '$2y$10$oO0FKmItylaHeKu4lbjTHuTyVxukDjvio.7MvAur8TcCABAaNn7rK', 'Pablo', 'Marino', '2944-69-3756', 'Balanz', 'https://clientes.balanz.com/auth/login', 4);
 
 -- --------------------------------------------------------
 
@@ -267,7 +273,9 @@ CREATE TABLE `fondos` (
 
 INSERT INTO `fondos` (`id`, `cliente_id`, `ticker_fondos`, `fecha_fondos`, `cantidad_fondos`, `precio_fondos`, `ccl_compra`) VALUES
 (4, 1, 'ALGIIIA', '2025-01-02', 225900, 1.11, 1186.83),
-(5, 1, 'IAMRCAB', '2025-03-19', 6000, 50.87, 1207.98);
+(5, 1, 'IAMRCAB', '2025-03-19', 6000, 50.87, 1207.98),
+(6, 2, 'COMRF4A', '2025-03-24', 10, 91.61, 1234.56),
+(7, 2, 'IAMRCAB', '2025-03-24', 20, 54.39, 1262.10);
 
 -- --------------------------------------------------------
 
@@ -1305,13 +1313,13 @@ ALTER TABLE `ticker_fondos`
 -- AUTO_INCREMENT de la tabla `acciones`
 --
 ALTER TABLE `acciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT de la tabla `acciones_historial`
 --
 ALTER TABLE `acciones_historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `admin`
@@ -1323,13 +1331,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `balance`
 --
 ALTER TABLE `balance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `bonos`
 --
 ALTER TABLE `bonos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `bonos_historial`
@@ -1341,7 +1349,7 @@ ALTER TABLE `bonos_historial`
 -- AUTO_INCREMENT de la tabla `cedear`
 --
 ALTER TABLE `cedear`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `cedear_historial`
@@ -1353,13 +1361,13 @@ ALTER TABLE `cedear_historial`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `cliente_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cliente_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `fondos`
 --
 ALTER TABLE `fondos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `fondos_historial`

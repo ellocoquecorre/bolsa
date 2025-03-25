@@ -15,8 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener los valores del formulario
     $cantidad_nueva = isset($_POST['cantidad']) ? floatval($_POST['cantidad']) : 0;
     $precio_nuevo = isset($_POST['precio']) ? floatval($_POST['precio']) : 0;
-    $ccl_compra_nuevo = isset($_POST['ccl_compra']) ? floatval($_POST['ccl_compra']) : 0;
+    $ccl_compra_nuevo = isset($_POST['ccl_compra']) ? $_POST['ccl_compra'] : 0;
     $fecha_nueva = isset($_POST['fecha']) ? date('Y-m-d', strtotime($_POST['fecha'])) : date('Y-m-d');
+
+    // Formatear el valor del campo ccl_compra
+    $ccl_compra_nuevo_formateado = str_replace('.', '', $ccl_compra_nuevo); // Eliminar puntos
+    $ccl_compra_nuevo_formateado = str_replace(',', '.', $ccl_compra_nuevo_formateado); // Reemplazar comas por puntos
 
     // Obtener el saldo en pesos del cliente
     $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
@@ -46,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Actualizar la tabla acciones con los nuevos valores
         $sql_update_acciones = "UPDATE acciones SET cantidad = ?, precio = ?, ccl_compra = ?, fecha = ? WHERE cliente_id = ? AND ticker = ?";
         $stmt_update_acciones = $conn->prepare($sql_update_acciones);
-        $stmt_update_acciones->bind_param("iddsis", $cantidad_nueva, $precio_nuevo, $ccl_compra_nuevo, $fecha_nueva, $cliente_id, $ticker);
+        $stmt_update_acciones->bind_param("iddsis", $cantidad_nueva, $precio_nuevo, $ccl_compra_nuevo_formateado, $fecha_nueva, $cliente_id, $ticker);
         $stmt_update_acciones->execute();
         $stmt_update_acciones->close();
 

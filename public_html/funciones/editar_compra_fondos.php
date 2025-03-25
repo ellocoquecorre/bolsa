@@ -15,8 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener los valores del formulario
     $cantidad_nueva = isset($_POST['cantidad']) ? floatval($_POST['cantidad']) : 0;
     $precio_nuevo = isset($_POST['precio']) ? floatval($_POST['precio']) : 0;
-    $ccl_compra_nuevo = isset($_POST['ccl_compra']) ? floatval($_POST['ccl_compra']) : 0;
+    $ccl_compra_nuevo = isset($_POST['ccl_compra']) ? $_POST['ccl_compra'] : 0;
     $fecha_nueva = isset($_POST['fecha']) ? date('Y-m-d', strtotime($_POST['fecha'])) : date('Y-m-d');
+
+    // Formatear el valor del campo ccl_compra
+    $ccl_compra_nuevo_formateado = str_replace('.', '', $ccl_compra_nuevo); // Eliminar puntos
+    $ccl_compra_nuevo_formateado = str_replace(',', '.', $ccl_compra_nuevo_formateado); // Reemplazar comas por puntos
 
     // Obtener el saldo en pesos del cliente
     $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";

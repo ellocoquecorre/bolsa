@@ -778,7 +778,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                             <a class='dropdown-item' href='../funciones/venta_total_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
                                                         </li>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i>Editar compra</a>
+                                                            <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='#' onclick='eliminarCedear(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
@@ -892,7 +892,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                             <a class='dropdown-item' href='../funciones/venta_total_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
                                                         </li>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i>Editar compra</a>
+                                                            <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='#' onclick='eliminarCedear(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
@@ -1030,7 +1030,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                             <a class='dropdown-item' href='../funciones/venta_total_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
                                                         </li>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-edit me-2'></i>Editar Compra</a>
+                                                            <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='#' onclick='eliminarBono(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
@@ -1148,7 +1148,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                             <a class='dropdown-item' href='../funciones/venta_total_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
                                                         </li>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-edit me-2'></i>Editar Compra</a>
+                                                            <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='#' onclick='eliminarBono(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
@@ -1286,7 +1286,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                             <a class='dropdown-item' href='../funciones/venta_total_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
                                                         </li>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-edit me-2'></i>Editar Compra</a>
+                                                            <a class='dropdown-item' href='../funciones/editar_compra_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='#' onclick='eliminarFondo(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
@@ -1404,7 +1404,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                                             <a class='dropdown-item' href='../funciones/venta_total_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
                                                         </li>
                                                         <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-edit me-2'></i>Editar Compra</a>
+                                                            <a class='dropdown-item' href='../funciones/editar_compra_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
                                                         </li>
                                                         <li>
                                                             <a class='dropdown-item' href='#' onclick='eliminarFondo(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>

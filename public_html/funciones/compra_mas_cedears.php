@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($costo_total > $saldo_en_pesos) {
         $error_msg = "Saldo insuficiente";
     } else {
-        // Obtener los datos del cedear específico del cliente
+        // Obtener los datos del CEDEAR específico del cliente
         $sql = "SELECT ticker_cedear, cantidad_cedear, fecha_cedear, precio_cedear, ccl_compra_cedear FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("is", $cliente_id, $ticker);
@@ -158,11 +158,11 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
 
         <hr class="mod">
 
-        <!-- COMPRA CEDEARS -->
+        <!-- COMPRA CEDARS -->
         <div class="col-3"></div>
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones mb-4">Comprar más cedears de <?php echo htmlspecialchars($ticker); ?></h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Comprar más Cedears de <?php echo htmlspecialchars($ticker); ?></h5>
                 <?php if ($error_msg): ?>
                     <div class="alert alert-danger" role="alert">
                         <?php echo $error_msg; ?>
@@ -249,7 +249,7 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
             </div>
         </div>
         <div class="col-3"></div>
-        <!-- FIN COMPRA CEDEARS -->
+        <!-- FIN COMPRA CEDARS -->
 
     </div>
     <!-- FIN CONTENIDO -->

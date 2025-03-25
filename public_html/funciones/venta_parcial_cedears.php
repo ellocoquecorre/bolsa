@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: ../backend/cliente.php?cliente_id=$cliente_id#cedears");
         exit();
     } else {
-        echo "<script>alert('Cantidad máxima de CEDEARs para una venta parcial = ' + $cantidad_max);</script>";
+        echo "<script>alert('Cantidad máxima de Cedears para una venta parcial = ' + $cantidad_max);</script>";
     }
 }
 ?>
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                        <input type="text" placeholder="Máximo <?php echo htmlspecialchars($cantidad_max); ?> CEDEARs" class="form-control"
+                                        <input type="text" placeholder="Máximo <?php echo htmlspecialchars($cantidad_max); ?> Cedears" class="form-control"
                                             id="cantidad" name="cantidad" value="" autofocus required>
                                     </div>
                                 </div>
@@ -235,7 +235,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             var cantidadMax = <?php echo $cantidad_max; ?>;
 
             if (cantidad >= cantidadMax) {
-                alert('Cantidad máxima de CEDEARs para una\nventa parcial = ' + cantidadMax);
+                alert('Cantidad máxima de Cedears para una\nventa parcial = ' + cantidadMax);
             } else {
                 document.getElementById('venta_parcial').submit();
             }

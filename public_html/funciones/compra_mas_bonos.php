@@ -16,6 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cantidad_hoy = isset($_POST['cantidad']) ? floatval($_POST['cantidad']) : 0;
     $precio_hoy = isset($_POST['precio']) ? floatval($_POST['precio']) : 0;
     $fecha_hoy = isset($_POST['fecha']) ? $_POST['fecha'] : date('Y-m-d');
+    $ccl_compra = isset($_POST['ccl_compra']) ? $_POST['ccl_compra'] : '';
+
+    // Formatear el valor de ccl_compra
+    $ccl_compra = str_replace('.', '', $ccl_compra); // Eliminar separadores de miles
+    $ccl_compra = str_replace(',', '.', $ccl_compra); // Reemplazar coma por punto decimal
+    $ccl_compra = floatval($ccl_compra); // Convertir a float
 
     // Obtener el saldo en pesos del cliente
     $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
@@ -48,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Calcular nuevo precio y ccl_compra
         $nuevo_precio = (($db_cantidad * $db_precio_compra) + ($cantidad_hoy * $precio_hoy)) / ($db_cantidad + $cantidad_hoy);
-        $nuevo_ccl_compra = (($db_cantidad * $db_ccl_compra) + ($cantidad_hoy * $ccl_compra_hoy)) / ($db_cantidad + $cantidad_hoy);
+        $nuevo_ccl_compra = (($db_cantidad * $db_ccl_compra) + ($cantidad_hoy * $ccl_compra)) / ($db_cantidad + $cantidad_hoy);
 
         // Actualizar la tabla bonos
         $sql_update_bonos = "UPDATE bonos SET cantidad_bonos = cantidad_bonos + ?, precio_bonos = ?, ccl_compra = ?, fecha_bonos = ? WHERE cliente_id = ? AND ticker_bonos = ?";
@@ -96,6 +102,7 @@ $stmt_saldo->close();
 $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
 
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 

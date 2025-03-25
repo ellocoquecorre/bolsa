@@ -23,6 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fecha_venta = $_POST['fecha_venta'];
     $valor_venta = $db_cantidad * $precio_venta;
 
+    // Formatear el valor de ccl_venta
+    $ccl_venta = $_POST['ccl_venta'];
+    $ccl_venta = str_replace('.', '', $ccl_venta); // Eliminar separador de miles
+    $ccl_venta = str_replace(',', '.', $ccl_venta); // Reemplazar coma decimal por punto
+    $ccl_venta = (float)$ccl_venta;
+
     // Actualizar el saldo en la tabla balance
     $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
     $stmt_update_balance = $conn->prepare($sql_update_balance);
@@ -30,14 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt_update_balance->execute();
     $stmt_update_balance->close();
 
-    // Obtener el promedio ccl
-    $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-
     // Insertar los datos en la tabla cedear_historial
     $sql_insert_historial = "INSERT INTO cedear_historial (cliente_id, ticker_cedear, cantidad_cedear, fecha_compra_cedear, precio_compra_cedear, ccl_compra, fecha_venta_cedear, precio_venta_cedear, ccl_venta) 
                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt_insert_historial = $conn->prepare($sql_insert_historial);
-    $stmt_insert_historial->bind_param("isissdssd", $cliente_id, $db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $promedio_ccl);
+    $stmt_insert_historial->bind_param("isissdssd", $cliente_id, $db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
     $stmt_insert_historial->execute();
     $stmt_insert_historial->close();
 

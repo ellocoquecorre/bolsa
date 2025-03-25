@@ -33,11 +33,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener el promedio ccl
     $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
 
+    // Formatear el valor de ccl_venta
+    $ccl_venta = $_POST['ccl_venta'];
+    $ccl_venta = str_replace('.', '', $ccl_venta); // Eliminar separador de miles
+    $ccl_venta = str_replace(',', '.', $ccl_venta); // Reemplazar coma decimal por punto
+
     // Insertar los datos en la tabla fondos_historial
-    $sql_insert_historial = "INSERT INTO fondos_historial (cliente_id, ticker_fondos, cantidad_fondos, fecha_compra_fondos, precio_compra_fondos, ccl_compra, fecha_venta_fondos, precio_venta_fondos, ccl_venta) 
+    $sql_insert_historial = "INSERT INTO fondos_historial (cliente_id, ticker_fondos, cantidad_fondos, fecha_compra_fondos, precio_compra_fondos, ccl_compra, fecha_venta_fondos, precio_venta_fondos, ccl_venta)
                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt_insert_historial = $conn->prepare($sql_insert_historial);
-    $stmt_insert_historial->bind_param("isissdssd", $cliente_id, $db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $promedio_ccl);
+    $stmt_insert_historial->bind_param("isissdssd", $cliente_id, $db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
     $stmt_insert_historial->execute();
     $stmt_insert_historial->close();
 

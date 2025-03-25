@@ -197,7 +197,7 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
-                                <input type="number" class="form-control" id="cantidad" name="cantidad" required>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" required autofocus>
                             </div>
                         </div>
                     </div>

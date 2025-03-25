@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $precio = floatval(str_replace(',', '.', $_POST['precio']));
     $ticker = $_POST['ticker'];
     $fecha = $_POST['fecha'];
+    $ccl_compra = str_replace(',', '.', str_replace('.', '', $_POST['ccl_compra'])); // Formatear el valor de ccl_compra
 
     $total_compra = $cantidad * $precio;
 
@@ -55,13 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_update_saldo->execute();
         $stmt_update_saldo->close();
 
-        // Obtener el promedio CCL
-        $promedio_ccl = obtenerPromedioCCL();
-
         // Insertar los datos de la compra en la tabla "acciones"
         $sql_insert_accion = "INSERT INTO acciones (cliente_id, ticker, cantidad, precio, fecha, ccl_compra) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt_insert_accion = $conn->prepare($sql_insert_accion);
-        $stmt_insert_accion->bind_param("isidsd", $cliente_id, $ticker, $cantidad, $precio, $fecha, $promedio_ccl);
+        $stmt_insert_accion->bind_param("isidsd", $cliente_id, $ticker, $cantidad, $precio, $fecha, $ccl_compra);
         $stmt_insert_accion->execute();
         $stmt_insert_accion->close();
 
@@ -71,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 

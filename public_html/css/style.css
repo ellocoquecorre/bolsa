@@ -358,3 +358,20 @@ form label {
   max-width: 400px;  /* Ajusta el ancho máximo */
   max-height: 300px; /* Ajusta la altura máxima */
 }
+.active > .page-link, .page-link.active {
+  z-index: 3;
+  color: #fff !important;
+  background-color: #0B486B !important;
+  border-color: #0B486B !important;
+}
+.page-link {
+  z-index: 2;
+  color: #0B486B !important;
+  border-color: #0B486B !important;
+}
+.page-link:hover {
+  z-index: 2;
+  color: #fff !important;
+  background-color: #0B486B !important;
+  border-color: #0B486B !important;
+}

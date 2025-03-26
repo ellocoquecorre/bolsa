@@ -519,7 +519,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <!-- Completa Cedear Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_cedear_pesos" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -608,7 +608,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <!-- Completa Cedear Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_cedear_dolares" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -723,7 +723,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <!-- Completa Bonos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_bonos_pesos" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -812,7 +812,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <!-- Completa Bonos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_bonos_dolares" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -927,7 +927,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <!-- Completa Fondos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_fondos_pesos" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -1016,7 +1016,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <!-- Completa Fondos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_fondos_dolares" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>

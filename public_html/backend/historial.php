@@ -1105,8 +1105,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
-    <script src="../js/dataTable10Columns.js"></script>
-    <script src="../js/dataTable12Columns.js"></script>
+    <script src="../js/filtro_tablas.js"></script>
     <!-- FIN JS -->
 
 </body>

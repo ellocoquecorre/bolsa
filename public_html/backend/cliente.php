@@ -64,7 +64,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
         <div class="col-12 text-center">
             <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
             <a href="historial.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
-                <i class="fa-solid fa-clock-rotate-left me-2"></i>Historial</a>
+                <i class="fa-solid fa-hourglass me-2"></i>Historial</a>
         </div>
         <!-- FIN TITULO -->
 

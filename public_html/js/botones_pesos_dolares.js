@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
         $('#completa_acciones_dolares').DataTable().columns.adjust().draw();
     });
 
-    // Similar adjustments for other sections (Cedear, Bonos, Fondos)
+    // Cedear
     const btnCedearPesos = document.getElementById("btnCedearPesos");
     const btnCedearDolares = document.getElementById("btnCedearDolares");
     const tablaCedearPesos = document.getElementById("tablaCedearPesos");
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tablaCedearPesos.classList.remove("d-none");
         tablaCedearDolares.classList.add("d-none");
         // Reinitialize DataTable
-        $('#tablaCedearPesos').DataTable().columns.adjust().draw();
+        $('#completa_cedear_pesos').DataTable().columns.adjust().draw();
     });
 
     btnCedearDolares.addEventListener("click", () => {
@@ -101,10 +101,10 @@ document.addEventListener("DOMContentLoaded", () => {
         tablaCedearDolares.classList.remove("d-none");
         tablaCedearPesos.classList.add("d-none");
         // Destroy and Reinitialize DataTable
-        if ($.fn.DataTable.isDataTable('#tablaCedearDolares')) {
-            $('#tablaCedearDolares').DataTable().destroy();
+        if ($.fn.DataTable.isDataTable('#completa_cedear_dolares')) {
+            $('#completa_cedear_dolares').DataTable().destroy();
         }
-        $('#tablaCedearDolares').DataTable({
+        $('#completa_cedear_dolares').DataTable({
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
             },
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 'rt' +
                 '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
         });
-        $('#tablaCedearDolares').DataTable().columns.adjust().draw();
+        $('#completa_cedear_dolares').DataTable().columns.adjust().draw();
     });
 
     // Bonos
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tablaBonosPesos.classList.remove("d-none");
         tablaBonosDolares.classList.add("d-none");
         // Reinitialize DataTable
-        $('#tablaBonosPesos').DataTable().columns.adjust().draw();
+        $('#completa_bonos_pesos').DataTable().columns.adjust().draw();
     });
 
     btnBonosDolares.addEventListener("click", () => {
@@ -140,10 +140,10 @@ document.addEventListener("DOMContentLoaded", () => {
         tablaBonosDolares.classList.remove("d-none");
         tablaBonosPesos.classList.add("d-none");
         // Destroy and Reinitialize DataTable
-        if ($.fn.DataTable.isDataTable('#tablaBonosDolares')) {
-            $('#tablaBonosDolares').DataTable().destroy();
+        if ($.fn.DataTable.isDataTable('#completa_bonos_dolares')) {
+            $('#completa_bonos_dolares').DataTable().destroy();
         }
-        $('#tablaBonosDolares').DataTable({
+        $('#completa_bonos_dolares').DataTable({
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
             },
@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 'rt' +
                 '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
         });
-        $('#tablaBonosDolares').DataTable().columns.adjust().draw();
+        $('#completa_bonos_dolares').DataTable().columns.adjust().draw();
     });
 
     // Fondos
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tablaFondosPesos.classList.remove("d-none");
         tablaFondosDolares.classList.add("d-none");
         // Reinitialize DataTable
-        $('#tablaFondosPesos').DataTable().columns.adjust().draw();
+        $('#completa_fondos_pesos').DataTable().columns.adjust().draw();
     });
 
     btnFondosDolares.addEventListener("click", () => {
@@ -179,10 +179,10 @@ document.addEventListener("DOMContentLoaded", () => {
         tablaFondosDolares.classList.remove("d-none");
         tablaFondosPesos.classList.add("d-none");
         // Destroy and Reinitialize DataTable
-        if ($.fn.DataTable.isDataTable('#tablaFondosDolares')) {
-            $('#tablaFondosDolares').DataTable().destroy();
+        if ($.fn.DataTable.isDataTable('#completa_fondos_dolares')) {
+            $('#completa_fondos_dolares').DataTable().destroy();
         }
-        $('#tablaFondosDolares').DataTable({
+        $('#completa_fondos_dolares').DataTable({
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
             },
@@ -194,6 +194,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 'rt' +
                 '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
         });
-        $('#tablaFondosDolares').DataTable().columns.adjust().draw();
+        $('#completa_fondos_dolares').DataTable().columns.adjust().draw();
     });
 });

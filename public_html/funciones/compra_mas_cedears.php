@@ -140,8 +140,7 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../backend/historial.php"><i class="fa-solid fa-clock-rotate-left me-2"></i>Historial
-                        </a>
+                        <a class="nav-link" href="../backend/dolares.php"><i class="fa-solid fa-dollar-sign me-2"></i>Dólares</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir

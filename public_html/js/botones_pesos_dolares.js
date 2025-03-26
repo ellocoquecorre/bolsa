@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
         btnResumenDolares.classList.remove("active");
         tablaResumenPesos.classList.remove("d-none");
         tablaResumenDolares.classList.add("d-none");
+        // Reinitialize DataTable
+        $('#completa_acciones_pesos').DataTable().columns.adjust().draw();
     });
 
     btnResumenDolares.addEventListener("click", () => {
@@ -19,6 +21,23 @@ document.addEventListener("DOMContentLoaded", () => {
         btnResumenPesos.classList.remove("active");
         tablaResumenDolares.classList.remove("d-none");
         tablaResumenPesos.classList.add("d-none");
+        // Destroy and Reinitialize DataTable
+        if ($.fn.DataTable.isDataTable('#completa_acciones_dolares')) {
+            $('#completa_acciones_dolares').DataTable().destroy();
+        }
+        $('#completa_acciones_dolares').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+            },
+            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50, 100],
+            order: [[0, 'asc']],
+            autoWidth: true,
+            dom: '<"row mb-3"<"col-md-6 text-left"l><"col-md-6"f>>' +
+                'rt' +
+                '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
+        });
+        $('#completa_acciones_dolares').DataTable().columns.adjust().draw();
     });
 
     // Acciones
@@ -33,6 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
         btnAccionesDolares.classList.remove("active");
         tablaAccionesPesos.classList.remove("d-none");
         tablaAccionesDolares.classList.add("d-none");
+        // Reinitialize DataTable
+        $('#completa_acciones_pesos').DataTable().columns.adjust().draw();
     });
 
     btnAccionesDolares.addEventListener("click", () => {
@@ -40,20 +61,38 @@ document.addEventListener("DOMContentLoaded", () => {
         btnAccionesPesos.classList.remove("active");
         tablaAccionesDolares.classList.remove("d-none");
         tablaAccionesPesos.classList.add("d-none");
+        // Destroy and Reinitialize DataTable
+        if ($.fn.DataTable.isDataTable('#completa_acciones_dolares')) {
+            $('#completa_acciones_dolares').DataTable().destroy();
+        }
+        $('#completa_acciones_dolares').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+            },
+            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50, 100],
+            order: [[0, 'asc']],
+            autoWidth: true,
+            dom: '<"row mb-3"<"col-md-6 text-left"l><"col-md-6"f>>' +
+                'rt' +
+                '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
+        });
+        $('#completa_acciones_dolares').DataTable().columns.adjust().draw();
     });
-    
-    // Cedear
+
+    // Similar adjustments for other sections (Cedear, Bonos, Fondos)
     const btnCedearPesos = document.getElementById("btnCedearPesos");
     const btnCedearDolares = document.getElementById("btnCedearDolares");
     const tablaCedearPesos = document.getElementById("tablaCedearPesos");
     const tablaCedearDolares = document.getElementById("tablaCedearDolares");
 
-    // Función para alternar entre las tablas
     btnCedearPesos.addEventListener("click", () => {
         btnCedearPesos.classList.add("active");
         btnCedearDolares.classList.remove("active");
         tablaCedearPesos.classList.remove("d-none");
         tablaCedearDolares.classList.add("d-none");
+        // Reinitialize DataTable
+        $('#tablaCedearPesos').DataTable().columns.adjust().draw();
     });
 
     btnCedearDolares.addEventListener("click", () => {
@@ -61,20 +100,38 @@ document.addEventListener("DOMContentLoaded", () => {
         btnCedearPesos.classList.remove("active");
         tablaCedearDolares.classList.remove("d-none");
         tablaCedearPesos.classList.add("d-none");
+        // Destroy and Reinitialize DataTable
+        if ($.fn.DataTable.isDataTable('#tablaCedearDolares')) {
+            $('#tablaCedearDolares').DataTable().destroy();
+        }
+        $('#tablaCedearDolares').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+            },
+            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50, 100],
+            order: [[0, 'asc']],
+            autoWidth: true,
+            dom: '<"row mb-3"<"col-md-6 text-left"l><"col-md-6"f>>' +
+                'rt' +
+                '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
+        });
+        $('#tablaCedearDolares').DataTable().columns.adjust().draw();
     });
- 
+
     // Bonos
     const btnBonosPesos = document.getElementById("btnBonosPesos");
     const btnBonosDolares = document.getElementById("btnBonosDolares");
     const tablaBonosPesos = document.getElementById("tablaBonosPesos");
     const tablaBonosDolares = document.getElementById("tablaBonosDolares");
 
-    // Función para alternar entre las tablas
     btnBonosPesos.addEventListener("click", () => {
         btnBonosPesos.classList.add("active");
         btnBonosDolares.classList.remove("active");
         tablaBonosPesos.classList.remove("d-none");
         tablaBonosDolares.classList.add("d-none");
+        // Reinitialize DataTable
+        $('#tablaBonosPesos').DataTable().columns.adjust().draw();
     });
 
     btnBonosDolares.addEventListener("click", () => {
@@ -82,20 +139,38 @@ document.addEventListener("DOMContentLoaded", () => {
         btnBonosPesos.classList.remove("active");
         tablaBonosDolares.classList.remove("d-none");
         tablaBonosPesos.classList.add("d-none");
+        // Destroy and Reinitialize DataTable
+        if ($.fn.DataTable.isDataTable('#tablaBonosDolares')) {
+            $('#tablaBonosDolares').DataTable().destroy();
+        }
+        $('#tablaBonosDolares').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+            },
+            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50, 100],
+            order: [[0, 'asc']],
+            autoWidth: true,
+            dom: '<"row mb-3"<"col-md-6 text-left"l><"col-md-6"f>>' +
+                'rt' +
+                '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
+        });
+        $('#tablaBonosDolares').DataTable().columns.adjust().draw();
     });
- 
+
     // Fondos
     const btnFondosPesos = document.getElementById("btnFondosPesos");
     const btnFondosDolares = document.getElementById("btnFondosDolares");
     const tablaFondosPesos = document.getElementById("tablaFondosPesos");
     const tablaFondosDolares = document.getElementById("tablaFondosDolares");
 
-    // Función para alternar entre las tablas
     btnFondosPesos.addEventListener("click", () => {
         btnFondosPesos.classList.add("active");
         btnFondosDolares.classList.remove("active");
         tablaFondosPesos.classList.remove("d-none");
         tablaFondosDolares.classList.add("d-none");
+        // Reinitialize DataTable
+        $('#tablaFondosPesos').DataTable().columns.adjust().draw();
     });
 
     btnFondosDolares.addEventListener("click", () => {
@@ -103,6 +178,22 @@ document.addEventListener("DOMContentLoaded", () => {
         btnFondosPesos.classList.remove("active");
         tablaFondosDolares.classList.remove("d-none");
         tablaFondosPesos.classList.add("d-none");
+        // Destroy and Reinitialize DataTable
+        if ($.fn.DataTable.isDataTable('#tablaFondosDolares')) {
+            $('#tablaFondosDolares').DataTable().destroy();
+        }
+        $('#tablaFondosDolares').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+            },
+            pageLength: 10,
+            lengthMenu: [5, 10, 25, 50, 100],
+            order: [[0, 'asc']],
+            autoWidth: true,
+            dom: '<"row mb-3"<"col-md-6 text-left"l><"col-md-6"f>>' +
+                'rt' +
+                '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
+        });
+        $('#tablaFondosDolares').DataTable().columns.adjust().draw();
     });
- 
 });

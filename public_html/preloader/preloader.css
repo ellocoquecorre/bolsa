@@ -13,8 +13,8 @@ body {
 }
 
 #loader {
-    width: 183px; /* Ajusta el tamaño de la imagen */
-    height: 424px; /* Ajusta el tamaño de la imagen */
+    width: 150px; /* Ajusta el tamaño de la imagen */
+    height: 341px; /* Ajusta el tamaño de la imagen */
     margin: 0 auto;
     animation: shake 1s infinite;
 }

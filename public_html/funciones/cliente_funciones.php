@@ -211,25 +211,33 @@ function formatearFechaCedear($fecha)
 // Precio Actual Cedear
 function obtenerPrecioActualCedear($ticker_cedear)
 {
-    $url = "https://www.google.com/finance/quote/$ticker_cedear:BCBA?hl=es";
-    $html = file_get_contents($url);
+    $url = "https://finance.yahoo.com/quote/{$ticker_cedear}.BA/";
 
-    // Crear un nuevo DOMDocument
+    // Agregar User-Agent para evitar bloqueos
+    $opts = [
+        "http" => [
+            "method" => "GET",
+            "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\r\n"
+        ]
+    ];
+    $context = stream_context_create($opts);
+
+    $html = @file_get_contents($url, false, $context);
+
+    if (!$html) {
+        return null;
+    }
+
     $dom = new DOMDocument();
     @$dom->loadHTML($html);
 
-    // Buscar el valor numérico en la etiqueta <div class="YMlKec fxKbKc">
     $finder = new DomXPath($dom);
-    $classname = "YMlKec fxKbKc";
-    $nodes = $finder->query("//*[contains(@class, '$classname')]");
+    $nodes = $finder->query("//span[@data-testid='qsp-price']");
 
     if ($nodes->length > 0) {
         $valor = $nodes->item(0)->nodeValue;
-        // Formatear valor a número sin formato
-        $valor = str_replace(",", "", $valor); // Eliminar comas de miles
-        $valor = str_replace(".", "", substr($valor, 0, -3)) . "." . substr($valor, -2); // Reemplazar punto decimal y reconstruir
-        $valor = (float)$valor / 100; // Corregir el formato multiplicando por 0.01
-        return $valor;
+        $valor = str_replace(',', '', $valor);
+        return (float)$valor;
     } else {
         return null;
     }

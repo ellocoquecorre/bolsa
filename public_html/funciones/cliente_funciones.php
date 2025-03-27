@@ -56,6 +56,9 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
 
 // PROMEDIO CCL
 $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
+if ($promedio_ccl == 0) {
+    $promedio_ccl = 1; // Evitar división por cero
+}
 // FIN PROMEDIO CCL
 
 // SALDO EN DÓLARES

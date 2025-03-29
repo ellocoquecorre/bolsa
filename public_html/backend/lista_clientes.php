@@ -112,7 +112,7 @@ $conn->close();
                                         </a>
                                     </td>
                                     <td class="text-center">
-                                        <a href="../funciones/retirar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom eliminar"
+                                        <a href="../funciones/retirar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom retirar"
                                             data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar Efectivo">
                                             <i class="fa-solid fa-minus"></i>
                                         </a>

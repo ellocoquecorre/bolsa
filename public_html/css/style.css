@@ -116,7 +116,12 @@ h5 {
   color: #fff;
   border-radius: 5px;
 }
-
+.btn-custom.retirar:hover {
+  border: 1px solid #000000;
+  background-color: #FF0000;
+  color: #fff;
+  border-radius: 5px;
+}
 .btn-custom.eliminar:hover {
   border: 1px solid #000000;
   background-color: #FF0000;

@@ -11,7 +11,7 @@ $(document).ready(function() {
             autoWidth: true, // Ajuste automático de anchos de columnas
             dom: '<"row mb-3 d-flex align-items-baseline justify-content-center"<"col-md-4"f><"col-md-4"l><"col-md-4"i>>' +  // búsqueda-longitud-info
                  'rt' +  // Cuerpo de la tabla
-                 '<"row mt-3"<"col-md-12 text-center"p>>'  // paginación
+                 '<"row mt-3  mb-3"<"col-md-12 text-center"p>>'  // paginación
         });
     }
 

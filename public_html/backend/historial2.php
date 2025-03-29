@@ -367,6 +367,20 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                             </tbody>
                         </table>
                     </div>
+                    <!-- Contenedor del Paginador -->
+                    <div class="pager">
+                        <span class="pager-first fa fa-fast-backward"></span>
+                        <span class="pager-prev fa fa-step-backward"></span>
+                        <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+                        <span class="pager-next fa fa-step-forward"></span>
+                        <span class="pager-last fa fa-fast-forward"></span>
+                        <select class="pagesize" title="Select page size">
+                            <option selected="selected" value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <select class="pagenum" title="Seleccione la página"></select>
+                    </div>
                     <!-- Fin Completa Acciones Pesos -->
 
                 </div>
@@ -461,6 +475,20 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                                 ?>
                             </tbody>
                         </table>
+                    </div>
+                    <!-- Contenedor del Paginador -->
+                    <div class="pager">
+                        <span class="pager-first fa fa-fast-backward"></span>
+                        <span class="pager-prev fa fa-step-backward"></span>
+                        <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+                        <span class="pager-next fa fa-step-forward"></span>
+                        <span class="pager-last fa fa-fast-forward"></span>
+                        <select class="pagesize" title="Select page size">
+                            <option selected="selected" value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <select class="pagenum" title="Seleccione la página"></select>
                     </div>
                     <!-- Fin Completa Acciones Dólares -->
 
@@ -1102,6 +1130,52 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../js/tooltip.js"></script>
+    <script src="../js/botones_pesos_dolares.js"></script>
+
+    <!-- Incluir TableSorter JS y CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.bootstrap_4.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.widgets.min.js"></script>
+    <!-- FIN TableSorter JS y CSS -->
+
+    <!-- Incluir TableSorter Pager CSS y JS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/jquery.tablesorter.pager.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/extras/jquery.tablesorter.pager.min.js"></script>
+    <!-- FIN TableSorter Pager CSS y JS -->
+
+    <!-- Inicializar TableSorter con Paginación -->
+    <script>
+        $(document).ready(function() {
+            $("#completa_acciones_pesos, #completa_acciones_dolares").tablesorter({
+                theme: 'bootstrap',
+                headerTemplate: '{content} {icon}', // Add bootstrap icon to the header
+                widgets: ["uitheme", "filter", "zebra", "pager"],
+                widgetOptions: {
+                    zebra: ["even", "odd"],
+                    filter_reset: ".reset",
+                    pager_size: 10, // Número de filas por página
+                    pager_output: '{startRow} - {endRow} de {filteredRows} ({totalRows})',
+                    pager_removeRows: false // False para mantener todas las filas en el DOM
+                }
+            }).tablesorterPager({
+                container: $(".pager"), // Contenedor del paginador
+                output: '{startRow} - {endRow} de {filteredRows} ({totalRows})',
+                updateArrows: true,
+                page: 0,
+                size: 10,
+                savePages: false, // Guardar el tamaño de la página en localStorage
+                fixedHeight: true,
+                removeRows: false, // False para mantener todas las filas en el DOM
+                cssGoto: ".pagenum" // Selector de página
+            });
+        });
+    </script>
+    <!-- FIN Inicializar TableSorter con Paginación -->
     <!-- FIN JS -->
 
 </body>

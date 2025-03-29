@@ -380,3 +380,37 @@ form label {
   background-color: #0B486B !important;
   border-color: #0B486B !important;
 }
+
+/* Estilizar el paginador */
+.pager {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.pager span,
+.pager select {
+  display: inline-block;
+  margin: 0 5px;
+  padding: 8px 12px;
+  background: #4CAF50;
+  color: white;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.pager span:hover,
+.pager select:hover {
+  background: #45a049;
+}
+
+.pagedisplay {
+  display: inline-block;
+  margin: 0 5px;
+  padding: 8px 12px;
+  background: none;
+  color: #0B486B;
+  border: none;
+  font-size: 14px;
+}

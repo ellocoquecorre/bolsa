@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-03-2025 a las 12:35:19
+-- Tiempo de generación: 28-03-2025 a las 21:45:21
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,10 +42,7 @@ CREATE TABLE `acciones` (
 --
 
 INSERT INTO `acciones` (`id`, `cliente_id`, `ticker`, `cantidad`, `precio`, `fecha`, `ccl_compra`) VALUES
-(79, 1, 'ALUA', 300, 885.63, '2025-03-19', 1216.37),
-(80, 1, 'BBAR', 29, 8570.00, '2025-01-02', 1186.83),
-(89, 2, 'ALUA', 20, 851.00, '2025-03-24', 1262.10),
-(90, 2, 'BBAR', 10, 8200.00, '2025-03-24', 1289.63);
+(117, 1, 'GGAL', 63, 7450.00, '2025-03-19', 1291.86);
 
 -- --------------------------------------------------------
 
@@ -71,11 +68,27 @@ CREATE TABLE `acciones_historial` (
 --
 
 INSERT INTO `acciones_historial` (`id`, `cliente_id`, `ticker`, `cantidad`, `fecha_compra`, `precio_compra`, `ccl_compra`, `fecha_venta`, `precio_venta`, `ccl_venta`) VALUES
-(29, 1, 'ALUA', 80, '2025-03-19', 885.63, 1216.37, '2025-03-19', 866.00, 1285.49),
-(30, 1, 'CRES', 160, '2025-01-02', 1560.00, 1186.83, '2025-03-19', 1405.00, 1294.51),
-(35, 4, 'BBAR', 20, '2024-06-12', 4326.00, 1289.63, '2024-06-27', 4092.00, 1289.63),
-(36, 4, 'BBAR', 10, '2025-01-02', 8020.00, 1289.63, '2025-01-27', 8570.00, 1289.63),
-(37, 4, 'BBAR', 16, '2025-01-30', 9200.00, 1289.63, '2025-02-11', 7900.00, 1289.63);
+(66, 1, 'BBAR', 20, '2024-06-07', 4326.48, 1305.21, '2024-07-27', 4092.00, 1345.70),
+(67, 1, 'BBAR', 10, '2025-01-02', 8020.00, 1174.59, '2025-01-27', 8570.00, 1176.15),
+(68, 1, 'BBAR', 16, '2025-01-30', 9200.00, 1180.70, '2025-02-11', 7900.00, 1189.68),
+(76, 1, 'BMA', 16, '2024-06-12', 7674.02, 1306.04, '2024-07-08', 7150.00, 1386.59),
+(77, 1, 'BMA', 18, '2024-09-11', 8110.00, 1254.39, '2024-09-26', 8020.00, 1227.58),
+(78, 1, 'BMA', 26, '2024-10-28', 9490.00, 1154.77, '2024-12-12', 9502.31, 1082.00),
+(79, 1, 'BMA', 12, '2025-01-30', 12100.00, 1180.70, '2025-01-30', 11000.00, 1189.68),
+(80, 1, 'BYMA', 145, '2024-09-05', 340.00, 1271.60, '2024-09-26', 307.00, 1227.58),
+(81, 1, 'CEPU', 72, '2024-11-22', 1545.00, 1106.07, '2024-12-23', 1645.00, 1166.99),
+(82, 1, 'CEPU', 115, '2025-01-30', 1710.00, 1180.70, '2025-02-11', 1555.00, 1189.68),
+(83, 1, 'EDN', 57, '2024-12-13', 2653.16, 1078.10, '2025-01-22', 2646.14, 1187.60),
+(84, 1, 'GGAL', 50, '2024-07-02', 4257.89, 1307.08, '2024-07-08', 3956.05, 1386.59),
+(85, 1, 'GGAL', 47, '2024-09-12', 5401.91, 1256.70, '2024-09-26', 5280.00, 1227.58),
+(86, 1, 'GGAL', 77, '2024-10-28', 6400.00, 1154.77, '2024-12-30', 6916.10, 1146.64),
+(87, 1, 'GGAL', 35, '2025-01-30', 8260.00, 1180.70, '2025-02-11', 7210.00, 1189.68),
+(88, 1, 'METR', 111, '2024-11-13', 1780.00, 1155.92, '2025-01-27', 2555.00, 1176.15),
+(89, 1, 'METR', 55, '2025-01-30', 2660.00, 1180.70, '2025-02-11', 2145.00, 1189.68),
+(90, 1, 'PAMP', 17, '2024-09-12', 2921.18, 1270.91, '2024-09-26', 2855.00, 1227.58),
+(91, 1, 'PAMP', 94, '2025-01-30', 3857.34, 1158.20, '2025-02-11', 3680.00, 1189.68),
+(92, 1, 'TGSU2', 44, '2024-10-28', 5370.00, 1154.77, '2025-01-27', 6910.91, 1181.61),
+(93, 1, 'TGSU2', 21, '2025-01-30', 6900.00, 1180.70, '2025-02-11', 6090.00, 1189.68);
 
 -- --------------------------------------------------------
 
@@ -114,9 +127,7 @@ CREATE TABLE `balance` (
 --
 
 INSERT INTO `balance` (`id`, `cliente_id`, `efectivo`) VALUES
-(1, 1, 2860299.36),
-(2, 2, 1673396.10),
-(4, 4, 14845585.00);
+(5, 1, 9237656.40);
 
 -- --------------------------------------------------------
 
@@ -133,16 +144,6 @@ CREATE TABLE `bonos` (
   `precio_bonos` decimal(10,2) NOT NULL,
   `ccl_compra` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `bonos`
---
-
-INSERT INTO `bonos` (`id`, `cliente_id`, `ticker_bonos`, `fecha_bonos`, `cantidad_bonos`, `precio_bonos`, `ccl_compra`) VALUES
-(5, 1, 'GD35', '2025-03-19', 3, 81667.50, 1217.90),
-(6, 1, 'AE38', '2025-01-02', 3, 86500.00, 1186.83),
-(9, 2, 'AE38', '2025-03-24', 20, 85821.00, 1262.10),
-(10, 2, 'AL29', '2025-03-24', 10, 88800.00, 1289.63);
 
 -- --------------------------------------------------------
 
@@ -162,14 +163,6 @@ CREATE TABLE `bonos_historial` (
   `precio_venta_bonos` decimal(10,2) NOT NULL,
   `ccl_venta` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `bonos_historial`
---
-
-INSERT INTO `bonos_historial` (`id`, `cliente_id`, `ticker_bonos`, `cantidad_bonos`, `fecha_compra_bonos`, `precio_compra_bonos`, `ccl_compra`, `fecha_venta_bonos`, `precio_venta_bonos`, `ccl_venta`) VALUES
-(4, 1, 'AL29', 1, '2025-01-02', 96800.00, 1186.83, '2025-03-19', 88630.00, 1294.51),
-(5, 1, 'AL29', 2, '2025-01-02', 96800.00, 1186.83, '2025-03-20', 89100.00, 1294.51);
 
 -- --------------------------------------------------------
 
@@ -192,11 +185,7 @@ CREATE TABLE `cedear` (
 --
 
 INSERT INTO `cedear` (`id`, `cliente_id`, `ticker_cedear`, `fecha_cedear`, `cantidad_cedear`, `precio_cedear`, `ccl_compra_cedear`) VALUES
-(5, 1, 'AAPL', '2025-03-19', 29, 13339.66, 1229.73),
-(6, 1, 'AMZN', '2025-01-03', 138, 1795.00, 1186.83),
-(10, 4, 'TSLA', '2024-12-23', 3, 33725.00, 1289.63),
-(11, 4, 'NVDA', '2024-12-23', 2, 6640.00, 1289.63),
-(14, 2, 'AAPL', '2025-03-25', 20, 14001.00, 694.81);
+(40, 1, 'AAPL', '2025-02-27', 187, 14044.12, 1202.28);
 
 -- --------------------------------------------------------
 
@@ -222,8 +211,8 @@ CREATE TABLE `cedear_historial` (
 --
 
 INSERT INTO `cedear_historial` (`id`, `cliente_id`, `ticker_cedear`, `cantidad_cedear`, `fecha_compra_cedear`, `precio_compra_cedear`, `ccl_compra`, `fecha_venta_cedear`, `precio_venta_cedear`, `ccl_venta`) VALUES
-(6, 1, 'BIDU', 8, '2025-01-02', 8850.00, 1186.83, '2025-03-19', 11550.00, 1294.51),
-(7, 1, 'JPM', 13, '2025-01-02', 18875.00, 1186.83, '2025-03-19', 20625.00, 1294.51);
+(32, 1, 'AAPL', 154, '2024-09-12', 13530.50, 1269.47, '2025-01-14', 13491.00, 1149.21),
+(33, 1, 'AAPL', 35, '2025-02-27', 14044.12, 1202.28, '2025-03-19', 13925.00, 1291.86);
 
 -- --------------------------------------------------------
 
@@ -247,9 +236,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`email`, `password`, `nombre`, `apellido`, `telefono`, `corredora`, `url`, `cliente_id`) VALUES
-('el.bueno.de.harry@gmail.com', '$2y$10$7aQJdfZZGPUw5pGJMZgmT.v83vhG2iQ8cK4OaeGiGWHYCtyuwpr5O', 'Harry', 'Flashman', '123', 'Balanz', 'https://clientes.balanz.com/auth/login', 1),
-('cafe.la.humedad@gmail.com', '$2y$10$s0gNWXGHERDw/aNdFc8kG.ovHC.zwfqvKV4ixSFlh8iaxGj90jOC6', 'Cacho', 'Castaña', '456', 'Allaria', 'https://allaria.com.ar', 2),
-('peilo@gmail.com', '$2y$10$oO0FKmItylaHeKu4lbjTHuTyVxukDjvio.7MvAur8TcCABAaNn7rK', 'Pablo', 'Marino', '2944-69-3756', 'Balanz', 'https://clientes.balanz.com/auth/login', 4);
+('peilo@gmail.com', '$2y$10$PjhGqrQJX.Iut8D3kTRdTOVFMVcYKcwQK9B3psbg4AdhgquRwmRnS', 'Pablo', 'Marino', '2944-69-3756', 'Balanz', 'https://clientes.balanz.com/auth/login', 1);
 
 -- --------------------------------------------------------
 
@@ -266,16 +253,6 @@ CREATE TABLE `fondos` (
   `precio_fondos` decimal(10,2) NOT NULL,
   `ccl_compra` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `fondos`
---
-
-INSERT INTO `fondos` (`id`, `cliente_id`, `ticker_fondos`, `fecha_fondos`, `cantidad_fondos`, `precio_fondos`, `ccl_compra`) VALUES
-(4, 1, 'ALGIIIA', '2025-01-02', 225900, 1.11, 1186.83),
-(5, 1, 'IAMRCAB', '2025-03-19', 6000, 50.87, 1207.98),
-(6, 2, 'COMRF4A', '2025-03-24', 10, 91.61, 1234.56),
-(7, 2, 'IAMRCAB', '2025-03-24', 20, 54.39, 1262.10);
 
 -- --------------------------------------------------------
 
@@ -295,14 +272,6 @@ CREATE TABLE `fondos_historial` (
   `precio_venta_fondos` decimal(10,2) NOT NULL,
   `ccl_venta` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `fondos_historial`
---
-
-INSERT INTO `fondos_historial` (`id`, `cliente_id`, `ticker_fondos`, `cantidad_fondos`, `fecha_compra_fondos`, `precio_compra_fondos`, `ccl_compra`, `fecha_venta_fondos`, `precio_venta_fondos`, `ccl_venta`) VALUES
-(1, 1, 'BCPE06A', 50436, '2025-01-02', 0.71, 1186.83, '2025-03-19', 1.00, 1294.51),
-(2, 1, 'BCPE06A', 300000, '2025-01-02', 0.71, 1186.83, '2025-03-20', 1.00, 1294.51);
 
 -- --------------------------------------------------------
 
@@ -1313,13 +1282,13 @@ ALTER TABLE `ticker_fondos`
 -- AUTO_INCREMENT de la tabla `acciones`
 --
 ALTER TABLE `acciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT de la tabla `acciones_historial`
 --
 ALTER TABLE `acciones_historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT de la tabla `admin`
@@ -1331,7 +1300,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `balance`
 --
 ALTER TABLE `balance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `bonos`
@@ -1343,19 +1312,19 @@ ALTER TABLE `bonos`
 -- AUTO_INCREMENT de la tabla `bonos_historial`
 --
 ALTER TABLE `bonos_historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `cedear`
 --
 ALTER TABLE `cedear`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `cedear_historial`
 --
 ALTER TABLE `cedear_historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
@@ -1373,7 +1342,7 @@ ALTER TABLE `fondos`
 -- AUTO_INCREMENT de la tabla `fondos_historial`
 --
 ALTER TABLE `fondos_historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tickers_acciones`

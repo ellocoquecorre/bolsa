@@ -47,8 +47,8 @@ session_start();
     <!-- FIN CONTENIDO -->
 
     <!-- FOOTER -->
-    <img id="fixed-image" src="../img/chorro.png" alt="Imagen Fija" />
     <footer class="footer bg-light">
+        <img id="fixed-image" src="../img/chorro.png" alt="Imagen Fija" />
         <div class="container">
             <span class="text-muted">© GoodFellas Inc.</span>
         </div>

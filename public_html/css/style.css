@@ -417,8 +417,8 @@ footer {
 }
 
 #preloader .frase-img {
-    width: 860px;
-    height: 115px;
+    width: 500px;
+    height: auto;
     max-width: 100%;
     height: auto;
 }

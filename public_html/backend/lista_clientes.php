@@ -28,6 +28,13 @@ $conn->close();
 </head>
 
 <body>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <img src="../img/preloader.gif" alt="Preloader" class="main-img">
+        <img src="../img/frases.gif" alt="Frases" class="frase-img">
+    </div>
+    <!-- FIN PRELOADER -->
+
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
@@ -155,6 +162,7 @@ $conn->close();
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/eliminar_cliente.js"></script>
+    <script src="../js/preloader.js"></script>
     <!-- FIN JS -->
 
 </body>

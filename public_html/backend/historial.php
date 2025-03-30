@@ -29,6 +29,13 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 </head>
 
 <body>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <img src="../img/preloader.gif" alt="Preloader" class="main-img">
+        <img src="../img/frases.gif" alt="Frases" class="frase-img">
+    </div>
+    <!-- FIN PRELOADER -->
+
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
@@ -1106,6 +1113,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/filtro_tablas.js"></script>
+    <script src="../js/preloader.js"></script>
     <!-- FIN JS -->
 
 </body>

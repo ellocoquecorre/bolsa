@@ -23,96 +23,16 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
-    <style>
-        #preloader {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #fff;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        #preloader img {
-            margin: 0 auto;
-        }
-
-        #preloader .main-img {
-            width: 150px;
-            height: 341px;
-            animation: shake 1s infinite;
-        }
-
-        #preloader .frase-img {
-            width: 500px;
-            height: auto;
-            max-width: 100%;
-            height: auto;
-        }
-
-        @keyframes shake {
-            0% {
-                transform: translate(1px, 1px) rotate(0deg);
-            }
-
-            10% {
-                transform: translate(-1px, -2px) rotate(-1deg);
-            }
-
-            20% {
-                transform: translate(-3px, 0px) rotate(1deg);
-            }
-
-            30% {
-                transform: translate(3px, 2px) rotate(0deg);
-            }
-
-            40% {
-                transform: translate(1px, -1px) rotate(1deg);
-            }
-
-            50% {
-                transform: translate(-1px, 2px) rotate(-1deg);
-            }
-
-            60% {
-                transform: translate(-3px, 1px) rotate(0deg);
-            }
-
-            70% {
-                transform: translate(3px, 1px) rotate(-1deg);
-            }
-
-            80% {
-                transform: translate(-1px, -1px) rotate(1deg);
-            }
-
-            90% {
-                transform: translate(1px, 2px) rotate(0deg);
-            }
-
-            100% {
-                transform: translate(1px, -2px) rotate(-1deg);
-            }
-        }
-    </style>
     <!-- FIN CSS -->
 </head>
 
 <body>
-    <!-- Preloader -->
+    <!-- PRELOADER -->
     <div id="preloader">
         <img src="../img/preloader.gif" alt="Preloader" class="main-img">
         <img src="../img/frases.gif" alt="Frases" class="frase-img">
     </div>
-    <!-- FIN Preloader -->
+    <!-- FIN PRELOADER -->
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">

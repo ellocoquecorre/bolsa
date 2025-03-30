@@ -32,7 +32,7 @@ $nombre_corredora = $datos_corredora['corredora'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goodfellas Inc.</title>
+    <title><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?> - Goodfellas Inc.</title>
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
@@ -68,7 +68,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                         <a class="nav-link" href="historial.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-hourglass me-2"></i>Historial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../backend/dolares.php"><i class="fa-solid fa-dollar-sign me-2"></i>Dólares</a>
+                        <a class="nav-link" href="dolares.php"><i class="fa-solid fa-dollar-sign me-2"></i>Dólares</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>

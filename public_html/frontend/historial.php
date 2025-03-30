@@ -1132,6 +1132,7 @@ $nombre_corredora = $datos_corredora['corredora'];
     <script src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/filtro_tablas.js"></script>
     <script src="../js/preloader.js"></script>
+    <script src="../js/fixedImage.js"></script>
     <!-- FIN JS -->
 </body>
 

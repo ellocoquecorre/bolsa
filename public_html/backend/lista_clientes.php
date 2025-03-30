@@ -166,6 +166,7 @@ $conn->close();
     <script src="../js/tooltip.js"></script>
     <script src="../js/eliminar_cliente.js"></script>
     <script src="../js/preloader.js"></script>
+    <script src="../js/fixedImage.js"></script>
     <!-- FIN JS -->
 
 </body>

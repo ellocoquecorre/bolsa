@@ -1248,6 +1248,7 @@ $nombre_corredora = $datos_corredora['corredora'];
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/graficos.js"></script>
     <script src="../js/preloader.js"></script>
+    <script src="../js/fixedImage.js"></script>
     <!-- FIN JS -->
 
 </body>

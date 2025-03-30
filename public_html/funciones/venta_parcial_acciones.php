@@ -253,6 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         });
     </script>
+    <script src="../js/fixedImage.js"></script>
     <!-- FIN JS -->
 </body>
 

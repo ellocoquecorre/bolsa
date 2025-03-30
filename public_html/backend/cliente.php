@@ -1474,6 +1474,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/graficos.js"></script>
     <script src="../js/preloader.js"></script>
+    <script src="../js/fixedImage.js"></script>
     <!-- FIN JS -->
 
 </body>

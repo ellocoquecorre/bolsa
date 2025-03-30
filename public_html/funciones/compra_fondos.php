@@ -270,6 +270,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../js/tickers_fondos.js"></script>
     <script src="../js/preloader.js"></script>
     <script src="../js/preloader.js"></script>
+    <script src="../js/fixedImage.js"></script>
     <!-- FIN JS -->
 </body>
 

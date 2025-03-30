@@ -342,14 +342,26 @@ form label {
   display: block;
   text-align: right;
 }
-/* Estilo para la imagen fija en la parte inferior */
 #fixed-image {
   position: fixed;
-  bottom: 22.81px; /* Ajusta este valor para desplazarla más abajo o más arriba */
+  bottom: 22.81px;
   right: 0;
   z-index: 9999;
-  width: 200px; /* Ajusta el tamaño de la imagen si es necesario */
+  width: 200px;
+  transform: translateX(100%); /* Empieza fuera de pantalla a la derecha */
+  opacity: 0;
+  transition: transform 1s ease-out, opacity 1s ease-out;
 }
+
+#fixed-image.show {
+  transform: translateX(0); /* Vuelve a su lugar */
+  opacity: 1;
+}
+#fixed-image.hide {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
 
 .promedio_ccl {
   color: #0B486B;

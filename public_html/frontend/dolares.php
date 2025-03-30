@@ -160,6 +160,10 @@ $nombre_corredora = $datos_corredora['corredora'];
 
     <!-- FOOTER -->
     <footer class="footer bg-light">
+        <a href="https://www.afip.gob.ar/" target="_blank" rel="noopener noreferrer">
+            <img id="fixed-image" src="../img/chorro.png" alt="" data-bs-toggle="tooltip"
+                data-bs-placement="top" title="Hacé click... dale..." />
+        </a>
         <div class="container">
             <span class="text-muted">© GoodFellas Inc.</span>
         </div>
@@ -174,6 +178,7 @@ $nombre_corredora = $datos_corredora['corredora'];
     <script src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/valor_promedio_ccl.js"></script>
     <script src="../js/preloader.js"></script>
+    <script src="../js/fixedImage.js"></script>
     <!-- FIN JS -->
 </body>
 

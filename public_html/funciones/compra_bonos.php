@@ -269,6 +269,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tickers_bonos.js"></script>
     <script src="../js/preloader.js"></script>
+    <script src="../js/fixedImage.js"></script>
     <!-- FIN JS -->
 </body>
 

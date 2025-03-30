@@ -41,12 +41,20 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
         }
 
         #preloader img {
-            width: 150px;
-            /* Ajusta el tamaño de la imagen */
-            height: 341px;
-            /* Ajusta el tamaño de la imagen */
             margin: 0 auto;
+        }
+
+        #preloader .main-img {
+            width: 150px;
+            height: 341px;
             animation: shake 1s infinite;
+        }
+
+        #preloader .frase-img {
+            width: 500px;
+            height: auto;
+            max-width: 100%;
+            height: auto;
         }
 
         @keyframes shake {
@@ -101,7 +109,8 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 <body>
     <!-- Preloader -->
     <div id="preloader">
-        <img src="../img/preloader.gif" alt="Preloader">
+        <img src="../img/preloader.gif" alt="Preloader" class="main-img">
+        <img src="../img/frases.gif" alt="Frases" class="frase-img">
     </div>
     <!-- FIN Preloader -->
 

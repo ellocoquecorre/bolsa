@@ -42,6 +42,13 @@ $nombre_corredora = $datos_corredora['corredora'];
 </head>
 
 <body>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <img src="../img/preloader.gif" alt="Preloader" class="main-img">
+        <img src="../img/frases.gif" alt="Frases" class="frase-img">
+    </div>
+    <!-- FIN PRELOADER -->
+
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
@@ -1237,6 +1244,7 @@ $nombre_corredora = $datos_corredora['corredora'];
     <script src="../js/botones_pesos_dolares.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/graficos.js"></script>
+    <script src="../js/preloader.js"></script>
     <!-- FIN JS -->
 
 </body>

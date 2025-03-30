@@ -43,6 +43,12 @@ $nombre_corredora = $datos_corredora['corredora'];
 </head>
 
 <body>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <img src="../img/preloader.gif" alt="Preloader" class="main-img">
+        <img src="../img/frases.gif" alt="Frases" class="frase-img">
+    </div>
+    <!-- FIN PRELOADER -->
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -1111,13 +1117,13 @@ $nombre_corredora = $datos_corredora['corredora'];
     </footer>
     <!-- FIN FOOTER -->
 
-
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
+    <script src="../js/preloader.js"></script>
     <!-- FIN JS -->
 </body>
 

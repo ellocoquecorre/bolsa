@@ -26,6 +26,12 @@ $nombre_corredora = $datos_corredora['corredora'];
 </head>
 
 <body>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <img src="../img/preloader.gif" alt="Preloader" class="main-img">
+        <img src="../img/frases.gif" alt="Frases" class="frase-img">
+    </div>
+    <!-- FIN PRELOADER -->
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -167,6 +173,7 @@ $nombre_corredora = $datos_corredora['corredora'];
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/valor_promedio_ccl.js"></script>
+    <script src="../js/preloader.js"></script>
     <!-- FIN JS -->
 </body>
 

@@ -23,23 +23,13 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
-    <script src="../js/preloader.js"></script>
-
-    <style>
-
-    </style>
     <!-- FIN CSS -->
 </head>
 
 <body>
 
     <!-- PRELOADER -->
-    <div id="preloader">
-        <div role="status">
-            <img id="loader" src="../img/preloader.gif" alt="Impaciente" />
-            <p id="loading-text"></p>
-        </div>
-    </div>
+
     <!-- FIN PRELOADER -->
 
     <!-- NAVBAR -->
@@ -1478,12 +1468,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <script src="../js/eliminar_fondos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/graficos.js"></script>
-    <script>
-        // Hide preloader when page is fully loaded
-        window.addEventListener('load', function() {
-            document.getElementById('preloader').style.display = 'none';
-        });
-    </script>
     <!-- FIN JS -->
 
 </body>

@@ -38,6 +38,7 @@ $nombre_corredora = $datos_corredora['corredora'];
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <!-- FIN CSS -->
 </head>
@@ -86,13 +87,14 @@ $nombre_corredora = $datos_corredora['corredora'];
         <!-- TITULO -->
         <div class="col-12 text-center">
             <h4 class="fancy">Historial de <?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
-            <p>Tu corredora es<br><a href="<?php echo $url_corredora; ?>" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><?php echo $nombre_corredora; ?></a></p>
+            <a href="cliente.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
+                <i class="fa-solid fa-magnifying-glass me-2"></i>Tenencia</a>
         </div>
         <!-- FIN TITULO -->
 
         <hr class="mod">
 
-        <!-- TOTAL -->
+        <!-- RESUMEN -->
         <div class="col-12 text-center">
             <div class="container-fluid my-4 efectivo" id="resumen">
                 <h5 class="me-2 cartera titulo-botones mb-4">Resumen</h5>
@@ -112,7 +114,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                 <div id="tablaResumenPesos">
 
                     <!-- Consolidada -->
-                    <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
+                    <h6 class="me-2 cartera posiciones mb-4">Resumen Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -147,7 +149,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <hr class="linea-accion">
 
                     <!-- Detalle -->
-                    <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
+                    <h6 class="me-2 cartera posiciones mb-4">Resumen Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -200,7 +202,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                 <div id="tablaResumenDolares" class="d-none">
 
                     <!-- Consolidada -->
-                    <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
+                    <h6 class="me-2 cartera posiciones mb-4">Resumen Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -235,7 +237,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <hr class="linea-accion">
 
                     <!-- Detalle -->
-                    <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
+                    <h6 class="me-2 cartera posiciones mb-4">Resumen Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -286,7 +288,7 @@ $nombre_corredora = $datos_corredora['corredora'];
 
             </div>
         </div>
-        <!-- FIN TOTAL -->
+        <!-- FIN RESUMEN -->
 
         <hr class="mod">
 
@@ -336,7 +338,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <!-- Completa Acciones Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_acciones_pesos" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -410,9 +412,9 @@ $nombre_corredora = $datos_corredora['corredora'];
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_acciones_dolares)); ?></td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_venta_consolidado_acciones_dolares)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_acciones_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_venta_consolidado_acciones_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_acciones_dolares, 'u$s'); ?></td>
                                     <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_acciones_dolares); ?></td>
                                 </tr>
                             </tbody>
@@ -425,7 +427,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <!-- Completa Acciones Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_acciones_dolares" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -539,7 +541,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <!-- Completa Cedear Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_cedear_pesos" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -613,9 +615,9 @@ $nombre_corredora = $datos_corredora['corredora'];
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_cedear_dolares)); ?></td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_venta_consolidado_cedear_dolares)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_dolares); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_cedear_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_venta_consolidado_cedear_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_cedear_dolares, 'u$s'); ?></td>
                                     <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_cedear_dolares); ?></td>
                                 </tr>
                             </tbody>
@@ -628,7 +630,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <!-- Completa Cedear Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_cedear_dolares" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -743,7 +745,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <!-- Completa Bonos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_bonos_pesos" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -817,9 +819,9 @@ $nombre_corredora = $datos_corredora['corredora'];
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_bonos_dolares)); ?></td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_venta_consolidado_bonos_dolares)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_dolares); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_bonos_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_venta_consolidado_bonos_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_bonos_dolares, 'u$s'); ?></td>
                                     <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_bonos_dolares); ?></td>
                                 </tr>
                             </tbody>
@@ -832,7 +834,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <!-- Completa Bonos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_bonos_dolares" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -947,7 +949,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <!-- Completa Fondos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_fondos_pesos" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -1021,9 +1023,9 @@ $nombre_corredora = $datos_corredora['corredora'];
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_fondos_dolares)); ?></td>
-                                    <td>$ <?php echo htmlspecialchars(formatear_dinero($valor_venta_consolidado_fondos_dolares)); ?></td>
-                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_dolares); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_compra_consolidado_fondos_dolares)); ?></td>
+                                    <td>u$s <?php echo htmlspecialchars(formatear_dinero($valor_venta_consolidado_fondos_dolares)); ?></td>
+                                    <td><?php echo formatear_y_colorear_valor($rendimiento_consolidado_fondos_dolares, 'u$s'); ?></td>
                                     <td><?php echo formatear_y_colorear_porcentaje($rentabilidad_consolidado_fondos_dolares); ?></td>
                                 </tr>
                             </tbody>
@@ -1036,7 +1038,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <!-- Completa Fondos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_fondos_dolares" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -1110,7 +1112,10 @@ $nombre_corredora = $datos_corredora['corredora'];
 
     <!-- FOOTER -->
     <footer class="footer bg-light">
-        <img id="fixed-image" src="../img/chorro.png" alt="Imagen Fija" />
+        <a href="https://www.afip.gob.ar/" target="_blank" rel="noopener noreferrer">
+            <img id="fixed-image" src="../img/chorro.png" alt="" data-bs-toggle="tooltip"
+                data-bs-placement="top" title="Hacé click... dale..." />
+        </a>
         <div class="container">
             <span class="text-muted">© GoodFellas Inc.</span>
         </div>
@@ -1121,8 +1126,11 @@ $nombre_corredora = $datos_corredora['corredora'];
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/botones_pesos_dolares.js"></script>
+    <script src="../js/filtro_tablas.js"></script>
     <script src="../js/preloader.js"></script>
     <!-- FIN JS -->
 </body>

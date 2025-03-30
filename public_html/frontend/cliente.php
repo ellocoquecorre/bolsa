@@ -1229,7 +1229,10 @@ $nombre_corredora = $datos_corredora['corredora'];
 
     <!-- FOOTER -->
     <footer class="footer bg-light">
-        <img id="fixed-image" src="../img/chorro.png" alt="Imagen Fija" />
+        <a href="https://www.afip.gob.ar/" target="_blank" rel="noopener noreferrer">
+            <img id="fixed-image" src="../img/chorro.png" alt="" data-bs-toggle="tooltip"
+                data-bs-placement="top" title="Hacé click... dale..." />
+        </a>
         <div class="container">
             <span class="text-muted">© GoodFellas Inc.</span>
         </div>

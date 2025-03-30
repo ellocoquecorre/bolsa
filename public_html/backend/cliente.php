@@ -27,11 +27,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
 </head>
 
 <body>
-
-    <!-- PRELOADER -->
-
-    <!-- FIN PRELOADER -->
-
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">

@@ -353,6 +353,8 @@ function obtenerValorActualRava($ticker_bonos)
         $valor = str_replace(".", "", $valor); // Eliminar separador de miles
         $valor = str_replace(",", ".", $valor); // Reemplazar coma decimal por punto
         $valor = (float)$valor;
+        // Dividir el valor final por 100
+        $valor = $valor / 100;
         return $valor;
     } else {
         return null;

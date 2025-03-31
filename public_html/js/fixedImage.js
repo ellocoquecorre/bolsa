@@ -1,20 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const image = document.getElementById("fixed-image");
+    // Probabilidad de que el script se ejecute (ajusta el 0.5 según lo que quieras)
+    if (Math.random() < 0.5) {  
+        const image = document.getElementById("fixed-image");
 
-    // Tiempo aleatorio entre 5s y 15s (en milisegundos)
-    const appearDelay = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
+        // Aparece entre 5s y 15s (en milisegundos)
+        const appearDelay = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
 
-    // Tiempo aleatorio entre 20s y 45s para permanecer visible
-    const visibleDuration = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
-
-    setTimeout(() => {
-        image.classList.add("show");
-        image.classList.remove("hide");
+        // Permanece entre 5s y 15s para permanecer visible
+        const visibleDuration = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
 
         setTimeout(() => {
-            image.classList.add("hide");
-            image.classList.remove("show");
-        }, visibleDuration);
+            image.classList.add("show");
+            image.classList.remove("hide");
 
-    }, appearDelay);
+            setTimeout(() => {
+                image.classList.add("hide");
+                image.classList.remove("show");
+            }, visibleDuration);
+
+        }, appearDelay);
+    }
 });

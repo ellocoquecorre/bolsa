@@ -266,6 +266,7 @@ $stmt_acciones->close();
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/preloader.js"></script>
+    <script src="../js/tooltip.js"></script>
     <script src="../js/fixedImage.js"></script>
     <!-- FIN JS -->
 </body>

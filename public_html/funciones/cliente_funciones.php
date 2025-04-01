@@ -225,6 +225,9 @@ function obtenerPrecioActualCedear($ticker_cedear)
 {
     global $conn, $userAgents;
 
+    // Eliminar espacios en blanco al inicio y al final del ticker
+    $ticker_cedear = trim($ticker_cedear);
+
     // Revisar si el precio está en la base de datos y es reciente (menos de 30 minutos)
     $sql = "SELECT precio_cedear, fecha_cedear FROM cedear WHERE ticker_cedear = ? ORDER BY fecha_cedear DESC LIMIT 1";
     $stmt = $conn->prepare($sql);
@@ -253,6 +256,8 @@ function obtenerPrecioActualCedear($ticker_cedear)
     $html = @file_get_contents($url, false, $context);
 
     if (!$html) {
+        // Log error
+        error_log("Failed to fetch Yahoo Finance page for ticker: $ticker_cedear");
         return null;
     }
 
@@ -276,9 +281,11 @@ function obtenerPrecioActualCedear($ticker_cedear)
         $stmt->close();
 
         return $precio;
+    } else {
+        // Log error
+        error_log("Failed to find price node for ticker: $ticker_cedear");
+        return null;
     }
-
-    return null;
 }
 
 // Obtener múltiples precios en paralelo
@@ -291,6 +298,9 @@ function obtenerPreciosCedearEnParalelo($tickers)
     $responses = [];
 
     foreach ($tickers as $ticker) {
+        // Eliminar espacios en blanco al inicio y al final del ticker
+        $ticker = trim($ticker);
+
         $url = "https://finance.yahoo.com/quote/{$ticker}.BA/";
         $userAgent = $userAgents[array_rand($userAgents)];
 

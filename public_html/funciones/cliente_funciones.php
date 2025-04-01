@@ -212,19 +212,44 @@ function formatearFechaCedear($fecha)
 // Fin Renderizar Cedear
 
 // Precio Actual Cedear
+// Lista de User-Agents aleatorios
+$userAgents = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1"
+];
+
+// Obtener precio con caché
 function obtenerPrecioActualCedear($ticker_cedear)
 {
-    $url = "https://finance.yahoo.com/quote/{$ticker_cedear}.BA/";
+    global $conn, $userAgents;
 
-    // Agregar User-Agent para evitar bloqueos
+    // Revisar si el precio está en la base de datos y es reciente (menos de 30 minutos)
+    $sql = "SELECT precio_cedear, fecha_cedear FROM cedear WHERE ticker_cedear = ? ORDER BY fecha_cedear DESC LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $ticker_cedear);
+    $stmt->execute();
+    $stmt->bind_result($precio_cedear, $fecha_cedear);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($precio_cedear && (time() - strtotime($fecha_cedear)) < 1800) { // 1800 segundos = 30 min
+        return (float)$precio_cedear;
+    }
+
+    // Si no hay precio o está desactualizado, hacer scraping
+    $url = "https://finance.yahoo.com/quote/{$ticker_cedear}.BA/";
+    $userAgent = $userAgents[array_rand($userAgents)]; // Elegir User-Agent aleatorio
+
+    // Configurar opciones de stream context
     $opts = [
         "http" => [
             "method" => "GET",
-            "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\r\n"
+            "header" => "User-Agent: $userAgent\r\n"
         ]
     ];
     $context = stream_context_create($opts);
-
     $html = @file_get_contents($url, false, $context);
 
     if (!$html) {
@@ -233,17 +258,100 @@ function obtenerPrecioActualCedear($ticker_cedear)
 
     $dom = new DOMDocument();
     @$dom->loadHTML($html);
-
     $finder = new DomXPath($dom);
     $nodes = $finder->query("//span[@data-testid='qsp-price']");
 
     if ($nodes->length > 0) {
         $valor = $nodes->item(0)->nodeValue;
         $valor = str_replace(',', '', $valor);
-        return (float)$valor;
-    } else {
-        return null;
+        $precio = (float)$valor;
+
+        // Guardar en base de datos
+        $fecha_actual = date("Y-m-d H:i:s");
+        $sql = "INSERT INTO cedear (ticker_cedear, fecha_cedear, precio_cedear) VALUES (?, ?, ?) 
+                ON DUPLICATE KEY UPDATE precio_cedear = VALUES(precio_cedear), fecha_cedear = VALUES(fecha_cedear)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssd", $ticker_cedear, $fecha_actual, $precio);
+        $stmt->execute();
+        $stmt->close();
+
+        return $precio;
     }
+
+    return null;
+}
+
+// Obtener múltiples precios en paralelo
+function obtenerPreciosCedearEnParalelo($tickers)
+{
+    global $userAgents;
+
+    $mh = curl_multi_init();
+    $curlArray = [];
+    $responses = [];
+
+    foreach ($tickers as $ticker) {
+        $url = "https://finance.yahoo.com/quote/{$ticker}.BA/";
+        $userAgent = $userAgents[array_rand($userAgents)];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
+
+        $curlArray[$ticker] = $ch;
+        curl_multi_add_handle($mh, $ch);
+    }
+
+    // Ejecutar todas las peticiones en paralelo
+    $running = null;
+    do {
+        curl_multi_exec($mh, $running);
+        curl_multi_select($mh);
+    } while ($running > 0);
+
+    // Obtener resultados
+    foreach ($curlArray as $ticker => $ch) {
+        $html = curl_multi_getcontent($ch);
+        curl_multi_remove_handle($mh, $ch);
+        curl_close($ch);
+
+        if ($html) {
+            $dom = new DOMDocument();
+            @$dom->loadHTML($html);
+            $finder = new DomXPath($dom);
+            $nodes = $finder->query("//span[@data-testid='qsp-price']");
+
+            if ($nodes->length > 0) {
+                $valor = $nodes->item(0)->nodeValue;
+                $valor = str_replace(',', '', $valor);
+                $precio = (float)$valor;
+
+                // Guardar en base de datos
+                global $conn;
+                $fecha_actual = date("Y-m-d H:i:s");
+                $sql = "INSERT INTO cedear (ticker_cedear, fecha_cedear, precio_cedear) VALUES (?, ?, ?) 
+                        ON DUPLICATE KEY UPDATE precio_cedear = VALUES(precio_cedear), fecha_cedear = VALUES(fecha_cedear)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ssd", $ticker, $fecha_actual, $precio);
+                $stmt->execute();
+                $stmt->close();
+
+                $responses[$ticker] = $precio;
+            } else {
+                $responses[$ticker] = null;
+            }
+        }
+    }
+
+    curl_multi_close($mh);
+    return $responses;
+}
+
+// Delay inteligente
+function delayAleatorio()
+{
+    usleep(rand(500000, 1500000)); // Entre 0.5s y 1.5s
 }
 // Fin Precio Actual Cedear
 

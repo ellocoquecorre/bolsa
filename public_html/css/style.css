@@ -423,17 +423,10 @@ footer {
 }
 
 #preloader .main-img {
-    width: 150px;
-    height: 341px;
-    animation: shake 1s infinite;
+    width: 454px;
+    height: 290px;
 }
 
-#preloader .frase-img {
-    width: 500px;
-    height: auto;
-    max-width: 100%;
-    height: auto;
-}
 
 @keyframes shake {
     0% { transform: translate(1px, 1px) rotate(0deg); }

@@ -32,7 +32,6 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
     <!-- PRELOADER -->
     <div id="preloader">
         <img src="../img/preloader.gif" alt="Preloader" class="main-img">
-        <img src="../img/frases.gif" alt="Frases" class="frase-img">
     </div>
     <!-- FIN PRELOADER -->
 

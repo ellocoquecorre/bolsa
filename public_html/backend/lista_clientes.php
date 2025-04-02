@@ -43,7 +43,7 @@ $conn->close();
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <!-- FIN CSS -->
 </head>
@@ -169,31 +169,32 @@ $conn->close();
 
     </div>
     <!-- FIN CONTENIDO -->
+
+    <!-- MODAL ELIMINACIÓN -->
     <!-- Modal de Confirmación -->
-    <div class="modal fade" id="confirmarEliminacion" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Confirmar eliminación</h5>
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Estás seguro que deseas eliminar este cliente y todos sus datos asociados?
-                    <div class="alert alert-warning mt-3">
+                    <p>¿Estás seguro que deseas eliminar este cliente permanentemente?</p>
+                    <div class="alert alert-warning">
                         <i class="fas fa-exclamation-triangle me-2"></i>
-                        Esta acción no se puede deshacer
+                        Esta acción eliminará todos los datos asociados y no se puede deshacer
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger btn-confirmar">Eliminar definitivamente</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Eliminar Definitivamente</button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- FIN MODAL ELIMINACIÓN -->
 
-    <!-- Container para Toasts -->
-    <div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100"></div>
     <!-- FOOTER -->
     <footer class="footer bg-light">
         <a href="https://www.afip.gob.ar/" target="_blank" rel="noopener noreferrer">

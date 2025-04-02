@@ -128,19 +128,23 @@ h5 {
   color: #fff;
   border-radius: 5px;
 }
+.btn-custom.cancelar:hover {
+  border: 1px solid #000000;
+  background-color: #6c757d;
+  color: #fff;
+  border-radius: 5px;
+}
 /* Estilo personalizado para el botón */
 .custom-btn {
   background-color: #0b486b !important;
   border-color: #0b486b !important;
   color: #fff !important;
 }
-
 /* Estilo para los elementos del menú al pasar el mouse */
 .dropdown-item:hover {
   background-color: #0b486b !important;
   color: #fff !important;
 }
-
 /* Estilo para los íconos dentro de los elementos del menú al pasar el mouse */
 .dropdown-item:hover i {
   color: #fff !important;
@@ -149,21 +153,18 @@ h5 {
 .table-responsive {
   overflow-x: auto;
 }
-
 /* Media query para notebooks (ancho mínimo de 768px) */
 @media (min-width: 768px) {
   .table-responsive {
     overflow-x: visible;
   }
 }
-
 /* Media query para teléfonos (ancho máximo de 767px) */
 @media (max-width: 767px) {
   .table-responsive {
     overflow-x: auto;
   }
 }
-
 .dropdown-menu {
   position: absolute;
   z-index: 1051; /* Z-index alto para asegurarse de que el menú esté por encima de otros elementos */
@@ -172,7 +173,6 @@ h5 {
     top: -10px;
     z-index: 1;
 }
-
 .custom-card {
     margin-top: 50px;
     border: 1px solid black;
@@ -180,7 +180,6 @@ h5 {
     background-color: #f8f9fa;
     padding: 20px;
 }
-
 .efectivo {
   border: 1px solid black;
   border-radius: 10px;
@@ -189,19 +188,16 @@ h5 {
   align-items: center;
   justify-content: space-between;
 }
-
 .item {
   flex: 1;
   text-align: center;
 }
-
 .titulo-botones {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
 }
-
 .posiciones {
   display: flex;
   flex-direction: column;
@@ -209,21 +205,17 @@ h5 {
   justify-content: center;
   width: 100%;
 }
-
 .saldo, .ingresar-efectivo, .retirar-efectivo {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 }
-
 .saldo h6 {
   margin-right: 10px;
 }
-
 .ingresar-efectivo label, .retirar-efectivo label {
   margin-right: 10px;
 }
-
 .linea-accion {
   width: 100%;
   border: none;
@@ -231,7 +223,6 @@ h5 {
   margin-top: 10px;
   margin-bottom: 25px;
 }
-
 .titulo-botones a {
   margin: 0;
   display: inline-flex;
@@ -265,7 +256,6 @@ h5 {
 th.text-center {
   text-align: center;
 }
-
 td.text-center {
   text-align: center;
 }
@@ -282,12 +272,10 @@ td.text-center {
   padding-top: 10px;
   max-height: 40px;
   }
-
 .dolar {
   color: #0B486B;
   font-weight: bold;
 }
-
 .navbar {
   border-bottom: 1px solid #0B486B;
 }
@@ -334,7 +322,6 @@ td.text-center {
 .text-right {
   text-align: right;
 }
-
 .text-left {
   text-align: left;
 }
@@ -352,7 +339,6 @@ form label {
   opacity: 0;
   transition: transform 1s ease-out, opacity 1s ease-out;
 }
-
 #fixed-image.show {
   transform: translateX(0); /* Vuelve a su lugar */
   opacity: 1;
@@ -361,12 +347,9 @@ form label {
   transform: translateX(100%);
   opacity: 0;
 }
-
-
 .promedio_ccl {
   color: #0B486B;
 }
-
 #valorPromedioCCL {
   margin-left: 10px;
   vertical-align: middle;
@@ -400,7 +383,6 @@ form label {
 footer {
   z-index: 9998;
 }
-
 .preloader {
   position: fixed;
   top: 0;
@@ -416,11 +398,9 @@ footer {
   visibility: visible;
   transition: opacity 0.5s ease, visibility 0.5s;
 }
-
 .preloader-content {
   text-align: center;
 }
-
 .preloader-img {
   max-width: 454px;
   height: auto;

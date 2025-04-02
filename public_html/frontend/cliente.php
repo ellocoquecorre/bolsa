@@ -43,8 +43,10 @@ $nombre_corredora = $datos_corredora['corredora'];
 
 <body>
     <!-- PRELOADER -->
-    <div id="preloader">
-        <img src="../img/preloader.gif" alt="Preloader" class="main-img">
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
+        </div>
     </div>
     <!-- FIN PRELOADER -->
 
@@ -1247,7 +1249,6 @@ $nombre_corredora = $datos_corredora['corredora'];
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/graficos.js"></script>
     <script src="../js/preloader.js"></script>
-    <script src="../js/fixedImage.js"></script>
     <!-- FIN JS -->
 
 </body>

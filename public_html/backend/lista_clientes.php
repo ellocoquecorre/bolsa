@@ -1,17 +1,38 @@
 <?php
-// Incluir archivo de configuración
+// 1. Verificar sesión y permisos
+session_start();
+
+if (!isset($_SESSION['loggedin'])) {
+    header("Location: ../login.php");
+    exit;
+}
+
+// 2. Cargar configuración de conexión
 require_once '../../config/config.php';
 
-// Consulta SQL
-$sql = "SELECT cliente_id, nombre, apellido, email, telefono, corredora FROM clientes"; // Asegúrate de seleccionar el ID del cliente
+// 3. Crear conexión a la base de datos
+$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+// 4. Obtener datos de clientes
+$clientes = array();
+$sql = "SELECT * FROM clientes";
 $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
-} else {
-    echo "<tr><td colspan='8'>No se encontraron resultados</td></tr>";
+if ($result) {
+    // Almacenamos todos los resultados en un array antes de cerrar
+    while ($row = $result->fetch_assoc()) {
+        $clientes[] = $row;
+    }
+    $result->free(); // Liberamos los resultados
 }
+
+// 5. Cerrar conexión
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -29,8 +50,10 @@ $conn->close();
 
 <body>
     <!-- PRELOADER -->
-    <div id="preloader">
-        <img src="../img/preloader.gif" alt="Preloader" class="main-img">
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
+        </div>
     </div>
     <!-- FIN PRELOADER -->
 
@@ -92,7 +115,7 @@ $conn->close();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($row = $result->fetch_assoc()): ?>
+                            <?php foreach ($clientes as $row): ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($row['nombre']); ?></td>
                                     <td><?php echo htmlspecialchars($row['apellido']); ?></td>
@@ -135,7 +158,7 @@ $conn->close();
                                         </button>
                                     </td>
                                 </tr>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -165,7 +188,6 @@ $conn->close();
     <script src="../js/tooltip.js"></script>
     <script src="../js/eliminar_cliente.js"></script>
     <script src="../js/preloader.js"></script>
-    <script src="../js/fixedImage.js"></script>
     <!-- FIN JS -->
 
 </body>

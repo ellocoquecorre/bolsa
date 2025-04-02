@@ -1,73 +1,87 @@
 <?php
-session_start();
-require_once '../config/config.php';
+// 1. Carga de configuración
+require_once __DIR__ . '/../config/config.php';
 
+// 2. Manejo de sesión
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+// 3. Procesamiento del formulario
+$error = null;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
 
-    // Crear conexión a la base de datos
-    $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    // 4. Conexión a DB usando las variables de config.php
+    $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 
-    // Verificar la conexión
     if ($conn->connect_error) {
-        die("La conexión ha fallado: " . $conn->connect_error);
-    }
+        $error = "Error de conexión. Intente nuevamente más tarde.";
+    } else {
+        try {
+            // Verificación para admin
+            $stmt = $conn->prepare("SELECT id, password FROM admin WHERE email = ? LIMIT 1");
+            if ($stmt) {
+                $stmt->bind_param("s", $email);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
-    try {
-        // Preparar y ejecutar la consulta para la tabla "admin"
-        $stmt = $conn->prepare("SELECT * FROM admin WHERE email = ?");
-        if (!$stmt) {
-            throw new Exception("Error en la preparación de la consulta para admin: " . $conn->error);
-        }
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    if (password_verify($password, $row['password'])) {
+                        $_SESSION['loggedin'] = true;
+                        $_SESSION['email'] = $email;
+                        $_SESSION['user_id'] = $row['id'];
+                        $_SESSION['user_type'] = 'admin';
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            // Verificar la contraseña hasheada
-            if (password_verify($password, $row['password'])) {
-                // Si la contraseña es correcta
-                $_SESSION['loggedin'] = true;
-                $_SESSION['email'] = $email;
-                $_SESSION['cliente_id'] = null; // Los administradores no tienen cliente_id
-                header("Location: backend/lista_clientes.php"); // Redirigir a la lista de clientes
-                exit;
+                        // Guardar la conexión en sesión para usar en lista_clientes.php
+                        $_SESSION['db_connection'] = [
+                            'host' => $db_host,
+                            'user' => $db_user,
+                            'pass' => $db_pass,
+                            'name' => $db_name
+                        ];
+
+                        $stmt->close();
+                        $conn->close();
+                        header("Location: backend/lista_clientes.php");
+                        exit;
+                    }
+                }
+                $stmt->close();
             }
-        }
 
-        // Preparar y ejecutar la consulta para la tabla "clientes"
-        $stmt = $conn->prepare("SELECT * FROM clientes WHERE email = ?");
-        if (!$stmt) {
-            throw new Exception("Error en la preparación de la consulta para clientes: " . $conn->error);
-        }
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+            // Verificación para clientes
+            $stmt = $conn->prepare("SELECT cliente_id, password FROM clientes WHERE email = ? LIMIT 1");
+            if ($stmt) {
+                $stmt->bind_param("s", $email);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            // Verificar la contraseña hasheada
-            if (password_verify($password, $row['password'])) {
-                // Si la contraseña es correcta
-                $_SESSION['loggedin'] = true;
-                $_SESSION['email'] = $email;
-                $_SESSION['cliente_id'] = $row['cliente_id']; // Guardar cliente_id en la sesión
-                header("Location: frontend/cliente.php?cliente_id=" . $row['cliente_id']); // Redirigir al cliente
-                exit;
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    if (password_verify($password, $row['password'])) {
+                        $_SESSION['loggedin'] = true;
+                        $_SESSION['email'] = $email;
+                        $_SESSION['cliente_id'] = $row['cliente_id'];
+                        $_SESSION['user_type'] = 'cliente';
+
+                        $stmt->close();
+                        $conn->close();
+                        header("Location: frontend/cliente.php?cliente_id=" . $row['cliente_id']);
+                        exit;
+                    }
+                }
+                $stmt->close();
             }
+
+            $error = "El correo electrónico o la contraseña son incorrectos.";
+        } catch (Exception $e) {
+            $error = "Ocurrió un error. Intente nuevamente.";
         }
-
-        // Si no se encuentra en ninguna tabla o la contraseña es incorrecta, mostrar un mensaje de error
-        $error = "El correo electrónico o la contraseña son incorrectos.";
-    } catch (Exception $e) {
-        // Mostrar mensaje de error para depuración
-        $error = $e->getMessage();
+        $conn->close();
     }
-
-    $stmt->close();
-    $conn->close();
 }
 ?>
 
@@ -102,7 +116,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- CONTENIDO -->
     <div class="row mt-navbar mx-2">
-
         <!-- TITULO -->
         <div class="col-12 text-center">
             <h4 class="fancy">Iniciar sesión</h4>
@@ -124,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label for="email" class="form-label" style="text-align: left;">Correo Electrónico</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
-                            <input type="email" name="email" class="form-control" id="email" required>
+                            <input type="email" name="email" class="form-control" id="email" required autofocus>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -140,7 +153,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="col-4"></div>
         <!-- FIN FORMULARIO LOGIN -->
-
     </div>
     <!-- FIN CONTENIDO -->
 

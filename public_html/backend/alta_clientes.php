@@ -15,8 +15,10 @@
 
 <body>
     <!-- PRELOADER -->
-    <div id="preloader">
-        <img src="../img/preloader.gif" alt="Preloader" class="main-img">
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
+        </div>
     </div>
     <!-- FIN PRELOADER -->
 
@@ -165,7 +167,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/preloader.js"></script>
-    <script src="../js/fixedImage.js"></script>
     <!-- FIN JS -->
 </body>
 

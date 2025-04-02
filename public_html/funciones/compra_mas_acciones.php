@@ -120,8 +120,10 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
 
 <body>
     <!-- PRELOADER -->
-    <div id="preloader">
-        <img src="../img/preloader.gif" alt="Preloader" class="main-img">
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
+        </div>
     </div>
     <!-- FIN PRELOADER -->
 

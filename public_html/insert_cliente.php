@@ -16,12 +16,12 @@ if ($conn->connect_error) {
 // Datos a insertar
 $clientes = [
     [
-        'cliente_id' => 4,
-        'email' => 'peilo@gmail.com',
+        'cliente_id' => 3,
+        'email' => 'roberto@gmail.com',
         'password' => 'tgy107Duna',
-        'nombre' => 'Pablo',
-        'apellido' => 'Marino',
-        'telefono' => '2944-69-3756',
+        'nombre' => 'Roberto',
+        'apellido' => 'Enano',
+        'telefono' => '654321',
         'corredora' => 'Balanz',
         'url' => 'https://clientes.balanz.com/auth/login'
     ]

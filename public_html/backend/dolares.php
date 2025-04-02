@@ -119,7 +119,8 @@ $cotizaciones = [
         <hr class="mod">
 
         <!-- TABLA DÓLARES -->
-        <div class="col-12 text-center">
+        <div class="col-3"></div>
+        <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Tipos de cambio actuales</h5>
                 <div class="table-responsive">
@@ -151,6 +152,7 @@ $cotizaciones = [
                 </div>
             </div>
         </div>
+        <div class="col-3"></div>
         <!-- FIN TABLA DÓLARES -->
 
     </div>

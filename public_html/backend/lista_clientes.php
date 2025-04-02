@@ -99,12 +99,13 @@ $conn->close();
         <hr class="mod">
 
         <!-- LISTA CLIENTES -->
-        <div class="col-12 text-center">
+        <div class="col-2"></div>
+        <div class="col-8 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones mb-4">Listado de clientes</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Lista de clientes</h5>
                 <div class="table-responsive">
                     <table id="clientes" class="table table-bordered table-striped">
-                        <thead>
+                        <thead class="bg-secondary text-white">
                             <tr>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
@@ -123,39 +124,38 @@ $conn->close();
                                     <td><?php echo htmlspecialchars($row['telefono']); ?></td>
                                     <td><?php echo htmlspecialchars($row['corredora']); ?></td>
                                     <td class="text-center">
-                                        <a href="cliente.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Ver">
-                                            <i class="fa-solid fa-magnifying-glass"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="historial.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Historial">
-                                            <i class="fa-solid fa-hourglass"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="../funciones/ingresar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom ver"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresar Efectivo">
-                                            <i class="fa-solid fa-plus"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="../funciones/retirar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom retirar"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Retirar Efectivo">
-                                            <i class="fa-solid fa-minus"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="../funciones/editar_cliente.php?cliente_id=<?php echo $row['cliente_id']; ?>" class="btn btn-info btn-custom editar"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <button class="btn btn-info btn-custom eliminar" data-cliente-id="<?php echo $row['cliente_id']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
-                                            <i class="fa-regular fa-trash-can"></i>
-                                        </button>
+                                        <div class="dropdown d-flex justify-content-center">
+                                            <button class="btn custom-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" title="Opciones">
+                                                <i class="fa-solid fa-bars"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                                <li>
+                                                    <a class="dropdown-item" href="cliente.php?cliente_id=<?php echo $row['cliente_id']; ?>">
+                                                        <i class="fa-solid fa-magnifying-glass me-2"></i>Ver cliente</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="historial.php?cliente_id=<?php echo $row['cliente_id']; ?>">
+                                                        <i class="fa-solid fa-hourglass me-2"></i>Historial</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="../funciones/ingresar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>">
+                                                        <i class="fa-solid fa-plus me-2"></i>Ingresar Efectivo</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="../funciones/retirar_efectivo.php?cliente_id=<?php echo $row['cliente_id']; ?>">
+                                                        <i class="fa-solid fa-minus me-2"></i>Retirar Efectivo</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="../funciones/editar_cliente.php?cliente_id=<?php echo $row['cliente_id']; ?>">
+                                                        <i class="fa-solid fa-pen-to-square me-2"></i>Editar cliente</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item eliminar text-danger" href="#" data-cliente-id="<?= $row['cliente_id'] ?>">
+                                                        <i class="fas fa-trash-alt me-2"></i>Eliminar cliente
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -164,11 +164,36 @@ $conn->close();
                 </div>
             </div>
         </div>
+        <div class="col-2"></div>
         <!-- FIN LISTA CLIENTES -->
 
     </div>
     <!-- FIN CONTENIDO -->
+    <!-- Modal de Confirmación -->
+    <div class="modal fade" id="confirmarEliminacion" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro que deseas eliminar este cliente y todos sus datos asociados?
+                    <div class="alert alert-warning mt-3">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Esta acción no se puede deshacer
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger btn-confirmar">Eliminar definitivamente</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Container para Toasts -->
+    <div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100"></div>
     <!-- FOOTER -->
     <footer class="footer bg-light">
         <a href="https://www.afip.gob.ar/" target="_blank" rel="noopener noreferrer">

@@ -150,7 +150,7 @@ $conn->close();
                                                         <i class="fa-solid fa-pen-to-square me-2"></i>Editar cliente</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item eliminar text-danger" href="#" data-cliente-id="<?php echo $row['cliente_id']; ?>">
+                                                    <a class="dropdown-item eliminar text-danger" href="#" data-cliente-id="<?php echo $row['cliente_id']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
                                                         <i class="fa-regular fa-trash-can me-2"></i>Eliminar cliente
                                                     </a>
                                                 </li>
@@ -182,7 +182,7 @@ $conn->close();
                     <p class="text-center">¿Estás seguro que querés eliminar este cliente permanentemente?</p>
                     <div class="alert alert-warning text-center">
                         <i class="fas fa-exclamation-triangle me-2"></i>
-                        Se van a eliminar todos los datos relacionados con este cliente y esta acción no se pude deshacer.<br>Fijate que hacés.
+                        Se van a eliminar todos los datos relacionados con este cliente y esta acción no se puede deshacer.<br>Fijate que hacés.
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -214,7 +214,6 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="../js/tooltip.js"></script>
     <script src="../js/eliminar_cliente.js"></script>
     <script src="../js/preloader.js"></script>
     <!-- FIN JS -->

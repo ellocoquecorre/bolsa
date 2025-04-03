@@ -22,8 +22,8 @@ $clientes = [
         'nombre' => 'Roberto',
         'apellido' => 'Enano',
         'telefono' => '654321',
-        'corredora' => 'Balanz',
-        'url' => 'https://clientes.balanz.com/auth/login'
+        'corredora' => 'Allaria',
+        'url' => 'https://allaria.com.ar/'
     ]
 ];
 
@@ -48,9 +48,9 @@ foreach ($clientes as $cliente) {
         echo "Nuevo registro creado exitosamente para el cliente con ID {$cliente['cliente_id']}<br>";
 
         // Consulta SQL para insertar datos en la tabla balance
-        $balance_sql = "INSERT INTO balance (cliente_id, efectivo) VALUES (1, 15000000)";
+        $balance_sql = "INSERT INTO balance (cliente_id, efectivo) VALUES (3, 15000000)";
         if ($conn->query($balance_sql) === TRUE) {
-            echo "Nuevo registro de balance creado exitosamente para el cliente con ID 1<br>";
+            echo "Nuevo registro de balance creado exitosamente para el cliente con ID 3<br>";
         } else {
             echo "Error: " . $balance_sql . "<br>" . $conn->error . "<br>";
         }

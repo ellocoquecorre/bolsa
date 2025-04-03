@@ -59,7 +59,7 @@ $cotizaciones = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cotización de Dólares - Goodfellas Inc.</title>
+    <title>Goodfellas Inc.</title>
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
@@ -69,13 +69,6 @@ $cotizaciones = [
 </head>
 
 <body>
-    <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
-        </div>
-    </div>
-    <!-- FIN PRELOADER -->
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -122,7 +115,7 @@ $cotizaciones = [
         <div class="col-3"></div>
         <div class="col-6 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones mb-4">Tipos de cambio actuales</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Tipos de cambio</h5>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <thead class="bg-secondary text-white">
@@ -136,13 +129,13 @@ $cotizaciones = [
                         <tbody>
                             <?php foreach ($cotizaciones as $tipo => $cotizacion): ?>
                                 <tr>
-                                    <td class="fw-bold"><?= htmlspecialchars($tipo) ?></td>
-                                    <td><?= ($cotizacion['compra'] !== "-") ? '$' . number_format($cotizacion['compra'], 2) : '-' ?></td>
-                                    <td><?= ($cotizacion['venta'] !== "-") ? '$' . number_format($cotizacion['venta'], 2) : '-' ?></td>
-                                    <td>
+                                    <td class="fw-bold text-left"><?= htmlspecialchars($tipo) ?></td>
+                                    <td class="text-right"><?= ($cotizacion['compra'] !== "-") ? '$ ' . formatear_dinero($cotizacion['compra'], 2) : '-' ?></td>
+                                    <td class="text-right"><?= ($cotizacion['venta'] !== "-") ? '$ ' . formatear_dinero($cotizacion['venta'], 2) : '-' ?></td>
+                                    <td class="text-right">
                                         <?php
                                         $promedio = calcularPromedio($cotizacion['compra'], $cotizacion['venta']);
-                                        echo ($promedio !== "-") ? '$' . number_format($promedio, 2) : '-';
+                                        echo ($promedio !== "-") ? '$ ' . formatear_dinero($promedio, 2) : '-';
                                         ?>
                                     </td>
                                 </tr>
@@ -172,8 +165,12 @@ $cotizaciones = [
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/preloader.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../js/tooltip.js"></script>
+    <script src="../js/easter_egg.js"></script>
     <!-- FIN JS -->
+
 </body>
 
 </html>

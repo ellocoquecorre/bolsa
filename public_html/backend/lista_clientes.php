@@ -1,5 +1,4 @@
 <?php
-// 1. Verificar sesión y permisos
 session_start();
 
 if (!isset($_SESSION['loggedin'])) {
@@ -7,29 +6,35 @@ if (!isset($_SESSION['loggedin'])) {
     exit;
 }
 
-// 2. Cargar configuración de conexión
 require_once '../../config/config.php';
+require_once '../funciones/formato_dinero.php';
 
-// 3. Crear conexión a la base de datos
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-// 4. Obtener datos de clientes
 $clientes = array();
 $sql = "SELECT * FROM clientes";
 $result = $conn->query($sql);
 
 if ($result) {
-    // Almacenamos todos los resultados en un array antes de cerrar
     while ($row = $result->fetch_assoc()) {
+        $cliente_id = $row['cliente_id'];
+        $balance_sql = "SELECT efectivo FROM balance WHERE cliente_id = $cliente_id";
+        $balance_result = $conn->query($balance_sql);
+        if ($balance_result) {
+            $balance_row = $balance_result->fetch_assoc();
+            $row['efectivo'] = $balance_row['efectivo'];
+            $balance_result->free();
+        } else {
+            $row['efectivo'] = null; // En caso de que no se encuentre el balance
+        }
         $clientes[] = $row;
     }
-    $result->free(); // Liberamos los resultados
+    $result->free();
 }
 
-// 5. Cerrar conexión
 $conn->close();
 ?>
 
@@ -49,14 +54,6 @@ $conn->close();
 </head>
 
 <body>
-    <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
-        </div>
-    </div>
-    <!-- FIN PRELOADER -->
-
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
@@ -92,7 +89,7 @@ $conn->close();
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy">Lista de Clientes</h4>
+            <h4 class="fancy">Clientes</h4>
         </div>
         <!-- FIN TITULO -->
 
@@ -102,13 +99,13 @@ $conn->close();
         <div class="col-2"></div>
         <div class="col-8 text-center">
             <div class="container-fluid my-4 efectivo">
-                <h5 class="me-2 cartera titulo-botones mb-4">Lista de clientes</h5>
+                <h5 class="me-2 cartera titulo-botones mb-4">Listado de clientes</h5>
                 <div class="table-responsive">
                     <table id="clientes" class="table table-bordered table-striped">
                         <thead class="bg-secondary text-white">
                             <tr>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
+                                <th>Cliente</th>
+                                <th>Saldo</th>
                                 <th>Mail</th>
                                 <th>Teléfono</th>
                                 <th>Corredora</th>
@@ -118,14 +115,15 @@ $conn->close();
                         <tbody>
                             <?php foreach ($clientes as $row): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($row['nombre']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['apellido']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['email']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['telefono']); ?></td>
+                                    <td class="text-left"><?php echo htmlspecialchars($row['nombre'] . ' ' . $row['apellido']); ?></td>
+                                    <td class="text-right">$ <?php echo htmlspecialchars(formatear_dinero($row['efectivo'])); ?></td>
+                                    <td class="text-right"><?php echo htmlspecialchars($row['email']); ?></td>
+                                    <td class="text-right"><?php echo htmlspecialchars($row['telefono']); ?></td>
                                     <td><?php echo htmlspecialchars($row['corredora']); ?></td>
                                     <td class="text-center">
                                         <div class="dropdown d-flex justify-content-center">
-                                            <button class="btn custom-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" title="Opciones">
+                                            <button class="btn custom-btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                                data-bs-toggle="dropdown" aria-expanded="false" title="Acciones">
                                                 <i class="fa-solid fa-bars"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
@@ -150,7 +148,7 @@ $conn->close();
                                                         <i class="fa-solid fa-pen-to-square me-2"></i>Editar cliente</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item eliminar text-danger" href="#" data-cliente-id="<?php echo $row['cliente_id']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                                                    <a class="dropdown-item eliminar text-danger" href="#" data-cliente-id="<?php echo $row['cliente_id']; ?>">
                                                         <i class="fa-regular fa-trash-can me-2"></i>Eliminar cliente
                                                     </a>
                                                 </li>
@@ -215,7 +213,8 @@ $conn->close();
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/eliminar_cliente.js"></script>
-    <script src="../js/preloader.js"></script>
+    <script src="../js/tooltip.js"></script>
+    <script src="../js/easter_egg.js"></script>
     <!-- FIN JS -->
 
 </body>

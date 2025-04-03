@@ -17,15 +17,19 @@ function obtenerPromedioCCL()
 }
 // FIN CLIENTE_ID
 
-// DATOS DEL CLIENTE
-$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $cliente_id);
-$stmt->execute();
-$stmt->bind_result($nombre, $apellido);
-$stmt->fetch();
-$stmt->close();
-// FIN DATOS DEL CLIENTE
+// DATOS CLIENTE (OPTIMIZADO)
+$sql_cliente = "SELECT nombre, email, telefono FROM clientes WHERE id = ?";
+$stmt_cliente = $conn->prepare($sql_cliente);
+$stmt_cliente->bind_param("i", $cliente_id);
+$stmt_cliente->execute();
+$datos_cliente = $stmt_cliente->get_result()->fetch_assoc();
+$stmt_cliente->close();
+
+$nombre = $datos_cliente['nombre'];
+$email = $datos_cliente['email'];
+$telefono = $datos_cliente['telefono'];
+// FIN DATOS CLIENTE (OPTIMIZADO)
+
 
 // CORREDORA CLIENTE
 function obtenerDatosCorredora($cliente_id)
@@ -51,19 +55,20 @@ $stmt_saldo->bind_result($saldo_en_pesos);
 $stmt_saldo->fetch();
 $stmt_saldo->close();
 
-$saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
+// Mantener la variable original sin formato para cálculos internos
+$saldo_en_pesos_raw = $saldo_en_pesos;
+
+// Formatear solo si es necesario para la vista
+$saldo_en_pesos_formateado = isset($mostrar_formato) && $mostrar_formato ? formatear_dinero($saldo_en_pesos) : $saldo_en_pesos_raw;
 // FIN SALDO EN PESOS
 
 // PROMEDIO CCL
-$promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-if ($promedio_ccl == 0) {
-    $promedio_ccl = 1; // Evitar división por cero
-}
+$promedio_ccl = max(1, ($contadoconliqui_compra + $contadoconliqui_venta) / 2);
 // FIN PROMEDIO CCL
 
 // SALDO EN DÓLARES
 $saldo_en_dolares = $saldo_en_pesos / $promedio_ccl;
-$saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
+$saldo_en_dolares_formateado = isset($mostrar_formato) && $mostrar_formato ? formatear_dinero($saldo_en_dolares) : $saldo_en_dolares_raw;
 // FIN SALDO EN DÓLARES
 
 //-- ACCIONES --//
@@ -93,33 +98,35 @@ function formatearFecha($fecha)
 }
 // Fin Renderizar Acciones
 
-// Precio Actual Acciones
+// PRECIO ACTUAL ACCIONES (OPTIMIZADO)
 function obtenerPrecioActualGoogleFinance($ticker)
 {
     $url = "https://www.google.com/finance/quote/$ticker:BCBA?hl=es";
-    $html = file_get_contents($url);
+    $ch = curl_init();
 
-    // Crear un nuevo DOMDocument
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5); // Timeout para evitar bloqueos
+    $html = curl_exec($ch);
+    curl_close($ch);
+
+    if (!$html) return null; // Manejo de errores
+
     $dom = new DOMDocument();
     @$dom->loadHTML($html);
-
-    // Buscar el valor numérico en la etiqueta <div class="YMlKec fxKbKc">
     $finder = new DomXPath($dom);
-    $classname = "YMlKec fxKbKc";
-    $nodes = $finder->query("//*[contains(@class, '$classname')]");
+    $nodes = $finder->query("//div[contains(@class, 'YMlKec fxKbKc')]");
 
     if ($nodes->length > 0) {
         $valor = $nodes->item(0)->nodeValue;
-        // Formatear valor a número sin formato
-        $valor = str_replace(",", "", $valor); // Eliminar comas de miles
-        $valor = str_replace(".", "", substr($valor, 0, -3)) . "." . substr($valor, -2); // Reemplazar punto decimal y reconstruir
-        $valor = (float)$valor / 100; // Corregir el formato multiplicando por 0.01
-        return $valor;
-    } else {
-        return null;
+        $valor = str_replace(",", "", $valor);
+        return (float)$valor;
     }
+
+    return null;
 }
-// Fin Precio Actual Acciones
+// FIN PRECIO ACTUAL ACCIONES (OPTIMIZADO)
+
 
 // CCL Compra Acciones
 function obtenerCCLCompra($cliente_id, $ticker)
@@ -136,40 +143,28 @@ function obtenerCCLCompra($cliente_id, $ticker)
 }
 // Fin CCL Compra Acciones
 
-// Historial Acciones
+// HISTORIAL ACCIONES (OPTIMIZADO)
+// Se usa la conexión global en lugar de crear una nueva cada vez
 function obtenerHistorialAcciones($cliente_id)
 {
-    // Conexión a la base de datos
-    $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    global $conn;
 
-    // Verificar la conexión
-    if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
-    }
-
-    // Consulta SQL
     $sql = "SELECT * FROM acciones_historial WHERE cliente_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $cliente_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Array para almacenar los resultados
-    $historial_acciones = array();
-    while ($row = $result->fetch_assoc()) {
-        $historial_acciones[] = $row;
-    }
+    // Se usa fetch_all() para obtener los resultados de manera más eficiente
+    $historial_acciones = $result->fetch_all(MYSQLI_ASSOC);
 
-    // Cerrar la conexión
     $stmt->close();
-    $conn->close();
-
     return $historial_acciones;
 }
 
 // Obtener el historial de acciones del cliente
 $historial_acciones = obtenerHistorialAcciones($cliente_id);
-// Fin Historial Acciones
+// FIN HISTORIAL ACCIONES (OPTIMIZADO)
 
 // Acciones Consolidada
 function calcularValorInicialConsolidadoAccionesPesos($acciones)
@@ -658,15 +653,24 @@ function calcularValorInicialConsolidadoFondos($fondos)
 //-- FIN FONDOS --//
 
 //-- TENENCIAS CONSOLIDADAS --//
-// Tenencia Acciones Pesos
+// TENENCIA ACCIONES PESOS
 $acciones = obtenerAcciones($cliente_id);
 $valor_inicial_consolidado_acciones_pesos = 0;
 $valor_actual_consolidado_acciones_pesos = 0;
 
+// Array para almacenar precios actuales y evitar múltiples llamadas externas
+$precios_actuales = [];
+
 foreach ($acciones as $accion) {
-    $precio_actual = obtenerPrecioActualGoogleFinance($accion['ticker']);
+    // Consultar precio solo si no lo tenemos en caché
+    if (!isset($precios_actuales[$accion['ticker']])) {
+        $precios_actuales[$accion['ticker']] = obtenerPrecioActualGoogleFinance($accion['ticker']);
+    }
+    $precio_actual = $precios_actuales[$accion['ticker']];
+
     $valor_inicial_acciones_pesos = $accion['precio'] * $accion['cantidad'];
     $valor_inicial_consolidado_acciones_pesos += $valor_inicial_acciones_pesos;
+
     $valor_actual_acciones_pesos = $precio_actual * $accion['cantidad'];
     $valor_actual_consolidado_acciones_pesos += $valor_actual_acciones_pesos;
 }
@@ -678,7 +682,8 @@ if ($valor_inicial_consolidado_acciones_pesos != 0) {
     $rendimiento_consolidado_acciones_pesos = $valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos;
     $rentabilidad_consolidado_acciones_pesos = (($valor_actual_consolidado_acciones_pesos - $valor_inicial_consolidado_acciones_pesos) / $valor_inicial_consolidado_acciones_pesos) * 100;
 }
-// Fin Tenencia Acciones Pesos
+// FIN TENENCIA ACCIONES PESOS
+
 
 // Tenencia Acciones Dolares
 $acciones = obtenerAcciones($cliente_id);

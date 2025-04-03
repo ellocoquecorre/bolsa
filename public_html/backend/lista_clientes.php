@@ -171,24 +171,27 @@ $conn->close();
     <!-- FIN CONTENIDO -->
 
     <!-- MODAL ELIMINACIÓN -->
-    <!-- Modal de Confirmación -->
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                    <h5 class="modal-title text-white" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>¿Estás seguro que deseas eliminar este cliente permanentemente?</p>
-                    <div class="alert alert-warning">
+                    <p class="text-center">¿Estás seguro que querés eliminar este cliente permanentemente?</p>
+                    <div class="alert alert-warning text-center">
                         <i class="fas fa-exclamation-triangle me-2"></i>
-                        Esta acción eliminará todos los datos asociados y no se puede deshacer
+                        Se van a eliminar todos los datos relacionados con este cliente y esta acción no se pude deshacer.<br>Fijate que hacés.
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Eliminar Definitivamente</button>
+                    <button type="button" class="btn btn-custom cancelar" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                        <i class="fa-solid fa-check me-2"></i>Eliminar
+                    </button>
                 </div>
             </div>
         </div>

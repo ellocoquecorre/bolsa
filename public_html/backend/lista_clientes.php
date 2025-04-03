@@ -150,8 +150,8 @@ $conn->close();
                                                         <i class="fa-solid fa-pen-to-square me-2"></i>Editar cliente</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item eliminar text-danger" href="#" data-cliente-id="<?= $row['cliente_id'] ?>">
-                                                        <i class="fas fa-trash-alt me-2"></i>Eliminar cliente
+                                                    <a class="dropdown-item eliminar text-danger" href="#" data-cliente-id="<?php echo $row['cliente_id']; ?>">
+                                                        <i class="fa-regular fa-trash-can me-2"></i>Eliminar cliente
                                                     </a>
                                                 </li>
                                             </ul>

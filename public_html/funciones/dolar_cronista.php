@@ -1,12 +1,15 @@
 <?php
 
-// Incluir utilidades comunes
-require_once 'formato_dinero.php';
+// Incluir utilidades comunes si las necesitás
+// require_once 'formato_dinero.php'; // Descomentá si usás esta función
 
-// FUNCIONES COMUNES
+// ==========================
+// FUNCIONES AUXILIARES
+// ==========================
+
 function obtener_valor($url, &$compra, &$venta)
 {
-    $html = file_get_contents($url);
+    $html = @file_get_contents($url);
     if ($html === FALSE) {
         $compra = "-";
         $venta = "-";
@@ -16,7 +19,7 @@ function obtener_valor($url, &$compra, &$venta)
     // Buscar el valor de compra
     preg_match('/<div class=text>Valor de compra<\/div><div class=val><span class="currency">\$<\/span>([\d\.,]+)/', $html, $matches);
     if (isset($matches[1])) {
-        $compra = str_replace(',', '.', str_replace('.', '', $matches[1])); // Convertir cadena a formato numérico
+        $compra = str_replace(',', '.', str_replace('.', '', $matches[1]));
     } else {
         $compra = "-";
     }
@@ -24,60 +27,60 @@ function obtener_valor($url, &$compra, &$venta)
     // Buscar el valor de venta
     preg_match('/<div class=text>Valor de venta<\/div><div class=val><span class="currency">\$<\/span>([\d\.,]+)/', $html, $matches);
     if (isset($matches[1])) {
-        $venta = str_replace(',', '.', str_replace('.', '', $matches[1])); // Convertir cadena a formato numérico
+        $venta = str_replace(',', '.', str_replace('.', '', $matches[1]));
     } else {
         $venta = "-";
     }
 }
 
-// DOLAR BNA
-$oficial_compra = $oficial_venta = "";
-obtener_valor('https://www.cronista.com/MercadosOnline/moneda.html?id=ARS', $oficial_compra, $oficial_venta);
-
-// DOLAR BLUE
-$blue_compra = $blue_venta = "";
-obtener_valor('https://www.cronista.com/MercadosOnline/moneda.html?id=ARSB', $blue_compra, $blue_venta);
-
-// DOLAR MEP
-$bolsa_compra = $bolsa_venta = "";
-obtener_valor('https://www.cronista.com/MercadosOnline/moneda.html?id=ARSMEP', $bolsa_compra, $bolsa_venta);
-
-// DOLAR TARJETA
-$tarjeta_compra = $tarjeta_venta = "";
-obtener_valor('https://www.cronista.com/MercadosOnline/moneda.html?id=ARSTAR', $tarjeta_compra, $tarjeta_venta);
-
-// DOLAR MAYORISTA
-$mayorista_compra = $mayorista_venta = "";
-obtener_valor('https://www.cronista.com/MercadosOnline/moneda.html?id=ARSVHM', $mayorista_compra, $mayorista_venta);
-
-// DOLAR CCL
 function obtener_valor_dolarhoy($url, &$compra, &$venta)
 {
-    $html = file_get_contents($url);
+    $html = @file_get_contents($url);
     if ($html === FALSE) {
         $compra = "-";
         $venta = "-";
         return;
     }
 
-    // Buscar el valor de compra
+    // Valor de compra
     preg_match('/<div class="tile is-child"><div class="topic">Compra<\/div><div class="value">\$(\d+,\d+)/', $html, $matches);
     if (isset($matches[1])) {
-        $compra = floatval(str_replace(',', '.', $matches[1])); // Convertir cadena a formato numérico
+        $compra = floatval(str_replace(',', '.', $matches[1]));
     } else {
         $compra = "-";
     }
 
-    // Buscar el valor de venta
+    // Valor de venta
     preg_match('/<div class="tile is-child"><div class="topic">Venta<\/div><div class="value">\$(\d+,\d+)/', $html, $matches);
     if (isset($matches[1])) {
-        $venta = floatval(str_replace(',', '.', $matches[1])); // Convertir cadena a formato numérico
+        $venta = floatval(str_replace(',', '.', $matches[1]));
     } else {
         $venta = "-";
     }
 }
 
-// URL de prueba
-$url = 'https://dolarhoy.com/cotizaciondolarcontadoconliqui';
-$contadoconliqui_compra = $contadoconliqui_venta = "";
-obtener_valor_dolarhoy($url, $contadoconliqui_compra, $contadoconliqui_venta);
+// ==========================
+// FUNCIONES DE ACCESO PÚBLICO
+// ==========================
+
+// CCL (Contado con Liqui)
+function obtenerCCLCompraDolarHoy()
+{
+    $url = 'https://dolarhoy.com/cotizaciondolarcontadoconliqui';
+    $compra = $venta = "";
+    obtener_valor_dolarhoy($url, $compra, $venta);
+
+    return is_numeric($compra) ? floatval($compra) : 0;
+}
+
+function obtenerCCLVentaDolarHoy()
+{
+    $url = 'https://dolarhoy.com/cotizaciondolarcontadoconliqui';
+    $compra = $venta = "";
+    obtener_valor_dolarhoy($url, $compra, $venta);
+
+    return is_numeric($venta) ? floatval($venta) : 0;
+}
+
+
+// Si querés agregar más funciones similares (blue, oficial, etc.), podés hacerlo aquí.

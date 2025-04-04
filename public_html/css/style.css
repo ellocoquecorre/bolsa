@@ -405,3 +405,12 @@ footer {
   max-width: 454px;
   height: auto;
 }
+.cliente-link {
+  color: #000;
+  text-decoration: none;
+}
+
+.cliente-link:hover {
+  color: #0B486B;
+  text-decoration: underline;
+}

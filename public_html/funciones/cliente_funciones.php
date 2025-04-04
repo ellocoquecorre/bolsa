@@ -55,11 +55,7 @@ $stmt_saldo->bind_result($saldo_en_pesos);
 $stmt_saldo->fetch();
 $stmt_saldo->close();
 
-// Mantener la variable original sin formato para cálculos internos
-$saldo_en_pesos_raw = $saldo_en_pesos;
-
-// Formatear solo si es necesario para la vista
-$saldo_en_pesos_formateado = isset($mostrar_formato) && $mostrar_formato ? formatear_dinero($saldo_en_pesos) : $saldo_en_pesos_raw;
+$saldo_en_pesos_formateado = number_format($saldo_en_pesos, 2, '.', ',');
 // FIN SALDO EN PESOS
 
 // PROMEDIO CCL

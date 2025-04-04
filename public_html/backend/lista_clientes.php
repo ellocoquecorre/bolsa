@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 }
 
 $clientes = array();
-$sql = "SELECT * FROM clientes";
+$sql = "SELECT cliente_id, nombre, apellido, email, telefono, corredora, url FROM clientes";
 $result = $conn->query($sql);
 
 if ($result) {
@@ -60,8 +60,8 @@ $conn->close();
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle na[...]
+                <span class=" navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -119,7 +119,11 @@ $conn->close();
                                     <td class="text-right">$ <?php echo htmlspecialchars(formatear_dinero($row['efectivo'])); ?></td>
                                     <td class="text-right"><?php echo htmlspecialchars($row['email']); ?></td>
                                     <td class="text-right"><?php echo htmlspecialchars($row['telefono']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['corredora']); ?></td>
+                                    <td>
+                                        <a href="<?php echo htmlspecialchars($row['url']); ?>" target="_blank" class="cliente-link">
+                                            <i class="fa-regular fa-hand-pointer me-2"></i><?php echo htmlspecialchars($row['corredora']); ?>
+                                        </a>
+                                    </td>
                                     <td class="text-center">
                                         <div class="dropdown d-flex justify-content-center">
                                             <button class="btn custom-btn dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -180,7 +184,7 @@ $conn->close();
                     <p class="text-center">¿Estás seguro que querés eliminar este cliente permanentemente?</p>
                     <div class="alert alert-warning text-center">
                         <i class="fas fa-exclamation-triangle me-2"></i>
-                        Se van a eliminar todos los datos relacionados con este cliente y esta acción no se puede deshacer.<br>Fijate que hacés.
+                        Se van a eliminar todos los datos relacionados con este cliente y esta acción no se puede deshacer.<br><b>Fijate que hacés.</b>
                     </div>
                 </div>
                 <div class="modal-footer">

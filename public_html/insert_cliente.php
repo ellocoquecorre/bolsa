@@ -16,14 +16,14 @@ if ($conn->connect_error) {
 // Datos a insertar
 $clientes = [
     [
-        'cliente_id' => 3,
-        'email' => 'roberto@gmail.com',
+        'cliente_id' => 4,
+        'email' => 'lula@gmail.com',
         'password' => 'tgy107Duna',
-        'nombre' => 'Roberto',
-        'apellido' => 'Enano',
-        'telefono' => '654321',
-        'corredora' => 'Allaria',
-        'url' => 'https://allaria.com.ar/'
+        'nombre' => 'Lula',
+        'apellido' => 'Negra',
+        'telefono' => '158928',
+        'corredora' => 'Lebsa',
+        'url' => 'https://operar.winvest.ar/'
     ]
 ];
 
@@ -48,9 +48,9 @@ foreach ($clientes as $cliente) {
         echo "Nuevo registro creado exitosamente para el cliente con ID {$cliente['cliente_id']}<br>";
 
         // Consulta SQL para insertar datos en la tabla balance
-        $balance_sql = "INSERT INTO balance (cliente_id, efectivo) VALUES (3, 15000000)";
+        $balance_sql = "INSERT INTO balance (cliente_id, efectivo) VALUES (4, 15000000)";
         if ($conn->query($balance_sql) === TRUE) {
-            echo "Nuevo registro de balance creado exitosamente para el cliente con ID 3<br>";
+            echo "Nuevo registro de balance creado exitosamente para el cliente con ID 4<br>";
         } else {
             echo "Error: " . $balance_sql . "<br>" . $conn->error . "<br>";
         }

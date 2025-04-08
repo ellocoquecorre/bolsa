@@ -1491,6 +1491,36 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
     </footer>
     <!-- FIN FOOTER -->
 
+    <!-- MODALES ELIMINACIÓN -->
+    <!-- Acciones -->
+    <div class="modal fade" id="confirmDeleteModalAcciones" tabindex="-1" aria-labelledby="confirmDeleteModalAccionesLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title text-white" id="confirmDeleteModalAccionesLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">¿Estás seguro que querés eliminar esta acción?</p>
+                    <div class="alert alert-warning text-center">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Se eliminarán todos los datos relacionados con esta acción. <br><b>Esta acción no se puede deshacer.</b>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-custom cancelar" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtnAcciones">
+                        <i class="fa-solid fa-check me-2"></i>Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Acciones -->
+    <!-- FIN MODALES ELIMINACIÓN -->
+
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

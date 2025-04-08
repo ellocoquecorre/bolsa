@@ -1,39 +1,39 @@
 <?php
 require_once '../../config/config.php';
 
-$cliente_id = $_POST['cliente_id'];
-$ticker = $_POST['ticker'];
+header('Content-Type: application/json');
 
-// Obtener los valores de cantidad y precio antes de eliminar
-$sql = "SELECT cantidad, precio FROM acciones WHERE cliente_id = ? AND ticker = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('is', $cliente_id, $ticker);
-$stmt->execute();
-$result = $stmt->get_result();
+$input = json_decode(file_get_contents('php://input'), true);
 
-$total = 0;
-
-while ($row = $result->fetch_assoc()) {
-    $cantidad = $row['cantidad'];
-    $precio = $row['precio'];
-    $total += $cantidad * $precio;
+if (!isset($input['cliente_id'], $input['ticker'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Datos incompletos']);
+    exit;
 }
 
-$stmt->close();
+$cliente_id = $input['cliente_id'];
+$ticker = $input['ticker'];
 
-// Eliminar las acciones del cliente
-$sql = "DELETE FROM acciones WHERE cliente_id = ? AND ticker = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('is', $cliente_id, $ticker);
-$stmt->execute();
-$stmt->close();
+try {
+    // Obtener cantidad y precio para calcular total
+    $stmt = $conexion->prepare("SELECT cantidad, precio FROM acciones WHERE cliente_id = :cliente_id AND ticker = :ticker");
+    $stmt->execute([':cliente_id' => $cliente_id, ':ticker' => $ticker]);
+    $acciones = $stmt->fetchAll();
 
-// Actualizar el balance del cliente
-$sql = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('di', $total, $cliente_id);
-$stmt->execute();
-$stmt->close();
+    $total = 0;
+    foreach ($acciones as $accion) {
+        $total += $accion['cantidad'] * $accion['precio'];
+    }
 
-$response = ['status' => 'success'];
-echo json_encode($response);
+    // Eliminar las acciones
+    $stmt = $conexion->prepare("DELETE FROM acciones WHERE cliente_id = :cliente_id AND ticker = :ticker");
+    $stmt->execute([':cliente_id' => $cliente_id, ':ticker' => $ticker]);
+
+    // Actualizar balance
+    $stmt = $conexion->prepare("UPDATE balance SET efectivo = efectivo + :total WHERE cliente_id = :cliente_id");
+    $stmt->execute([':total' => $total, ':cliente_id' => $cliente_id]);
+
+    echo json_encode(['status' => 'success']);
+} catch (PDOException $e) {
+    error_log("Error al eliminar acción: " . $e->getMessage());
+    echo json_encode(['status' => 'error', 'message' => 'Error al eliminar acción']);
+}

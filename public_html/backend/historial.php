@@ -30,7 +30,6 @@ try {
 }
 
 // Incluir las funciones necesarias
-// Estas funciones dependen de $conexion y $cliente_id, por eso deben incluirse después de definir ambas variables
 require_once '../funciones/cliente_funciones.php';
 require_once '../funciones/cliente_historial.php';
 

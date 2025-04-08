@@ -428,24 +428,21 @@ function calcularValorInicialConsolidadoCedear($cedear)
 //-- Renderizar Bonos --//
 function obtenerBonos($cliente_id)
 {
-    global $conn;
+    global $conexion;
 
-    $sql = "SELECT ticker_bonos, fecha_bonos, cantidad_bonos, precio_bonos 
-            FROM bonos 
-            WHERE cliente_id = ?";
+    try {
+        $sql = "SELECT ticker_bonos, fecha_bonos, cantidad_bonos, precio_bonos 
+                FROM bonos 
+                WHERE cliente_id = ?";
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $cliente_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $bonos = [];
-    while ($fila = $result->fetch_assoc()) {
-        $bonos[] = $fila;
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute([$cliente_id]);
+        $bonos = $stmt->fetchAll();
+        return $bonos;
+    } catch (PDOException $e) {
+        error_log("Error al obtener bonos: " . $e->getMessage());
+        return [];
     }
-
-    $stmt->close();
-    return $bonos;
 }
 
 function formatearFechaBonos($fecha)
@@ -499,58 +496,48 @@ function obtenerValorActualRava($ticker_bonos)
 }
 //-- Fin Precio Actual Bonos --//
 
-//-- CCL Compra Bonos --//
+//-- CCL Compra Bonos (usando PDO) --//
 function obtenerCCLCompraBonos($cliente_id, $ticker_bonos)
 {
-    global $conn;
+    global $conexion;
 
-    // Validar entrada mínima
     if (empty($ticker_bonos) || !is_numeric($cliente_id)) {
         error_log("Datos inválidos en obtenerCCLCompraBonos: cliente_id=$cliente_id, ticker_bonos=$ticker_bonos");
         return null;
     }
 
-    $sql = "SELECT ccl_compra FROM bonos WHERE cliente_id = ? AND ticker_bonos = ?";
-    $stmt = $conn->prepare($sql);
+    try {
+        $stmt = $conexion->prepare("SELECT ccl_compra FROM bonos WHERE cliente_id = :cliente_id AND ticker_bonos = :ticker");
+        $stmt->execute([
+            ':cliente_id' => $cliente_id,
+            ':ticker' => $ticker_bonos
+        ]);
+        $resultado = $stmt->fetch();
 
-    if (!$stmt) {
-        error_log("Error al preparar la consulta: " . $conn->error);
+        return $resultado ? $resultado['ccl_compra'] : null;
+    } catch (PDOException $e) {
+        error_log("Error en obtenerCCLCompraBonos: " . $e->getMessage());
         return null;
     }
-
-    $stmt->bind_param("is", $cliente_id, $ticker_bonos);
-    $stmt->execute();
-    $stmt->bind_result($valor_compra_ccl);
-    $stmt->fetch();
-    $stmt->close();
-
-    return $valor_compra_ccl ?? null;
 }
 //-- Fin CCL Compra Bonos --//
 
 //-- Historial Bonos --//
 function obtenerHistorialBonos($cliente_id)
 {
-    global $conn;
+    global $conexion;
 
     $sql = "SELECT * FROM bonos_historial WHERE cliente_id = ?";
-    $stmt = $conn->prepare($sql);
+    $stmt = $conexion->prepare($sql);
 
     if (!$stmt) {
-        error_log("Error al preparar consulta de historial bonos: " . $conn->error);
+        error_log("Error al preparar consulta de historial bonos (PDO).");
         return [];
     }
 
-    $stmt->bind_param("i", $cliente_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->execute([$cliente_id]);
+    $historial_bonos = $stmt->fetchAll();
 
-    $historial_bonos = [];
-    while ($row = $result->fetch_assoc()) {
-        $historial_bonos[] = $row;
-    }
-
-    $stmt->close();
     return $historial_bonos;
 }
 
@@ -578,29 +565,32 @@ function calcularValorInicialConsolidadoBonos($bonos)
 //-- Renderizar Fondos --//
 function obtenerFondos($cliente_id)
 {
-    global $conn;
+    global $conexion;
 
-    $sql_fondos = "SELECT ticker_fondos, fecha_fondos, cantidad_fondos, precio_fondos 
-                   FROM fondos 
-                   WHERE cliente_id = ?";
-    $stmt_fondos = $conn->prepare($sql_fondos);
-    $stmt_fondos->bind_param("i", $cliente_id);
-    $stmt_fondos->execute();
-    $result = $stmt_fondos->get_result();
+    try {
+        $sql = "SELECT ticker_fondos, fecha_fondos, cantidad_fondos, precio_fondos 
+                FROM fondos 
+                WHERE cliente_id = ?";
 
-    $fondos = [];
-    while ($fila = $result->fetch_assoc()) {
-        $fondos[] = $fila;
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute([$cliente_id]);
+        $fondos = $stmt->fetchAll();
+        return $fondos;
+    } catch (PDOException $e) {
+        error_log("Error al obtener fondos: " . $e->getMessage());
+        return [];
     }
-
-    $stmt_fondos->close();
-    return $fondos;
 }
 
 function formatearFechaFondos($fecha)
 {
-    $date = new DateTime($fecha);
-    return $date->format('d-m-y');
+    try {
+        $date = new DateTime($fecha);
+        return $date->format('d-m-y');
+    } catch (Exception $e) {
+        error_log("Error al formatear fecha de fondos: " . $e->getMessage());
+        return $fecha;
+    }
 }
 //-- Fin Renderizar Fondos --//
 
@@ -646,35 +636,20 @@ function obtenerCCLCompraFondos($cliente_id, $ticker_fondos)
 //-- Historial Fondos --//
 function obtenerHistorialFondos($cliente_id)
 {
-    // Conexión a la base de datos
-    $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    global $conexion;
 
-    // Verificar la conexión
-    if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
+    try {
+        $sql = "SELECT * FROM fondos_historial WHERE cliente_id = ?";
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute([$cliente_id]);
+        $historial_fondos = $stmt->fetchAll();
+        return $historial_fondos;
+    } catch (PDOException $e) {
+        error_log("Error al obtener historial de fondos: " . $e->getMessage());
+        return [];
     }
-
-    // Consulta SQL
-    $sql = "SELECT * FROM fondos_historial WHERE cliente_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $cliente_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Array para almacenar los resultados
-    $historial_fondos = [];
-    while ($row = $result->fetch_assoc()) {
-        $historial_fondos[] = $row;
-    }
-
-    // Cerrar la conexión
-    $stmt->close();
-    $conn->close();
-
-    return $historial_fondos;
 }
 
-// Obtener el historial de fondos del cliente
 $historial_fondos = obtenerHistorialFondos($cliente_id);
 //-- Fin Historial Fondos --//
 

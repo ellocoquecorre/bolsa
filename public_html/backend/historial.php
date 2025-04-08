@@ -2,12 +2,37 @@
 // Incluir archivo de configuración
 require_once '../../config/config.php';
 
-// Incluir las funciones necesarias
-include '../funciones/cliente_funciones.php';
-include '../funciones/cliente_historial.php';
+// Verificar si $conexion está definido correctamente
+if (!isset($conexion)) {
+    die("Error: No se pudo establecer conexión con la base de datos.");
+}
 
 // Obtener el id del cliente desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+$cliente_id = isset($_GET['cliente_id']) ? (int)$_GET['cliente_id'] : 1;
+
+// Obtener nombre y apellido del cliente
+try {
+    $stmt = $conexion->prepare("SELECT nombre, apellido FROM clientes WHERE cliente_id = ?");
+    $stmt->execute([$cliente_id]);
+    $cliente = $stmt->fetch();
+
+    if ($cliente) {
+        $nombre = $cliente['nombre'];
+        $apellido = $cliente['apellido'];
+    } else {
+        $nombre = "Cliente";
+        $apellido = "Desconocido";
+    }
+} catch (PDOException $e) {
+    error_log("Error al obtener nombre del cliente: " . $e->getMessage());
+    $nombre = "Cliente";
+    $apellido = "Desconocido";
+}
+
+// Incluir las funciones necesarias
+// Estas funciones dependen de $conexion y $cliente_id, por eso deben incluirse después de definir ambas variables
+require_once '../funciones/cliente_funciones.php';
+require_once '../funciones/cliente_historial.php';
 
 ?>
 
@@ -103,7 +128,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Resumen Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -138,7 +163,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Resumen Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th></th>
                                     <th>Valor Inicial</th>
@@ -191,7 +216,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Resumen Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -226,7 +251,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Resumen Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th></th>
                                     <th>Valor Inicial</th>
@@ -299,7 +324,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -325,7 +350,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_acciones_pesos" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
@@ -388,7 +413,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -414,7 +439,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_acciones_dolares" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
@@ -502,7 +527,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -528,7 +553,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_cedear_pesos" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
@@ -591,7 +616,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -617,7 +642,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_cedear_dolares" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
@@ -706,7 +731,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -732,7 +757,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_bonos_pesos" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
@@ -795,7 +820,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -821,7 +846,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_bonos_dolares" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
@@ -910,7 +935,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -936,7 +961,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_fondos_pesos" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
@@ -999,7 +1024,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -1025,7 +1050,7 @@ $cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_fondos_dolares" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>

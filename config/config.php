@@ -65,10 +65,3 @@ define('ROOT_PATH', str_replace('\\', '/', dirname(__DIR__)));
 define('APP_PATH', ROOT_PATH . '/app');
 define('PUBLIC_PATH', ROOT_PATH . '/public_html');
 define('UPLOAD_PATH', PUBLIC_PATH . '/uploads');
-
-// 8. Optimización para XDebug (útil en VS Code)
-if (function_exists('xdebug_disable')) {
-    if (function_exists('xdebug_disable')) {
-        xdebug_disable();
-    }
-}

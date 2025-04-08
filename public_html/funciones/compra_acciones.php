@@ -5,25 +5,24 @@ require_once '../funciones/formato_dinero.php';
 require_once '../funciones/cliente_funciones.php';
 
 // Obtener el id del cliente desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+$cliente_id = isset($_GET['cliente_id']) ? intval($_GET['cliente_id']) : 1;
 
 // Obtener los datos del cliente
 $sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $cliente_id);
-$stmt->execute();
-$stmt->bind_result($nombre, $apellido);
-$stmt->fetch();
-$stmt->close();
+$stmt = $conexion->prepare($sql);
+$stmt->execute([$cliente_id]);
+$cliente = $stmt->fetch();
+
+$nombre = $cliente['nombre'] ?? '';
+$apellido = $cliente['apellido'] ?? '';
+$nombre_y_apellido = htmlspecialchars(trim($nombre . ' ' . $apellido));
 
 // Obtener el saldo en pesos del cliente
 $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
-$stmt_saldo = $conn->prepare($sql_saldo);
-$stmt_saldo->bind_param("i", $cliente_id);
-$stmt_saldo->execute();
-$stmt_saldo->bind_result($saldo_en_pesos);
-$stmt_saldo->fetch();
-$stmt_saldo->close();
+$stmt_saldo = $conexion->prepare($sql_saldo);
+$stmt_saldo->execute([$cliente_id]);
+$saldo_data = $stmt_saldo->fetch();
+$saldo_en_pesos = $saldo_data['efectivo'] ?? 0;
 $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
 
 // Obtener la fecha actual
@@ -31,9 +30,6 @@ $fecha_hoy = date('Y-m-d');
 
 // Inicializar el mensaje de error
 $error_msg = '';
-
-// Renderizar los datos obtenidos
-$nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
 
 // Si se envió el formulario, realizar las operaciones
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -51,17 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Restar el valor de la compra al saldo en pesos
         $nuevo_saldo = $saldo_en_pesos - $total_compra;
         $sql_update_saldo = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
-        $stmt_update_saldo = $conn->prepare($sql_update_saldo);
-        $stmt_update_saldo->bind_param("di", $nuevo_saldo, $cliente_id);
-        $stmt_update_saldo->execute();
-        $stmt_update_saldo->close();
+        $stmt_update_saldo = $conexion->prepare($sql_update_saldo);
+        $stmt_update_saldo->execute([$nuevo_saldo, $cliente_id]);
 
         // Insertar los datos de la compra en la tabla "acciones"
-        $sql_insert_accion = "INSERT INTO acciones (cliente_id, ticker, cantidad, precio, fecha, ccl_compra) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt_insert_accion = $conn->prepare($sql_insert_accion);
-        $stmt_insert_accion->bind_param("isidsd", $cliente_id, $ticker, $cantidad, $precio, $fecha, $ccl_compra);
-        $stmt_insert_accion->execute();
-        $stmt_insert_accion->close();
+        $sql_insert_accion = "INSERT INTO acciones (cliente_id, ticker, cantidad, precio, fecha, ccl_compra) 
+                              VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt_insert_accion = $conexion->prepare($sql_insert_accion);
+        $stmt_insert_accion->execute([$cliente_id, $ticker, $cantidad, $precio, $fecha, $ccl_compra]);
 
         // Redirigir a la página del cliente
         header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
@@ -69,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 

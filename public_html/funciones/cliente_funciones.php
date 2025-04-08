@@ -4,6 +4,9 @@ require_once '../../config/config.php';
 require_once 'dolar_cronista.php'; // importante para contadoconliqui_compra y venta
 // FIN CONFIG
 
+// Hacer accesible cliente_id si está disponible globalmente
+$cliente_id = $GLOBALS['cliente_id'] ?? null;
+
 // CLIENTE_ID
 function obtenerClienteId($email)
 {

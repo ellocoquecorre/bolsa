@@ -11,13 +11,12 @@ header('X-Powered-By: BolsaTrabajo');
 header('Cache-Control: no-cache, must-revalidate'); // Dinámico por defecto
 header_remove('X-Powered-By'); // Ocultar tecnología
 
-// 3. Conexión DB (sin cambios)
-$conexion = obtenerConexion();
+// 3. La conexión ya está creada como $conexion por config.php (con PDO)
 
-// 4. Función OPTIMIZADA de verificación (20-30% más rápida)
+// 4. Función optimizada de verificación con PDO
 function verificarCredenciales($conexion, $mail, $password, $tabla)
 {
-    $stmt = $conexion->prepare("SELECT password FROM $tabla WHERE mail = ? LIMIT 1");
+    $stmt = $conexion->prepare("SELECT password FROM $tabla WHERE email = ? LIMIT 1");
     $stmt->execute([$mail]);
 
     if ($row = $stmt->fetch()) {
@@ -26,24 +25,22 @@ function verificarCredenciales($conexion, $mail, $password, $tabla)
     return false;
 }
 
-// 5. Manejo de login (misma lógica pero optimizada)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+// 5. Manejo de login
+session_start();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     $mail = filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
 
-    // Cache de resultados (evita consultas repetidas en misma sesión)
     $cache_key = md5($mail . $password);
 
     if (!isset($_SESSION['auth_cache'][$cache_key])) {
-        // Verificación admin (2-3ms más rápido con prepared statements)
         if (verificarCredenciales($conexion, $mail, $password, 'admin')) {
             $_SESSION['auth_cache'][$cache_key] = 'backend';
             header('Location: backend/cliente.php');
             exit;
         }
 
-        // Verificación clientes
         if (verificarCredenciales($conexion, $mail, $password, 'clientes')) {
             $_SESSION['auth_cache'][$cache_key] = 'frontend';
             header('Location: frontend/cliente.php');
@@ -53,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         $_SESSION['auth_cache'][$cache_key] = false;
     }
 
-    // Redirección basada en cache
     if ($_SESSION['auth_cache'][$cache_key] === 'backend') {
         header('Location: backend/cliente.php');
         exit;
@@ -67,11 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     exit;
 }
 
-// 6. Cache para archivos estáticos (CSS/JS/IMG)
+// 6. Cache para archivos estáticos
 if (preg_match('/\.(css|js|jpg|png)$/', $_SERVER['REQUEST_URI'])) {
-    header('Cache-Control: public, max-age=86400'); // 1 día para estáticos
+    header('Cache-Control: public, max-age=86400'); // 1 día
 }
 
-// 7. Redirección por defecto (sin cambios)
+// 7. Redirección por defecto
 header('Location: login.php');
 exit;

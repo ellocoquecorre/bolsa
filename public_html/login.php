@@ -1,86 +1,57 @@
 <?php
-// 1. Carga de configuración
+// 1. Cargar configuración con conexión PDO
 require_once __DIR__ . '/../config/config.php';
 
-// 2. Manejo de sesión
+// 2. Iniciar sesión
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-// 3. Procesamiento del formulario
+// 3. Manejo de errores
 $error = null;
+
+// 4. Procesamiento del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
 
-    // 4. Conexión a DB usando las variables de config.php
-    $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+    try {
+        // Verificar si es admin
+        $stmt = $conexion->prepare("SELECT id, password FROM admin WHERE email = ? LIMIT 1");
+        $stmt->execute([$email]);
 
-    if ($conn->connect_error) {
-        $error = "Error de conexión. Intente nuevamente más tarde.";
-    } else {
-        try {
-            // Verificación para admin
-            $stmt = $conn->prepare("SELECT id, password FROM admin WHERE email = ? LIMIT 1");
-            if ($stmt) {
-                $stmt->bind_param("s", $email);
-                $stmt->execute();
-                $result = $stmt->get_result();
+        if ($row = $stmt->fetch()) {
+            if (password_verify($password, $row['password'])) {
+                $_SESSION['loggedin'] = true;
+                $_SESSION['email'] = $email;
+                $_SESSION['user_id'] = $row['id'];
+                $_SESSION['user_type'] = 'admin';
 
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    if (password_verify($password, $row['password'])) {
-                        $_SESSION['loggedin'] = true;
-                        $_SESSION['email'] = $email;
-                        $_SESSION['user_id'] = $row['id'];
-                        $_SESSION['user_type'] = 'admin';
-
-                        // Guardar la conexión en sesión para usar en lista_clientes.php
-                        $_SESSION['db_connection'] = [
-                            'host' => $db_host,
-                            'user' => $db_user,
-                            'pass' => $db_pass,
-                            'name' => $db_name
-                        ];
-
-                        $stmt->close();
-                        $conn->close();
-                        header("Location: backend/lista_clientes.php");
-                        exit;
-                    }
-                }
-                $stmt->close();
+                header("Location: backend/lista_clientes.php");
+                exit;
             }
-
-            // Verificación para clientes
-            $stmt = $conn->prepare("SELECT cliente_id, password FROM clientes WHERE email = ? LIMIT 1");
-            if ($stmt) {
-                $stmt->bind_param("s", $email);
-                $stmt->execute();
-                $result = $stmt->get_result();
-
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    if (password_verify($password, $row['password'])) {
-                        $_SESSION['loggedin'] = true;
-                        $_SESSION['email'] = $email;
-                        $_SESSION['cliente_id'] = $row['cliente_id'];
-                        $_SESSION['user_type'] = 'cliente';
-
-                        $stmt->close();
-                        $conn->close();
-                        header("Location: frontend/cliente.php?cliente_id=" . $row['cliente_id']);
-                        exit;
-                    }
-                }
-                $stmt->close();
-            }
-
-            $error = "El correo electrónico o la contraseña son incorrectos.";
-        } catch (Exception $e) {
-            $error = "Ocurrió un error. Intente nuevamente.";
         }
-        $conn->close();
+
+        // Verificar si es cliente
+        $stmt = $conexion->prepare("SELECT cliente_id, password FROM clientes WHERE email = ? LIMIT 1");
+        $stmt->execute([$email]);
+
+        if ($row = $stmt->fetch()) {
+            if (password_verify($password, $row['password'])) {
+                $_SESSION['loggedin'] = true;
+                $_SESSION['email'] = $email;
+                $_SESSION['cliente_id'] = $row['cliente_id'];
+                $_SESSION['user_type'] = 'cliente';
+
+                header("Location: frontend/cliente.php?cliente_id=" . $row['cliente_id']);
+                exit;
+            }
+        }
+
+        $error = "El correo electrónico o la contraseña son incorrectos.";
+    } catch (Exception $e) {
+        error_log("Error de login: " . $e->getMessage());
+        $error = "Ocurrió un error. Intente nuevamente.";
     }
 }
 ?>

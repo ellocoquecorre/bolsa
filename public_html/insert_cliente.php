@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 // Datos a insertar
 $clientes = [
     [
-        'cliente_id' => 4,
+        'cliente_id' => 2,
         'email' => 'lula@gmail.com',
         'password' => 'tgy107Duna',
         'nombre' => 'Lula',
@@ -48,9 +48,9 @@ foreach ($clientes as $cliente) {
         echo "Nuevo registro creado exitosamente para el cliente con ID {$cliente['cliente_id']}<br>";
 
         // Consulta SQL para insertar datos en la tabla balance
-        $balance_sql = "INSERT INTO balance (cliente_id, efectivo) VALUES (4, 15000000)";
+        $balance_sql = "INSERT INTO balance (cliente_id, efectivo) VALUES (2, 15000000)";
         if ($conn->query($balance_sql) === TRUE) {
-            echo "Nuevo registro de balance creado exitosamente para el cliente con ID 4<br>";
+            echo "Nuevo registro de balance creado exitosamente para el cliente con ID 2<br>";
         } else {
             echo "Error: " . $balance_sql . "<br>" . $conn->error . "<br>";
         }

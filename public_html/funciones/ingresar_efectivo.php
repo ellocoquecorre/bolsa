@@ -4,41 +4,45 @@ require_once '../../config/config.php';
 require_once '../funciones/formato_dinero.php';
 
 // Obtener el id del cliente desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+$cliente_id = isset($_GET['cliente_id']) ? intval($_GET['cliente_id']) : 1;
 
 // Obtener los datos del cliente
-$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $cliente_id);
+$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = :cliente_id";
+$stmt = $conexion->prepare($sql);
+$stmt->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
 $stmt->execute();
-$stmt->bind_result($nombre, $apellido);
-$stmt->fetch();
-$stmt->close();
+$cliente = $stmt->fetch();
+
+if ($cliente) {
+    $nombre = $cliente['nombre'];
+    $apellido = $cliente['apellido'];
+} else {
+    die("Cliente no encontrado.");
+}
 
 // Obtener el saldo en pesos del cliente
-$sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
-$stmt_saldo = $conn->prepare($sql_saldo);
-$stmt_saldo->bind_param("i", $cliente_id);
+$sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = :cliente_id";
+$stmt_saldo = $conexion->prepare($sql_saldo);
+$stmt_saldo->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
 $stmt_saldo->execute();
-$stmt_saldo->bind_result($saldo_en_pesos);
-$stmt_saldo->fetch();
-$stmt_saldo->close();
+$saldo_row = $stmt_saldo->fetch();
+
+$saldo_en_pesos = $saldo_row ? floatval($saldo_row['efectivo']) : 0;
 $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
 
 // Verificar si se envió el formulario
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Obtener el monto ingresado
     $monto_ingresado = floatval(str_replace(',', '.', $_POST['monto']));
-    // Sumar el monto ingresado al saldo actual
     $nuevo_saldo = $saldo_en_pesos + $monto_ingresado;
 
     // Actualizar el saldo en la base de datos
-    $sql_update = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
-    $stmt_update = $conn->prepare($sql_update);
-    $stmt_update->bind_param("di", $nuevo_saldo, $cliente_id);
+    $sql_update = "UPDATE balance SET efectivo = :nuevo_saldo WHERE cliente_id = :cliente_id";
+    $stmt_update = $conexion->prepare($sql_update);
+    $stmt_update->bindParam(':nuevo_saldo', $nuevo_saldo);
+    $stmt_update->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
 
     if ($stmt_update->execute()) {
-        // Mostrar mensaje de éxito y redirigir
         echo "<script>
             alert('Operación realizada con éxito');
             window.location.href = '../backend/lista_clientes.php';
@@ -46,13 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         echo "<script>alert('Error al realizar la operación');</script>";
     }
-    $stmt_update->close();
 }
 
-// Renderizar los datos obtenidos
 $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">

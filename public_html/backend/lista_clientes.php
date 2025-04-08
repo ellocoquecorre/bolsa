@@ -9,33 +9,33 @@ if (!isset($_SESSION['loggedin'])) {
 require_once '../../config/config.php';
 require_once '../funciones/formato_dinero.php';
 
-$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
-}
+$clientes = [];
 
-$clientes = array();
-$sql = "SELECT cliente_id, nombre, apellido, email, telefono, corredora, url FROM clientes";
-$result = $conn->query($sql);
+try {
+    // Obtener clientes
+    $sql = "SELECT cliente_id, nombre, apellido, email, telefono, corredora, url FROM clientes";
+    $stmt = $conexion->prepare($sql);
+    $stmt->execute();
+    $resultado = $stmt->fetchAll();
 
-if ($result) {
-    while ($row = $result->fetch_assoc()) {
+    // Iterar por cada cliente
+    foreach ($resultado as $row) {
         $cliente_id = $row['cliente_id'];
-        $balance_sql = "SELECT efectivo FROM balance WHERE cliente_id = $cliente_id";
-        $balance_result = $conn->query($balance_sql);
-        if ($balance_result) {
-            $balance_row = $balance_result->fetch_assoc();
-            $row['efectivo'] = $balance_row['efectivo'];
-            $balance_result->free();
-        } else {
-            $row['efectivo'] = null; // En caso de que no se encuentre el balance
-        }
+
+        // Obtener saldo asociado
+        $balance_sql = "SELECT efectivo FROM balance WHERE cliente_id = :cliente_id";
+        $balance_stmt = $conexion->prepare($balance_sql);
+        $balance_stmt->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
+        $balance_stmt->execute();
+        $balance_row = $balance_stmt->fetch();
+
+        $row['efectivo'] = $balance_row ? $balance_row['efectivo'] : null;
         $clientes[] = $row;
     }
-    $result->free();
+} catch (PDOException $e) {
+    error_log("Error al obtener los clientes: " . $e->getMessage());
+    die("Hubo un problema al cargar los datos de los clientes.");
 }
-
-$conn->close();
 ?>
 
 <!DOCTYPE html>

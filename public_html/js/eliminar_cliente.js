@@ -46,10 +46,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function eliminarCliente(clienteId, boton) {
+        // Previene múltiples clics
+        if (boton.classList.contains('disabled')) return;
+    
         const originalHTML = boton.innerHTML;
         boton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Eliminando...';
         boton.classList.add('disabled');
-
+    
         fetch(`../funciones/eliminar_cliente.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

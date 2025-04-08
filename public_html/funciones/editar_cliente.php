@@ -3,39 +3,58 @@
 require_once '../../config/config.php';
 
 // Obtener el id del cliente desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+$cliente_id = isset($_GET['cliente_id']) ? intval($_GET['cliente_id']) : 1;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener los datos del formulario
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $email = $_POST['mail'];
-    $telefono = $_POST['telefono'];
-    $corredora = $_POST['corredora'];
+    $nombre     = $_POST['nombre'];
+    $apellido   = $_POST['apellido'];
+    $email      = $_POST['mail'];
+    $telefono   = $_POST['telefono'];
+    $corredora  = $_POST['corredora'];
 
     // Consulta para actualizar los datos del cliente
-    $sql = "UPDATE clientes SET nombre = ?, apellido = ?, email = ?, telefono = ?, corredora = ? WHERE cliente_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssi", $nombre, $apellido, $email, $telefono, $corredora, $cliente_id);
+    $sql = "UPDATE clientes 
+            SET nombre = :nombre, apellido = :apellido, email = :email, telefono = :telefono, corredora = :corredora 
+            WHERE cliente_id = :cliente_id";
+
+    $stmt = $conexion->prepare($sql);
+    $stmt->bindParam(':nombre', $nombre);
+    $stmt->bindParam(':apellido', $apellido);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':telefono', $telefono);
+    $stmt->bindParam(':corredora', $corredora);
+    $stmt->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
 
     if ($stmt->execute()) {
         // Redirigir a la lista de clientes después de actualizar
         header("Location: ../backend/lista_clientes.php");
         exit();
     } else {
-        echo "Error al actualizar el registro: " . $conn->error;
+        echo "Error al actualizar el registro.";
     }
-
-    $stmt->close();
 } else {
     // Consulta para obtener los datos del cliente
-    $sql = "SELECT nombre, apellido, email, telefono, corredora FROM clientes WHERE cliente_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $cliente_id);
+    $sql = "SELECT nombre, apellido, email, telefono, corredora 
+            FROM clientes 
+            WHERE cliente_id = :cliente_id";
+
+    $stmt = $conexion->prepare($sql);
+    $stmt->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
     $stmt->execute();
-    $stmt->bind_result($nombre, $apellido, $email, $telefono, $corredora);
-    $stmt->fetch();
-    $stmt->close();
+
+    $cliente = $stmt->fetch();
+
+    if ($cliente) {
+        $nombre     = $cliente['nombre'];
+        $apellido   = $cliente['apellido'];
+        $email      = $cliente['email'];
+        $telefono   = $cliente['telefono'];
+        $corredora  = $cliente['corredora'];
+    } else {
+        echo "Cliente no encontrado.";
+        exit;
+    }
 }
 ?>
 

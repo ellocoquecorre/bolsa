@@ -1609,7 +1609,7 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
     <script src="../js/preloader.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/easter_egg.js"></script>
-    <script src="../js/botones_pesos_dolares.js"></script>
+    <script type="module" src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/eliminar_acciones.js"></script>
     <script src="../js/eliminar_cedears.js"></script>
     <script src="../js/eliminar_bonos.js"></script>

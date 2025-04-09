@@ -352,12 +352,12 @@ require_once '../funciones/cliente_historial.php';
                         <table id="completa_acciones_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="3">Compra</th>
-                                    <th colspan="3">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="3" class="text-center">Compra</th>
+                                    <th colspan="3" class="text-center">Venta</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -441,12 +441,12 @@ require_once '../funciones/cliente_historial.php';
                         <table id="completa_acciones_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
                                     <th colspan="4">Compra</th>
                                     <th colspan="4">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -555,12 +555,12 @@ require_once '../funciones/cliente_historial.php';
                         <table id="completa_cedear_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="3">Compra</th>
-                                    <th colspan="3">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="3" class="text-center">Compra</th>
+                                    <th colspan="3" class="text-center">Venta</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -644,12 +644,12 @@ require_once '../funciones/cliente_historial.php';
                         <table id="completa_cedear_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
                                     <th colspan="4">Compra</th>
                                     <th colspan="4">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -759,12 +759,12 @@ require_once '../funciones/cliente_historial.php';
                         <table id="completa_bonos_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="3">Compra</th>
-                                    <th colspan="3">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="3" class="text-center">Compra</th>
+                                    <th colspan="3" class="text-center">Venta</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -848,12 +848,12 @@ require_once '../funciones/cliente_historial.php';
                         <table id="completa_bonos_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
                                     <th colspan="4">Compra</th>
                                     <th colspan="4">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -963,12 +963,12 @@ require_once '../funciones/cliente_historial.php';
                         <table id="completa_fondos_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="3">Compra</th>
-                                    <th colspan="3">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="3" class="text-center">Compra</th>
+                                    <th colspan="3" class="text-center">Venta</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -1052,12 +1052,12 @@ require_once '../funciones/cliente_historial.php';
                         <table id="completa_fondos_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
                                     <th colspan="4">Compra</th>
                                     <th colspan="4">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>

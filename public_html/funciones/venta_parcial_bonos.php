@@ -1,67 +1,98 @@
 <?php
-// Incluir archivo de configuración
 require_once '../../config/config.php';
 require_once '../funciones/cliente_funciones.php';
 require_once '../funciones/formato_dinero.php';
 
 // Obtener el id del cliente y el ticker desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+$cliente_id = isset($_GET['cliente_id']) ? intval($_GET['cliente_id']) : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
-// Obtener los datos del bono específico del cliente
-$sql = "SELECT ticker_bonos, cantidad_bonos, fecha_bonos, precio_bonos, ccl_compra FROM bonos WHERE cliente_id = ? AND ticker_bonos = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("is", $cliente_id, $ticker);
-$stmt->execute();
-$stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra);
-$stmt->fetch();
-$stmt->close();
+// Obtener datos del bono específico
+$sql = "SELECT ticker_bonos, cantidad_bonos, fecha_bonos, precio_bonos, ccl_compra 
+        FROM bonos 
+        WHERE cliente_id = ? AND ticker_bonos = ?";
+$stmt = $conexion->prepare($sql);
+$stmt->execute([$cliente_id, $ticker]);
+$bono = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if (!$bono) {
+    echo "<script>alert('No se encontró el bono.'); window.history.back();</script>";
+    exit;
+}
+
+$db_ticker = $bono['ticker_bonos'];
+$db_cantidad = $bono['cantidad_bonos'];
+$db_fecha_compra = $bono['fecha_bonos'];
+$db_precio_compra = $bono['precio_bonos'];
+$db_ccl_compra = $bono['ccl_compra'];
 $cantidad_max = $db_cantidad - 1;
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cantidad_vendida = (int) $_POST['cantidad'];
     $precio_venta = (float) $_POST['precio_venta'];
     $fecha_venta = $_POST['fecha_venta'];
     $ccl_venta = $_POST['ccl_venta'];
 
-    // Formatear el valor de ccl_venta
-    $ccl_venta = str_replace('.', '', $ccl_venta); // Eliminar separador de miles
-    $ccl_venta = str_replace(',', '.', $ccl_venta); // Reemplazar coma decimal por punto
+    // Formatear CCL venta
+    $ccl_venta = str_replace('.', '', $ccl_venta);
+    $ccl_venta = str_replace(',', '.', $ccl_venta);
     $ccl_venta = (float) $ccl_venta;
 
-    if ($cantidad_vendida < $cantidad_max) {
-        // Restar la cantidad vendida de la columna cantidad en la tabla bonos
-        $nueva_cantidad = $db_cantidad - $cantidad_vendida;
-        $sql_update_bonos = "UPDATE bonos SET cantidad_bonos = ? WHERE cliente_id = ? AND ticker_bonos = ?";
-        $stmt_update_bonos = $conn->prepare($sql_update_bonos);
-        $stmt_update_bonos->bind_param("iis", $nueva_cantidad, $cliente_id, $ticker);
-        $stmt_update_bonos->execute();
-        $stmt_update_bonos->close();
+    if ($cantidad_vendida < $db_cantidad) {
+        // Iniciar transacción
+        $conexion->beginTransaction();
 
-        // Sumar el total de la venta a la columna efectivo en la tabla balance
-        $total_venta = $cantidad_vendida * $precio_venta;
-        $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
-        $stmt_update_balance = $conn->prepare($sql_update_balance);
-        $stmt_update_balance->bind_param("di", $total_venta, $cliente_id);
-        $stmt_update_balance->execute();
-        $stmt_update_balance->close();
+        try {
+            // Restar cantidad de bonos
+            $nueva_cantidad = $db_cantidad - $cantidad_vendida;
+            $sql_update_bonos = "UPDATE bonos SET cantidad_bonos = ? WHERE cliente_id = ? AND ticker_bonos = ?";
+            $stmt = $conexion->prepare($sql_update_bonos);
+            $stmt->execute([$nueva_cantidad, $cliente_id, $ticker]);
 
-        // Insertar una nueva entrada en la tabla bonos_historial
-        $sql_insert_historial = "INSERT INTO bonos_historial (cliente_id, ticker_bonos, cantidad_bonos, fecha_compra_bonos, precio_compra_bonos, ccl_compra, fecha_venta_bonos, precio_venta_bonos, ccl_venta)
-                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt_insert_historial = $conn->prepare($sql_insert_historial);
-        $stmt_insert_historial->bind_param("isissdssd", $cliente_id, $db_ticker, $cantidad_vendida, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
-        $stmt_insert_historial->execute();
-        $stmt_insert_historial->close();
+            // Sumar efectivo por venta
+            $total_venta = $cantidad_vendida * $precio_venta;
+            $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
+            $stmt = $conexion->prepare($sql_update_balance);
+            $stmt->execute([$total_venta, $cliente_id]);
 
-        // Redirigir al cliente.php
-        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#bonos");
-        exit();
+            // Insertar en historial
+            $sql_insert_historial = "INSERT INTO bonos_historial (
+                cliente_id, ticker_bonos, cantidad_bonos, fecha_compra_bonos, 
+                precio_compra_bonos, ccl_compra, fecha_venta_bonos, precio_venta_bonos, ccl_venta
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conexion->prepare($sql_insert_historial);
+            $stmt->execute([
+                $cliente_id,
+                $db_ticker,
+                $cantidad_vendida,
+                $db_fecha_compra,
+                $db_precio_compra,
+                $db_ccl_compra,
+                $fecha_venta,
+                $precio_venta,
+                $ccl_venta
+            ]);
+
+            $conexion->commit();
+            header("Location: ../backend/cliente.php?cliente_id=$cliente_id#bonos");
+            exit;
+        } catch (Exception $e) {
+            $conexion->rollBack();
+            echo "<script>alert('Error al procesar la venta de bonos.');</script>";
+        }
     } else {
-        echo "<script>alert('Cantidad máxima de bonos para una venta parcial = ' + $cantidad_max);</script>";
+        echo "<script>alert('Cantidad máxima de bonos para una venta parcial = $cantidad_max');</script>";
     }
 }
+
+// Obtener datos del cliente
+$sql_cliente = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
+$stmt = $conexion->prepare($sql_cliente);
+$stmt->execute([$cliente_id]);
+$cliente = $stmt->fetch();
+
+$nombre_y_apellido = htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apellido']);
+
 ?>
 
 <!DOCTYPE html>
@@ -80,13 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-    <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
-        </div>
-    </div>
-    <!-- FIN PRELOADER -->
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -123,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
+            <h4 class="fancy"><?php echo $nombre_y_apellido; ?></h4>
         </div>
         <!-- FIN TITULO -->
 
@@ -243,8 +267,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="../js/preloader.js"></script>
     <script src="../js/tooltip.js"></script>
+    <script src="../js/easter_egg.js"></script>
     <script>
         document.getElementById('btnAceptar').addEventListener('click', function() {
             var cantidad = parseFloat(document.getElementById('cantidad').value);
@@ -257,7 +281,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         });
     </script>
-    <script src="../js/easter_egg.js"></script>
     <!-- FIN JS -->
 </body>
 

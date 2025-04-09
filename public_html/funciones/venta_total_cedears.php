@@ -1,60 +1,90 @@
 <?php
-// Incluir archivo de configuración
 require_once '../../config/config.php';
 require_once '../funciones/cliente_funciones.php';
 require_once '../funciones/formato_dinero.php';
 
-// Obtener el id del cliente y el ticker desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+// Obtener cliente y ticker desde GET
+$cliente_id = isset($_GET['cliente_id']) ? intval($_GET['cliente_id']) : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
-// Obtener los datos del cedear específico del cliente
-$sql = "SELECT ticker_cedear, cantidad_cedear, fecha_cedear, precio_cedear, ccl_compra_cedear FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("is", $cliente_id, $ticker);
-$stmt->execute();
-$stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra);
-$stmt->fetch();
-$stmt->close();
+// Obtener los datos del CEDEAR
+$sql = "SELECT ticker_cedear, cantidad_cedear, fecha_cedear, precio_cedear, ccl_compra_cedear 
+        FROM cedear 
+        WHERE cliente_id = ? AND ticker_cedear = ?";
+$stmt = $conexion->prepare($sql);
+$stmt->execute([$cliente_id, $ticker]);
+$cedear = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$cedear) {
+    echo "<script>alert('CEDEAR no encontrado.'); window.history.back();</script>";
+    exit;
+}
+
+$db_ticker = $cedear['ticker_cedear'];
+$db_cantidad = $cedear['cantidad_cedear'];
+$db_fecha_compra = $cedear['fecha_cedear'];
+$db_precio_compra = $cedear['precio_cedear'];
+$db_ccl_compra = $cedear['ccl_compra_cedear'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Calcular el valor de la venta
-    $precio_venta = $_POST['precio_venta'];
+    $precio_venta = (float) $_POST['precio_venta'];
     $fecha_venta = $_POST['fecha_venta'];
+
+    // Formatear CCL venta
+    $ccl_venta = $_POST['ccl_venta'];
+    $ccl_venta = str_replace('.', '', $ccl_venta);
+    $ccl_venta = str_replace(',', '.', $ccl_venta);
+    $ccl_venta = (float) $ccl_venta;
+
     $valor_venta = $db_cantidad * $precio_venta;
 
-    // Formatear el valor de ccl_venta
-    $ccl_venta = $_POST['ccl_venta'];
-    $ccl_venta = str_replace('.', '', $ccl_venta); // Eliminar separador de miles
-    $ccl_venta = str_replace(',', '.', $ccl_venta); // Reemplazar coma decimal por punto
-    $ccl_venta = (float)$ccl_venta;
+    try {
+        $conexion->beginTransaction();
 
-    // Actualizar el saldo en la tabla balance
-    $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
-    $stmt_update_balance = $conn->prepare($sql_update_balance);
-    $stmt_update_balance->bind_param("di", $valor_venta, $cliente_id);
-    $stmt_update_balance->execute();
-    $stmt_update_balance->close();
+        // Actualizar efectivo en balance
+        $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
+        $stmt = $conexion->prepare($sql_update_balance);
+        $stmt->execute([$valor_venta, $cliente_id]);
 
-    // Insertar los datos en la tabla cedear_historial
-    $sql_insert_historial = "INSERT INTO cedear_historial (cliente_id, ticker_cedear, cantidad_cedear, fecha_compra_cedear, precio_compra_cedear, ccl_compra, fecha_venta_cedear, precio_venta_cedear, ccl_venta) 
-                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt_insert_historial = $conn->prepare($sql_insert_historial);
-    $stmt_insert_historial->bind_param("isissdssd", $cliente_id, $db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
-    $stmt_insert_historial->execute();
-    $stmt_insert_historial->close();
+        // Insertar en historial
+        $sql_insert_historial = "INSERT INTO cedear_historial 
+            (cliente_id, ticker_cedear, cantidad_cedear, fecha_compra_cedear, precio_compra_cedear, ccl_compra, fecha_venta_cedear, precio_venta_cedear, ccl_venta) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conexion->prepare($sql_insert_historial);
+        $stmt->execute([
+            $cliente_id,
+            $db_ticker,
+            $db_cantidad,
+            $db_fecha_compra,
+            $db_precio_compra,
+            $db_ccl_compra,
+            $fecha_venta,
+            $precio_venta,
+            $ccl_venta
+        ]);
 
-    // Borrar el registro de la tabla cedear
-    $sql_delete_cedear = "DELETE FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?";
-    $stmt_delete_cedear = $conn->prepare($sql_delete_cedear);
-    $stmt_delete_cedear->bind_param("is", $cliente_id, $ticker);
-    $stmt_delete_cedear->execute();
-    $stmt_delete_cedear->close();
+        // Eliminar CEDEAR
+        $sql_delete_cedear = "DELETE FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?";
+        $stmt = $conexion->prepare($sql_delete_cedear);
+        $stmt->execute([$cliente_id, $ticker]);
 
-    // Redirigir a la página del cliente
-    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#cedears");
-    exit();
+        $conexion->commit();
+
+        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#cedears");
+        exit;
+    } catch (Exception $e) {
+        $conexion->rollBack();
+        echo "<script>alert('Error al realizar la venta total del CEDEAR.');</script>";
+    }
 }
+
+// Obtener nombre y apellido del cliente
+$sql_cliente = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
+$stmt = $conexion->prepare($sql_cliente);
+$stmt->execute([$cliente_id]);
+$cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$nombre_y_apellido = htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apellido']);
 ?>
 
 <!DOCTYPE html>
@@ -73,13 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
-        </div>
-    </div>
-    <!-- FIN PRELOADER -->
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -116,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
+            <h4 class="fancy"><?php echo $nombre_y_apellido; ?></h4>
         </div>
         <!-- FIN TITULO -->
 
@@ -236,7 +259,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="../js/preloader.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/easter_egg.js"></script>
     <!-- FIN JS -->

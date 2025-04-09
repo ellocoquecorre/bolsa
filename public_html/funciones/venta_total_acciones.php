@@ -1,60 +1,91 @@
 <?php
-// Incluir archivo de configuración
 require_once '../../config/config.php';
 require_once '../funciones/cliente_funciones.php';
 require_once '../funciones/formato_dinero.php';
 
-// Obtener el id del cliente y el ticker desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+// Obtener cliente y ticker desde GET
+$cliente_id = isset($_GET['cliente_id']) ? intval($_GET['cliente_id']) : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
-// Obtener los datos de la acción específica del cliente
-$sql = "SELECT ticker, cantidad, fecha, precio, ccl_compra FROM acciones WHERE cliente_id = ? AND ticker = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("is", $cliente_id, $ticker);
-$stmt->execute();
-$stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra);
-$stmt->fetch();
-$stmt->close();
+// Obtener los datos de la acción específica
+$sql = "SELECT ticker, cantidad, fecha, precio, ccl_compra 
+        FROM acciones 
+        WHERE cliente_id = ? AND ticker = ?";
+$stmt = $conexion->prepare($sql);
+$stmt->execute([$cliente_id, $ticker]);
+$accion = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$accion) {
+    echo "<script>alert('Acción no encontrada.'); window.history.back();</script>";
+    exit;
+}
+
+$db_ticker = $accion['ticker'];
+$db_cantidad = $accion['cantidad'];
+$db_fecha_compra = $accion['fecha'];
+$db_precio_compra = $accion['precio'];
+$db_ccl_compra = $accion['ccl_compra'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Calcular el valor de la venta
-    $precio_venta = $_POST['precio_venta'];
+    $precio_venta = (float) $_POST['precio_venta'];
     $fecha_venta = $_POST['fecha_venta'];
+    $ccl_venta = $_POST['ccl_venta'];
+
+    // Formatear CCL
+    $ccl_venta = str_replace('.', '', $ccl_venta);
+    $ccl_venta = str_replace(',', '.', $ccl_venta);
+    $ccl_venta = (float) $ccl_venta;
+
     $valor_venta = $db_cantidad * $precio_venta;
 
-    // Formatear el valor de ccl_venta
-    $ccl_venta = $_POST['ccl_venta'];
-    $ccl_venta = str_replace('.', '', $ccl_venta); // Eliminar separador de miles
-    $ccl_venta = str_replace(',', '.', $ccl_venta); // Reemplazar coma decimal por punto
-    $ccl_venta = (float)$ccl_venta;
+    try {
+        $conexion->beginTransaction();
 
-    // Actualizar el saldo en la tabla balance
-    $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
-    $stmt_update_balance = $conn->prepare($sql_update_balance);
-    $stmt_update_balance->bind_param("di", $valor_venta, $cliente_id);
-    $stmt_update_balance->execute();
-    $stmt_update_balance->close();
+        // Actualizar efectivo
+        $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
+        $stmt = $conexion->prepare($sql_update_balance);
+        $stmt->execute([$valor_venta, $cliente_id]);
 
-    // Insertar los datos en la tabla acciones_historial
-    $sql_insert_historial = "INSERT INTO acciones_historial (cliente_id, ticker, cantidad, fecha_compra, precio_compra, ccl_compra, fecha_venta, precio_venta, ccl_venta) 
-                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt_insert_historial = $conn->prepare($sql_insert_historial);
-    $stmt_insert_historial->bind_param("isissdssd", $cliente_id, $db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
-    $stmt_insert_historial->execute();
-    $stmt_insert_historial->close();
+        // Insertar en acciones_historial
+        $sql_insert_historial = "INSERT INTO acciones_historial 
+            (cliente_id, ticker, cantidad, fecha_compra, precio_compra, ccl_compra, fecha_venta, precio_venta, ccl_venta) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conexion->prepare($sql_insert_historial);
+        $stmt->execute([
+            $cliente_id,
+            $db_ticker,
+            $db_cantidad,
+            $db_fecha_compra,
+            $db_precio_compra,
+            $db_ccl_compra,
+            $fecha_venta,
+            $precio_venta,
+            $ccl_venta
+        ]);
 
-    // Borrar el registro de la tabla acciones
-    $sql_delete_acciones = "DELETE FROM acciones WHERE cliente_id = ? AND ticker = ?";
-    $stmt_delete_acciones = $conn->prepare($sql_delete_acciones);
-    $stmt_delete_acciones->bind_param("is", $cliente_id, $ticker);
-    $stmt_delete_acciones->execute();
-    $stmt_delete_acciones->close();
+        // Borrar acción
+        $sql_delete_acciones = "DELETE FROM acciones WHERE cliente_id = ? AND ticker = ?";
+        $stmt = $conexion->prepare($sql_delete_acciones);
+        $stmt->execute([$cliente_id, $ticker]);
 
-    // Redirigir a la página del cliente
-    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
-    exit();
+        $conexion->commit();
+
+        // Redirigir
+        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#acciones");
+        exit;
+    } catch (Exception $e) {
+        $conexion->rollBack();
+        echo "<script>alert('Error al procesar la venta total.');</script>";
+    }
 }
+
+// Obtener datos del cliente
+$sql_cliente = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
+$stmt = $conexion->prepare($sql_cliente);
+$stmt->execute([$cliente_id]);
+$cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$nombre_y_apellido = htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apellido']);
 ?>
 
 <!DOCTYPE html>
@@ -73,13 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
-        </div>
-    </div>
-    <!-- FIN PRELOADER -->
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -116,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
+            <h4 class="fancy"><?php echo $nombre_y_apellido; ?></h4>
         </div>
         <!-- FIN TITULO -->
 
@@ -236,7 +260,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="../js/preloader.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/easter_egg.js"></script>
     <!-- FIN JS -->

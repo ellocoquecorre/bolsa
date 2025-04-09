@@ -1,62 +1,89 @@
 <?php
-// Incluir archivo de configuración
 require_once '../../config/config.php';
 require_once '../funciones/cliente_funciones.php';
 require_once '../funciones/formato_dinero.php';
 
-// Obtener el id del cliente y el ticker desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+// Obtener cliente_id y ticker
+$cliente_id = isset($_GET['cliente_id']) ? intval($_GET['cliente_id']) : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
-// Obtener los datos del fondo específico del cliente
-$sql = "SELECT ticker_fondos, cantidad_fondos, fecha_fondos, precio_fondos, ccl_compra FROM fondos WHERE cliente_id = ? AND ticker_fondos = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("is", $cliente_id, $ticker);
-$stmt->execute();
-$stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra);
-$stmt->fetch();
-$stmt->close();
+// Obtener los datos del fondo
+$sql = "SELECT ticker_fondos, cantidad_fondos, fecha_fondos, precio_fondos, ccl_compra 
+        FROM fondos 
+        WHERE cliente_id = ? AND ticker_fondos = ?";
+$stmt = $conexion->prepare($sql);
+$stmt->execute([$cliente_id, $ticker]);
+$fondo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$fondo) {
+    echo "<script>alert('Fondo no encontrado.'); window.history.back();</script>";
+    exit;
+}
+
+$db_ticker = $fondo['ticker_fondos'];
+$db_cantidad = $fondo['cantidad_fondos'];
+$db_fecha_compra = $fondo['fecha_fondos'];
+$db_precio_compra = $fondo['precio_fondos'];
+$db_ccl_compra = $fondo['ccl_compra'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Calcular el valor de la venta
-    $precio_venta = $_POST['precio_venta'];
+    $precio_venta = (float) $_POST['precio_venta'];
     $fecha_venta = $_POST['fecha_venta'];
     $valor_venta = $db_cantidad * $precio_venta;
 
-    // Actualizar el saldo en la tabla balance
-    $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
-    $stmt_update_balance = $conn->prepare($sql_update_balance);
-    $stmt_update_balance->bind_param("di", $valor_venta, $cliente_id);
-    $stmt_update_balance->execute();
-    $stmt_update_balance->close();
-
-    // Obtener el promedio ccl
-    $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-
-    // Formatear el valor de ccl_venta
+    // Formatear ccl_venta
     $ccl_venta = $_POST['ccl_venta'];
-    $ccl_venta = str_replace('.', '', $ccl_venta); // Eliminar separador de miles
-    $ccl_venta = str_replace(',', '.', $ccl_venta); // Reemplazar coma decimal por punto
+    $ccl_venta = str_replace('.', '', $ccl_venta); // eliminar puntos (miles)
+    $ccl_venta = str_replace(',', '.', $ccl_venta); // cambiar coma por punto
+    $ccl_venta = (float)$ccl_venta;
 
-    // Insertar los datos en la tabla fondos_historial
-    $sql_insert_historial = "INSERT INTO fondos_historial (cliente_id, ticker_fondos, cantidad_fondos, fecha_compra_fondos, precio_compra_fondos, ccl_compra, fecha_venta_fondos, precio_venta_fondos, ccl_venta)
-                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt_insert_historial = $conn->prepare($sql_insert_historial);
-    $stmt_insert_historial->bind_param("isissdssd", $cliente_id, $db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra, $fecha_venta, $precio_venta, $ccl_venta);
-    $stmt_insert_historial->execute();
-    $stmt_insert_historial->close();
+    try {
+        $conexion->beginTransaction();
 
-    // Borrar el registro de la tabla fondos
-    $sql_delete_fondos = "DELETE FROM fondos WHERE cliente_id = ? AND ticker_fondos = ?";
-    $stmt_delete_fondos = $conn->prepare($sql_delete_fondos);
-    $stmt_delete_fondos->bind_param("is", $cliente_id, $ticker);
-    $stmt_delete_fondos->execute();
-    $stmt_delete_fondos->close();
+        // Actualizar el saldo en balance
+        $sql_update_balance = "UPDATE balance SET efectivo = efectivo + ? WHERE cliente_id = ?";
+        $stmt = $conexion->prepare($sql_update_balance);
+        $stmt->execute([$valor_venta, $cliente_id]);
 
-    // Redirigir a la página del cliente
-    header("Location: ../backend/cliente.php?cliente_id=$cliente_id#fondos");
-    exit();
+        // Insertar en historial
+        $sql_insert_historial = "INSERT INTO fondos_historial 
+            (cliente_id, ticker_fondos, cantidad_fondos, fecha_compra_fondos, precio_compra_fondos, ccl_compra, fecha_venta_fondos, precio_venta_fondos, ccl_venta)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conexion->prepare($sql_insert_historial);
+        $stmt->execute([
+            $cliente_id,
+            $db_ticker,
+            $db_cantidad,
+            $db_fecha_compra,
+            $db_precio_compra,
+            $db_ccl_compra,
+            $fecha_venta,
+            $precio_venta,
+            $ccl_venta
+        ]);
+
+        // Borrar el fondo de la tabla fondos
+        $sql_delete_fondos = "DELETE FROM fondos WHERE cliente_id = ? AND ticker_fondos = ?";
+        $stmt = $conexion->prepare($sql_delete_fondos);
+        $stmt->execute([$cliente_id, $ticker]);
+
+        $conexion->commit();
+
+        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#fondos");
+        exit;
+    } catch (Exception $e) {
+        $conexion->rollBack();
+        echo "<script>alert('Error al procesar la venta del fondo.');</script>";
+    }
 }
+
+// Obtener datos del cliente
+$sql_cliente = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
+$stmt = $conexion->prepare($sql_cliente);
+$stmt->execute([$cliente_id]);
+$cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$nombre_y_apellido = htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apellido']);
 ?>
 
 <!DOCTYPE html>
@@ -75,13 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
-        </div>
-    </div>
-    <!-- FIN PRELOADER -->
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -118,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
+            <h4 class="fancy"><?php echo $nombre_y_apellido; ?></h4>
         </div>
         <!-- FIN TITULO -->
 
@@ -238,7 +258,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="../js/preloader.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/easter_egg.js"></script>
     <!-- FIN JS -->

@@ -8,7 +8,7 @@ require_once '../funciones/cliente_funciones.php';
 $error_msg = '';
 
 // Obtener el id del cliente desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+$cliente_id = isset($_GET['cliente_id']) ? intval($_GET['cliente_id']) : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -23,81 +23,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ccl_compra_nuevo_formateado = str_replace(',', '.', $ccl_compra_nuevo_formateado); // Reemplazar comas por puntos
 
     // Obtener el saldo en pesos del cliente
-    $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
-    $stmt_saldo = $conn->prepare($sql_saldo);
-    $stmt_saldo->bind_param("i", $cliente_id);
-    $stmt_saldo->execute();
-    $stmt_saldo->bind_result($saldo_en_pesos);
-    $stmt_saldo->fetch();
-    $stmt_saldo->close();
+    $stmt_saldo = $conexion->prepare("SELECT efectivo FROM balance WHERE cliente_id = ?");
+    $stmt_saldo->execute([$cliente_id]);
+    $saldo_en_pesos = $stmt_saldo->fetchColumn();
 
-    // Obtener los datos del cedear específico del cliente
-    $sql_cedear = "SELECT cantidad_cedear, precio_cedear, ccl_compra_cedear FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?";
-    $stmt_cedear = $conn->prepare($sql_cedear);
-    $stmt_cedear->bind_param("is", $cliente_id, $ticker);
-    $stmt_cedear->execute();
-    $stmt_cedear->bind_result($cantidad_actual, $precio_actual, $ccl_compra_actual);
-    $stmt_cedear->fetch();
-    $stmt_cedear->close();
+    // Obtener los datos del cedear actual
+    $stmt_cedear = $conexion->prepare("SELECT cantidad_cedear, precio_cedear, ccl_compra_cedear FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?");
+    $stmt_cedear->execute([$cliente_id, $ticker]);
+    $cedear = $stmt_cedear->fetch();
 
-    // Calcular el costo total de la compra
-    $costo_total_nuevo = $cantidad_nueva * $precio_nuevo;
-
-    // Comprobar si el saldo es suficiente
-    if ($costo_total_nuevo > $saldo_en_pesos) {
-        $error_msg = "Saldo insuficiente";
+    if (!$cedear) {
+        $error_msg = "No se encontró el CEDEAR para este cliente.";
     } else {
-        // Actualizar la tabla cedear con los nuevos valores
-        $sql_update_cedear = "UPDATE cedear SET cantidad_cedear = ?, precio_cedear = ?, ccl_compra_cedear = ?, fecha_cedear = ? WHERE cliente_id = ? AND ticker_cedear = ?";
-        $stmt_update_cedear = $conn->prepare($sql_update_cedear);
-        $stmt_update_cedear->bind_param("iddsis", $cantidad_nueva, $precio_nuevo, $ccl_compra_nuevo, $fecha_nueva, $cliente_id, $ticker);
-        $stmt_update_cedear->execute();
-        $stmt_update_cedear->close();
+        $cantidad_actual = $cedear['cantidad_cedear'];
+        $precio_actual = $cedear['precio_cedear'];
+        $ccl_compra_actual = $cedear['ccl_compra_cedear'];
 
-        // Calcular la diferencia de costo entre la nueva y la antigua compra
-        $diferencia_costo = ($cantidad_nueva * $precio_nuevo) - ($cantidad_actual * $precio_actual);
+        // Calcular el nuevo costo total
+        $costo_total_nuevo = $cantidad_nueva * $precio_nuevo;
 
-        // Actualizar el saldo en pesos del cliente según la diferencia de costo
-        if ($diferencia_costo < 0) {
-            $nuevo_saldo_en_pesos = $saldo_en_pesos + abs($diferencia_costo);
+        // Verificar si hay saldo suficiente
+        if ($costo_total_nuevo > $saldo_en_pesos) {
+            $error_msg = "Saldo insuficiente";
         } else {
-            $nuevo_saldo_en_pesos = $saldo_en_pesos - abs($diferencia_costo);
+            // Actualizar los datos del CEDEAR
+            $stmt_update_cedear = $conexion->prepare(
+                "UPDATE cedear 
+                 SET cantidad_cedear = ?, precio_cedear = ?, ccl_compra_cedear = ?, fecha_cedear = ? 
+                 WHERE cliente_id = ? AND ticker_cedear = ?"
+            );
+            $stmt_update_cedear->execute([
+                $cantidad_nueva,
+                $precio_nuevo,
+                $ccl_compra_nuevo_formateado,
+                $fecha_nueva,
+                $cliente_id,
+                $ticker
+            ]);
+
+            // Calcular la diferencia de costo
+            $diferencia_costo = ($cantidad_nueva * $precio_nuevo) - ($cantidad_actual * $precio_actual);
+
+            if ($diferencia_costo < 0) {
+                $nuevo_saldo_en_pesos = $saldo_en_pesos + abs($diferencia_costo);
+            } else {
+                $nuevo_saldo_en_pesos = $saldo_en_pesos - abs($diferencia_costo);
+            }
+
+            // Actualizar el saldo del cliente
+            $stmt_update_balance = $conexion->prepare("UPDATE balance SET efectivo = ? WHERE cliente_id = ?");
+            $stmt_update_balance->execute([$nuevo_saldo_en_pesos, $cliente_id]);
+
+            // Redireccionar
+            header("Location: ../backend/cliente.php?cliente_id=$cliente_id#cedears");
+            exit();
         }
-
-        $sql_update_balance = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
-        $stmt_update_balance = $conn->prepare($sql_update_balance);
-        $stmt_update_balance->bind_param("di", $nuevo_saldo_en_pesos, $cliente_id);
-        $stmt_update_balance->execute();
-        $stmt_update_balance->close();
-
-        // Redireccionar después de guardar los datos
-        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#cedears");
-        exit();
     }
 }
 
 // Obtener los datos del cliente
-$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $cliente_id);
-$stmt->execute();
-$stmt->bind_result($nombre, $apellido);
-$stmt->fetch();
-$stmt->close();
+$stmt_cliente = $conexion->prepare("SELECT nombre, apellido FROM clientes WHERE cliente_id = ?");
+$stmt_cliente->execute([$cliente_id]);
+$cliente = $stmt_cliente->fetch();
+$nombre_y_apellido = $cliente ? htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apellido']) : 'Cliente desconocido';
 
-// Renderizar los datos obtenidos
-$nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
+// Obtener los datos del CEDEAR para el formulario
+$stmt_cedear_form = $conexion->prepare(
+    "SELECT cantidad_cedear, precio_cedear, fecha_cedear, ccl_compra_cedear 
+     FROM cedear 
+     WHERE cliente_id = ? AND ticker_cedear = ?"
+);
+$stmt_cedear_form->execute([$cliente_id, $ticker]);
+$cedear_form = $stmt_cedear_form->fetch();
 
-// Obtener los datos de la compra de cedear para mostrar en el formulario
-$sql_cedear = "SELECT cantidad_cedear, precio_cedear, fecha_cedear, ccl_compra_cedear FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?";
-$stmt_cedear = $conn->prepare($sql_cedear);
-$stmt_cedear->bind_param("is", $cliente_id, $ticker);
-$stmt_cedear->execute();
-$stmt_cedear->bind_result($cantidad, $precio, $fecha, $ccl_compra);
-$stmt_cedear->fetch();
-$stmt_cedear->close();
-
+$cantidad = $cedear_form['cantidad_cedear'] ?? 0;
+$precio = $cedear_form['precio_cedear'] ?? 0;
+$fecha = $cedear_form['fecha_cedear'] ?? date('Y-m-d');
+$ccl_compra = $cedear_form['ccl_compra_cedear'] ?? 0;
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 

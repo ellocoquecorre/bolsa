@@ -8,7 +8,7 @@ require_once '../funciones/cliente_funciones.php';
 $error_msg = '';
 
 // Obtener el id del cliente desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+$cliente_id = isset($_GET['cliente_id']) ? intval($_GET['cliente_id']) : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -23,81 +23,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ccl_compra_nuevo_formateado = str_replace(',', '.', $ccl_compra_nuevo_formateado); // Reemplazar comas por puntos
 
     // Obtener el saldo en pesos del cliente
-    $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
-    $stmt_saldo = $conn->prepare($sql_saldo);
-    $stmt_saldo->bind_param("i", $cliente_id);
-    $stmt_saldo->execute();
-    $stmt_saldo->bind_result($saldo_en_pesos);
-    $stmt_saldo->fetch();
-    $stmt_saldo->close();
+    $stmt_saldo = $conexion->prepare("SELECT efectivo FROM balance WHERE cliente_id = ?");
+    $stmt_saldo->execute([$cliente_id]);
+    $saldo_en_pesos = $stmt_saldo->fetchColumn();
 
-    // Obtener los datos del bono específico del cliente
-    $sql_bonos = "SELECT cantidad_bonos, precio_bonos, ccl_compra FROM bonos WHERE cliente_id = ? AND ticker_bonos = ?";
-    $stmt_bonos = $conn->prepare($sql_bonos);
-    $stmt_bonos->bind_param("is", $cliente_id, $ticker);
-    $stmt_bonos->execute();
-    $stmt_bonos->bind_result($cantidad_actual, $precio_actual, $ccl_compra_actual);
-    $stmt_bonos->fetch();
-    $stmt_bonos->close();
+    // Obtener los datos del bono actual del cliente
+    $stmt_bonos = $conexion->prepare("SELECT cantidad_bonos, precio_bonos, ccl_compra FROM bonos WHERE cliente_id = ? AND ticker_bonos = ?");
+    $stmt_bonos->execute([$cliente_id, $ticker]);
+    $bono = $stmt_bonos->fetch();
 
-    // Calcular el costo total de la compra
-    $costo_total_nuevo = $cantidad_nueva * $precio_nuevo;
-
-    // Comprobar si el saldo es suficiente
-    if ($costo_total_nuevo > $saldo_en_pesos) {
-        $error_msg = "Saldo insuficiente";
+    if (!$bono) {
+        $error_msg = "No se encontró el bono para este cliente.";
     } else {
-        // Actualizar la tabla bonos con los nuevos valores
-        $sql_update_bonos = "UPDATE bonos SET cantidad_bonos = ?, precio_bonos = ?, ccl_compra = ?, fecha_bonos = ? WHERE cliente_id = ? AND ticker_bonos = ?";
-        $stmt_update_bonos = $conn->prepare($sql_update_bonos);
-        $stmt_update_bonos->bind_param("iddsis", $cantidad_nueva, $precio_nuevo, $ccl_compra_nuevo, $fecha_nueva, $cliente_id, $ticker);
-        $stmt_update_bonos->execute();
-        $stmt_update_bonos->close();
+        $cantidad_actual = $bono['cantidad_bonos'];
+        $precio_actual = $bono['precio_bonos'];
+        $ccl_compra_actual = $bono['ccl_compra'];
 
-        // Calcular la diferencia de costo entre la nueva y la antigua compra
-        $diferencia_costo = ($cantidad_nueva * $precio_nuevo) - ($cantidad_actual * $precio_actual);
+        // Calcular el nuevo costo total
+        $costo_total_nuevo = $cantidad_nueva * $precio_nuevo;
 
-        // Actualizar el saldo en pesos del cliente según la diferencia de costo
-        if ($diferencia_costo < 0) {
-            $nuevo_saldo_en_pesos = $saldo_en_pesos + abs($diferencia_costo);
+        // Verificar saldo suficiente
+        if ($costo_total_nuevo > $saldo_en_pesos) {
+            $error_msg = "Saldo insuficiente";
         } else {
-            $nuevo_saldo_en_pesos = $saldo_en_pesos - abs($diferencia_costo);
+            // Actualizar los bonos
+            $stmt_update_bonos = $conexion->prepare(
+                "UPDATE bonos SET cantidad_bonos = ?, precio_bonos = ?, ccl_compra = ?, fecha_bonos = ? WHERE cliente_id = ? AND ticker_bonos = ?"
+            );
+            $stmt_update_bonos->execute([
+                $cantidad_nueva,
+                $precio_nuevo,
+                $ccl_compra_nuevo_formateado,
+                $fecha_nueva,
+                $cliente_id,
+                $ticker
+            ]);
+
+            // Calcular la diferencia de costo
+            $diferencia_costo = ($cantidad_nueva * $precio_nuevo) - ($cantidad_actual * $precio_actual);
+
+            if ($diferencia_costo < 0) {
+                $nuevo_saldo_en_pesos = $saldo_en_pesos + abs($diferencia_costo);
+            } else {
+                $nuevo_saldo_en_pesos = $saldo_en_pesos - abs($diferencia_costo);
+            }
+
+            // Actualizar el saldo
+            $stmt_update_balance = $conexion->prepare("UPDATE balance SET efectivo = ? WHERE cliente_id = ?");
+            $stmt_update_balance->execute([$nuevo_saldo_en_pesos, $cliente_id]);
+
+            // Redireccionar
+            header("Location: ../backend/cliente.php?cliente_id=$cliente_id#bonos");
+            exit();
         }
-
-        $sql_update_balance = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
-        $stmt_update_balance = $conn->prepare($sql_update_balance);
-        $stmt_update_balance->bind_param("di", $nuevo_saldo_en_pesos, $cliente_id);
-        $stmt_update_balance->execute();
-        $stmt_update_balance->close();
-
-        // Redireccionar después de guardar los datos
-        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#bonos");
-        exit();
     }
 }
 
 // Obtener los datos del cliente
-$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $cliente_id);
-$stmt->execute();
-$stmt->bind_result($nombre, $apellido);
-$stmt->fetch();
-$stmt->close();
+$stmt_cliente = $conexion->prepare("SELECT nombre, apellido FROM clientes WHERE cliente_id = ?");
+$stmt_cliente->execute([$cliente_id]);
+$cliente = $stmt_cliente->fetch();
+$nombre_y_apellido = $cliente ? htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apellido']) : 'Cliente desconocido';
 
-// Renderizar los datos obtenidos
-$nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
+// Obtener los datos del bono para mostrar en el formulario
+$stmt_bono_form = $conexion->prepare("SELECT cantidad_bonos, precio_bonos, fecha_bonos, ccl_compra FROM bonos WHERE cliente_id = ? AND ticker_bonos = ?");
+$stmt_bono_form->execute([$cliente_id, $ticker]);
+$bono_form = $stmt_bono_form->fetch();
 
-// Obtener los datos de la compra de bonos para mostrar en el formulario
-$sql_bonos = "SELECT cantidad_bonos, precio_bonos, fecha_bonos, ccl_compra FROM bonos WHERE cliente_id = ? AND ticker_bonos = ?";
-$stmt_bonos = $conn->prepare($sql_bonos);
-$stmt_bonos->bind_param("is", $cliente_id, $ticker);
-$stmt_bonos->execute();
-$stmt_bonos->bind_result($cantidad, $precio, $fecha, $ccl_compra);
-$stmt_bonos->fetch();
-$stmt_bonos->close();
-
+$cantidad = $bono_form['cantidad_bonos'] ?? 0;
+$precio = $bono_form['precio_bonos'] ?? 0;
+$fecha = $bono_form['fecha_bonos'] ?? date('Y-m-d');
+$ccl_compra = $bono_form['ccl_compra'] ?? 0;
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 

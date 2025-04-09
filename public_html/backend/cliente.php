@@ -1519,6 +1519,87 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
         </div>
     </div>
     <!-- Fin Acciones -->
+    <!-- Cedears -->
+    <div class="modal fade" id="confirmDeleteModalCedears" tabindex="-1" aria-labelledby="confirmDeleteModalCedearsLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title text-white" id="confirmDeleteModalCedearsLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">¿Estás seguro que querés eliminar este Cedear?</p>
+                    <div class="alert alert-warning text-center">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Se eliminarán todos los datos relacionados con este Cedear. <br><b>Esta acción no se puede deshacer.</b>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-custom cancelar" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtnCedears">
+                        <i class="fa-solid fa-check me-2"></i>Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Cedears -->
+    <!-- Bonos -->
+    <div class="modal fade" id="confirmDeleteModalBonos" tabindex="-1" aria-labelledby="confirmDeleteModalBonosLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title text-white" id="confirmDeleteModalBonosLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">¿Estás seguro que querés eliminar este bono?</p>
+                    <div class="alert alert-warning text-center">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Se eliminarán todos los datos relacionados con este bono. <br><b>Esta acción no se puede deshacer.</b>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-custom cancelar" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtnBonos">
+                        <i class="fa-solid fa-check me-2"></i>Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Bonos -->
+    <!-- Fondos -->
+    <div class="modal fade" id="confirmDeleteModalFondos" tabindex="-1" aria-labelledby="confirmDeleteModalFondosLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title text-white" id="confirmDeleteModalFondosLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">¿Estás seguro que querés eliminar este fondo?</p>
+                    <div class="alert alert-warning text-center">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Se eliminarán todos los datos relacionados con este fondo. <br><b>Esta acción no se puede deshacer.</b>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-custom cancelar" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtnFondos">
+                        <i class="fa-solid fa-check me-2"></i>Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Fondos -->
     <!-- FIN MODALES ELIMINACIÓN -->
 
     <!-- JS -->

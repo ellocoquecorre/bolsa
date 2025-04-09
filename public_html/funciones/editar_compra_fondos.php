@@ -8,7 +8,7 @@ require_once '../funciones/cliente_funciones.php';
 $error_msg = '';
 
 // Obtener el id del cliente desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+$cliente_id = isset($_GET['cliente_id']) ? intval($_GET['cliente_id']) : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,85 +19,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fecha_nueva = isset($_POST['fecha']) ? date('Y-m-d', strtotime($_POST['fecha'])) : date('Y-m-d');
 
     // Formatear el valor del campo ccl_compra
-    $ccl_compra_nuevo_formateado = str_replace('.', '', $ccl_compra_nuevo); // Eliminar puntos
-    $ccl_compra_nuevo_formateado = str_replace(',', '.', $ccl_compra_nuevo_formateado); // Reemplazar comas por puntos
+    $ccl_compra_nuevo_formateado = str_replace('.', '', $ccl_compra_nuevo);
+    $ccl_compra_nuevo_formateado = str_replace(',', '.', $ccl_compra_nuevo_formateado);
 
     // Obtener el saldo en pesos del cliente
-    $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
-    $stmt_saldo = $conn->prepare($sql_saldo);
-    $stmt_saldo->bind_param("i", $cliente_id);
-    $stmt_saldo->execute();
-    $stmt_saldo->bind_result($saldo_en_pesos);
-    $stmt_saldo->fetch();
-    $stmt_saldo->close();
+    $stmt_saldo = $conexion->prepare("SELECT efectivo FROM balance WHERE cliente_id = ?");
+    $stmt_saldo->execute([$cliente_id]);
+    $saldo_en_pesos = $stmt_saldo->fetchColumn();
 
-    // Obtener los datos del fondo específico del cliente
-    $sql_fondos = "SELECT cantidad_fondos, precio_fondos, ccl_compra FROM fondos WHERE cliente_id = ? AND ticker_fondos = ?";
-    $stmt_fondos = $conn->prepare($sql_fondos);
-    $stmt_fondos->bind_param("is", $cliente_id, $ticker);
-    $stmt_fondos->execute();
-    $stmt_fondos->bind_result($cantidad_actual, $precio_actual, $ccl_compra_actual);
-    $stmt_fondos->fetch();
-    $stmt_fondos->close();
+    // Obtener los datos del fondo actual
+    $stmt_fondos = $conexion->prepare("SELECT cantidad_fondos, precio_fondos, ccl_compra FROM fondos WHERE cliente_id = ? AND ticker_fondos = ?");
+    $stmt_fondos->execute([$cliente_id, $ticker]);
+    $fondos = $stmt_fondos->fetch();
 
-    // Calcular el costo total de la compra
-    $costo_total_nuevo = $cantidad_nueva * $precio_nuevo;
-
-    // Comprobar si el saldo es suficiente
-    if ($costo_total_nuevo > $saldo_en_pesos) {
-        $error_msg = "Saldo insuficiente";
+    if (!$fondos) {
+        $error_msg = "No se encontró el fondo para este cliente.";
     } else {
-        // Actualizar la tabla fondos con los nuevos valores
-        $sql_update_fondos = "UPDATE fondos SET cantidad_fondos = ?, precio_fondos = ?, ccl_compra = ?, fecha_fondos = ? WHERE cliente_id = ? AND ticker_fondos = ?";
-        $stmt_update_fondos = $conn->prepare($sql_update_fondos);
-        $stmt_update_fondos->bind_param("iddsis", $cantidad_nueva, $precio_nuevo, $ccl_compra_nuevo, $fecha_nueva, $cliente_id, $ticker);
-        $stmt_update_fondos->execute();
-        $stmt_update_fondos->close();
+        $cantidad_actual = $fondos['cantidad_fondos'];
+        $precio_actual = $fondos['precio_fondos'];
+        $ccl_compra_actual = $fondos['ccl_compra'];
 
-        // Calcular la diferencia de costo entre la nueva y la antigua compra
-        $diferencia_costo = ($cantidad_nueva * $precio_nuevo) - ($cantidad_actual * $precio_actual);
+        // Calcular el costo total
+        $costo_total_nuevo = $cantidad_nueva * $precio_nuevo;
 
-        // Actualizar el saldo en pesos del cliente según la diferencia de costo
-        if ($diferencia_costo < 0) {
-            $nuevo_saldo_en_pesos = $saldo_en_pesos + abs($diferencia_costo);
+        // Verificar si hay saldo suficiente
+        if ($costo_total_nuevo > $saldo_en_pesos) {
+            $error_msg = "Saldo insuficiente";
         } else {
-            $nuevo_saldo_en_pesos = $saldo_en_pesos - abs($diferencia_costo);
+            // Actualizar la tabla fondos
+            $stmt_update_fondos = $conexion->prepare("
+                UPDATE fondos 
+                SET cantidad_fondos = ?, precio_fondos = ?, ccl_compra = ?, fecha_fondos = ? 
+                WHERE cliente_id = ? AND ticker_fondos = ?
+            ");
+            $stmt_update_fondos->execute([
+                $cantidad_nueva,
+                $precio_nuevo,
+                $ccl_compra_nuevo_formateado,
+                $fecha_nueva,
+                $cliente_id,
+                $ticker
+            ]);
+
+            // Calcular diferencia de costo
+            $diferencia_costo = ($cantidad_nueva * $precio_nuevo) - ($cantidad_actual * $precio_actual);
+
+            if ($diferencia_costo < 0) {
+                $nuevo_saldo_en_pesos = $saldo_en_pesos + abs($diferencia_costo);
+            } else {
+                $nuevo_saldo_en_pesos = $saldo_en_pesos - abs($diferencia_costo);
+            }
+
+            // Actualizar balance
+            $stmt_update_balance = $conexion->prepare("UPDATE balance SET efectivo = ? WHERE cliente_id = ?");
+            $stmt_update_balance->execute([$nuevo_saldo_en_pesos, $cliente_id]);
+
+            // Redireccionar
+            header("Location: ../backend/cliente.php?cliente_id=$cliente_id#fondos");
+            exit();
         }
-
-        $sql_update_balance = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
-        $stmt_update_balance = $conn->prepare($sql_update_balance);
-        $stmt_update_balance->bind_param("di", $nuevo_saldo_en_pesos, $cliente_id);
-        $stmt_update_balance->execute();
-        $stmt_update_balance->close();
-
-        // Redireccionar después de guardar los datos
-        header("Location: ../backend/cliente.php?cliente_id=$cliente_id#fondos");
-        exit();
     }
 }
 
-// Obtener los datos del cliente
-$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $cliente_id);
-$stmt->execute();
-$stmt->bind_result($nombre, $apellido);
-$stmt->fetch();
-$stmt->close();
+// Obtener datos del cliente
+$stmt_cliente = $conexion->prepare("SELECT nombre, apellido FROM clientes WHERE cliente_id = ?");
+$stmt_cliente->execute([$cliente_id]);
+$cliente = $stmt_cliente->fetch();
+$nombre_y_apellido = $cliente ? htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apellido']) : 'Cliente desconocido';
 
-// Renderizar los datos obtenidos
-$nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
+// Obtener datos del fondo para el formulario
+$stmt_fondos_form = $conexion->prepare("
+    SELECT cantidad_fondos, precio_fondos, fecha_fondos, ccl_compra 
+    FROM fondos 
+    WHERE cliente_id = ? AND ticker_fondos = ?
+");
+$stmt_fondos_form->execute([$cliente_id, $ticker]);
+$fondos_form = $stmt_fondos_form->fetch();
 
-// Obtener los datos de la compra de fondos para mostrar en el formulario
-$sql_fondos = "SELECT cantidad_fondos, precio_fondos, fecha_fondos, ccl_compra FROM fondos WHERE cliente_id = ? AND ticker_fondos = ?";
-$stmt_fondos = $conn->prepare($sql_fondos);
-$stmt_fondos->bind_param("is", $cliente_id, $ticker);
-$stmt_fondos->execute();
-$stmt_fondos->bind_result($cantidad, $precio, $fecha, $ccl_compra);
-$stmt_fondos->fetch();
-$stmt_fondos->close();
-
+$cantidad = $fondos_form['cantidad_fondos'] ?? 0;
+$precio = $fondos_form['precio_fondos'] ?? 0;
+$fecha = $fondos_form['fecha_fondos'] ?? date('Y-m-d');
+$ccl_compra = $fondos_form['ccl_compra'] ?? 0;
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 

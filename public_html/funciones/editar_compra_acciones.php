@@ -258,7 +258,7 @@ $ccl_compra = $accion_form['ccl_compra'] ?? 0;
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tooltip.js"></script>
-    <script src="../js/fixedImage.js"></script>
+    <script src="../js/easter_egg.js"></script>
     <!-- FIN JS -->
 </body>
 

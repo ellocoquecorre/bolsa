@@ -257,7 +257,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         });
     </script>
-    <script src="../js/fixedImage.js"></script>
+    <script src="../js/easter_egg.js"></script>
     <!-- FIN JS -->
 </body>
 

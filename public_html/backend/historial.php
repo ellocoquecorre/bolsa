@@ -53,6 +53,7 @@ require_once '../funciones/cliente_historial.php';
 </head>
 
 <body>
+
     <!-- PRELOADER -->
     <div class="preloader" id="preloader">
         <div class="preloader-content">

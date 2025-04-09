@@ -90,14 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
-        </div>
-    </div>
-    <!-- FIN PRELOADER -->
-
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
@@ -269,9 +261,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tickers_bonos.js"></script>
-    <script src="../js/preloader.js"></script>
     <script src="../js/tooltip.js"></script>
-    <script src="../js/fixedImage.js"></script>
+    <script src="../js/easter_egg.js"></script>
     <!-- FIN JS -->
 </body>
 

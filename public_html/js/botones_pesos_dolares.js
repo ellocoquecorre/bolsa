@@ -1,18 +1,18 @@
+import { initDataTable } from './datatables.js';
+
 document.addEventListener("DOMContentLoaded", () => {
-    
+
     // Resumen
     const btnResumenPesos = document.getElementById("btnResumenPesos");
     const btnResumenDolares = document.getElementById("btnResumenDolares");
     const tablaResumenPesos = document.getElementById("tablaResumenPesos");
     const tablaResumenDolares = document.getElementById("tablaResumenDolares");
 
-    // Función para alternar entre las tablas
     btnResumenPesos.addEventListener("click", () => {
         btnResumenPesos.classList.add("active");
         btnResumenDolares.classList.remove("active");
         tablaResumenPesos.classList.remove("d-none");
         tablaResumenDolares.classList.add("d-none");
-        // Reinitialize DataTable
         $('#completa_acciones_pesos').DataTable().columns.adjust().draw();
     });
 
@@ -21,23 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnResumenPesos.classList.remove("active");
         tablaResumenDolares.classList.remove("d-none");
         tablaResumenPesos.classList.add("d-none");
-        // Destroy and Reinitialize DataTable
-        if ($.fn.DataTable.isDataTable('#completa_acciones_dolares')) {
-            $('#completa_acciones_dolares').DataTable().destroy();
-        }
-        $('#completa_acciones_dolares').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
-            },
-            pageLength: 10,
-            lengthMenu: [5, 10, 25, 50, 100],
-            order: [[0, 'asc']],
-            autoWidth: true,
-            dom: '<"row mb-3"<"col-md-6 text-left"l><"col-md-6"f>>' +
-                'rt' +
-                '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
-        });
-        $('#completa_acciones_dolares').DataTable().columns.adjust().draw();
+        initDataTable('#completa_acciones_dolares', 0);
     });
 
     // Acciones
@@ -46,13 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const tablaAccionesPesos = document.getElementById("tablaAccionesPesos");
     const tablaAccionesDolares = document.getElementById("tablaAccionesDolares");
 
-    // Función para alternar entre las tablas
     btnAccionesPesos.addEventListener("click", () => {
         btnAccionesPesos.classList.add("active");
         btnAccionesDolares.classList.remove("active");
         tablaAccionesPesos.classList.remove("d-none");
         tablaAccionesDolares.classList.add("d-none");
-        // Reinitialize DataTable
         $('#completa_acciones_pesos').DataTable().columns.adjust().draw();
     });
 
@@ -61,23 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnAccionesPesos.classList.remove("active");
         tablaAccionesDolares.classList.remove("d-none");
         tablaAccionesPesos.classList.add("d-none");
-        // Destroy and Reinitialize DataTable
-        if ($.fn.DataTable.isDataTable('#completa_acciones_dolares')) {
-            $('#completa_acciones_dolares').DataTable().destroy();
-        }
-        $('#completa_acciones_dolares').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
-            },
-            pageLength: 10,
-            lengthMenu: [5, 10, 25, 50, 100],
-            order: [[0, 'asc']],
-            autoWidth: true,
-            dom: '<"row mb-3"<"col-md-6 text-left"l><"col-md-6"f>>' +
-                'rt' +
-                '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
-        });
-        $('#completa_acciones_dolares').DataTable().columns.adjust().draw();
+        initDataTable('#completa_acciones_dolares', 0);
     });
 
     // Cedear
@@ -91,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnCedearDolares.classList.remove("active");
         tablaCedearPesos.classList.remove("d-none");
         tablaCedearDolares.classList.add("d-none");
-        // Reinitialize DataTable
         $('#completa_cedear_pesos').DataTable().columns.adjust().draw();
     });
 
@@ -100,23 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnCedearPesos.classList.remove("active");
         tablaCedearDolares.classList.remove("d-none");
         tablaCedearPesos.classList.add("d-none");
-        // Destroy and Reinitialize DataTable
-        if ($.fn.DataTable.isDataTable('#completa_cedear_dolares')) {
-            $('#completa_cedear_dolares').DataTable().destroy();
-        }
-        $('#completa_cedear_dolares').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
-            },
-            pageLength: 10,
-            lengthMenu: [5, 10, 25, 50, 100],
-            order: [[0, 'asc']],
-            autoWidth: true,
-            dom: '<"row mb-3"<"col-md-6 text-left"l><"col-md-6"f>>' +
-                'rt' +
-                '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
-        });
-        $('#completa_cedear_dolares').DataTable().columns.adjust().draw();
+        initDataTable('#completa_cedear_dolares', 0);
     });
 
     // Bonos
@@ -130,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnBonosDolares.classList.remove("active");
         tablaBonosPesos.classList.remove("d-none");
         tablaBonosDolares.classList.add("d-none");
-        // Reinitialize DataTable
         $('#completa_bonos_pesos').DataTable().columns.adjust().draw();
     });
 
@@ -139,23 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnBonosPesos.classList.remove("active");
         tablaBonosDolares.classList.remove("d-none");
         tablaBonosPesos.classList.add("d-none");
-        // Destroy and Reinitialize DataTable
-        if ($.fn.DataTable.isDataTable('#completa_bonos_dolares')) {
-            $('#completa_bonos_dolares').DataTable().destroy();
-        }
-        $('#completa_bonos_dolares').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
-            },
-            pageLength: 10,
-            lengthMenu: [5, 10, 25, 50, 100],
-            order: [[0, 'asc']],
-            autoWidth: true,
-            dom: '<"row mb-3"<"col-md-6 text-left"l><"col-md-6"f>>' +
-                'rt' +
-                '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
-        });
-        $('#completa_bonos_dolares').DataTable().columns.adjust().draw();
+        initDataTable('#completa_bonos_dolares', 0);
     });
 
     // Fondos
@@ -169,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnFondosDolares.classList.remove("active");
         tablaFondosPesos.classList.remove("d-none");
         tablaFondosDolares.classList.add("d-none");
-        // Reinitialize DataTable
         $('#completa_fondos_pesos').DataTable().columns.adjust().draw();
     });
 
@@ -178,22 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnFondosPesos.classList.remove("active");
         tablaFondosDolares.classList.remove("d-none");
         tablaFondosPesos.classList.add("d-none");
-        // Destroy and Reinitialize DataTable
-        if ($.fn.DataTable.isDataTable('#completa_fondos_dolares')) {
-            $('#completa_fondos_dolares').DataTable().destroy();
-        }
-        $('#completa_fondos_dolares').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
-            },
-            pageLength: 10,
-            lengthMenu: [5, 10, 25, 50, 100],
-            order: [[0, 'asc']],
-            autoWidth: true,
-            dom: '<"row mb-3"<"col-md-6 text-left"l><"col-md-6"f>>' +
-                'rt' +
-                '<"row mt-3"<"col-md-6 text-left"i><"col-md-6"p>>'
-        });
-        $('#completa_fondos_dolares').DataTable().columns.adjust().draw();
+        initDataTable('#completa_fondos_dolares', 0);
     });
 });

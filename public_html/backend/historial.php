@@ -1140,8 +1140,8 @@ require_once '../funciones/cliente_historial.php';
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="../js/tooltip.js"></script>
-    <script src="../js/botones_pesos_dolares.js"></script>
-    <script src="../js/filtro_tablas.js"></script>
+    <script type="module" src="../js/filtro_tablas.js"></script>
+    <script type="module" src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/preloader.js"></script>
     <!-- FIN JS -->
 

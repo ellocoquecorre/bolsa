@@ -8,100 +8,90 @@ require_once '../funciones/cliente_funciones.php';
 $error_msg = '';
 
 // Obtener el id del cliente desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+$cliente_id = isset($_GET['cliente_id']) ? intval($_GET['cliente_id']) : 1;
 $ticker = isset($_GET['ticker']) ? $_GET['ticker'] : '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obtener los valores del formulario
     $cantidad_hoy = isset($_POST['cantidad']) ? floatval($_POST['cantidad']) : 0;
     $precio_hoy = isset($_POST['precio']) ? floatval($_POST['precio']) : 0;
     $fecha_hoy = isset($_POST['fecha']) ? $_POST['fecha'] : date('Y-m-d');
     $ccl_compra = isset($_POST['ccl_compra']) ? $_POST['ccl_compra'] : '';
 
-    // Formatear el valor de ccl_compra
-    $ccl_compra = str_replace('.', '', $ccl_compra); // Eliminar separadores de miles
-    $ccl_compra = str_replace(',', '.', $ccl_compra); // Reemplazar coma por punto decimal
-    $ccl_compra = floatval($ccl_compra); // Convertir a float
+    // Formatear CCL
+    $ccl_compra = str_replace('.', '', $ccl_compra);
+    $ccl_compra = str_replace(',', '.', $ccl_compra);
+    $ccl_compra = floatval($ccl_compra);
 
-    // Obtener el saldo en pesos del cliente
+    // Obtener saldo actual
     $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
-    $stmt_saldo = $conn->prepare($sql_saldo);
-    $stmt_saldo->bind_param("i", $cliente_id);
-    $stmt_saldo->execute();
-    $stmt_saldo->bind_result($saldo_en_pesos);
-    $stmt_saldo->fetch();
-    $stmt_saldo->close();
+    $stmt = $conexion->prepare($sql_saldo);
+    $stmt->execute([$cliente_id]);
+    $saldo_en_pesos = $stmt->fetchColumn();
 
-    // Calcular el costo total de la compra
     $costo_total = $cantidad_hoy * $precio_hoy;
 
-    // Comprobar si el saldo es suficiente
     if ($costo_total > $saldo_en_pesos) {
         $error_msg = "Saldo insuficiente";
     } else {
-        // Obtener los datos del CEDEAR específico del cliente
-        $sql = "SELECT ticker_cedear, cantidad_cedear, fecha_cedear, precio_cedear, ccl_compra_cedear FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("is", $cliente_id, $ticker);
-        $stmt->execute();
-        $stmt->bind_result($db_ticker, $db_cantidad, $db_fecha_compra, $db_precio_compra, $db_ccl_compra);
-        $stmt->fetch();
-        $stmt->close();
+        // Buscar si ya tiene CEDEAR de ese ticker
+        $sql = "SELECT cantidad_cedear, precio_cedear, ccl_compra_cedear FROM cedear WHERE cliente_id = ? AND ticker_cedear = ?";
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute([$cliente_id, $ticker]);
+        $cedear = $stmt->fetch();
 
-        // Calcular el promedio CCL
-        $promedio_ccl = ($contadoconliqui_compra + $contadoconliqui_venta) / 2;
-        $ccl_compra_hoy = $promedio_ccl;
+        $db_cantidad = $cedear ? $cedear['cantidad_cedear'] : 0;
+        $db_precio = $cedear ? $cedear['precio_cedear'] : 0;
+        $db_ccl = $cedear ? $cedear['ccl_compra_cedear'] : 0;
 
-        // Calcular nuevo precio y ccl_compra
-        $nuevo_precio = (($db_cantidad * $db_precio_compra) + ($cantidad_hoy * $precio_hoy)) / ($db_cantidad + $cantidad_hoy);
-        $nuevo_ccl_compra = (($db_cantidad * $db_ccl_compra) + ($cantidad_hoy * $ccl_compra)) / ($db_cantidad + $cantidad_hoy);
+        $nuevo_precio = (($db_cantidad * $db_precio) + ($cantidad_hoy * $precio_hoy)) / ($db_cantidad + $cantidad_hoy);
+        $nuevo_ccl_compra = (($db_cantidad * $db_ccl) + ($cantidad_hoy * $ccl_compra)) / ($db_cantidad + $cantidad_hoy);
 
-        // Actualizar la tabla cedear
-        $sql_update_cedear = "UPDATE cedear SET cantidad_cedear = cantidad_cedear + ?, precio_cedear = ?, ccl_compra_cedear = ?, fecha_cedear = ? WHERE cliente_id = ? AND ticker_cedear = ?";
-        $stmt_update_cedear = $conn->prepare($sql_update_cedear);
-        $stmt_update_cedear->bind_param("iddsis", $cantidad_hoy, $nuevo_precio, $nuevo_ccl_compra, $fecha_hoy, $cliente_id, $ticker);
-        $stmt_update_cedear->execute();
-        $stmt_update_cedear->close();
+        if ($cedear) {
+            // Ya existe: actualizar
+            $sql_update = "UPDATE cedear 
+                           SET cantidad_cedear = cantidad_cedear + ?, 
+                               precio_cedear = ?, 
+                               ccl_compra_cedear = ?, 
+                               fecha_cedear = ? 
+                           WHERE cliente_id = ? AND ticker_cedear = ?";
+            $stmt = $conexion->prepare($sql_update);
+            $stmt->execute([$cantidad_hoy, $nuevo_precio, $nuevo_ccl_compra, $fecha_hoy, $cliente_id, $ticker]);
+        } else {
+            // Nuevo CEDEAR
+            $sql_insert = "INSERT INTO cedear (cliente_id, ticker_cedear, cantidad_cedear, precio_cedear, ccl_compra_cedear, fecha_cedear) 
+                           VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $conexion->prepare($sql_insert);
+            $stmt->execute([$cliente_id, $ticker, $cantidad_hoy, $precio_hoy, $ccl_compra, $fecha_hoy]);
+        }
 
-        // Calcular el nuevo saldo en pesos
-        $nuevo_saldo_en_pesos = $saldo_en_pesos - $costo_total;
+        // Actualizar balance
+        $nuevo_saldo = $saldo_en_pesos - $costo_total;
+        $sql_balance = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
+        $stmt = $conexion->prepare($sql_balance);
+        $stmt->execute([$nuevo_saldo, $cliente_id]);
 
-        // Actualizar la tabla balance
-        $sql_update_balance = "UPDATE balance SET efectivo = ? WHERE cliente_id = ?";
-        $stmt_update_balance = $conn->prepare($sql_update_balance);
-        $stmt_update_balance->bind_param("di", $nuevo_saldo_en_pesos, $cliente_id);
-        $stmt_update_balance->execute();
-        $stmt_update_balance->close();
-
-        // Redireccionar después de guardar los datos
+        // Redireccionar
         header("Location: ../backend/cliente.php?cliente_id=$cliente_id#cedears");
         exit();
     }
 }
 
-// Obtener los datos del cliente
-$sql = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $cliente_id);
-$stmt->execute();
-$stmt->bind_result($nombre, $apellido);
-$stmt->fetch();
-$stmt->close();
+// Obtener nombre del cliente
+$sql_cliente = "SELECT nombre, apellido FROM clientes WHERE cliente_id = ?";
+$stmt = $conexion->prepare($sql_cliente);
+$stmt->execute([$cliente_id]);
+$cliente = $stmt->fetch();
 
-// Renderizar los datos obtenidos
-$nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
+$nombre_y_apellido = htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apellido']);
 
-// Obtener el saldo en pesos del cliente para mostrar en el formulario
+// Obtener saldo para mostrar
 $sql_saldo = "SELECT efectivo FROM balance WHERE cliente_id = ?";
-$stmt_saldo = $conn->prepare($sql_saldo);
-$stmt_saldo->bind_param("i", $cliente_id);
-$stmt_saldo->execute();
-$stmt_saldo->bind_result($saldo_en_pesos);
-$stmt_saldo->fetch();
-$stmt_saldo->close();
+$stmt = $conexion->prepare($sql_saldo);
+$stmt->execute([$cliente_id]);
+$saldo_en_pesos = $stmt->fetchColumn();
 $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
-
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -118,13 +108,6 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
 </head>
 
 <body>
-    <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
-        </div>
-    </div>
-    <!-- FIN PRELOADER -->
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -283,7 +266,6 @@ $saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="../js/preloader.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/easter_egg.js"></script>
     <!-- FIN JS -->

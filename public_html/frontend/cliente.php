@@ -38,6 +38,16 @@ if (!isset($promedio_ccl)) {
 $saldo_en_dolares = obtenerSaldoDolares($cliente_id, $promedio_ccl);
 $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
 
+// Ver si hay que mostrar el disclaimer
+try {
+    $stmt = $conexion->prepare("SELECT mostrar_disclaimer FROM clientes WHERE cliente_id = ?");
+    $stmt->execute([$cliente_id]);
+    $mostrar_disclaimer = $stmt->fetchColumn();
+} catch (PDOException $e) {
+    error_log("Error al verificar mostrar_disclaimer: " . $e->getMessage());
+    $mostrar_disclaimer = 1; // Por si falla, lo mostramos igual
+}
+
 // Obtener datos de la corredora
 $datos_corredora = obtenerDatosCorredora($cliente_id);
 $nombre_corredora = $datos_corredora['corredora'] ?? 'Corredora';
@@ -1260,6 +1270,44 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
     </footer>
     <!-- FIN FOOTER -->
 
+    <!-- DISCLAIMER MODAL -->
+
+    <?php if ($mostrar_disclaimer): ?>
+
+        <div class="modal fade" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title text-white" id="disclaimerLabel">Aviso importante</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p class="text-justify">La información que ves en esta página está pensada para que puedas seguir tus inversiones
+                            de forma clara y sencilla.</p>
+                        <p class="text-justify">Pueden haber diferencias con los datos que se muestran en la página de tu corredora
+                            debido a redondeos o a la frecuencia con la que se actualizan los datos en este sitio.</p>
+                        <div class="form-check mt-3 d-flex justify-content-center bg-danger py-3" style="border-radius: 5px; box-shadow: 2px 2px 5px #000000;">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="noMostrarDisclaimer">
+                            <label class="form-check-label text-white" for="noMostrarDisclaimer">
+                                No volver a mostrar este mensaje
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-custom ver" id="cerrarDisclaimer" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-check me-2"></i>Cerrar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    <?php endif; ?>
+    <!-- FIN DISCLAIMER MODAL -->
+
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -1269,6 +1317,27 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/graficos.js"></script>
     <script src="../js/preloader.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            <?php if ($mostrar_disclaimer): ?>
+                var disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
+                disclaimerModal.show();
+
+                document.getElementById("cerrarDisclaimer").addEventListener("click", function() {
+                    if (document.getElementById("noMostrarDisclaimer").checked) {
+                        fetch("guardar_preferencia_disclaimer.php", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: "cliente_id=<?php echo $cliente_id; ?>"
+                        });
+                    }
+                });
+            <?php endif; ?>
+        });
+    </script>
+
     <!-- FIN JS -->
 
 </body>

@@ -1,13 +1,59 @@
 <?php
-require_once '../../config/config.php';
-include '../funciones/cliente_funciones.php';
+// 1. Verificación de sesión segura
+session_start();
+if (!isset($_SESSION['loggedin'])) {
+    header("Location: ../login.php");
+    exit;
+}
 
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : 1;
+// 2. Obtener datos del dólar
+require_once '../funciones/dolar_cronista.php';
+require_once '../funciones/formato_dinero.php';
 
-$datos_corredora = obtenerDatosCorredora($cliente_id);
-$url_corredora = $datos_corredora['url'];
-$nombre_corredora = $datos_corredora['corredora'];
+// Obtener el id del cliente desde la URL
+$cliente_id = isset($_GET['cliente_id']) ? (int)$_GET['cliente_id'] : 1;
 
+/**
+ * Calcula el promedio entre los valores de compra y venta
+ * @param mixed $compra Valor de compra
+ * @param mixed $venta Valor de venta
+ * @return mixed Promedio o "-" si hay valores inválidos
+ */
+function calcularPromedio($compra, $venta)
+{
+    if ($compra === "-" || $venta === "-" || !is_numeric($compra) || !is_numeric($venta)) {
+        return "-";
+    }
+    return ($compra + $venta) / 2;
+}
+
+// 3. Organizar datos en estructura clara
+$cotizaciones = [
+    'Oficial' => [
+        'compra' => $oficial_compra,
+        'venta' => $oficial_venta
+    ],
+    'Blue' => [
+        'compra' => $blue_compra,
+        'venta' => $blue_venta
+    ],
+    'MEP' => [
+        'compra' => $bolsa_compra,
+        'venta' => $bolsa_venta
+    ],
+    'Tarjeta' => [
+        'compra' => $tarjeta_compra,
+        'venta' => $tarjeta_venta
+    ],
+    'Mayorista' => [
+        'compra' => $mayorista_compra,
+        'venta' => $mayorista_venta
+    ],
+    'Contado con Liqui' => [
+        'compra' => $contadoconliqui_compra,
+        'venta' => $contadoconliqui_venta
+    ]
+];
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +62,7 @@ $nombre_corredora = $datos_corredora['corredora'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cotización de dólares - Goodfellas Inc.</title>
+    <title>Goodfellas Inc.</title>
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
@@ -26,6 +72,7 @@ $nombre_corredora = $datos_corredora['corredora'];
 </head>
 
 <body>
+
     <!-- PRELOADER -->
     <div class="preloader" id="preloader">
         <div class="preloader-content">
@@ -53,7 +100,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                         <a class="nav-link" href="historial.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-hourglass me-2"></i>Historial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="dolares.php"><i class="fa-solid fa-dollar-sign me-2"></i>Dólares</a>
+                        <a class="nav-link active" href="dolares.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-dollar-sign me-2"></i>Dólares</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>
@@ -69,92 +116,48 @@ $nombre_corredora = $datos_corredora['corredora'];
 
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
-            <p>Tu corredora es<br><a href="<?php echo $url_corredora; ?>" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><?php echo $nombre_corredora; ?></a></p>
+            <h4 class="fancy">Cotización de Dólares</h4>
         </div>
         <!-- FIN TITULO -->
 
         <hr class="mod">
 
-        <!-- COTIZACION DOLAR -->
-        <div class="col-12 text-center">
-            <div class="container-fluid my-4 efectivo" id="dolar">
+        <!-- TABLA DÓLARES -->
+        <div class="col-3"></div>
+        <div class="col-6 text-center">
+            <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Tipos de cambio</h5>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
-                        <thead>
+                        <thead class="bg-secondary text-white">
                             <tr>
-                                <th colspan="3">Oficial</th>
-                                <th colspan="3">Blue</th>
-                                <th colspan="3">Bolsa</th>
+                                <th>Tipo</th>
+                                <th>Compra</th>
+                                <th>Venta</th>
+                                <th>Promedio</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Promedio</td>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Promedio</td>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Promedio</td>
-                            </tr>
-                            <tr>
-                                <td>$ <?php echo formatear_dinero($oficial_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($oficial_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero(($oficial_compra + $oficial_venta) / 2); ?></td>
-                                <td>$ <?php echo formatear_dinero($blue_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($blue_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero(($blue_compra + $blue_venta) / 2); ?></td>
-                                <td>$ <?php echo formatear_dinero($bolsa_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($bolsa_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero(($bolsa_compra + $bolsa_venta) / 2); ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr class="linea-accion">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th colspan="3">CCL</th>
-                                <th colspan="3">Tarjeta</th>
-                                <th colspan="3">Mayorista</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Promedio</td>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Promedio</td>
-                                <td>Compra</td>
-                                <td>Venta</td>
-                                <td>Promedio</td>
-                            </tr>
-                            <tr>
-                                <td>$ <?php echo formatear_dinero($contadoconliqui_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($contadoconliqui_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero(($contadoconliqui_compra + $contadoconliqui_venta) / 2); ?></td>
-                                <td>$ <?php echo formatear_dinero($tarjeta_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($tarjeta_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero(($tarjeta_compra + $tarjeta_venta) / 2); ?></td>
-                                <td>$ <?php echo formatear_dinero($mayorista_compra); ?></td>
-                                <td>$ <?php echo formatear_dinero($mayorista_venta); ?></td>
-                                <td>$ <?php echo formatear_dinero(($mayorista_compra + $mayorista_venta) / 2); ?></td>
-                            </tr>
+                            <?php foreach ($cotizaciones as $tipo => $cotizacion): ?>
+                                <tr>
+                                    <td class="fw-bold text-left"><?= htmlspecialchars($tipo) ?></td>
+                                    <td class="text-right"><?= ($cotizacion['compra'] !== "-") ? '$ ' . formatear_dinero($cotizacion['compra'], 2) : '-' ?></td>
+                                    <td class="text-right"><?= ($cotizacion['venta'] !== "-") ? '$ ' . formatear_dinero($cotizacion['venta'], 2) : '-' ?></td>
+                                    <td class="text-right">
+                                        <?php
+                                        $promedio = calcularPromedio($cotizacion['compra'], $cotizacion['venta']);
+                                        echo ($promedio !== "-") ? '$ ' . formatear_dinero($promedio, 2) : '-';
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <!-- FIN COTIZACION DOLAR -->
-
-        <hr class="mod" style="margin-bottom: 80px;">
-
+        <div class="col-3"></div>
+        <!-- FIN TABLA DÓLARES -->
 
     </div>
     <!-- FIN CONTENIDO -->
@@ -176,10 +179,10 @@ $nombre_corredora = $datos_corredora['corredora'];
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../js/tooltip.js"></script>
-    <script src="../js/botones_pesos_dolares.js"></script>
-    <script src="../js/valor_promedio_ccl.js"></script>
+    <script src="../js/easter_egg.js"></script>
     <script src="../js/preloader.js"></script>
     <!-- FIN JS -->
+
 </body>
 
 </html>

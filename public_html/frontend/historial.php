@@ -1,31 +1,44 @@
 <?php
-session_start(); // Asegúrate de que la sesión esté iniciada
-
-// Verificar si el cliente está logueado
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: login.php"); // Redirigir al login si no está logueado
-    exit;
-}
-
-// Obtener el cliente_id desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : null;
-
-// Verificar que el cliente_id de la URL coincida con el cliente_id en la sesión
-if ($cliente_id != $_SESSION['cliente_id']) {
-    header("Location: error.php"); // Redirigir a una página de error si el cliente_id no coincide
-    exit;
-}
-
-// El resto del código
+// Incluir archivo de configuración
 require_once '../../config/config.php';
-include '../funciones/cliente_funciones.php';
-include '../funciones/cliente_historial.php';
 
+// Verificar si $conexion está definido correctamente
+if (!isset($conexion)) {
+    die("Error: No se pudo establecer conexión con la base de datos.");
+}
+
+// Obtener el id del cliente desde la URL
+$cliente_id = isset($_GET['cliente_id']) ? (int)$_GET['cliente_id'] : 1;
+
+// Obtener nombre y apellido del cliente
+try {
+    $stmt = $conexion->prepare("SELECT nombre, apellido FROM clientes WHERE cliente_id = ?");
+    $stmt->execute([$cliente_id]);
+    $cliente = $stmt->fetch();
+
+    if ($cliente) {
+        $nombre = $cliente['nombre'];
+        $apellido = $cliente['apellido'];
+    } else {
+        $nombre = "Cliente";
+        $apellido = "Desconocido";
+    }
+} catch (PDOException $e) {
+    error_log("Error al obtener nombre del cliente: " . $e->getMessage());
+    $nombre = "Cliente";
+    $apellido = "Desconocido";
+}
+
+// Incluir las funciones necesarias
+require_once '../funciones/cliente_funciones.php';
+require_once '../funciones/cliente_historial.php';
+
+// Obtener datos de la corredora
 $datos_corredora = obtenerDatosCorredora($cliente_id);
-$url_corredora = $datos_corredora['url'];
-$nombre_corredora = $datos_corredora['corredora'];
-?>
+$nombre_corredora = $datos_corredora['corredora'] ?? 'Corredora';
+$url_corredora = $datos_corredora['url_corredora'] ?? '#';
 
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -33,7 +46,7 @@ $nombre_corredora = $datos_corredora['corredora'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historial de <?php echo htmlspecialchars($nombre . ' ' . $apellido); ?> - Goodfellas Inc.</title>
+    <title>Goodfellas Inc.</title>
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
@@ -41,9 +54,11 @@ $nombre_corredora = $datos_corredora['corredora'];
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <!-- FIN CSS -->
+
 </head>
 
 <body>
+
     <!-- PRELOADER -->
     <div class="preloader" id="preloader">
         <div class="preloader-content">
@@ -71,7 +86,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                         <a class="nav-link active" href="historial.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-hourglass me-2"></i>Historial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="dolares.php"><i class="fa-solid fa-dollar-sign me-2"></i>Dólares</a>
+                        <a class="nav-link" href="dolares.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-dollar-sign me-2"></i>Dólares</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>
@@ -88,8 +103,7 @@ $nombre_corredora = $datos_corredora['corredora'];
         <!-- TITULO -->
         <div class="col-12 text-center">
             <h4 class="fancy">Historial de <?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
-            <a href="cliente.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
-                <i class="fa-solid fa-magnifying-glass me-2"></i>Tenencia</a>
+            <p>Tu corredora es<br><a href="<?php echo $url_corredora; ?>" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><?php echo $nombre_corredora; ?></a></p>
         </div>
         <!-- FIN TITULO -->
 
@@ -118,7 +132,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Resumen Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -153,7 +167,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Resumen Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th></th>
                                     <th>Valor Inicial</th>
@@ -206,7 +220,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Resumen Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -241,7 +255,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Resumen Completo</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th></th>
                                     <th>Valor Inicial</th>
@@ -314,7 +328,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -340,14 +354,14 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_acciones_pesos" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="3">Compra</th>
-                                    <th colspan="3">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="3" class="text-center">Compra</th>
+                                    <th colspan="3" class="text-center">Venta</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -403,7 +417,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -429,14 +443,14 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_acciones_dolares" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="4">Compra</th>
-                                    <th colspan="4">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="4" class="text-center">Compra</th>
+                                    <th colspan="4" class="text-center">Venta</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -517,7 +531,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -543,14 +557,14 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_cedear_pesos" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="3">Compra</th>
-                                    <th colspan="3">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="3" class="text-center">Compra</th>
+                                    <th colspan="3" class="text-center">Venta</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -606,7 +620,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -632,14 +646,14 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_cedear_dolares" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="4">Compra</th>
-                                    <th colspan="4">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="4" class="text-center">Compra</th>
+                                    <th colspan="4" class="text-center">Venta</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -721,7 +735,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -747,14 +761,14 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_bonos_pesos" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="3">Compra</th>
-                                    <th colspan="3">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="3" class="text-center">Compra</th>
+                                    <th colspan="3" class="text-center">Venta</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -810,7 +824,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -836,14 +850,14 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_bonos_dolares" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="4">Compra</th>
-                                    <th colspan="4">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="4" class="text-center">Compra</th>
+                                    <th colspan="4" class="text-center">Venta</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -925,7 +939,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -951,14 +965,14 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_fondos_pesos" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="3">Compra</th>
-                                    <th colspan="3">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="3" class="text-center">Compra</th>
+                                    <th colspan="3" class="text-center">Venta</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -1014,7 +1028,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Consolidado</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor total Compra</th>
                                     <th>Valor total Venta</th>
@@ -1040,14 +1054,14 @@ $nombre_corredora = $datos_corredora['corredora'];
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
                         <table id="completa_fondos_dolares" class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="4">Compra</th>
-                                    <th colspan="4">Venta</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="4" class="text-center">Compra</th>
+                                    <th colspan="4" class="text-center">Venta</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
                                     <th>Fecha<!-- Compra --></th>
@@ -1125,15 +1139,16 @@ $nombre_corredora = $datos_corredora['corredora'];
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="../js/tooltip.js"></script>
-    <script src="../js/botones_pesos_dolares.js"></script>
-    <script src="../js/filtro_tablas.js"></script>
+    <script type="module" src="../js/filtro_tablas.js"></script>
+    <script type="module" src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/preloader.js"></script>
     <!-- FIN JS -->
+
 </body>
 
 </html>

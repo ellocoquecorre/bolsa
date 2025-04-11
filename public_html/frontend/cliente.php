@@ -1,30 +1,49 @@
 <?php
-session_start(); // Asegúrate de que la sesión esté iniciada
-
-// Verificar si el cliente está logueado
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: login.php"); // Redirigir al login si no está logueado
-    exit;
-}
-
-// Obtener el cliente_id desde la URL
-$cliente_id = isset($_GET['cliente_id']) ? $_GET['cliente_id'] : null;
-
-// Verificar que el cliente_id de la URL coincida con el cliente_id en la sesión
-if ($cliente_id != $_SESSION['cliente_id']) {
-    header("Location: error.php"); // Redirigir a una página de error si el cliente_id no coincide
-    exit;
-}
-
-// El resto del código
 require_once '../../config/config.php';
-include '../funciones/cliente_funciones.php';
 
+if (!isset($conexion)) {
+    die("Error: No se pudo establecer conexión con la base de datos.");
+}
+
+$cliente_id = isset($_GET['cliente_id']) ? (int)$_GET['cliente_id'] : 1;
+
+// Obtener nombre y apellido
+try {
+    $stmt = $conexion->prepare("SELECT nombre, apellido FROM clientes WHERE cliente_id = ?");
+    $stmt->execute([$cliente_id]);
+    $cliente = $stmt->fetch();
+
+    $nombre = $cliente['nombre'] ?? "Cliente";
+    $apellido = $cliente['apellido'] ?? "Desconocido";
+} catch (PDOException $e) {
+    error_log("Error al obtener nombre del cliente: " . $e->getMessage());
+    $nombre = "Cliente";
+    $apellido = "Desconocido";
+}
+
+// Incluir funciones
+require_once '../funciones/cliente_funciones.php';
+require_once '../funciones/formato_dinero.php';
+
+// Obtener saldo en pesos y formatearlo
+$saldo_en_pesos = obtenerSaldoPesos($cliente_id);
+$saldo_en_pesos_formateado = formatear_dinero($saldo_en_pesos);
+
+// Definir promedio_ccl si no está
+if (!isset($promedio_ccl)) {
+    $promedio_ccl = 1;
+}
+
+// Obtener saldo en dólares y formatearlo
+$saldo_en_dolares = obtenerSaldoDolares($cliente_id, $promedio_ccl);
+$saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
+
+// Obtener datos de la corredora
 $datos_corredora = obtenerDatosCorredora($cliente_id);
-$url_corredora = $datos_corredora['url'];
-$nombre_corredora = $datos_corredora['corredora'];
-?>
+$nombre_corredora = $datos_corredora['corredora'] ?? 'Corredora';
+$url_corredora = $datos_corredora['url_corredora'] ?? '#';
 
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -69,7 +88,7 @@ $nombre_corredora = $datos_corredora['corredora'];
                         <a class="nav-link" href="historial.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-hourglass me-2"></i>Historial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="dolares.php"><i class="fa-solid fa-dollar-sign me-2"></i>Dólares</a>
+                        <a class="nav-link" href="dolares.php?cliente_id=<?php echo $cliente_id; ?>"><i class="fa-solid fa-dollar-sign me-2"></i>Dólares</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Salir</a>

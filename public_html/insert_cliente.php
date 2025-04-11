@@ -17,10 +17,10 @@ if ($conn->connect_error) {
 $clientes = [
     [
         'cliente_id' => 2,
-        'email' => 'lula@gmail.com',
+        'email' => 'harry.flashman@gmail.com',
         'password' => 'tgy107Duna',
-        'nombre' => 'Lula',
-        'apellido' => 'Negra',
+        'nombre' => 'Harry',
+        'apellido' => 'Flashman',
         'telefono' => '158928',
         'corredora' => 'Lebsa',
         'url' => 'https://operar.winvest.ar/'

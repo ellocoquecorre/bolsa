@@ -443,8 +443,8 @@ require_once '../funciones/cliente_historial.php';
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
-                                    <th colspan="4">Compra</th>
-                                    <th colspan="4">Venta</th>
+                                    <th colspan="4" class="text-center">Compra</th>
+                                    <th colspan="4" class="text-center">Venta</th>
                                     <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
@@ -646,8 +646,8 @@ require_once '../funciones/cliente_historial.php';
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
-                                    <th colspan="4">Compra</th>
-                                    <th colspan="4">Venta</th>
+                                    <th colspan="4" class="text-center">Compra</th>
+                                    <th colspan="4" class="text-center">Venta</th>
                                     <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
@@ -850,8 +850,8 @@ require_once '../funciones/cliente_historial.php';
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
-                                    <th colspan="4">Compra</th>
-                                    <th colspan="4">Venta</th>
+                                    <th colspan="4" class="text-center">Compra</th>
+                                    <th colspan="4" class="text-center">Venta</th>
                                     <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
@@ -1054,8 +1054,8 @@ require_once '../funciones/cliente_historial.php';
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: middle;">Cantidad</th>
-                                    <th colspan="4">Compra</th>
-                                    <th colspan="4">Venta</th>
+                                    <th colspan="4" class="text-center">Compra</th>
+                                    <th colspan="4" class="text-center">Venta</th>
                                     <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
                                     <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>

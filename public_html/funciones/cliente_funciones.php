@@ -63,6 +63,30 @@ function obtenerCorredoraCliente($cliente_id)
 }
 // FIN CORREDORA CLIENTE
 
+// DATOS COMPLETOS DE LA CORREDORA
+function obtenerDatosCorredora($cliente_id)
+{
+    global $conexion;
+
+    try {
+        $stmt = $conexion->prepare("SELECT corredora, url FROM clientes WHERE cliente_id = :cliente_id");
+        $stmt->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $fila ? [
+            'corredora' => $fila['corredora'] ?? '',
+            'url_corredora' => $fila['url'] ?? ''
+        ] : ['corredora' => '', 'url_corredora' => ''];
+    } catch (PDOException $e) {
+        error_log('Error en obtenerDatosCorredora: ' . $e->getMessage());
+        return ['corredora' => '', 'url_corredora' => ''];
+    }
+}
+
+// FIN DATOS COMPLETOS DE LA CORREDORA
+
 // SALDO EN PESOS
 function obtenerSaldoPesos($cliente_id)
 {

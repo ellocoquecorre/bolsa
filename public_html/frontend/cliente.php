@@ -61,6 +61,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
 </head>
 
 <body>
+
     <!-- PRELOADER -->
     <div class="preloader" id="preloader">
         <div class="preloader-content">

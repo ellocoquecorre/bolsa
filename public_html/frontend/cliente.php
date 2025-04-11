@@ -61,7 +61,8 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?> - Goodfellas Inc.</title>
+    <title>Goodfellas Inc.</title>
+    <meta name="cliente_id" content="<?php echo $cliente_id; ?>">
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
@@ -86,7 +87,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
             <a class="navbar-brand" href="#">
                 <img src="../img/logo.png" alt="Logo" title="GoodFellas" />
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle nav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -145,7 +146,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -178,7 +179,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                         <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                         <div class="col-lg-6 col-md-12 table-responsive">
                             <table class="table table-bordered table-striped">
-                                <thead>
+                                <thead class="bg-secondary text-white">
                                     <tr>
                                         <th></th>
                                         <th>Valor Inicial</th>
@@ -221,7 +222,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                         </div>
                         <div class="col-lg-6 col-md-12 table-responsive">
                             <table class="table table-bordered table-striped">
-                                <thead>
+                                <thead class="bg-secondary text-white">
                                     <tr>
                                         <th colspan="2">Efectivo</th>
                                     </tr>
@@ -308,7 +309,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -341,7 +342,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                         <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                         <div class="col-lg-6 col-md-12 table-responsive">
                             <table class="table table-bordered table-striped">
-                                <thead>
+                                <thead class="bg-secondary text-white">
                                     <tr>
                                         <th></th>
                                         <th>Valor Inicial</th>
@@ -384,7 +385,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                         </div>
                         <div class="col-lg-6 col-md-12 table-responsive">
                             <table class="table table-bordered table-striped">
-                                <thead>
+                                <thead class="bg-secondary text-white">
                                     <tr>
                                         <th colspan="2">Efectivo</th>
                                     </tr>
@@ -493,7 +494,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -519,7 +520,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
@@ -547,16 +548,16 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                                     $rentabilidad_acciones_pesos = (($rendimiento_acciones_pesos) / $valor_inicial_acciones_pesos) * 100;
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                            <td>{$accion['ticker']}</td>
-                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
-                                        </tr>";
+                                                <td>{$accion['ticker']}</td>
+                                                <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                                <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
+                                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
+                                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
+                                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
+                                                <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
+                                                <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
+                                            </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -574,7 +575,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -600,7 +601,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
@@ -638,18 +639,18 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
 
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                            <td>{$accion['ticker']}</td>
-                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
-                                        </tr>";
+                                                <td>{$accion['ticker']}</td>
+                                                <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                                <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
+                                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
+                                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                                <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_compra_ccl)) . "</td>
+                                                <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                                <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
+                                                <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
+                                                <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
+                                                <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
+                                            </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -690,7 +691,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -716,7 +717,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
@@ -771,7 +772,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -797,7 +798,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
@@ -853,8 +854,6 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                 </div>
                 <!-- Fin Cedear Dólares -->
 
-                <hr class="linea-accion">
-
             </div>
         </div>
         <!-- FIN CEDEAR -->
@@ -884,7 +883,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -910,7 +909,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
@@ -965,7 +964,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -991,7 +990,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
@@ -1051,8 +1050,6 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                 </div>
                 <!-- Fin Bonos Dólares -->
 
-                <hr class="linea-accion">
-
             </div>
         </div>
         <!-- FIN BONOS -->
@@ -1082,7 +1079,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -1108,7 +1105,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
@@ -1163,7 +1160,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Consolidada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th>Valor Total Inicial</th>
                                     <th>Valor Total Actual</th>
@@ -1189,7 +1186,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
                                     <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
@@ -1270,74 +1267,16 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
     </footer>
     <!-- FIN FOOTER -->
 
-    <!-- DISCLAIMER MODAL -->
-
-    <?php if ($mostrar_disclaimer): ?>
-
-        <div class="modal fade" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-
-                    <div class="modal-header bg-danger">
-                        <h5 class="modal-title text-white" id="disclaimerLabel">Aviso importante</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <p class="text-justify">La información que ves en esta página está pensada para que puedas seguir tus inversiones
-                            de forma clara y sencilla.</p>
-                        <p class="text-justify">Pueden haber diferencias con los datos que se muestran en la página de tu corredora
-                            debido a redondeos o a la frecuencia con la que se actualizan los datos en este sitio.</p>
-                        <div class="form-check mt-3 d-flex justify-content-center bg-danger py-3" style="border-radius: 5px; box-shadow: 2px 2px 5px #000000;">
-                            <input class="form-check-input me-2" type="checkbox" value="" id="noMostrarDisclaimer">
-                            <label class="form-check-label text-white" for="noMostrarDisclaimer">
-                                No volver a mostrar este mensaje
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-custom ver" id="cerrarDisclaimer" data-bs-dismiss="modal">
-                            <i class="fa-solid fa-check me-2"></i>Cerrar</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-    <?php endif; ?>
-    <!-- FIN DISCLAIMER MODAL -->
-
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../js/preloader.js"></script>
     <script src="../js/tooltip.js"></script>
-    <script src="../js/botones_pesos_dolares.js"></script>
+    <script src="../js/easter_egg.js"></script>
+    <script type="module" src="../js/botones_pesos_dolares.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/graficos.js"></script>
-    <script src="../js/preloader.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            <?php if ($mostrar_disclaimer): ?>
-                var disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
-                disclaimerModal.show();
-
-                document.getElementById("cerrarDisclaimer").addEventListener("click", function() {
-                    if (document.getElementById("noMostrarDisclaimer").checked) {
-                        fetch("guardar_preferencia_disclaimer.php", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/x-www-form-urlencoded"
-                            },
-                            body: "cliente_id=<?php echo $cliente_id; ?>"
-                        });
-                    }
-                });
-            <?php endif; ?>
-        });
-    </script>
-
     <!-- FIN JS -->
 
 </body>

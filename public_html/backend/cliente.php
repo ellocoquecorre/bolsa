@@ -505,7 +505,7 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                     <!-- Completa Acciones Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table id="completa_acciones_pesos" class="table table-bordered table-striped">
+                        <table id="tenencia_acciones_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -611,7 +611,7 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                     <!-- Completa Acciones Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table id="completa_acciones_dolares" class="table table-bordered table-striped">
+                        <table id="tenencia_acciones_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -762,7 +762,7 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                     <!-- Completa Cedear Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_cedear_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -868,7 +868,7 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                     <!-- Completa Cedear Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_cedear_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -1014,7 +1014,7 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                     <!-- Completa Bonos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_bonos_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -1120,7 +1120,7 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                     <!-- Completa Bonos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_bonos_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -1270,7 +1270,7 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                     <!-- Completa Fondos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_fondos_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -1376,7 +1376,7 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                     <!-- Completa Fondos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_fondos_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>

@@ -1,6 +1,9 @@
+// botones_pesos_dolares.js
+
 import { initDataTable } from './datatables.js';
 
 document.addEventListener("DOMContentLoaded", () => {
+    const columnasDolares = [2, 3, 4, 5, 6, 7, 8, 11];
 
     // Resumen
     const btnResumenPesos = document.getElementById("btnResumenPesos");
@@ -13,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnResumenDolares.classList.remove("active");
         tablaResumenPesos.classList.remove("d-none");
         tablaResumenDolares.classList.add("d-none");
-        $('#completa_acciones_pesos').DataTable().columns.adjust().draw();
+        $('#tenencia_acciones_pesos').DataTable().columns.adjust().draw();
     });
 
     btnResumenDolares.addEventListener("click", () => {
@@ -21,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnResumenPesos.classList.remove("active");
         tablaResumenDolares.classList.remove("d-none");
         tablaResumenPesos.classList.add("d-none");
-        initDataTable('#completa_acciones_dolares', 0);
+        initDataTable('#tenencia_acciones_dolares', 0, columnasDolares);
     });
 
     // Acciones
@@ -35,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnAccionesDolares.classList.remove("active");
         tablaAccionesPesos.classList.remove("d-none");
         tablaAccionesDolares.classList.add("d-none");
-        $('#completa_acciones_pesos').DataTable().columns.adjust().draw();
+        $('#tenencia_acciones_pesos').DataTable().columns.adjust().draw();
     });
 
     btnAccionesDolares.addEventListener("click", () => {
@@ -43,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnAccionesPesos.classList.remove("active");
         tablaAccionesDolares.classList.remove("d-none");
         tablaAccionesPesos.classList.add("d-none");
-        initDataTable('#completa_acciones_dolares', 0);
+        initDataTable('#tenencia_acciones_dolares', 0, columnasDolares);
     });
 
     // Cedear
@@ -57,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnCedearDolares.classList.remove("active");
         tablaCedearPesos.classList.remove("d-none");
         tablaCedearDolares.classList.add("d-none");
-        $('#completa_cedear_pesos').DataTable().columns.adjust().draw();
+        $('#tenencia_cedear_pesos').DataTable().columns.adjust().draw();
     });
 
     btnCedearDolares.addEventListener("click", () => {
@@ -65,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnCedearPesos.classList.remove("active");
         tablaCedearDolares.classList.remove("d-none");
         tablaCedearPesos.classList.add("d-none");
-        initDataTable('#completa_cedear_dolares', 0);
+        initDataTable('#tenencia_cedear_dolares', 0, columnasDolares);
     });
 
     // Bonos
@@ -79,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnBonosDolares.classList.remove("active");
         tablaBonosPesos.classList.remove("d-none");
         tablaBonosDolares.classList.add("d-none");
-        $('#completa_bonos_pesos').DataTable().columns.adjust().draw();
+        $('#tenencia_bonos_pesos').DataTable().columns.adjust().draw();
     });
 
     btnBonosDolares.addEventListener("click", () => {
@@ -87,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnBonosPesos.classList.remove("active");
         tablaBonosDolares.classList.remove("d-none");
         tablaBonosPesos.classList.add("d-none");
-        initDataTable('#completa_bonos_dolares', 0);
+        initDataTable('#tenencia_bonos_dolares', 0, columnasDolares);
     });
 
     // Fondos
@@ -101,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnFondosDolares.classList.remove("active");
         tablaFondosPesos.classList.remove("d-none");
         tablaFondosDolares.classList.add("d-none");
-        $('#completa_fondos_pesos').DataTable().columns.adjust().draw();
+        $('#tenencia_fondos_pesos').DataTable().columns.adjust().draw();
     });
 
     btnFondosDolares.addEventListener("click", () => {
@@ -109,6 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnFondosPesos.classList.remove("active");
         tablaFondosDolares.classList.remove("d-none");
         tablaFondosPesos.classList.add("d-none");
-        initDataTable('#completa_fondos_dolares', 0);
+        initDataTable('#tenencia_fondos_dolares', 0, columnasDolares);
     });
 });

@@ -1,6 +1,18 @@
 // datatables.js
 
-export function initDataTable(tableId, orderColumn = 0, nonOrderableColumns = []) {
+export function initDataTable(tableId, orderColumn = 0) {
+    // Columnas que NO se pueden ordenar, por tabla
+    const columnasNoOrdenables = {
+        '#tenencia_acciones_pesos': [2, 3, 4, 5, 6, 9],
+        '#tenencia_cedear_pesos': [2, 3, 4, 5, 6, 9],
+        '#tenencia_bonos_pesos': [2, 3, 4, 5, 6, 9],
+        '#tenencia_fondos_pesos': [2, 3, 4, 5, 6, 9],
+        '#tenencia_acciones_dolares': [2, 3, 4, 5, 6, 7, 8, 11],
+        '#tenencia_cedear_dolares': [2, 3, 4, 5, 6, 7, 8, 11],
+        '#tenencia_bonos_dolares': [2, 3, 4, 5, 6, 7, 8, 11],
+        '#tenencia_fondos_dolares': [2, 3, 4, 5, 6, 7, 8, 11]
+    };
+
     if ($.fn.DataTable.isDataTable(tableId)) {
         $(tableId).DataTable().destroy();
     }
@@ -14,7 +26,10 @@ export function initDataTable(tableId, orderColumn = 0, nonOrderableColumns = []
         order: [[orderColumn, 'asc']],
         autoWidth: true,
         columnDefs: [
-            { orderable: false, targets: nonOrderableColumns }
+            {
+                orderable: false,
+                targets: columnasNoOrdenables[tableId] || []
+            }
         ],
         dom: '<"row mb-3 d-flex align-items-baseline justify-content-center"<"col-md-4"f><"col-md-4"l><"col-md-4"i>>' +
              'rt' +

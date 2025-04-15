@@ -1280,20 +1280,28 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-center">
-                    <h5 class="modal-title text-white w-100 fw-bold" id="disclaimerModalLabel">Aviso importante</h5>
+                    <h5 class="modal-title text-white w-100 fw-bold" id="disclaimerModalLabel">
+                        <i class="fa-solid fa-circle-exclamation me-2"></i>
+                        Aviso importante
+                        <i class="fa-solid fa-circle-exclamation ms-2"></i>
+                    </h5>
                 </div>
                 <div class="modal-body">
                     <p class="text-center">Este sitio está pensado para que puedas ver tu cartera de inversiones de manera clara, sencilla y fácil entender.</p>
                     <p class="text-center">Pero tené en cuenta que los datos mostrados no siempre reflejan tu posición de forma 100% precisa.</p>
-                    <div class="form-check text-center bg-danger text-white py-3 rounded-2 custom-shadow">
-                        <input class="form-check-input mx-auto" type="checkbox" value="" id="noMostrarDisclaimer">
-                        <label class="form-check-label" for="noMostrarDisclaimer">
-                            No volver a mostrar este mensaje
-                        </label>
+                    <div class="form-check text-center bg-secondary text-white py-3 rounded-2 custom-shadow w-75 mx-auto">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="noMostrarDisclaimer">
+                            <label class="form-check-label" for="noMostrarDisclaimer">
+                                No volver a mostrar este mensaje
+                            </label>
+                        </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button id="cerrarDisclaimer" type="button" class="btn btn-primary">Cerrar</button>
+                <div class="modal-footer d-flex justify-content-center border-0">
+                    <button id="cerrarDisclaimer" type="button" class="btn btn-custom ver">
+                        <i class="fa-solid fa-times me-2"></i>Cerrar
+                    </button>
                 </div>
             </div>
         </div>

@@ -51,11 +51,13 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <!-- FIN CSS -->
 </head>
 
 <body>
+
     <!-- PRELOADER -->
     <div class="preloader" id="preloader">
         <div class="preloader-content">
@@ -503,23 +505,23 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                     <!-- Completa Acciones Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_acciones_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                     <th rowspan="2"></th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Compra</th>
-                                    <th><!-- Valor -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- Valor -->Compra</th>
+                                    <th class="text-center"><!-- Valor -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
@@ -609,26 +611,26 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                     <!-- Completa Acciones Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="completa_acciones_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Dólar CCL</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                     <th rowspan="2"></th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Valor CCL -->Compra</th>
-                                    <th><!-- Valor CCL -->Hoy</th>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- X -->Compra</th>
-                                    <th><!-- X -->Hoy</th>
+                                    <th class="text-center"><!-- Valor CCL -->Compra</th>
+                                    <th class="text-center"><!-- Valor CCL -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- X -->Compra</th>
+                                    <th class="text-center"><!-- X -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-dolares">
@@ -763,20 +765,20 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                         <table class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                     <th rowspan="2"></th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Compra</th>
-                                    <th><!-- Valor -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- Valor -->Compra</th>
+                                    <th class="text-center"><!-- Valor -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-cedear-pesos">
@@ -869,23 +871,23 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                         <table class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Dólar CCL</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                     <th rowspan="2"></th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Valor CCL -->Compra</th>
-                                    <th><!-- Valor CCL -->Hoy</th>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- X -->Compra</th>
-                                    <th><!-- X -->Hoy</th>
+                                    <th class="text-center"><!-- Valor CCL -->Compra</th>
+                                    <th class="text-center"><!-- Valor CCL -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- X -->Compra</th>
+                                    <th class="text-center"><!-- X -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-cedear-dolares">
@@ -1015,20 +1017,20 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                         <table class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                     <th rowspan="2"></th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Compra</th>
-                                    <th><!-- Valor -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- Valor -->Compra</th>
+                                    <th class="text-center"><!-- Valor -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-bonos-pesos">
@@ -1121,23 +1123,23 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                         <table class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Dólar CCL</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                     <th rowspan="2"></th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Valor CCL -->Compra</th>
-                                    <th><!-- Valor CCL -->Hoy</th>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- X -->Compra</th>
-                                    <th><!-- X -->Hoy</th>
+                                    <th class="text-center"><!-- Valor CCL -->Compra</th>
+                                    <th class="text-center"><!-- Valor CCL -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- X -->Compra</th>
+                                    <th class="text-center"><!-- X -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-bonos-dolares">
@@ -1271,20 +1273,20 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                         <table class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                     <th rowspan="2"></th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Compra</th>
-                                    <th><!-- Valor -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- Valor -->Compra</th>
+                                    <th class="text-center"><!-- Valor -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-fondos-pesos">
@@ -1377,23 +1379,23 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                         <table class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Dólar CCL</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                     <th rowspan="2"></th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Valor CCL -->Compra</th>
-                                    <th><!-- Valor CCL -->Hoy</th>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- X -->Compra</th>
-                                    <th><!-- X -->Hoy</th>
+                                    <th class="text-center"><!-- Valor CCL -->Compra</th>
+                                    <th class="text-center"><!-- Valor CCL -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- X -->Compra</th>
+                                    <th class="text-center"><!-- X -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-fondos-dolares">
@@ -1606,9 +1608,12 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="../js/preloader.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/easter_egg.js"></script>
+    <script type="module" src="../js/filtro_tablas.js"></script>
     <script type="module" src="../js/botones_pesos_dolares.js"></script>
     <script src="../js/eliminar_acciones.js"></script>
     <script src="../js/eliminar_cedears.js"></script>

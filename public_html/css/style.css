@@ -414,3 +414,6 @@ footer {
   color: #0B486B;
   text-decoration: underline;
 }
+.custom-shadow {
+  box-shadow: 2px 2px 5px black;
+}

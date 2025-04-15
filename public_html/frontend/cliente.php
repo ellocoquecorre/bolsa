@@ -1,11 +1,20 @@
 <?php
 require_once '../../config/config.php';
 
+session_start();
+
+// Verificar si el cliente está logueado
+if (!isset($_SESSION['cliente_id'])) {
+    // Redirigir a login.php si no está logueado
+    header('Location: login.php');
+    exit;
+}
+
+$cliente_id = $_SESSION['cliente_id']; // Obtener cliente_id desde la sesión
+
 if (!isset($conexion)) {
     die("Error: No se pudo establecer conexión con la base de datos.");
 }
-
-$cliente_id = isset($_GET['cliente_id']) ? (int)$_GET['cliente_id'] : 1;
 
 // Obtener nombre y apellido
 try {
@@ -52,7 +61,6 @@ try {
 $datos_corredora = obtenerDatosCorredora($cliente_id);
 $nombre_corredora = $datos_corredora['corredora'] ?? 'Corredora';
 $url_corredora = $datos_corredora['url_corredora'] ?? '#';
-
 ?>
 
 <!DOCTYPE html>
@@ -1267,6 +1275,30 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
     </footer>
     <!-- FIN FOOTER -->
 
+    <!-- Disclaimer Modal -->
+    <div class="modal fade" id="disclaimerModal" tabindex="-1" aria-labelledby="disclaimerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-center">
+                    <h5 class="modal-title text-white w-100 fw-bold" id="disclaimerModalLabel">Aviso importante</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Este sitio está pensado para que puedas ver tu cartera de inversiones de manera clara, sencilla y fácil entender.</p>
+                    <p class="text-center">Pero tené en cuenta que los datos mostrados no siempre reflejan tu posición de forma 100% precisa.</p>
+                    <div class="form-check text-center bg-danger text-white py-3 rounded-2 custom-shadow">
+                        <input class="form-check-input mx-auto" type="checkbox" value="" id="noMostrarDisclaimer">
+                        <label class="form-check-label" for="noMostrarDisclaimer">
+                            No volver a mostrar este mensaje
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cerrarDisclaimer" type="button" class="btn btn-primary">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -1277,6 +1309,45 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
     <script type="module" src="../js/botones_pesos_dolares.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/graficos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pasamos el valor de mostrar_disclaimer desde PHP a JS
+            const mostrarDisclaimer = <?php echo json_encode($mostrar_disclaimer); ?>;
+
+            // Si mostrar_disclaimer es 1, mostramos el modal
+            if (mostrarDisclaimer == 1) {
+                const disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
+                disclaimerModal.show();
+
+                document.getElementById('cerrarDisclaimer').addEventListener('click', function() {
+                    const noMostrar = document.getElementById('noMostrarDisclaimer').checked;
+
+                    if (noMostrar) {
+                        // Guardar preferencia con fetch
+                        fetch('disclaimer.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    mostrar_disclaimer: 0
+                                })
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    disclaimerModal.hide();
+                                } else {
+                                    alert("Error al guardar la preferencia.");
+                                }
+                            });
+                    } else {
+                        disclaimerModal.hide(); // Si no está marcada la casilla, lo volvemos a mostrar la próxima vez
+                    }
+                });
+            }
+        });
+    </script>
     <!-- FIN JS -->
 
 </body>

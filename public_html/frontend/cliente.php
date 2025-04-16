@@ -529,7 +529,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Acciones Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table id="tenencia_acciones_pesos_front" class="table table-bordered table-striped">
+                        <table id="tenencia_acciones_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -610,7 +610,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Acciones Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table id="tenencia_acciones_dolares_front" class="table table-bordered table-striped">
+                        <table id="tenencia_acciones_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -724,7 +724,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Cedear Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table id="tenencia_cedear_pesos_front" class="table table-bordered table-striped">
+                        <table id="tenencia_cedear_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -805,7 +805,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Cedear Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table id="tenencia_cedear_dolares_front" class="table table-bordered table-striped">
+                        <table id="tenencia_cedear_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -916,7 +916,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Bonos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table id="tenencia_bonos_pesos_front" class="table table-bordered table-striped">
+                        <table id="tenencia_bonos_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -997,7 +997,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Bonos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table id="tenencia_bonos_dolares_front" class="table table-bordered table-striped">
+                        <table id="tenencia_bonos_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -1112,7 +1112,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Fondos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table id="tenencia_fondos_pesos_front" class="table table-bordered table-striped">
+                        <table id="tenencia_fondos_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -1193,7 +1193,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Fondos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table id="tenencia_fondos_dolares_front" class="table table-bordered table-striped">
+                        <table id="tenencia_fondos_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -1317,8 +1317,8 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
     <script src="../js/preloader.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/easter_egg.js"></script>
-    <script type="module" src="../js/filtro_tablas.js"></script>
-    <script type="module" src="../js/botones_pesos_dolares.js"></script>
+    <script type="module" src="js/filtro_tablas.js"></script>
+    <script type="module" src="js/botones_pesos_dolares.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/graficos.js"></script>
     <!-- FIN JS -->

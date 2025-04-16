@@ -1145,7 +1145,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="../js/tooltip.js"></script>
     <script type="module" src="../js/filtro_tablas.js"></script>
-    <script type="module" src="../js/botones_pesos_dolares.js"></script>
+    <script type="module" src="../js/botones_historial_pesos_dolares.js"></script>
     <script src="../js/preloader.js"></script>
     <!-- FIN JS -->
 

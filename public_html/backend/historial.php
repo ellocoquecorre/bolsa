@@ -349,7 +349,7 @@ require_once '../funciones/cliente_historial.php';
                     <!-- Completa Acciones Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table id="completa_acciones_pesos" class="table table-bordered table-striped">
+                        <table id="historial_acciones_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -360,12 +360,12 @@ require_once '../funciones/cliente_historial.php';
                                     <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th>Fecha<!-- Compra --></th>
-                                    <th>Precio<!-- Compra --></th>
-                                    <th>Total<!-- Compra --></th>
-                                    <th>Fecha<!-- Venta --></th>
-                                    <th>Precio<!-- Venta --></th>
-                                    <th>Total<!-- Venta --></th>
+                                    <th class="text-center">Fecha<!-- Compra --></th>
+                                    <th class="text-center">Precio<!-- Compra --></th>
+                                    <th class="text-center">Total<!-- Compra --></th>
+                                    <th class="text-center">Fecha<!-- Venta --></th>
+                                    <th class="text-center">Precio<!-- Venta --></th>
+                                    <th class="text-center">Total<!-- Venta --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
@@ -438,7 +438,7 @@ require_once '../funciones/cliente_historial.php';
                     <!-- Completa Acciones Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table id="completa_acciones_dolares" class="table table-bordered table-striped">
+                        <table id="historial_acciones_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -449,14 +449,14 @@ require_once '../funciones/cliente_historial.php';
                                     <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th>Fecha<!-- Compra --></th>
-                                    <th>Dolar CCL<!-- Compra --></th>
-                                    <th>Precio<!-- Compra --></th>
-                                    <th>Total<!-- Compra --></th>
-                                    <th>Fecha<!-- Venta --></th>
-                                    <th>Dolar CCL<!-- Venta --></th>
-                                    <th>Precio<!-- Venta --></th>
-                                    <th>Total<!-- Venta --></th>
+                                    <th class="text-center">Fecha<!-- Compra --></th>
+                                    <th class="text-center">Dolar CCL<!-- Compra --></th>
+                                    <th class="text-center">Precio<!-- Compra --></th>
+                                    <th class="text-center">Total<!-- Compra --></th>
+                                    <th class="text-center">Fecha<!-- Venta --></th>
+                                    <th class="text-center">Dolar CCL<!-- Venta --></th>
+                                    <th class="text-center">Precio<!-- Venta --></th>
+                                    <th class="text-center">Total<!-- Venta --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-dolares">
@@ -552,7 +552,7 @@ require_once '../funciones/cliente_historial.php';
                     <!-- Completa Cedear Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table id="completa_cedear_pesos" class="table table-bordered table-striped">
+                        <table id="historial_cedear_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -563,12 +563,12 @@ require_once '../funciones/cliente_historial.php';
                                     <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th>Fecha<!-- Compra --></th>
-                                    <th>Precio<!-- Compra --></th>
-                                    <th>Total<!-- Compra --></th>
-                                    <th>Fecha<!-- Venta --></th>
-                                    <th>Precio<!-- Venta --></th>
-                                    <th>Total<!-- Venta --></th>
+                                    <th class="text-center">Fecha<!-- Compra --></th>
+                                    <th class="text-center">Precio<!-- Compra --></th>
+                                    <th class="text-center">Total<!-- Compra --></th>
+                                    <th class="text-center">Fecha<!-- Venta --></th>
+                                    <th class="text-center">Precio<!-- Venta --></th>
+                                    <th class="text-center">Total<!-- Venta --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-cedear-pesos">
@@ -641,7 +641,7 @@ require_once '../funciones/cliente_historial.php';
                     <!-- Completa Cedear Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table id="completa_cedear_dolares" class="table table-bordered table-striped">
+                        <table id="historial_cedear_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -652,14 +652,14 @@ require_once '../funciones/cliente_historial.php';
                                     <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th>Fecha<!-- Compra --></th>
-                                    <th>Dolar CCL<!-- Compra --></th>
-                                    <th>Precio<!-- Compra --></th>
-                                    <th>Total<!-- Compra --></th>
-                                    <th>Fecha<!-- Venta --></th>
-                                    <th>Dolar CCL<!-- Venta --></th>
-                                    <th>Precio<!-- Venta --></th>
-                                    <th>Total<!-- Venta --></th>
+                                    <th class="text-center">Fecha<!-- Compra --></th>
+                                    <th class="text-center">Dolar CCL<!-- Compra --></th>
+                                    <th class="text-center">Precio<!-- Compra --></th>
+                                    <th class="text-center">Total<!-- Compra --></th>
+                                    <th class="text-center">Fecha<!-- Venta --></th>
+                                    <th class="text-center">Dolar CCL<!-- Venta --></th>
+                                    <th class="text-center">Precio<!-- Venta --></th>
+                                    <th class="text-center">Total<!-- Venta --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-cedear-dolares">
@@ -756,7 +756,7 @@ require_once '../funciones/cliente_historial.php';
                     <!-- Completa Bonos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table id="completa_bonos_pesos" class="table table-bordered table-striped">
+                        <table id="historial_bonos_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -767,12 +767,12 @@ require_once '../funciones/cliente_historial.php';
                                     <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th>Fecha<!-- Compra --></th>
-                                    <th>Precio<!-- Compra --></th>
-                                    <th>Total<!-- Compra --></th>
-                                    <th>Fecha<!-- Venta --></th>
-                                    <th>Precio<!-- Venta --></th>
-                                    <th>Total<!-- Venta --></th>
+                                    <th class="text-center">Fecha<!-- Compra --></th>
+                                    <th class="text-center">Precio<!-- Compra --></th>
+                                    <th class="text-center">Total<!-- Compra --></th>
+                                    <th class="text-center">Fecha<!-- Venta --></th>
+                                    <th class="text-center">Precio<!-- Venta --></th>
+                                    <th class="text-center">Total<!-- Venta --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-bonos-pesos">
@@ -845,7 +845,7 @@ require_once '../funciones/cliente_historial.php';
                     <!-- Completa Bonos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table id="completa_bonos_dolares" class="table table-bordered table-striped">
+                        <table id="historial_bonos_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -856,14 +856,14 @@ require_once '../funciones/cliente_historial.php';
                                     <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th>Fecha<!-- Compra --></th>
-                                    <th>Dolar CCL<!-- Compra --></th>
-                                    <th>Precio<!-- Compra --></th>
-                                    <th>Total<!-- Compra --></th>
-                                    <th>Fecha<!-- Venta --></th>
-                                    <th>Dolar CCL<!-- Venta --></th>
-                                    <th>Precio<!-- Venta --></th>
-                                    <th>Total<!-- Venta --></th>
+                                    <th class="text-center">Fecha<!-- Compra --></th>
+                                    <th class="text-center">Dolar CCL<!-- Compra --></th>
+                                    <th class="text-center">Precio<!-- Compra --></th>
+                                    <th class="text-center">Total<!-- Compra --></th>
+                                    <th class="text-center">Fecha<!-- Venta --></th>
+                                    <th class="text-center">Dolar CCL<!-- Venta --></th>
+                                    <th class="text-center">Precio<!-- Venta --></th>
+                                    <th class="text-center">Total<!-- Venta --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-bonos-dolares">
@@ -960,7 +960,7 @@ require_once '../funciones/cliente_historial.php';
                     <!-- Completa Fondos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table id="completa_fondos_pesos" class="table table-bordered table-striped">
+                        <table id="historial_fondos_pesos" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -971,12 +971,12 @@ require_once '../funciones/cliente_historial.php';
                                     <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th>Fecha<!-- Compra --></th>
-                                    <th>Precio<!-- Compra --></th>
-                                    <th>Total<!-- Compra --></th>
-                                    <th>Fecha<!-- Venta --></th>
-                                    <th>Precio<!-- Venta --></th>
-                                    <th>Total<!-- Venta --></th>
+                                    <th class="text-center">Fecha<!-- Compra --></th>
+                                    <th class="text-center">Precio<!-- Compra --></th>
+                                    <th class="text-center">Total<!-- Compra --></th>
+                                    <th class="text-center">Fecha<!-- Venta --></th>
+                                    <th class="text-center">Precio<!-- Venta --></th>
+                                    <th class="text-center">Total<!-- Venta --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-fondos-pesos">
@@ -1049,7 +1049,7 @@ require_once '../funciones/cliente_historial.php';
                     <!-- Completa Fondos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Historial Completo</h6>
                     <div class="table-responsive">
-                        <table id="completa_fondos_dolares" class="table table-bordered table-striped">
+                        <table id="historial_fondos_dolares" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: middle;">Ticker</th>
@@ -1060,14 +1060,14 @@ require_once '../funciones/cliente_historial.php';
                                     <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th>Fecha<!-- Compra --></th>
-                                    <th>Dolar CCL<!-- Compra --></th>
-                                    <th>Precio<!-- Compra --></th>
-                                    <th>Total<!-- Compra --></th>
-                                    <th>Fecha<!-- Venta --></th>
-                                    <th>Dolar CCL<!-- Venta --></th>
-                                    <th>Precio<!-- Venta --></th>
-                                    <th>Total<!-- Venta --></th>
+                                    <th class="text-center">Fecha<!-- Compra --></th>
+                                    <th class="text-center">Dolar CCL<!-- Compra --></th>
+                                    <th class="text-center">Precio<!-- Compra --></th>
+                                    <th class="text-center">Total<!-- Compra --></th>
+                                    <th class="text-center">Fecha<!-- Venta --></th>
+                                    <th class="text-center">Dolar CCL<!-- Venta --></th>
+                                    <th class="text-center">Precio<!-- Venta --></th>
+                                    <th class="text-center">Total<!-- Venta --></th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-fondos-dolares">
@@ -1141,7 +1141,7 @@ require_once '../funciones/cliente_historial.php';
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="../js/tooltip.js"></script>
     <script type="module" src="../js/filtro_tablas.js"></script>
-    <script type="module" src="../js/botones_pesos_dolares.js"></script>
+    <script type="module" src="../js/botones_historial_pesos_dolares.js"></script>
     <script src="../js/preloader.js"></script>
     <!-- FIN JS -->
 

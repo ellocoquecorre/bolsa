@@ -3,6 +3,7 @@
 export function initDataTable(tableId, orderColumn = 0) {
     // Columnas que NO se pueden ordenar, por tabla
     const columnasNoOrdenables = {
+        // Cliente
         '#tenencia_acciones_pesos': [2, 3, 4, 5, 6, 9],
         '#tenencia_cedear_pesos': [2, 3, 4, 5, 6, 9],
         '#tenencia_bonos_pesos': [2, 3, 4, 5, 6, 9],
@@ -10,7 +11,17 @@ export function initDataTable(tableId, orderColumn = 0) {
         '#tenencia_acciones_dolares': [2, 3, 4, 5, 6, 7, 8, 11],
         '#tenencia_cedear_dolares': [2, 3, 4, 5, 6, 7, 8, 11],
         '#tenencia_bonos_dolares': [2, 3, 4, 5, 6, 7, 8, 11],
-        '#tenencia_fondos_dolares': [2, 3, 4, 5, 6, 7, 8, 11]
+        '#tenencia_fondos_dolares': [2, 3, 4, 5, 6, 7, 8, 11],
+
+        // Historial
+        '#historial_acciones_pesos': [1, 3, 4, 6, 7],
+        '#historial_cedear_pesos': [1, 3, 4, 6, 7],
+        '#historial_bonos_pesos': [1, 3, 4, 6, 7],
+        '#historial_fondos_pesos': [1, 3, 4, 6, 7],
+        '#historial_acciones_dolares': [1, 3, 4, 5, 7, 8, 9],
+        '#historial_cedear_dolares': [1, 3, 4, 5, 7, 8, 9],
+        '#historial_bonos_dolares': [1, 3, 4, 5, 7, 8, 9],
+        '#historial_fondos_dolares': [1, 3, 4, 5, 7, 8, 9]
     };
 
     if ($.fn.DataTable.isDataTable(tableId)) {

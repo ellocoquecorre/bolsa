@@ -535,40 +535,40 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                                     $rentabilidad_acciones_pesos = (($rendimiento_acciones_pesos) / $valor_inicial_acciones_pesos) * 100;
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                            <td>{$accion['ticker']}</td>
-                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                    <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/compra_mas_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_parcial_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                    <td>{$accion['ticker']}</td>
+                                    <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
+                                    <td class='text-center'>
+                                        <div class='dropdown d-flex justify-content-center'>
+                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                <i class='fa-solid fa-bars'></i>
+                                            </button>
+                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/compra_mas_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -651,42 +651,42 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
 
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                            <td>{$accion['ticker']}</td>
-                                            <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
-                                                    <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/compra_mas_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_parcial_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-check-circle me-2'></i> Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-pen me-2'></i> Editar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                    <td>{$accion['ticker']}</td>
+                                    <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
+                                    <td class='text-center'>
+                                        <div class='dropdown d-flex justify-content-center'>
+                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                <i class='fa-solid fa-bars'></i>
+                                            </button>
+                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/compra_mas_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-percent me-2'></i> Venta parcial</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-check-circle me-2'></i> Venta total</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_acciones.php?cliente_id={$cliente_id}&ticker={$accion['ticker']}'><i class='fa-solid fa-pen me-2'></i> Editar</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarAccion(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -792,40 +792,40 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                                     $rentabilidad_cedear_pesos = (($rendimiento_cedear_pesos) / $valor_inicial_cedear_pesos) * 100;
 
                                     echo "<tr data-ticker='{$c['ticker_cedear']}'>
-                                            <td>{$c['ticker_cedear']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($c['cantidad_cedear'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($c['precio_cedear'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_cedear_pesos)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_cedear_pesos)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_cedear_pesos) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_cedear_pesos) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                        <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/compra_mas_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_parcial_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_total_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarCedear(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                    <td>{$c['ticker_cedear']}</td>
+                                    <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($c['cantidad_cedear'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($c['precio_cedear'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_cedear_pesos)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_cedear_pesos)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_cedear_pesos) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_cedear_pesos) . "</td>
+                                    <td class='text-center'>
+                                        <div class='dropdown d-flex justify-content-center'>
+                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                <i class='fa-solid fa-bars'></i>
+                                            </button>
+                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/compra_mas_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarCedear(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -904,42 +904,42 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                                     $rentabilidad_cedear_dolares = (($valor_actual_cedear_dolares - $valor_inicial_cedear_dolares) / $valor_inicial_cedear_dolares) * 100;
 
                                     echo "<tr data-ticker='{$c['ticker_cedear']}'>
-                                            <td>{$c['ticker_cedear']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($c['cantidad_cedear'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($c['precio_cedear'] / $valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_cedear_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_cedear_dolares)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_cedear_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_cedear_dolares) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                        <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/compra_mas_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_parcial_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_total_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarCedear(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                    <td>{$c['ticker_cedear']}</td>
+                                    <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($c['cantidad_cedear'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($c['precio_cedear'] / $valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_cedear_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_cedear_dolares)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_cedear_dolares, 'u$s') . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_cedear_dolares) . "</td>
+                                    <td class='text-center'>
+                                        <div class='dropdown d-flex justify-content-center'>
+                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                <i class='fa-solid fa-bars'></i>
+                                            </button>
+                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/compra_mas_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_cedears.php?cliente_id={$cliente_id}&ticker={$c['ticker_cedear']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarCedear(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -1044,40 +1044,40 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                                     $rentabilidad_bonos_pesos = (($rendimiento_bonos_pesos) / $valor_inicial_bonos_pesos) * 100;
 
                                     echo "<tr data-ticker='{$bono['ticker_bonos']}'>
-                                            <td>{$bono['ticker_bonos']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($bono['cantidad_bonos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bono['precio_bonos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_bonos_pesos)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_bonos_pesos)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_bonos_pesos) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_bonos_pesos) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                        <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/compra_mas_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_parcial_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_total_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarBono(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                    <td>{$bono['ticker_bonos']}</td>
+                                    <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($bono['cantidad_bonos'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bono['precio_bonos'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_bonos_pesos)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_bonos_pesos)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_bonos_pesos) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_bonos_pesos) . "</td>
+                                    <td class='text-center'>
+                                        <div class='dropdown d-flex justify-content-center'>
+                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                <i class='fa-solid fa-bars'></i>
+                                            </button>
+                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/compra_mas_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarBono(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -1160,42 +1160,42 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                                     $rentabilidad_bonos_dolares = (($valor_actual_bonos_dolares - $valor_inicial_bonos_dolares) / $valor_inicial_bonos_dolares) * 100;
 
                                     echo "<tr data-ticker='{$bono['ticker_bonos']}'>
-                                            <td>{$bono['ticker_bonos']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($bono['cantidad_bonos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($bono['precio_bonos'] / $valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_bonos_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_bonos_dolares)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_bonos_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_bonos_dolares) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                        <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/compra_mas_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_parcial_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_total_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarBono(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                    <td>{$bono['ticker_bonos']}</td>
+                                    <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($bono['cantidad_bonos'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($bono['precio_bonos'] / $valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_bonos_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_bonos_dolares)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_bonos_dolares, 'u$s') . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_bonos_dolares) . "</td>
+                                    <td class='text-center'>
+                                        <div class='dropdown d-flex justify-content-center'>
+                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                <i class='fa-solid fa-bars'></i>
+                                            </button>
+                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/compra_mas_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_bonos.php?cliente_id={$cliente_id}&ticker={$bono['ticker_bonos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarBono(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -1300,40 +1300,40 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                                     $rentabilidad_fondos_pesos = (($rendimiento_fondos_pesos) / $valor_inicial_fondos_pesos) * 100;
 
                                     echo "<tr data-ticker='{$fondo['ticker_fondos']}'>
-                                            <td>{$fondo['ticker_fondos']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaFondos($fondo['fecha_fondos'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($fondo['cantidad_fondos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondo['precio_fondos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_fondos_pesos)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_fondos_pesos)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_fondos_pesos) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_fondos_pesos) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                        <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/compra_mas_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_parcial_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_total_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarFondo(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                    <td>{$fondo['ticker_fondos']}</td>
+                                    <td>" . htmlspecialchars(formatearFechaFondos($fondo['fecha_fondos'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($fondo['cantidad_fondos'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondo['precio_fondos'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_fondos_pesos)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_fondos_pesos)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_fondos_pesos) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_fondos_pesos) . "</td>
+                                    <td class='text-center'>
+                                        <div class='dropdown d-flex justify-content-center'>
+                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                <i class='fa-solid fa-bars'></i>
+                                            </button>
+                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/compra_mas_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarFondo(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -1416,42 +1416,42 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
                                     $rentabilidad_fondos_dolares = (($valor_actual_fondos_dolares - $valor_inicial_fondos_dolares) / $valor_inicial_fondos_dolares) * 100;
 
                                     echo "<tr data-ticker='{$fondo['ticker_fondos']}'>
-                                            <td>{$fondo['ticker_fondos']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaFondos($fondo['fecha_fondos'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($fondo['cantidad_fondos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($fondo['precio_fondos'] / $valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_fondos_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_fondos_dolares)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_fondos_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_fondos_dolares) . "</td>
-                                            <td class='text-center'>
-                                                <div class='dropdown d-flex justify-content-center'>
-                                                    <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
-                                                        <i class='fa-solid fa-bars'></i>
-                                                    </button>
-                                                    <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/compra_mas_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_parcial_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/venta_total_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item' href='../funciones/editar_compra_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarFondo(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>";
+                                    <td>{$fondo['ticker_fondos']}</td>
+                                    <td>" . htmlspecialchars(formatearFechaFondos($fondo['fecha_fondos'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($fondo['cantidad_fondos'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($fondo['precio_fondos'] / $valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_fondos_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_fondos_dolares)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_fondos_dolares, 'u$s') . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_fondos_dolares) . "</td>
+                                    <td class='text-center'>
+                                        <div class='dropdown d-flex justify-content-center'>
+                                            <button class='btn custom-btn dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false' title='Opciones'>
+                                                <i class='fa-solid fa-bars'></i>
+                                            </button>
+                                            <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton'>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/compra_mas_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-plus me-2'></i>Comprar mas</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_parcial_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-percent me-2'></i>Venta parcial</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/venta_total_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-coins me-2'></i>Venta total</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item' href='../funciones/editar_compra_fondos.php?cliente_id={$cliente_id}&ticker={$fondo['ticker_fondos']}'><i class='fa-solid fa-edit me-2'></i>Editar</a>
+                                                </li>
+                                                <li>
+                                                    <a class='dropdown-item eliminar text-danger' href='#' onclick='eliminarFondo(this)'><i class='fa-solid fa-trash me-2'></i>Eliminar</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>

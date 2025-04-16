@@ -126,7 +126,8 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
         <!-- TITULO -->
         <div class="col-12 text-center">
             <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
-            <p>Tu corredora es<br><a href="<?php echo $url_corredora; ?>" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><?php echo $nombre_corredora; ?></a></p>
+            <a href="historial.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
+                <i class="fa-solid fa-hourglass me-2"></i>Historial</a>
         </div>
         <!-- FIN TITULO -->
 
@@ -531,19 +532,19 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                         <table id="tenencia_acciones_pesos_front" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Compra</th>
-                                    <th><!-- Valor -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- Valor -->Compra</th>
+                                    <th class="text-center"><!-- Valor -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-pesos">
@@ -557,16 +558,16 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                                     $rentabilidad_acciones_pesos = (($rendimiento_acciones_pesos) / $valor_inicial_acciones_pesos) * 100;
 
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                                <td>{$accion['ticker']}</td>
-                                                <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                                <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
-                                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
-                                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
-                                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
-                                                <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
-                                                <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
-                                            </tr>";
+                                    <td>{$accion['ticker']}</td>
+                                    <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($accion['precio'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_pesos)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_acciones_pesos)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_pesos) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_pesos) . "</td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -612,22 +613,22 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                         <table id="tenencia_acciones_dolares_front" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Dólar CCL</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Valor CCL -->Compra</th>
-                                    <th><!-- Valor CCL -->Hoy</th>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- X -->Compra</th>
-                                    <th><!-- X -->Hoy</th>
+                                    <th class="text-center"><!-- Valor CCL -->Compra</th>
+                                    <th class="text-center"><!-- Valor CCL -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- X -->Compra</th>
+                                    <th class="text-center"><!-- X -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-acciones-dolares">
@@ -646,24 +647,22 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                                     $rendimiento_acciones_dolares = $valor_actual_acciones_dolares - $valor_inicial_acciones_dolares;
                                     $rentabilidad_acciones_dolares = (($valor_actual_acciones_dolares - $valor_inicial_acciones_dolares) / $valor_inicial_acciones_dolares) * 100;
 
-
                                     echo "<tr data-ticker='{$accion['ticker']}'>
-                                                <td>{$accion['ticker']}</td>
-                                                <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
-                                                <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
-                                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
-                                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                                <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_compra_ccl)) . "</td>
-                                                <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                                <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
-                                                <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
-                                                <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
-                                                <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
-                                            </tr>";
+                                    <td>{$accion['ticker']}</td>
+                                    <td>" . htmlspecialchars(formatearFecha($accion['fecha'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($accion['cantidad'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($accion['precio'] / $valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_acciones_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_acciones_dolares)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_acciones_dolares, 'u$s') . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_acciones_dolares) . "</td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>
-
                         </table>
                     </div>
                     <!-- Fin Completa Acciones Dólares -->
@@ -725,22 +724,22 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Cedear Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_cedear_pesos_front" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Compra</th>
-                                    <th><!-- Valor -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- Valor -->Compra</th>
+                                    <th class="text-center"><!-- Valor -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-cedear-pesos">
@@ -754,16 +753,16 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                                     $rentabilidad_cedear_pesos = (($rendimiento_cedear_pesos) / $valor_inicial_cedear_pesos) * 100;
 
                                     echo "<tr data-ticker='{$c['ticker_cedear']}'>
-                                            <td>{$c['ticker_cedear']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($c['cantidad_cedear'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($c['precio_cedear'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_cedear_pesos)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_cedear_pesos)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_cedear_pesos) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_cedear_pesos) . "</td>
-                                        </tr>";
+                                <td>{$c['ticker_cedear']}</td>
+                                <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
+                                <td class='text-right'>" . htmlspecialchars(formatear_numero($c['cantidad_cedear'])) . "</td>
+                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($c['precio_cedear'])) . "</td>
+                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_cedear_pesos)) . "</td>
+                                <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_cedear_pesos)) . "</td>
+                                <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_cedear_pesos) . "</td>
+                                <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_cedear_pesos) . "</td>
+                                </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -806,25 +805,25 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Cedear Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_cedear_dolares_front" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Dólar CCL</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Valor CCL -->Compra</th>
-                                    <th><!-- Valor CCL -->Hoy</th>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- X -->Compra</th>
-                                    <th><!-- X -->Hoy</th>
+                                    <th class="text-center"><!-- Valor CCL -->Compra</th>
+                                    <th class="text-center"><!-- Valor CCL -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- X -->Compra</th>
+                                    <th class="text-center"><!-- X -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-cedear-dolares">
@@ -841,17 +840,17 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                                     $rentabilidad_cedear_dolares = (($valor_actual_cedear_dolares - $valor_inicial_cedear_dolares) / $valor_inicial_cedear_dolares) * 100;
 
                                     echo "<tr data-ticker='{$c['ticker_cedear']}'>
-                                            <td>{$c['ticker_cedear']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($c['cantidad_cedear'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($c['precio_cedear'] / $valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_cedear_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_cedear_dolares)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_cedear_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_cedear_dolares) . "</td>
+                                        <td>{$c['ticker_cedear']}</td>
+                                        <td>" . htmlspecialchars(formatearFechaCedear($c['fecha_cedear'])) . "</td>
+                                        <td class='text-right'>" . htmlspecialchars(formatear_numero($c['cantidad_cedear'])) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
+                                        <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($c['precio_cedear'] / $valor_compra_ccl)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_cedear_dolares)) . "</td>
+                                        <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_cedear_dolares)) . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_cedear_dolares, 'u$s') . "</td>
+                                        <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_cedear_dolares) . "</td>
                                         </tr>";
                                 }
                                 ?>
@@ -917,22 +916,22 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Bonos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_bonos_pesos_front" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Compra</th>
-                                    <th><!-- Valor -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- Valor -->Compra</th>
+                                    <th class="text-center"><!-- Valor -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-bonos-pesos">
@@ -946,16 +945,16 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                                     $rentabilidad_bonos_pesos = (($rendimiento_bonos_pesos) / $valor_inicial_bonos_pesos) * 100;
 
                                     echo "<tr data-ticker='{$bono['ticker_bonos']}'>
-                                            <td>{$bono['ticker_bonos']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($bono['cantidad_bonos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bono['precio_bonos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_bonos_pesos)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_bonos_pesos)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_bonos_pesos) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_bonos_pesos) . "</td>
-                                        </tr>";
+                                    <td>{$bono['ticker_bonos']}</td>
+                                    <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($bono['cantidad_bonos'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($bono['precio_bonos'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_bonos_pesos)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_bonos_pesos)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_bonos_pesos) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_bonos_pesos) . "</td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -998,25 +997,25 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Bonos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_bonos_dolares_front" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Dólar CCL</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Valor CCL -->Compra</th>
-                                    <th><!-- Valor CCL -->Hoy</th>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- X -->Compra</th>
-                                    <th><!-- X -->Hoy</th>
+                                    <th class="text-center"><!-- Valor CCL -->Compra</th>
+                                    <th class="text-center"><!-- Valor CCL -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- X -->Compra</th>
+                                    <th class="text-center"><!-- X -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-bonos-dolares">
@@ -1037,18 +1036,18 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                                     $rentabilidad_bonos_dolares = (($valor_actual_bonos_dolares - $valor_inicial_bonos_dolares) / $valor_inicial_bonos_dolares) * 100;
 
                                     echo "<tr data-ticker='{$bono['ticker_bonos']}'>
-                                            <td>{$bono['ticker_bonos']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($bono['cantidad_bonos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($bono['precio_bonos'] / $valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_bonos_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_bonos_dolares)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_bonos_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_bonos_dolares) . "</td>
-                                        </tr>";
+                                    <td>{$bono['ticker_bonos']}</td>
+                                    <td>" . htmlspecialchars(formatearFechaBonos($bono['fecha_bonos'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($bono['cantidad_bonos'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($bono['precio_bonos'] / $valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_bonos_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_bonos_dolares)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_bonos_dolares, 'u$s') . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_bonos_dolares) . "</td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -1113,22 +1112,22 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Fondos Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_fondos_pesos_front" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- Valor -->Compra</th>
-                                    <th><!-- Valor -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- Valor -->Compra</th>
+                                    <th class="text-center"><!-- Valor -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-fondos-pesos">
@@ -1142,16 +1141,16 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                                     $rentabilidad_fondos_pesos = (($rendimiento_fondos_pesos) / $valor_inicial_fondos_pesos) * 100;
 
                                     echo "<tr data-ticker='{$fondo['ticker_fondos']}'>
-                                            <td>{$fondo['ticker_fondos']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaFondos($fondo['fecha_fondos'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($fondo['cantidad_fondos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondo['precio_fondos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_fondos_pesos)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_fondos_pesos)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_fondos_pesos) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_fondos_pesos) . "</td>
-                                        </tr>";
+                                    <td>{$fondo['ticker_fondos']}</td>
+                                    <td>" . htmlspecialchars(formatearFechaFondos($fondo['fecha_fondos'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($fondo['cantidad_fondos'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($fondo['precio_fondos'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($precio_actual)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_inicial_fondos_pesos)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_actual_fondos_pesos)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_fondos_pesos) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_fondos_pesos) . "</td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -1194,25 +1193,25 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Fondos Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_fondos_dolares_front" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Fecha</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Cantidad</th>
-                                    <th colspan="2">Dólar CCL</th>
-                                    <th colspan="2">Valor unitario</th>
-                                    <th colspan="2">Valor total</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rendimiento</th>
-                                    <th rowspan="2" style="vertical-align: text-top;">Rentabilidad</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Ticker</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Fecha</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Cantidad</th>
+                                    <th colspan="2" class="text-center">Dólar CCL</th>
+                                    <th colspan="2" class="text-center">Valor unitario</th>
+                                    <th colspan="2" class="text-center">Valor total</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rendimiento</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Rentabilidad</th>
                                 </tr>
                                 <tr>
-                                    <th><!-- Valor CCL -->Compra</th>
-                                    <th><!-- Valor CCL -->Hoy</th>
-                                    <th><!-- Precio -->Compra</th>
-                                    <th><!-- Precio -->Hoy</th>
-                                    <th><!-- X -->Compra</th>
-                                    <th><!-- X -->Hoy</th>
+                                    <th class="text-center"><!-- Valor CCL -->Compra</th>
+                                    <th class="text-center"><!-- Valor CCL -->Hoy</th>
+                                    <th class="text-center"><!-- Precio -->Compra</th>
+                                    <th class="text-center"><!-- Precio -->Hoy</th>
+                                    <th class="text-center"><!-- X -->Compra</th>
+                                    <th class="text-center"><!-- X -->Hoy</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-fondos-dolares">
@@ -1233,18 +1232,18 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                                     $rentabilidad_fondos_dolares = (($valor_actual_fondos_dolares - $valor_inicial_fondos_dolares) / $valor_inicial_fondos_dolares) * 100;
 
                                     echo "<tr data-ticker='{$fondo['ticker_fondos']}'>
-                                            <td>{$fondo['ticker_fondos']}</td>
-                                            <td>" . htmlspecialchars(formatearFechaFondos($fondo['fecha_fondos'])) . "</td>
-                                            <td class='text-right'>" . htmlspecialchars(formatear_numero($fondo['cantidad_fondos'])) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($fondo['precio_fondos'] / $valor_compra_ccl)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_fondos_dolares)) . "</td>
-                                            <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_fondos_dolares)) . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_fondos_dolares, 'u$s') . "</td>
-                                            <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_fondos_dolares) . "</td>
-                                        </tr>";
+                                    <td>{$fondo['ticker_fondos']}</td>
+                                    <td>" . htmlspecialchars(formatearFechaFondos($fondo['fecha_fondos'])) . "</td>
+                                    <td class='text-right'>" . htmlspecialchars(formatear_numero($fondo['cantidad_fondos'])) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>$ " . htmlspecialchars(formatear_dinero($promedio_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($fondo['precio_fondos'] / $valor_compra_ccl)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($precio_actual_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_inicial_fondos_dolares)) . "</td>
+                                    <td class='text-right'>u\$s " . htmlspecialchars(formatear_dinero($valor_actual_fondos_dolares)) . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_valor($rendimiento_fondos_dolares, 'u$s') . "</td>
+                                    <td class='text-right'>" . formatear_y_colorear_porcentaje($rentabilidad_fondos_dolares) . "</td>
+                                    </tr>";
                                 }
                                 ?>
                             </tbody>

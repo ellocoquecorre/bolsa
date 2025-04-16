@@ -75,6 +75,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <!-- FIN CSS -->
 </head>
@@ -527,7 +528,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Acciones Pesos -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_acciones_pesos_front" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -608,7 +609,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
                     <!-- Completa Acciones Dólares -->
                     <h6 class="me-2 cartera posiciones mb-4">Posición Detallada</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="tenencia_acciones_dolares_front" class="table table-bordered table-striped">
                             <thead class="bg-secondary text-white">
                                 <tr>
                                     <th rowspan="2" style="vertical-align: text-top;">Ticker</th>
@@ -1312,51 +1313,15 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="../js/preloader.js"></script>
     <script src="../js/tooltip.js"></script>
     <script src="../js/easter_egg.js"></script>
+    <script type="module" src="../js/filtro_tablas.js"></script>
     <script type="module" src="../js/botones_pesos_dolares.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/graficos.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Pasamos el valor de mostrar_disclaimer desde PHP a JS
-            const mostrarDisclaimer = <?php echo json_encode($mostrar_disclaimer); ?>;
-
-            // Si mostrar_disclaimer es 1, mostramos el modal
-            if (mostrarDisclaimer == 1) {
-                const disclaimerModal = new bootstrap.Modal(document.getElementById('disclaimerModal'));
-                disclaimerModal.show();
-
-                document.getElementById('cerrarDisclaimer').addEventListener('click', function() {
-                    const noMostrar = document.getElementById('noMostrarDisclaimer').checked;
-
-                    if (noMostrar) {
-                        // Guardar preferencia con fetch
-                        fetch('disclaimer.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    mostrar_disclaimer: 0
-                                })
-                            })
-                            .then(res => res.json())
-                            .then(data => {
-                                if (data.success) {
-                                    disclaimerModal.hide();
-                                } else {
-                                    alert("Error al guardar la preferencia.");
-                                }
-                            });
-                    } else {
-                        disclaimerModal.hide(); // Si no está marcada la casilla, lo volvemos a mostrar la próxima vez
-                    }
-                });
-            }
-        });
-    </script>
     <!-- FIN JS -->
 
 </body>

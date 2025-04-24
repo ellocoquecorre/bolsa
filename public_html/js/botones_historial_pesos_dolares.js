@@ -5,7 +5,29 @@ import { initDataTable } from './datatables.js';
 document.addEventListener("DOMContentLoaded", () => {
     const columnasDolares = [2, 3, 4, 5, 6, 7, 8];
 
-    // Acciones
+    // RESUMEN PESOS / DÓLARES
+    const btnResumenPesos = document.getElementById("btnResumenPesos");
+    const btnResumenDolares = document.getElementById("btnResumenDolares");
+    const tablaResumenPesos = document.getElementById("tablaResumenPesos");
+    const tablaResumenDolares = document.getElementById("tablaResumenDolares");
+
+    if (btnResumenPesos && btnResumenDolares) {
+        btnResumenPesos.addEventListener("click", () => {
+            btnResumenPesos.classList.add("active");
+            btnResumenDolares.classList.remove("active");
+            tablaResumenPesos.classList.remove("d-none");
+            tablaResumenDolares.classList.add("d-none");
+        });
+
+        btnResumenDolares.addEventListener("click", () => {
+            btnResumenDolares.classList.add("active");
+            btnResumenPesos.classList.remove("active");
+            tablaResumenDolares.classList.remove("d-none");
+            tablaResumenPesos.classList.add("d-none");
+        });
+    }
+
+    // ACCIONES
     const btnAccionesPesos = document.getElementById("btnAccionesPesos");
     const btnAccionesDolares = document.getElementById("btnAccionesDolares");
     const tablaAccionesPesos = document.getElementById("tablaAccionesPesos");
@@ -27,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         initDataTable('#historial_acciones_dolares', 0, columnasDolares);
     });
 
-    // Cedear
+    // CEDEAR
     const btnCedearPesos = document.getElementById("btnCedearPesos");
     const btnCedearDolares = document.getElementById("btnCedearDolares");
     const tablaCedearPesos = document.getElementById("tablaCedearPesos");
@@ -49,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
         initDataTable('#historial_cedear_dolares', 0, columnasDolares);
     });
 
-    // Bonos
+    // BONOS
     const btnBonosPesos = document.getElementById("btnBonosPesos");
     const btnBonosDolares = document.getElementById("btnBonosDolares");
     const tablaBonosPesos = document.getElementById("tablaBonosPesos");
@@ -71,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         initDataTable('#historial_bonos_dolares', 0, columnasDolares);
     });
 
-    // Fondos
+    // FONDOS
     const btnFondosPesos = document.getElementById("btnFondosPesos");
     const btnFondosDolares = document.getElementById("btnFondosDolares");
     const tablaFondosPesos = document.getElementById("tablaFondosPesos");

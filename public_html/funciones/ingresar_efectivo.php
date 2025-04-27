@@ -140,6 +140,8 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
             </div>
         </div>
         <div class="col-4"></div>
+        <!-- FIN INGRESAR EFECTIVO -->
+
     </div>
 
     <!-- MODAL -->

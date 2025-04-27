@@ -105,28 +105,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!-- FORMULARIO LOGIN -->
         <div class="col-4"></div>
-        <div class="col-md-12 col-lg-4">
+        <div class="col-md-12 col-lg-4 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Login</h5>
                 <?php if (isset($error)): ?>
                     <div class="alert alert-danger"><?php echo $error; ?></div>
                 <?php endif; ?>
                 <form method="POST">
-                    <div class="mb-3">
-                        <label for="email" class="form-label" style="text-align: left;">Mail</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
-                            <input type="email" name="email" class="form-control" id="email" required autofocus>
+                    <!-- Email -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="saldo" class="col-sm-3 col-form-label text-start text-lg-end text-start text-lg-end">Email</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
+                                <input type="email" name="email" class="form-control" id="email" required autofocus>
+                            </div>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label" style="text-align: left;">Contraseña</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light"><i class="fa-solid fa-lock"></i></span>
-                            <input type="password" name="password" class="form-control" id="password" required>
+                    <!-- Contraseña -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="monto" class="col-sm-3 col-form-label text-start text-lg-end text-start text-lg-end">Contraseña</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-lock"></i></span>
+                                <input type="password" name="password" class="form-control" id="password" required>
+                            </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-custom ver w-100"><i class="fa-solid fa-check me-2"></i>Entrar</button>
+                    <hr class="mod mb-3">
+                    <!-- Botones -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Entrar</button>
+                    </div>
                 </form>
             </div>
         </div>

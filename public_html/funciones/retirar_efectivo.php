@@ -61,6 +61,7 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Goodfellas Inc.</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
@@ -102,14 +103,14 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
 
         <!-- RETIRAR EFECTIVO -->
         <div class="col-4"></div>
-        <div class="col-4 text-center">
+        <div class="col-md-12 col-lg-4 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Retirar Efectivo</h5>
                 <form method="POST" action="">
                     <input type="hidden" name="cliente_id" value="<?php echo $cliente_id; ?>">
                     <!-- Saldo -->
                     <div class="row mb-3 align-items-center">
-                        <label for="saldo" class="col-sm-2 col-form-label">Saldo</label>
+                        <label for="saldo" class="col-sm-2 col-form-label text-start text-lg-end text-start text-lg-end">Saldo</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-chart-line"></i></span>
@@ -119,7 +120,7 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                     </div>
                     <!-- Monto -->
                     <div class="row mb-3 align-items-center">
-                        <label for="monto" class="col-sm-2 col-form-label">Monto</label>
+                        <label for="monto" class="col-sm-2 col-form-label text-start text-lg-end text-start text-lg-end">Monto</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
@@ -129,7 +130,7 @@ $nombre_y_apellido = htmlspecialchars($nombre . ' ' . $apellido);
                     </div>
                     <hr class="mod mb-3">
                     <!-- Botones -->
-                    <div class="text-end">
+                    <div class="text-center">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
                         <button type="button" class="btn btn-custom eliminar" onclick="window.location.href='../backend/lista_clientes.php'">
                             <i class="fa-solid fa-times me-2"></i>Cancelar

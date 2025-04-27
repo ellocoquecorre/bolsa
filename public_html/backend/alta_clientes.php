@@ -15,9 +15,9 @@
 
 <body>
     <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
+    <div class="preloader d-flex justify-content-center align-items-center" id="preloader">
         <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
+            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img img-fluid">
         </div>
     </div>
     <!-- FIN PRELOADER -->
@@ -76,12 +76,12 @@
 
         <!-- ALTA CLIENTES -->
         <div class="col-3"></div>
-        <div class="col-6 text-center">
+        <div class="col-md-12 col-lg-6 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Formulario de registro</h5>
                 <form method="POST">
                     <div class="row mb-3 align-items-center">
-                        <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
+                        <label for="nombre" class="col-sm-2 col-form-label text-start text-lg-end text-right">Nombre</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
@@ -90,7 +90,7 @@
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="apellido" class="col-sm-2 col-form-label text-right">Apellido</label>
+                        <label for="apellido" class="col-sm-2 col-form-label text-start text-lg-end text-right">Apellido</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
@@ -99,7 +99,7 @@
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="mail" class="col-sm-2 col-form-label text-right">Mail</label>
+                        <label for="mail" class="col-sm-2 col-form-label text-start text-lg-end text-right">Mail</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="telefono" class="col-sm-2 col-form-label text-right">Teléfono</label>
+                        <label for="telefono" class="col-sm-2 col-form-label text-start text-lg-end text-right">Teléfono</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-phone"></i></span>
@@ -117,7 +117,7 @@
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="corredora" class="col-sm-2 col-form-label text-right">Corredora</label>
+                        <label for="corredora" class="col-sm-2 col-form-label text-start text-lg-end text-right">Corredora</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-briefcase"></i></span>
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="url" class="col-sm-2 col-form-label text-right">URL Corredora</label>
+                        <label for="url" class="col-sm-2 col-form-label text-start text-lg-end text-right">URL Corredora</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-link"></i></span>
@@ -144,8 +144,6 @@
         </div>
         <div class="col-3"></div>
         <!-- FIN ALTA CLIENTES -->
-
-        <hr class="mod" style="margin-bottom: 80px;">
 
     </div>
     <!-- FIN CONTENIDO -->

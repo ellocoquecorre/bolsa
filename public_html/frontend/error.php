@@ -33,7 +33,7 @@ session_start();
 
         <!-- COMPRA ACCIONES -->
         <div class="col-3"></div>
-        <div class="col-6 text-center">
+        <div class="col-md-12 col-lg-6 text-center">
             <div class="container-fluid my-4 efectivo" style="height: 350px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow: hidden;">
                 <img src="../img/no.gif" alt="Imagen Fija" style="max-height: 80%; width: auto;" />
                 <p>No tenés permiso para ver esa página.</p>

@@ -95,9 +95,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <hr class="mod">
 
+        <div class="col-12 text-center">
+            <p class="intro mb-1">Bienvenido a GoodFellas</p>
+            <p class="cartera">Tus finanzas en manos expertas.<br>
+                O casi expertas.<br>
+                Mas o menos...
+            </p>
+        </div>
+
         <!-- FORMULARIO LOGIN -->
         <div class="col-4"></div>
-        <div class="col-4">
+        <div class="col-md-12 col-lg-4">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Login</h5>
                 <?php if (isset($error)): ?>
@@ -105,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php endif; ?>
                 <form method="POST">
                     <div class="mb-3">
-                        <label for="email" class="form-label" style="text-align: left;">Correo Electrónico</label>
+                        <label for="email" class="form-label" style="text-align: left;">Mail</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
                             <input type="email" name="email" class="form-control" id="email" required autofocus>

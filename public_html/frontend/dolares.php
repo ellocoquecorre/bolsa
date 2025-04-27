@@ -74,9 +74,9 @@ $cotizaciones = [
 <body>
 
     <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
+    <div class="preloader d-flex justify-content-center align-items-center" id="preloader">
         <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
+            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img img-fluid">
         </div>
     </div>
     <!-- FIN PRELOADER -->
@@ -124,7 +124,7 @@ $cotizaciones = [
 
         <!-- TABLA DÓLARES -->
         <div class="col-3"></div>
-        <div class="col-6 text-center">
+        <div class="col-md-12 col-lg-6 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Tipos de cambio</h5>
                 <div class="table-responsive">

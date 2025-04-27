@@ -60,9 +60,9 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
 <body>
 
     <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
+    <div class="preloader d-flex justify-content-center align-items-center" id="preloader">
         <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
+            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img img-fluid">
         </div>
     </div>
     <!-- FIN PRELOADER -->
@@ -1119,8 +1119,6 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
             </div>
         </div>
         <!-- FIN FONDOS -->
-
-        <hr class="mod" style="margin-bottom: 80px;">
 
     </div>
     <!-- FIN CONTENIDO -->

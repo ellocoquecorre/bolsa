@@ -78,9 +78,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
+    <div class="preloader d-flex justify-content-center align-items-center" id="preloader">
         <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
+            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img img-fluid">
         </div>
     </div>
     <!-- FIN PRELOADER -->
@@ -138,12 +138,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!-- EDITAR CLIENTES -->
         <div class="col-3"></div>
-        <div class="col-6 text-center">
+        <div class="col-md-12 col-lg-6 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Edición de datos</h5>
                 <form method="POST">
                     <div class="row mb-3 align-items-center">
-                        <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
+                        <label for="nombre" class="col-sm-2 col-form-label text-start text-lg-end text-start text-lg-end">Nombre</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
@@ -152,7 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="apellido" class="col-sm-2 col-form-label text-right">Apellido</label>
+                        <label for="apellido" class="col-sm-2 col-form-label text-start text-lg-end text-start text-lg-end">Apellido</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
@@ -161,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="mail" class="col-sm-2 col-form-label text-right">Mail</label>
+                        <label for="mail" class="col-sm-2 col-form-label text-start text-lg-end text-start text-lg-end">Mail</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"></i></span>
@@ -170,7 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="telefono" class="col-sm-2 col-form-label text-right">Teléfono</label>
+                        <label for="telefono" class="col-sm-2 col-form-label text-start text-lg-end text-start text-lg-end">Teléfono</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-phone"></i></span>
@@ -179,7 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="corredora" class="col-sm-2 col-form-label text-right">Corredora</label>
+                        <label for="corredora" class="col-sm-2 col-form-label text-start text-lg-end text-start text-lg-end">Corredora</label>
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <span class="input-group-text bg-light"><i class="fa-solid fa-briefcase"></i></span>
@@ -188,7 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     <hr class="mod mb-3">
-                    <div class="text-right">
+                    <div class="text-center">
                         <button type="submit" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
                         <a href="../backend/lista_clientes.php" class="btn btn-custom eliminar"><i class="fa-solid fa-xmark me-2"></i>Cancelar</a>
                     </div>

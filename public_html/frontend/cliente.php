@@ -83,9 +83,9 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
 <body>
 
     <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
+    <div class="preloader d-flex justify-content-center align-items-center" id="preloader">
         <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
+            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img img-fluid">
         </div>
     </div>
     <!-- FIN PRELOADER -->
@@ -126,8 +126,7 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
         <!-- TITULO -->
         <div class="col-12 text-center">
             <h4 class="fancy"><?php echo htmlspecialchars($nombre . ' ' . $apellido); ?></h4>
-            <a href="historial.php?cliente_id=<?php echo $cliente_id; ?>" class="btn btn-custom ver">
-                <i class="fa-solid fa-hourglass me-2"></i>Historial</a>
+            <p>Tu corredora es<br><a href="<?php echo $url_corredora; ?>" class="btn btn-custom ver"><i class="fas fa-hand-pointer me-2"></i><?php echo $nombre_corredora; ?></a></p>
         </div>
         <!-- FIN TITULO -->
 
@@ -1257,8 +1256,6 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
             </div>
         </div>
         <!-- FIN FONDOS -->
-
-        <hr class="mod" style="margin-bottom: 80px;">
 
     </div>
     <!-- FIN CONTENIDO -->

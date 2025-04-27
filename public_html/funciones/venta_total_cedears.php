@@ -147,7 +147,7 @@ $nombre_y_apellido = htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apell
 
         <!-- VENTA TOTAL CEDARS -->
         <div class="col-4"></div>
-        <div class="col-4 text-center">
+        <div class="col-md-12 col-lg-4 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Venta total de <?php echo htmlspecialchars($db_ticker); ?></h5>
                 <form id="venta_total" method="POST" action="">
@@ -158,7 +158,7 @@ $nombre_y_apellido = htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apell
                     <div class="row">
                         <div class="col-12 text-center">
                             <div class="row mb-3 align-items-center">
-                                <label class="col-sm-4 col-sm-2 col-form-label" for="cantidad">Cantidad</label>
+                                <label class="col-sm-4 col-sm-2 col-form-label text-start text-lg-end text-start text-lg-end" for="cantidad">Cantidad</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
@@ -176,7 +176,7 @@ $nombre_y_apellido = htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apell
                     <div class="row">
                         <div class="col-12 text-center">
                             <div class="row mb-3 align-items-center">
-                                <label class="col-sm-4 col-sm-2 col-form-label" for="precio_venta">Precio Venta</label>
+                                <label class="col-sm-4 col-sm-2 col-form-label text-start text-lg-end text-start text-lg-end" for="precio_venta">Precio Venta</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
@@ -194,7 +194,7 @@ $nombre_y_apellido = htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apell
                     <div class="row">
                         <div class="col-12 text-center">
                             <div class="row mb-3 align-items-center">
-                                <label class="col-sm-4 col-sm-2 col-form-label" for="ccl_venta">Dólar CCL</label>
+                                <label class="col-sm-4 col-sm-2 col-form-label text-start text-lg-end text-start text-lg-end" for="ccl_venta">Dólar CCL</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-dollar-sign"></i></span>
@@ -212,7 +212,7 @@ $nombre_y_apellido = htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apell
                     <div class="row">
                         <div class="col-12 text-center">
                             <div class="row mb-3 align-items-center">
-                                <label class="col-sm-4 col-sm-2 col-form-label" for="fecha_venta">Fecha Venta</label>
+                                <label class="col-sm-4 col-sm-2 col-form-label text-start text-lg-end text-start text-lg-end" for="fecha_venta">Fecha Venta</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light"><i class="fa-solid fa-calendar-alt"></i></span>
@@ -228,7 +228,7 @@ $nombre_y_apellido = htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apell
                     <hr class="mod mb-3">
 
                     <!-- Botones -->
-                    <div class="text-end">
+                    <div class="text-center">
                         <button type="submit" id="btnAceptar" class="btn btn-custom ver"><i class="fa-solid fa-check me-2"></i>Aceptar</button>
                         <a href="../backend/cliente.php?cliente_id=<?php echo $cliente_id; ?>#cedears"
                             class="btn btn-custom eliminar"><i class="fa-solid fa-times me-2"></i>Cancelar</a>

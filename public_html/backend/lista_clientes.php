@@ -97,7 +97,7 @@ try {
 
         <!-- LISTA CLIENTES -->
         <div class="col-2"></div>
-        <div class="col-8 text-center">
+        <div class="col-md-12 col-lg-8 text-center">
             <div class="container-fluid my-4 efectivo">
                 <h5 class="me-2 cartera titulo-botones mb-4">Listado de clientes</h5>
                 <div class="table-responsive">

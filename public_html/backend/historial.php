@@ -55,9 +55,9 @@ require_once '../funciones/cliente_historial.php';
 <body>
 
     <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
+    <div class="preloader d-flex justify-content-center align-items-center" id="preloader">
         <div class="preloader-content">
-            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img">
+            <img src="../img/preloader.gif" alt="Preloader" class="preloader-img img-fluid">
         </div>
     </div>
     <!-- FIN PRELOADER -->
@@ -1115,8 +1115,6 @@ require_once '../funciones/cliente_historial.php';
             </div>
         </div>
         <!-- FIN FONDOS -->
-
-        <hr class="mod" style="margin-bottom: 80px;">
 
     </div>
     <!-- FIN CONTENIDO -->

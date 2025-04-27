@@ -89,14 +89,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="row mt-navbar mx-2">
         <!-- TITULO -->
         <div class="col-12 text-center">
-            <h4 class="fancy">Iniciar sesión</h4>
+            <h4 class="fancy">GoodFellas</h4>
         </div>
         <!-- FIN TITULO -->
 
         <hr class="mod">
 
         <div class="col-12 text-center">
-            <p class="intro mb-1">Bienvenido a GoodFellas</p>
             <p class="cartera">Tus finanzas en manos expertas.<br>
                 O casi expertas.<br>
                 Mas o menos...

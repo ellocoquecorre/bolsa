@@ -169,6 +169,8 @@ try {
         <div class="col-2"></div>
         <!-- FIN LISTA CLIENTES -->
 
+        <hr class="mod">
+
     </div>
     <!-- FIN CONTENIDO -->
 

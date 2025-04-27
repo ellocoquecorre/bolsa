@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- NAVBAR -->
 
     <!-- CONTENIDO -->
-    <div class="row mx-2 mt-navbar">
+    <div class="row mx-2 mt-navbar mb-5">
 
         <!-- TITULO -->
         <div class="col-12 text-center">

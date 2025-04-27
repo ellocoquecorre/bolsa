@@ -1476,6 +1476,8 @@ $saldo_en_dolares_formateado = formatear_dinero($saldo_en_dolares);
         </div>
         <!-- FIN FONDOS -->
 
+        <hr class="mod">
+
     </div>
     <!-- FIN CONTENIDO -->
 

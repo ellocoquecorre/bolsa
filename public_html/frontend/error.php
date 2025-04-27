@@ -43,6 +43,8 @@ session_start();
         <div class="col-3"></div>
         <!-- FIN COMPRA ACCIONES -->
 
+        <hr class="mod">
+
     </div>
     <!-- FIN CONTENIDO -->
 

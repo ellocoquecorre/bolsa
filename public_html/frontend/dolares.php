@@ -159,8 +159,12 @@ $cotizaciones = [
         <div class="col-3"></div>
         <!-- FIN TABLA DÓLARES -->
 
+        <hr class="mod">
+
     </div>
     <!-- FIN CONTENIDO -->
+
+
 
     <!-- FOOTER -->
     <footer class="footer bg-light">

@@ -1120,6 +1120,8 @@ $url_corredora = $datos_corredora['url_corredora'] ?? '#';
         </div>
         <!-- FIN FONDOS -->
 
+        <hr class="mod">
+
     </div>
     <!-- FIN CONTENIDO -->
 

@@ -1,13 +1,5 @@
-/* Archivo styles.css */
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-
-@font-face {
-  font-family: 'Goodfellas';
-  src: url('../fonts/goodfellas.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
 
 body {
   font-family: "Nunito Sans", serif;
@@ -83,11 +75,11 @@ h1 {
   margin-inline: auto;
 }
 
-hr.mod {
+.mod {
   border: 0;
   height: 1px;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-  margin: 10px 0px 10px 0px;
+  margin: 10px 0 10px 0;
 }
 
 h5 {
@@ -273,7 +265,7 @@ td.text-center {
   border-radius: 5px;
 }
 .cambio_fondo {
-  background-color: #f2f2f2; /* Color de fondo */
+  background-color: #f2f2f2;
 }
 .cambio_celda {
   padding-top: 10px;
@@ -296,15 +288,14 @@ td.text-center {
 .mt-6 {
   margin-top: 5rem !important;
 }
-/* Agrega esta clase al final de tu archivo style.css */
 .mt-navbar {
-    margin-top: 77px; /* Ajusta el valor según la altura de tu navbar */
+    margin-top: 77px;
 }
 #acciones, #bonos {
-  scroll-margin-top: 70px; /* Ajusta el valor según sea necesario */
+  scroll-margin-top: 70px;
 }
 #fondos, #cedears {
-  scroll-margin-top: 100px; /* Ajusta el valor según sea necesario */
+  scroll-margin-top: 100px;
 }
 /* Estilo para el elemento seleccionado en el dropdown */
 .selected {
@@ -424,10 +415,9 @@ footer {
 .custom-shadow {
   box-shadow: 2px 2px 5px black;
 }
-@media (max-width: 991px) {
-  .mt-navbar {
-      margin-bottom: 80px; /* Ajusta el valor según lo que necesites */
-  }
+
+.mt-navbar {
+  margin-bottom: 80px;
 }
 
 @media (max-width: 768px) {
@@ -439,17 +429,5 @@ footer {
 @media (max-width: 480px) {
   .preloader-img {
       max-width: 75%; /* Ajusta este valor según sea necesario */
-  }
-}
-
-.intro {
-  font-family: 'Goodfellas', sans-serif;
-  font-size: 3rem; /* Tamaño de fuente en pantallas grandes */
-  color: #0B486B;
-}
-
-@media (max-width: 768px) {
-  .intro {
-      font-size: 2rem; /* Tamaño de fuente en pantallas medianas y pequeñas */
   }
 }

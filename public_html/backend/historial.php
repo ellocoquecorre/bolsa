@@ -1116,6 +1116,8 @@ require_once '../funciones/cliente_historial.php';
         </div>
         <!-- FIN FONDOS -->
 
+        <hr class="mod">
+
     </div>
     <!-- FIN CONTENIDO -->
 
